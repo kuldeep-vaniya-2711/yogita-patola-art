@@ -1,0 +1,318 @@
+<%
+    layout("layout", {
+        title: "Search Products | Yogita Patola Art",
+        pageCss: "/css/pages/search.css",
+        pageJs: "/js/pages/search.js"
+    });
+%>
+
+
+<!-- =========================================================
+     SEARCH PAGE
+     ========================================================= -->
+
+<section class="search-page">
+
+
+    <!-- =====================================================
+         SEARCH HERO
+         ===================================================== -->
+
+    <section class="search-hero">
+
+        <div class="container">
+
+            <div class="search-hero-content text-center">
+
+                <span class="search-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
+
+                <h1 class="search-title">
+                    Search Our Collection
+                </h1>
+
+                <p class="search-description">
+                    Discover handcrafted Patolas,
+                    traditional textiles and timeless
+                    Indian artistry.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SEARCH CONTENT
+         ===================================================== -->
+
+    <section class="search-content py-5">
+
+        <div class="container">
+
+
+            <!-- =================================================
+                 SEARCH FORM
+                 ================================================= -->
+
+            <div class="search-form-wrapper mb-5">
+
+                <form
+                    action="/search"
+                    method="GET"
+                    class="search-form"
+                    id="searchForm"
+                >
+
+                    <div class="input-group">
+
+                        <input
+                            type="search"
+                            name="q"
+                            id="searchInput"
+                            class="form-control"
+                            value="<%= typeof q !== 'undefined' ? q : '' %>"
+                            placeholder="Search Patola sarees, dupattas, accessories..."
+                            autocomplete="off"
+                            aria-label="Search products"
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark"
+                        >
+                            🔍 Search
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SEARCH RESULT HEADER
+                 ================================================= -->
+
+            <div class="search-result-header mb-4">
+
+                <div>
+
+                    <span class="section-subtitle">
+                        SEARCH RESULTS
+                    </span>
+
+                    <h2 class="section-title mb-0">
+
+                        <% if (
+                            typeof q !== "undefined" &&
+                            q
+                        ) { %>
+
+                            Results for
+                            "<%= q %>"
+
+                        <% } else { %>
+
+                            Our Products
+
+                        <% } %>
+
+                    </h2>
+
+                </div>
+
+
+                <%
+                    const searchProducts =
+                        typeof products !== "undefined" &&
+                        Array.isArray(products)
+                            ? products
+                            : [];
+                %>
+
+
+                <div class="search-result-count">
+
+                    <strong>
+                        <%= searchProducts.length %>
+                    </strong>
+
+                    <span>
+                        <%= searchProducts.length === 1
+                            ? "Product"
+                            : "Products"
+                        %>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SEARCH RESULTS
+                 ================================================= -->
+
+            <% if (searchProducts.length > 0) { %>
+
+
+                <div
+                    class="row g-4 search-grid"
+                    id="searchGrid"
+                >
+
+
+                    <% searchProducts.forEach(product => { %>
+
+
+                        <div
+                            class="col-xl-4 col-lg-4 col-md-6 search-grid-item"
+                            data-category="<%= product.category || '' %>"
+                        >
+
+
+                            <%- include("../partials/product-card", {
+                                product: product
+                            }) %>
+
+
+                        </div>
+
+
+                    <% }); %>
+
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <!-- =================================================
+                     EMPTY SEARCH RESULT
+                     ================================================= -->
+
+                <div class="search-empty text-center">
+
+
+                    <div class="search-empty-icon">
+                        🔍
+                    </div>
+
+
+                    <% if (
+                        typeof q !== "undefined" &&
+                        q
+                    ) { %>
+
+
+                        <h3>
+                            No Products Found
+                        </h3>
+
+
+                        <p>
+                            We could not find any products
+                            matching
+                            "<strong><%= q %></strong>".
+                        </p>
+
+
+                    <% } else { %>
+
+
+                        <h3>
+                            Search Our Collection
+                        </h3>
+
+
+                        <p>
+                            Enter a product name or category
+                            to discover our collection.
+                        </p>
+
+
+                    <% } %>
+
+
+
+                    <a
+                        href="/products"
+                        class="btn btn-dark mt-3"
+                    >
+                        View All Products
+                    </a>
+
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SEARCH CTA
+         ===================================================== -->
+
+    <section class="search-cta py-5">
+
+        <div class="container">
+
+            <div class="text-center">
+
+                <span class="search-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
+
+                <h2 class="section-title">
+                    Looking For Something Special?
+                </h2>
+
+                <p class="section-description mx-auto">
+                    Explore our complete collection or
+                    get in touch with us for more information
+                    about our handcrafted Patolas.
+                </p>
+
+
+                <div class="search-cta-buttons">
+
+                    <a
+                        href="/products"
+                        class="btn btn-dark btn-lg"
+                    >
+                        View Collection
+                    </a>
+
+
+                    <a
+                        href="/contact"
+                        class="btn btn-outline-dark btn-lg"
+                    >
+                        Contact Us
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</section>

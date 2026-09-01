@@ -1,0 +1,1177 @@
+/* =========================================================
+   YOGITA PATOLA ART
+   LOGIN PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.login-page {
+
+    position: relative;
+
+    min-height: calc(100vh - 76px);
+
+    padding: 70px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(176, 138, 74, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(101, 31, 42, 0.08),
+            transparent 30%
+        ),
+        #faf8f3;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   DECORATIVE PATOLA PATTERN
+   ========================================================= */
+
+.login-page::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+
+    height: 420px;
+
+    left: -210px;
+
+    top: -190px;
+
+    border:
+        1px solid rgba(176, 138, 74, 0.18);
+
+    transform: rotate(45deg);
+
+    box-shadow:
+        0 0 0 28px rgba(176, 138, 74, 0.035),
+        0 0 0 56px rgba(176, 138, 74, 0.025);
+
+    pointer-events: none;
+
+}
+
+
+.login-page::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 360px;
+
+    height: 360px;
+
+    right: -180px;
+
+    bottom: -170px;
+
+    border:
+        1px solid rgba(101, 31, 42, 0.12);
+
+    transform: rotate(45deg);
+
+    box-shadow:
+        0 0 0 24px rgba(101, 31, 42, 0.025),
+        0 0 0 48px rgba(176, 138, 74, 0.025);
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.login-container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 980px;
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.login-card {
+
+    display: grid;
+
+    grid-template-columns: 0.9fr 1.1fr;
+
+    min-height: 600px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #e5ded5;
+
+    box-shadow:
+        0 25px 70px rgba(51, 42, 39, 0.13);
+
+}
+
+
+/* =========================================================
+   BRAND PANEL
+   ========================================================= */
+
+.login-brand-panel {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 55px 45px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #651f2a 0%,
+            #571923 48%,
+            #4d1720 100%
+        );
+
+    color: #ffffff;
+
+}
+
+
+/* PATOLA GEOMETRIC DETAIL */
+
+.login-brand-panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 270px;
+
+    height: 270px;
+
+    right: -135px;
+
+    top: 50%;
+
+    border:
+        1px solid rgba(200, 169, 107, 0.35);
+
+    transform:
+        translateY(-50%)
+        rotate(45deg);
+
+}
+
+
+.login-brand-panel::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+
+    height: 190px;
+
+    right: -95px;
+
+    top: 50%;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    transform:
+        translateY(-50%)
+        rotate(45deg);
+
+}
+
+
+/* =========================================================
+   BRAND INNER
+   ========================================================= */
+
+.login-brand-inner {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 330px;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   SYMBOL
+   ========================================================= */
+
+.login-brand-symbol {
+
+    width: 52px;
+
+    height: 52px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid rgba(200, 169, 107, 0.65);
+
+    color: #c8a96b;
+
+    font-size: 21px;
+
+    transform: rotate(45deg);
+
+}
+
+
+.login-brand-symbol::first-letter {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   BRAND EYEBROW
+   ========================================================= */
+
+.login-brand-eyebrow {
+
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: #c8a96b;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.25em;
+
+}
+
+
+/* =========================================================
+   BRAND TITLE
+   ========================================================= */
+
+.login-brand-title {
+
+    margin-bottom: 22px;
+
+    color: #ffffff;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: clamp(42px, 5vw, 58px);
+
+    font-weight: 600;
+
+    line-height: 0.98;
+
+}
+
+
+.login-brand-title em {
+
+    display: block;
+
+    color: #d3b274;
+
+    font-style: italic;
+
+    font-weight: 500;
+
+}
+
+
+/* =========================================================
+   BRAND DESCRIPTION
+   ========================================================= */
+
+.login-brand-description {
+
+    margin-bottom: 28px;
+
+    color:
+        rgba(255, 255, 255, 0.76);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================================
+   DECORATION
+   ========================================================= */
+
+.login-brand-decoration {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+
+}
+
+
+.login-brand-decoration span {
+
+    width: 55px;
+
+    height: 1px;
+
+    background:
+        rgba(200, 169, 107, 0.55);
+
+}
+
+
+.login-brand-decoration i {
+
+    color: #c8a96b;
+
+    font-size: 13px;
+
+    font-style: normal;
+
+}
+
+
+/* =========================================================
+   BRAND NOTE
+   ========================================================= */
+
+.login-brand-note {
+
+    margin: 0;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: 15px;
+
+    font-style: italic;
+
+}
+
+
+/* =========================================================
+   FORM PANEL
+   ========================================================= */
+
+.login-form-panel {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 55px 60px;
+
+    background:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   FORM INNER
+   ========================================================= */
+
+.login-form-inner {
+
+    width: 100%;
+
+    max-width: 390px;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.login-header {
+
+    margin-bottom: 34px;
+
+    text-align: center;
+
+}
+
+
+.login-eyebrow {
+
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: #b08a4a;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.20em;
+
+}
+
+
+.login-title {
+
+    margin-bottom: 10px;
+
+    color: #332a27;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: 43px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+}
+
+
+.login-description {
+
+    margin: 0;
+
+    color: #766d68;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   ALERT
+   ========================================================= */
+
+.login-alert {
+
+    margin-bottom: 22px;
+
+    padding: 12px 15px;
+
+    border: 1px solid transparent;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+.login-alert-error {
+
+    border-color: #e4c8cc;
+
+    background: #fff5f6;
+
+    color: #7b2632;
+
+}
+
+
+.login-alert-success {
+
+    border-color: #d8cfb7;
+
+    background: #fbf8ed;
+
+    color: #675329;
+
+}
+
+
+/* =========================================================
+   FIELD
+   ========================================================= */
+
+.login-field {
+
+    margin-bottom: 22px;
+
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.login-label-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.login-label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #332a27;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+
+}
+
+
+/* =========================================================
+   INPUT WRAP
+   ========================================================= */
+
+.login-input-wrap {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   INPUT ICON
+   ========================================================= */
+
+.login-input-icon {
+
+    position: absolute;
+
+    left: 15px;
+
+    z-index: 2;
+
+    color: #b08a4a;
+
+    font-size: 14px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.login-input {
+
+    width: 100%;
+
+    min-height: 49px;
+
+    padding:
+        12px 15px 12px 43px;
+
+    border:
+        1px solid #e1d9cf;
+
+    border-radius: 0;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #332a27;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+
+}
+
+
+.login-input::placeholder {
+
+    color: #aaa19a;
+
+}
+
+
+.login-input:hover {
+
+    border-color: #cfc4b8;
+
+}
+
+
+.login-input:focus {
+
+    border-color: #b08a4a;
+
+    background: #fffdfa;
+
+    box-shadow:
+        0 0 0 3px rgba(176, 138, 74, 0.08);
+
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+   ========================================================= */
+
+.login-password-toggle {
+
+    position: absolute;
+
+    right: 10px;
+
+    top: 50%;
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    border: 0;
+
+    background: transparent;
+
+    color: #766d68;
+
+    font-size: 14px;
+
+}
+
+
+.login-password-toggle:hover {
+
+    color: #651f2a;
+
+}
+
+
+/* =========================================================
+   FIELD ERROR
+   ========================================================= */
+
+.login-field-error {
+
+    min-height: 0;
+
+    margin-top: 6px;
+
+    color: #9a2635;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+}
+
+
+.login-input.is-invalid {
+
+    border-color: #a93646;
+
+    background: #fff9f9;
+
+}
+
+
+/* =========================================================
+   SUBMIT
+   ========================================================= */
+
+.login-submit {
+
+    width: 100%;
+
+    min-height: 51px;
+
+    margin-top: 5px;
+
+    padding: 13px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    border:
+        1px solid #651f2a;
+
+    border-radius: 0;
+
+    background:
+        #651f2a;
+
+    color: #ffffff;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.login-submit:hover {
+
+    border-color: #4d1720;
+
+    background: #4d1720;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(101, 31, 42, 0.18);
+
+}
+
+
+.login-submit-arrow {
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.login-submit:hover .login-submit-arrow {
+
+    transform: translateX(4px);
+
+}
+
+
+/* =========================================================
+   REGISTER
+   ========================================================= */
+
+.login-register {
+
+    margin-top: 27px;
+
+    text-align: center;
+
+    color: #766d68;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+}
+
+
+.login-register a {
+
+    margin-left: 5px;
+
+    color: #651f2a;
+
+    font-weight: 600;
+
+}
+
+
+.login-register a:hover {
+
+    color: #b08a4a;
+
+}
+
+
+.login-register a span {
+
+    margin-left: 3px;
+
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+.login-back {
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid #eee8df;
+
+    text-align: center;
+
+}
+
+
+.login-back a {
+
+    color: #766d68;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    transition:
+        color 0.25s ease;
+
+}
+
+
+.login-back a:hover {
+
+    color: #651f2a;
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .login-card {
+
+        grid-template-columns:
+            0.8fr 1.2fr;
+
+    }
+
+
+    .login-brand-panel {
+
+        padding:
+            45px 30px;
+
+    }
+
+
+    .login-form-panel {
+
+        padding:
+            45px 40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .login-page {
+
+        min-height: auto;
+
+        padding:
+            40px 16px;
+
+    }
+
+
+    .login-card {
+
+        display: block;
+
+        min-height: auto;
+
+    }
+
+
+    .login-brand-panel {
+
+        min-height: 300px;
+
+        padding:
+            40px 25px;
+
+    }
+
+
+    .login-brand-title {
+
+        font-size: 43px;
+
+    }
+
+
+    .login-brand-description {
+
+        max-width: 400px;
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+    .login-form-panel {
+
+        padding:
+            42px 25px 45px;
+
+    }
+
+
+    .login-form-inner {
+
+        max-width: 450px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .login-page {
+
+        padding:
+            25px 12px;
+
+    }
+
+
+    .login-brand-panel {
+
+        min-height: 275px;
+
+        padding:
+            35px 20px;
+
+    }
+
+
+    .login-brand-symbol {
+
+        width: 44px;
+
+        height: 44px;
+
+        margin-bottom: 20px;
+
+        font-size: 18px;
+
+    }
+
+
+    .login-brand-title {
+
+        font-size: 39px;
+
+    }
+
+
+    .login-brand-description {
+
+        font-size: 11px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .login-form-panel {
+
+        padding:
+            35px 20px 40px;
+
+    }
+
+
+    .login-title {
+
+        font-size: 38px;
+
+    }
+
+
+    .login-input {
+
+        min-height: 47px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .login-input,
+    .login-submit,
+    .login-submit-arrow {
+
+        transition: none;
+
+    }
+
+}

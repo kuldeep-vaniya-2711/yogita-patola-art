@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Verify Email | Yogita Patola Art
+    </title>
+
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Google Fonts -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            background:
+                #f8f7f4;
+
+            color:
+                #222;
+
+        }
+
+
+        h1,
+        h2,
+        h3 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+        }
+
+
+        .verify-wrapper {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 40px 15px;
+
+        }
+
+
+        .verify-card {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            background: #ffffff;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 10px 40px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .brand-name {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 28px;
+
+            font-weight: 600;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .brand-subtitle {
+
+            color: #777;
+
+            font-size: 13px;
+
+        }
+
+
+        .verify-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #f1f1ef;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+        }
+
+
+        .verify-title {
+
+            text-align: center;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .verify-description {
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .email-display {
+
+            text-align: center;
+
+            background: #f8f7f4;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+
+            word-break: break-word;
+
+        }
+
+
+        .email-display strong {
+
+            color: #222;
+
+        }
+
+
+        .form-label {
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+        }
+
+
+        .otp-input {
+
+            width: 100%;
+
+            text-align: center;
+
+            font-size: 25px;
+
+            font-weight: 600;
+
+            letter-spacing: 8px;
+
+            border-radius: 10px;
+
+            padding: 13px;
+
+            border: 1px solid #ddd;
+
+        }
+
+
+        .otp-input:focus {
+
+            border-color: #333;
+
+            box-shadow:
+                0 0 0 0.2rem
+                rgba(0, 0, 0, 0.08);
+
+            outline: none;
+
+        }
+
+
+        .verify-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-weight: 500;
+
+            background: #222;
+
+            color: #fff;
+
+            border: none;
+
+            margin-top: 20px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .verify-button:hover {
+
+            background: #000;
+
+        }
+
+
+        .resend-section {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #eee;
+
+        }
+
+
+        .resend-text {
+
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .resend-button {
+
+            border: none;
+
+            background: transparent;
+
+            color: #222;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-decoration: underline;
+
+            cursor: pointer;
+
+        }
+
+
+        .back-home {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+        }
+
+
+        .back-home a {
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+        }
+
+
+        .back-home a:hover {
+
+            color: #222;
+
+        }
+
+
+        @media (max-width: 576px) {
+
+            .verify-card {
+
+                padding: 30px 20px;
+
+            }
+
+            .brand-name {
+
+                font-size: 24px;
+
+            }
+
+            .otp-input {
+
+                font-size: 21px;
+
+                letter-spacing: 5px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="verify-wrapper">
+
+
+    <div class="verify-card">
+
+
+        <!-- ========================================= -->
+        <!-- BRAND -->
+        <!-- ========================================= -->
+
+        <div class="brand">
+
+            <div class="brand-name">
+
+                Yogita Patola Art
+
+            </div>
+
+
+            <div class="brand-subtitle">
+
+                Woven with Tradition
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ========================================= -->
+        <!-- ICON -->
+        <!-- ========================================= -->
+
+        <div class="verify-icon">
+
+            ✉️
+
+        </div>
+
+
+
+        <!-- ========================================= -->
+        <!-- TITLE -->
+        <!-- ========================================= -->
+
+        <h1 class="verify-title">
+
+            Verify Your Email
+
+        </h1>
+
+
+        <p class="verify-description">
+
+            We generated a 6-digit verification code
+            for your email address.
+
+        </p>
+
+
+
+        <!-- ========================================= -->
+        <!-- EMAIL -->
+        <!-- ========================================= -->
+
+        <div class="email-display">
+
+            OTP generated for:
+
+            <br>
+
+            <strong>
+
+                <%= email || "" %>
+
+            </strong>
+
+        </div>
+
+
+
+        <!-- ========================================= -->
+        <!-- ERROR -->
+        <!-- ========================================= -->
+
+        <% if (typeof error !== "undefined" && error) { %>
+
+            <div
+                class="alert alert-danger"
+                role="alert"
+            >
+
+                <%= error %>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- ========================================= -->
+        <!-- SUCCESS -->
+        <!-- ========================================= -->
+
+        <% if (typeof success !== "undefined" && success) { %>
+
+            <div
+                class="alert alert-success"
+                role="alert"
+            >
+
+                <%= success %>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- ========================================= -->
+        <!-- OTP FORM -->
+        <!-- ========================================= -->
+
+        <form
+            action="/user/verify-email"
+            method="POST"
+        >
+
+
+            <div class="mb-3">
+
+                <label
+                    for="otp"
+                    class="form-label"
+                >
+
+                    Enter 6-Digit OTP
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    class="otp-input"
+                    placeholder="000000"
+                    maxlength="6"
+                    minlength="6"
+                    pattern="[0-9]{6}"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="verify-button"
+            >
+
+                Verify Email
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- ========================================= -->
+        <!-- RESEND OTP -->
+        <!-- ========================================= -->
+
+        <div class="resend-section">
+
+            <div class="resend-text">
+
+                Didn't receive the OTP?
+
+            </div>
+
+
+            <form
+                action="/user/resend-otp"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="resend-button"
+                >
+
+                    Generate New OTP
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ========================================= -->
+        <!-- BACK HOME -->
+        <!-- ========================================= -->
+
+        <div class="back-home">
+
+            <a href="/">
+
+                ← Back to Website
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<!-- ========================================= -->
+<!-- OTP INPUT SCRIPT -->
+<!-- ========================================= -->
+
+<script>
+
+    const otpInput =
+        document.getElementById("otp");
+
+
+    if (otpInput) {
+
+        otpInput.addEventListener(
+            "input",
+            function () {
+
+                this.value =
+                    this.value
+                        .replace(/\D/g, "")
+                        .slice(0, 6);
+
+            }
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

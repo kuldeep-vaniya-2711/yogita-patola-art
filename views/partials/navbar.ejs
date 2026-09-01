@@ -1,0 +1,347 @@
+<%
+    /*
+     * =========================================================
+     * WEBSITE SETTINGS
+     * =========================================================
+     */
+
+    const s =
+        typeof websiteSettings !== "undefined" &&
+        websiteSettings
+            ? websiteSettings
+            : (
+                typeof settings !== "undefined"
+                    ? settings
+                    : null
+            );
+
+
+    /*
+     * =========================================================
+     * LOGGED-IN USER
+     * =========================================================
+     */
+
+    const user =
+        typeof currentUser !== "undefined"
+            ? currentUser
+            : null;
+
+
+    /*
+     * =========================================================
+     * CURRENT PATH
+     * =========================================================
+     */
+
+    const path =
+        typeof currentPath !== "undefined" &&
+        currentPath
+            ? currentPath
+            : (
+                typeof req !== "undefined" &&
+                req.path
+                    ? req.path
+                    : ""
+            );
+%>
+
+
+<!-- =========================================================
+     PUBLIC NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg sticky-top patola-navbar">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <a
+            href="/"
+            class="navbar-brand patola-navbar-brand"
+            aria-label="<%= s?.siteName || 'Yogita Patola Art' %>"
+        >
+            <%= s?.siteName || "Yogita Patola Art" %>
+        </a>
+
+
+        <!-- =================================================
+             MOBILE TOGGLE
+        ================================================== -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <!-- =================================================
+             NAVBAR COLLAPSE
+        ================================================== -->
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+
+            <!-- =============================================
+                 NAVIGATION
+            ============================================== -->
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+
+                <!-- HOME -->
+
+                <li class="nav-item">
+
+                    <a
+                        href="/"
+                        class="nav-link <%= path === "/" ? "active" : "" %>"
+                    >
+                        Home
+                    </a>
+
+                </li>
+
+
+                <!-- COLLECTIONS -->
+
+                <li class="nav-item">
+
+                    <a
+                        href="/collections"
+                        class="nav-link <%= path === "/collections" ? "active" : "" %>"
+                    >
+                        Collections
+                    </a>
+
+                </li>
+
+
+                <!-- OUR STORY -->
+
+                <li class="nav-item">
+
+                    <a
+                        href="/about"
+                        class="nav-link <%= path === "/about" ? "active" : "" %>"
+                    >
+                        Our Story
+                    </a>
+
+                </li>
+
+
+                <!-- CONTACT -->
+
+                <% if (s?.showContact !== false) { %>
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/contact"
+                            class="nav-link <%= path === "/contact" ? "active" : "" %>"
+                        >
+                            Contact
+                        </a>
+
+                    </li>
+
+                <% } %>
+
+
+                <!-- FEEDBACK -->
+
+                <% if (s?.showFeedback !== false) { %>
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/feedback"
+                            class="nav-link <%= path === "/feedback" ? "active" : "" %>"
+                        >
+                            Feedback
+                        </a>
+
+                    </li>
+
+                <% } %>
+
+
+                <!-- =========================================
+                     DESKTOP SEARCH
+                ========================================== -->
+
+                <li class="nav-item patola-desktop-search">
+
+                    <form
+                        action="/search"
+                        method="GET"
+                        class="navbar-search-form"
+                        role="search"
+                    >
+
+                        <div class="input-group">
+
+                            <input
+                                type="search"
+                                name="q"
+                                class="form-control"
+                                placeholder="Search products..."
+                                aria-label="Search products"
+                                autocomplete="off"
+                                required
+                            >
+
+                            <button
+                                type="submit"
+                                class="btn"
+                                aria-label="Search"
+                            >
+                                🔍
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </li>
+
+
+                <!-- =========================================
+                     USER
+                ========================================== -->
+
+                <% if (user) { %>
+
+
+                    <!-- ACCOUNT -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/user/profile"
+                            class="nav-link"
+                        >
+                            👤 <%= user.name || "Account" %>
+                        </a>
+
+                    </li>
+
+
+                    <!-- WISHLIST -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/wishlist"
+                            class="nav-link <%= path.startsWith("/wishlist") ? "active" : "" %>"
+                        >
+                            ❤️ Wishlist
+                        </a>
+
+                    </li>
+
+
+                    <!-- LOGOUT -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/user/logout"
+                            class="nav-link"
+                        >
+                            Logout
+                        </a>
+
+                    </li>
+
+
+                <% } else { %>
+
+
+                    <!-- LOGIN -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/user/login"
+                            class="nav-link <%= path.startsWith("/user/login") ? "active" : "" %>"
+                        >
+                            Login
+                        </a>
+
+                    </li>
+
+
+                    <!-- REGISTER -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/user/register"
+                            class="btn patola-register-btn"
+                        >
+                            Register
+                        </a>
+
+                    </li>
+
+
+                <% } %>
+
+
+            </ul>
+
+
+            <!-- =============================================
+                 MOBILE SEARCH
+            ============================================== -->
+
+            <div class="mobile-search">
+
+                <form
+                    action="/search"
+                    method="GET"
+                    role="search"
+                >
+
+                    <input
+                        type="search"
+                        name="q"
+                        placeholder="Search products..."
+                        aria-label="Search products"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        aria-label="Search"
+                    >
+                        🔍
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</nav>

@@ -1,0 +1,1441 @@
+/* =========================================================
+YOGITA PATOLA ART
+ADMIN SETTINGS PAGE
+File:
+public/css/admin/settings.css
+========================================================= */
+
+/* =========================================================
+PAGE
+========================================================= */
+
+.admin-settings-page {
+
+
+width: 100%;
+max-width: 1440px;
+
+margin: 0 auto;
+
+padding:
+    32px
+    36px
+    56px;
+
+box-sizing: border-box;
+
+color: #332a27;
+
+
+}
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.admin-settings-page .settings-header {
+
+
+margin-bottom: 28px;
+
+
+}
+
+.admin-settings-page .settings-header-content {
+
+
+display: flex;
+
+align-items: flex-start;
+justify-content: space-between;
+
+gap: 24px;
+
+
+}
+
+.admin-settings-page .settings-header-text {
+
+
+max-width: 850px;
+
+
+}
+
+.admin-settings-page .settings-eyebrow {
+
+
+display: inline-block;
+
+margin-bottom: 9px;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 11px;
+
+font-weight: 600;
+
+letter-spacing: 0.18em;
+
+color: #8b6b3f;
+
+
+}
+
+.admin-settings-page .settings-header h1 {
+
+
+display: flex;
+
+align-items: center;
+
+gap: 12px;
+
+margin: 0 0 10px;
+
+font-family:
+    "Playfair Display",
+    serif;
+
+font-size: clamp(
+    28px,
+    3vw,
+    38px
+);
+
+line-height: 1.15;
+
+font-weight: 600;
+
+color: #302622;
+
+
+}
+
+.admin-settings-page .settings-header h1 i {
+
+
+font-size: 27px;
+
+color: #8b6b3f;
+
+
+}
+
+.admin-settings-page .settings-header p {
+
+
+max-width: 760px;
+
+margin: 0;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 14px;
+
+line-height: 1.8;
+
+color: #786d68;
+
+
+}
+
+/* =========================================================
+ALERTS
+========================================================= */
+
+.admin-settings-page .settings-alert {
+
+
+display: flex;
+
+align-items: center;
+
+gap: 13px;
+
+width: 100%;
+
+margin-bottom: 24px;
+
+padding:
+    15px
+    18px;
+
+border: 1px solid transparent;
+
+border-radius: 10px;
+
+box-sizing: border-box;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+
+}
+
+.admin-settings-page .settings-alert-success {
+
+
+background: #f3f8f3;
+
+border-color: #d8e8da;
+
+color: #355c3d;
+
+
+}
+
+.admin-settings-page .settings-alert-error {
+
+
+background: #fbf3f1;
+
+border-color: #edd8d3;
+
+color: #82443a;
+
+
+}
+
+.admin-settings-page .settings-alert-icon {
+
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+flex: 0 0 auto;
+
+font-size: 18px;
+
+
+}
+
+.admin-settings-page .settings-alert-content {
+
+
+display: flex;
+
+flex-direction: column;
+
+gap: 2px;
+
+
+}
+
+.admin-settings-page .settings-alert-content strong {
+
+
+font-size: 13px;
+
+font-weight: 600;
+
+
+}
+
+.admin-settings-page .settings-alert-content span {
+
+
+font-size: 12px;
+
+opacity: 0.9;
+
+
+}
+
+/* =========================================================
+SETTINGS CARD
+========================================================= */
+
+.admin-settings-page .settings-card {
+
+
+width: 100%;
+
+margin-bottom: 24px;
+
+padding: 28px;
+
+background: #ffffff;
+
+border: 1px solid #e8dfd9;
+
+border-radius: 14px;
+
+box-shadow:
+    0 6px 20px rgba(
+        62,
+        45,
+        37,
+        0.045
+    );
+
+box-sizing: border-box;
+
+
+}
+
+.admin-settings-page .settings-card-header {
+
+
+display: flex;
+
+align-items: flex-start;
+
+gap: 15px;
+
+margin-bottom: 27px;
+
+padding-bottom: 21px;
+
+border-bottom: 1px solid #eee7e2;
+
+
+}
+
+.admin-settings-page .settings-icon {
+
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+flex: 0 0 44px;
+
+width: 44px;
+height: 44px;
+
+border-radius: 10px;
+
+background: #f7f0e9;
+
+color: #8b6b3f;
+
+font-size: 18px;
+
+
+}
+
+.admin-settings-page .settings-card-eyebrow {
+
+display: block;
+
+margin-bottom: 4px;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 9px;
+
+font-weight: 600;
+
+letter-spacing: 0.17em;
+
+color: #9b7b53;
+
+
+}
+
+.admin-settings-page .settings-card-header h2 {
+
+
+margin: 0 0 4px;
+
+font-family:
+    "Playfair Display",
+    serif;
+
+font-size: 22px;
+
+line-height: 1.3;
+
+font-weight: 600;
+
+color: #342b27;
+
+
+}
+
+.admin-settings-page .settings-card-header p {
+
+
+margin: 0;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 12px;
+
+line-height: 1.6;
+
+color: #8a7e78;
+
+
+}
+
+/* =========================================================
+SETTINGS GRID
+========================================================= */
+
+.admin-settings-page .settings-grid {
+
+
+display: grid;
+
+grid-template-columns:
+    repeat(
+        2,
+        minmax(
+            0,
+            1fr
+        )
+    );
+
+gap:
+    22px
+    20px;
+
+
+}
+
+.admin-settings-page .settings-field {
+
+
+min-width: 0;
+
+
+}
+
+.admin-settings-page .settings-field.settings-full {
+
+
+grid-column:
+    1 / -1;
+
+
+}
+
+/* =========================================================
+LABEL
+========================================================= */
+
+.admin-settings-page .settings-field > label {
+
+
+display: block;
+
+margin-bottom: 8px;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 12px;
+
+font-weight: 600;
+
+color: #4c403b;
+
+
+}
+
+/* =========================================================
+INPUTS
+========================================================= */
+
+.admin-settings-page .settings-field input:not(
+[type="file"]
+):not(
+[type="checkbox"]
+) {
+
+
+width: 100%;
+
+height: 46px;
+
+padding:
+    0
+    14px;
+
+border: 1px solid #ddd3cd;
+
+border-radius: 8px;
+
+outline: none;
+
+background: #fffdfb;
+
+color: #332a27;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 13px;
+
+box-sizing: border-box;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+
+}
+
+.admin-settings-page .settings-field textarea {
+
+
+width: 100%;
+
+min-height: 46px;
+
+padding:
+    12px
+    14px;
+
+border: 1px solid #ddd3cd;
+
+border-radius: 8px;
+
+outline: none;
+
+resize: vertical;
+
+background: #fffdfb;
+
+color: #332a27;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 13px;
+
+line-height: 1.65;
+
+box-sizing: border-box;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+
+}
+
+.admin-settings-page .settings-field input::placeholder,
+.admin-settings-page .settings-field textarea::placeholder {
+
+
+color: #b1a6a0;
+
+
+}
+
+.admin-settings-page .settings-field input:not(
+[type="file"]
+):not(
+[type="checkbox"]
+):focus,
+.admin-settings-page .settings-field textarea:focus {
+
+
+border-color: #a58a69;
+
+background: #ffffff;
+
+box-shadow:
+    0 0 0 3px rgba(
+        139,
+        107,
+        63,
+        0.08
+    );
+
+
+}
+
+/* =========================================================
+SOCIAL INPUT
+========================================================= */
+
+.admin-settings-page .settings-input-icon {
+
+position: relative;
+
+
+}
+
+.admin-settings-page .settings-input-icon > i {
+
+
+position: absolute;
+
+left: 14px;
+top: 50%;
+
+transform:
+    translateY(-50%);
+
+z-index: 2;
+
+color: #8b6b3f;
+
+font-size: 15px;
+
+pointer-events: none;
+
+
+}
+
+.admin-settings-page .settings-input-icon input {
+
+
+padding-left: 40px !important;
+
+
+}
+
+/* =========================================================
+IMAGE UPLOAD
+========================================================= */
+
+.admin-settings-page .settings-upload-box {
+
+
+display: flex;
+
+align-items: center;
+
+gap: 17px;
+
+min-height: 108px;
+
+padding: 12px;
+
+border: 1px solid #ddd3cd;
+
+border-radius: 10px;
+
+background: #fffdfb;
+
+box-sizing: border-box;
+
+
+}
+
+.admin-settings-page .settings-upload-preview {
+
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+flex: 0 0 94px;
+
+width: 94px;
+height: 82px;
+
+overflow: hidden;
+
+border: 1px solid #e3d9d2;
+
+border-radius: 8px;
+
+background: #f8f3ef;
+
+
+}
+
+.admin-settings-page .settings-upload-preview img {
+
+
+display: block;
+
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+
+
+}
+
+.admin-settings-page .settings-upload-placeholder {
+
+
+display: flex;
+
+align-items: center;
+justify-content: center;
+
+flex-direction: column;
+
+gap: 5px;
+
+width: 100%;
+height: 100%;
+
+color: #aa9d95;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 10px;
+
+text-align: center;
+
+
+}
+
+.admin-settings-page .settings-upload-placeholder i {
+
+
+font-size: 21px;
+
+color: #b9aaa0;
+
+
+}
+
+.admin-settings-page .settings-upload-content {
+
+
+display: flex;
+
+align-items: flex-start;
+
+flex-direction: column;
+
+gap: 4px;
+
+min-width: 0;
+
+
+}
+
+.admin-settings-page .settings-upload-content strong {
+
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 12px;
+
+font-weight: 600;
+
+color: #493c36;
+
+
+}
+
+.admin-settings-page .settings-upload-content small {
+
+
+margin-bottom: 5px;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 10px;
+
+color: #9a8d86;
+
+
+}
+
+.admin-settings-page .settings-upload-button {
+
+
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 7px;
+
+min-height: 32px;
+
+padding:
+    0
+    12px;
+
+border: 1px solid #d4c5b8;
+
+border-radius: 7px;
+
+background: #f8f2ec;
+
+color: #6d5235;
+
+cursor: pointer;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 10px;
+
+font-weight: 600;
+
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+
+}
+
+.admin-settings-page .settings-upload-button:hover {
+
+
+background: #efe5da;
+
+border-color: #bfa88d;
+
+color: #4e3927;
+
+
+}
+
+.admin-settings-page .settings-upload-content input[type="file"] {
+
+
+display: none;
+
+
+}
+
+/* =========================================================
+FAVICON
+========================================================= */
+
+.admin-settings-page .favicon-preview {
+
+
+flex-basis: 82px;
+
+width: 82px;
+height: 82px;
+
+
+}
+
+.admin-settings-page .favicon-preview img {
+
+
+object-fit: contain;
+
+padding: 13px;
+
+box-sizing: border-box;
+
+
+}
+
+/* =========================================================
+SWITCHES
+========================================================= */
+
+.admin-settings-page .settings-switches {
+
+
+display: grid;
+
+grid-template-columns:
+    repeat(
+        2,
+        minmax(
+            0,
+            1fr
+        )
+    );
+
+gap: 12px;
+
+
+}
+
+.admin-settings-page .settings-switch {
+
+position: relative;
+
+display: flex;
+
+align-items: center;
+
+gap: 13px;
+
+min-height: 76px;
+
+padding:
+    14px
+    15px;
+
+border: 1px solid #e5dcd6;
+
+border-radius: 10px;
+
+background: #fffdfb;
+
+cursor: pointer;
+
+box-sizing: border-box;
+
+transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+
+}
+
+.admin-settings-page .settings-switch:hover {
+
+
+border-color: #cdbba9;
+
+background: #fdf9f5;
+
+
+}
+
+.admin-settings-page .settings-switch input {
+
+
+position: absolute;
+
+width: 1px;
+height: 1px;
+
+opacity: 0;
+
+
+}
+
+.admin-settings-page .switch-slider {
+
+position: relative;
+
+flex: 0 0 40px;
+
+width: 40px;
+height: 22px;
+
+border-radius: 20px;
+
+background: #d6ccc5;
+
+transition:
+    background 0.2s ease;
+
+
+}
+
+.admin-settings-page .switch-slider::after {
+
+
+content: "";
+
+position: absolute;
+
+top: 3px;
+left: 3px;
+
+width: 16px;
+height: 16px;
+
+border-radius: 50%;
+
+background: #ffffff;
+
+box-shadow:
+    0 1px 4px rgba(
+        0,
+        0,
+        0,
+        0.18
+    );
+
+transition:
+    transform 0.2s ease;
+
+
+}
+
+.admin-settings-page .settings-switch input:checked
+
+* .switch-slider {
+
+  background: #7e6140;
+
+}
+
+.admin-settings-page .settings-switch input:checked
+
+* .switch-slider::after {
+
+  transform:
+  translateX(18px);
+
+}
+
+.admin-settings-page .settings-switch input:focus-visible
+
+* .switch-slider {
+
+  box-shadow:
+  0 0 0 3px rgba(
+  126,
+  97,
+  64,
+  0.14
+  );
+
+}
+
+.admin-settings-page .switch-content {
+
+
+display: flex;
+
+flex-direction: column;
+
+gap: 3px;
+
+min-width: 0;
+
+
+}
+
+.admin-settings-page .switch-content strong {
+
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 12px;
+
+font-weight: 600;
+
+color: #493d37;
+
+
+}
+
+.admin-settings-page .switch-content small {
+
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 10px;
+
+line-height: 1.5;
+
+color: #938780;
+
+
+}
+
+/* =========================================================
+SAVE ACTIONS
+========================================================= */
+
+.admin-settings-page .settings-actions {
+
+
+display: flex;
+
+align-items: center;
+justify-content: flex-end;
+
+margin-top: 28px;
+
+
+}
+
+.admin-settings-page .btn-save-settings {
+
+
+display: inline-flex;
+
+align-items: center;
+justify-content: center;
+
+gap: 9px;
+
+min-width: 170px;
+
+height: 46px;
+
+padding:
+    0
+    22px;
+
+border: 1px solid #47362b;
+
+border-radius: 8px;
+
+background: #47362b;
+
+color: #ffffff;
+
+cursor: pointer;
+
+font-family:
+    "Poppins",
+    sans-serif;
+
+font-size: 12px;
+
+font-weight: 600;
+
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+
+
+}
+
+.admin-settings-page .btn-save-settings:hover {
+
+
+background: #34261f;
+
+border-color: #34261f;
+
+transform:
+    translateY(-1px);
+
+
+}
+
+.admin-settings-page .btn-save-settings:active {
+
+
+transform:
+    translateY(0);
+
+
+}
+
+.admin-settings-page .btn-save-settings:disabled {
+
+
+cursor: wait;
+
+opacity: 0.72;
+
+transform: none;
+
+
+}
+
+.admin-settings-page .btn-save-settings.is-saving i {
+
+
+animation:
+    settings-spin 0.8s linear infinite;
+
+
+}
+
+@keyframes settings-spin {
+
+
+from {
+    transform: rotate(0deg);
+}
+
+to {
+    transform: rotate(360deg);
+}
+
+
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+
+.admin-settings-page {
+
+    padding:
+        28px
+        26px
+        48px;
+
+}
+
+
+}
+
+@media (max-width: 900px) {
+
+
+.admin-settings-page .settings-grid {
+
+    grid-template-columns:
+        minmax(
+            0,
+            1fr
+        );
+
+}
+
+
+.admin-settings-page .settings-field.settings-full {
+
+    grid-column: auto;
+
+}
+
+
+.admin-settings-page .settings-switches {
+
+    grid-template-columns:
+        minmax(
+            0,
+            1fr
+        );
+
+}
+
+
+}
+
+@media (max-width: 767px) {
+
+
+.admin-settings-page {
+
+    padding:
+        22px
+        18px
+        40px;
+
+}
+
+
+.admin-settings-page .settings-header {
+
+    margin-bottom: 22px;
+
+}
+
+
+.admin-settings-page .settings-header h1 {
+
+    font-size: 29px;
+
+}
+
+
+.admin-settings-page .settings-header h1 i {
+
+    font-size: 23px;
+
+}
+
+
+.admin-settings-page .settings-card {
+
+    padding: 21px 18px;
+
+    border-radius: 12px;
+
+}
+
+
+.admin-settings-page .settings-card-header {
+
+    margin-bottom: 21px;
+
+    padding-bottom: 17px;
+
+}
+
+
+.admin-settings-page .settings-card-header h2 {
+
+    font-size: 20px;
+
+}
+
+
+.admin-settings-page .settings-upload-box {
+
+    align-items: flex-start;
+
+}
+
+
+}
+
+@media (max-width: 520px) {
+
+
+.admin-settings-page {
+
+    padding:
+        18px
+        14px
+        32px;
+
+}
+
+
+.admin-settings-page .settings-header h1 {
+
+    font-size: 25px;
+
+}
+
+
+.admin-settings-page .settings-header p {
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+}
+
+
+.admin-settings-page .settings-card {
+
+    padding: 18px 15px;
+
+}
+
+
+.admin-settings-page .settings-card-header {
+
+    gap: 11px;
+
+}
+
+
+.admin-settings-page .settings-icon {
+
+    flex-basis: 38px;
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 15px;
+
+}
+
+
+.admin-settings-page .settings-card-header h2 {
+
+    font-size: 18px;
+
+}
+
+
+.admin-settings-page .settings-card-header p {
+
+    font-size: 11px;
+
+}
+
+
+.admin-settings-page .settings-upload-box {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+}
+
+
+.admin-settings-page .settings-upload-preview {
+
+    flex-basis: auto;
+
+    width: 100%;
+    height: 150px;
+
+}
+
+
+.admin-settings-page .favicon-preview {
+
+    width: 100%;
+    height: 120px;
+
+}
+
+
+.admin-settings-page .settings-upload-content {
+
+    width: 100%;
+
+}
+
+
+.admin-settings-page .settings-upload-button {
+
+    width: 100%;
+
+}
+
+
+.admin-settings-page .settings-actions {
+
+    justify-content: stretch;
+
+}
+
+
+.admin-settings-page .btn-save-settings {
+
+    width: 100%;
+
+}
+
+
+}
+
+/* =========================================================
+REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+
+.admin-settings-page *,
+.admin-settings-page *::before,
+.admin-settings-page *::after {
+
+    transition: none !important;
+
+    animation: none !important;
+
+}
+
+
+}

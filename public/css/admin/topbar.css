@@ -1,0 +1,493 @@
+/* =========================================================
+   ADMIN TOPBAR
+   Yogita Patola Art — Admin Panel
+   ========================================================= */
+
+
+/* =========================================================
+   TOPBAR BASE
+   ========================================================= */
+
+.admin-topbar {
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 30px;
+
+    background: #fffdf9;
+    border-bottom: 1px solid #e8dfd4;
+
+    z-index: 900;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.admin-topbar-left {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   MOBILE MENU TOGGLE
+   ========================================================= */
+
+.admin-menu-toggle {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 0;
+
+    border: 1px solid #e1d6ca;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+
+.admin-menu-toggle:hover {
+    background: #f8f1e9;
+    border-color: #cfbfae;
+}
+
+
+.admin-menu-toggle:focus-visible {
+    outline: 2px solid #b99a68;
+    outline-offset: 2px;
+}
+
+
+.admin-menu-toggle span {
+    display: block;
+
+    width: 18px;
+    height: 2px;
+
+    border-radius: 2px;
+
+    background: #5b3036;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   PAGE INFORMATION
+   ========================================================= */
+
+.admin-topbar-page-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.admin-topbar-label {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #9a8876;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 0.13em;
+    line-height: 1.2;
+
+    text-transform: uppercase;
+}
+
+
+.admin-topbar-title {
+    margin: 0;
+
+    max-width: 600px;
+
+    overflow: hidden;
+
+    color: #48252a;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 23px;
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.admin-topbar-right {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   VIEW WEBSITE LINK
+   ========================================================= */
+
+.admin-topbar-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 7px 12px;
+
+    gap: 7px;
+
+    border: 1px solid #e1d6ca;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #5b4640;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.admin-topbar-site-link:hover {
+    color: #4f252b;
+    background: #f8f1e9;
+    border-color: #cfbfae;
+
+    text-decoration: none;
+}
+
+
+.admin-topbar-site-link:focus-visible {
+    outline: 2px solid #b99a68;
+    outline-offset: 2px;
+}
+
+
+.admin-topbar-site-link > span:first-child {
+    font-size: 15px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   USER AREA
+   ========================================================= */
+
+.admin-topbar-user {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.admin-topbar-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #642d35;
+
+    color: #ffffff;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   USER INFO
+   ========================================================= */
+
+.admin-topbar-user-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.2;
+}
+
+
+.admin-topbar-user-info strong {
+    display: block;
+
+    max-width: 160px;
+
+    overflow: hidden;
+
+    color: #443a35;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.admin-topbar-user-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #998a7c;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .admin-topbar {
+        min-height: 70px;
+
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+
+    .admin-menu-toggle {
+        display: inline-flex;
+    }
+
+
+    .admin-topbar-left {
+        gap: 12px;
+    }
+
+
+    .admin-topbar-title {
+        max-width: 420px;
+
+        font-size: 21px;
+    }
+
+
+    .admin-topbar-right {
+        gap: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .admin-topbar {
+        min-height: 68px;
+
+        padding: 10px 16px;
+    }
+
+
+    .admin-topbar-left {
+        gap: 10px;
+    }
+
+
+    .admin-menu-toggle {
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+    }
+
+
+    .admin-topbar-label {
+        font-size: 9px;
+    }
+
+
+    .admin-topbar-title {
+        max-width: 250px;
+
+        font-size: 19px;
+    }
+
+
+    .admin-topbar-right {
+        gap: 9px;
+    }
+
+
+    .admin-topbar-site-link {
+        width: 38px;
+        height: 38px;
+
+        min-height: 38px;
+
+        padding: 0;
+
+        border-radius: 8px;
+    }
+
+
+    .admin-topbar-site-link > span:first-child {
+        font-size: 16px;
+    }
+
+
+    .admin-topbar-avatar {
+        width: 36px;
+        height: 36px;
+
+        flex-basis: 36px;
+    }
+
+
+    .admin-topbar-user-info {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    .admin-topbar {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .admin-topbar-title {
+        max-width: 180px;
+
+        font-size: 17px;
+    }
+
+
+    .admin-topbar-label {
+        font-size: 8px;
+        letter-spacing: 0.1em;
+    }
+
+
+    .admin-topbar-right {
+        gap: 6px;
+    }
+
+
+    .admin-topbar-avatar {
+        width: 34px;
+        height: 34px;
+
+        flex-basis: 34px;
+
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .admin-menu-toggle,
+    .admin-menu-toggle span,
+    .admin-topbar-site-link {
+        transition: none;
+    }
+
+}

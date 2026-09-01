@@ -1,0 +1,1362 @@
+/* =========================================================
+   YOGITA PATOLA ART
+   ADMIN — FEEDBACK MANAGEMENT
+   FINAL RESPONSIVE CSS
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE CONTAINER
+   ========================================================= */
+
+.admin-page {
+    width: 100%;
+    max-width: 1440px;
+
+    margin: 0 auto;
+
+    padding: 38px 42px 60px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 32px;
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid #dfd1c5;
+}
+
+.admin-page-eyebrow {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #7a273d;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.admin-page-title {
+    margin: 0;
+
+    color: #302621;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.admin-page-description {
+    margin: 10px 0 0;
+
+    max-width: 650px;
+
+    color: #756a63;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.admin-page-header-actions {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 42px;
+
+    padding: 10px 17px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-btn-outline {
+    background: #fffdf9;
+
+    border: 1px solid #d5c7bb;
+
+    color: #594a42;
+}
+
+.admin-btn-outline:hover {
+    background: #f5eee7;
+
+    border-color: #c4b1a3;
+
+    color: #7a273d;
+
+    transform: translateY(-1px);
+}
+
+.admin-btn-primary {
+    background: #7a273d;
+
+    border: 1px solid #7a273d;
+
+    color: #ffffff;
+}
+
+.admin-btn-primary:hover {
+    background: #682136;
+
+    border-color: #682136;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(122, 39, 61, 0.18);
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.admin-feedback-stat {
+    width: 100%;
+    min-height: 108px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 20px 21px;
+
+    background: #fffdf9;
+
+    border: 1px solid #e1d5cb;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(70, 48, 38, 0.045);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-feedback-stat:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 25px rgba(70, 48, 38, 0.075);
+}
+
+.admin-feedback-stat-icon {
+    width: 47px;
+    height: 47px;
+
+    flex: 0 0 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f1e7de;
+
+    color: #7a273d;
+
+    font-size: 19px;
+}
+
+.admin-feedback-stat span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #786d66;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.admin-feedback-stat strong {
+    display: block;
+
+    color: #302621;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.admin-feedback-toolbar {
+    margin-top: 28px;
+    margin-bottom: 26px;
+
+    padding: 17px;
+
+    background: #f7f1eb;
+
+    border: 1px solid #dfd2c7;
+
+    border-radius: 11px;
+
+    box-shadow:
+        0 4px 15px rgba(70, 48, 38, 0.035);
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.admin-feedback-search {
+    position: relative;
+}
+
+.admin-feedback-search > i {
+    position: absolute;
+
+    top: 50%;
+    left: 15px;
+
+    z-index: 2;
+
+    transform: translateY(-50%);
+
+    color: #8a786d;
+
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.admin-feedback-search .form-control {
+    width: 100%;
+    height: 44px;
+
+    padding: 9px 15px 9px 40px;
+
+    background: #ffffff;
+
+    border: 1px solid #d5c7bb;
+
+    border-radius: 8px;
+
+    color: #3d332e;
+
+    font-size: 13px;
+
+    box-shadow: none;
+}
+
+.admin-feedback-search .form-control::placeholder {
+    color: #9a8e86;
+}
+
+.admin-feedback-search .form-control:focus {
+    border-color: #a87563;
+
+    box-shadow:
+        0 0 0 3px rgba(122, 39, 61, 0.07);
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.admin-feedback-toolbar .form-select {
+    width: 100%;
+    height: 44px;
+
+    padding: 8px 38px 8px 13px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #d5c7bb;
+
+    border-radius: 8px;
+
+    color: #463b35;
+
+    font-size: 13px;
+
+    box-shadow: none;
+
+    cursor: pointer;
+}
+
+.admin-feedback-toolbar .form-select:focus {
+    border-color: #a87563;
+
+    box-shadow:
+        0 0 0 3px rgba(122, 39, 61, 0.07);
+}
+
+
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
+
+.admin-feedback-table-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #fffdf9;
+
+    border: 1px solid #dfd3c9;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 6px 22px rgba(70, 48, 38, 0.045);
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.admin-feedback-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 21px 24px;
+
+    background: #fffdf9;
+
+    border-bottom: 1px solid #e5dad1;
+}
+
+.admin-feedback-table-header h2 {
+    margin: 0;
+
+    color: #302621;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.admin-feedback-table-header p {
+    margin: 5px 0 0;
+
+    color: #82766e;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.admin-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 1080px;
+
+    margin: 0;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    color: #443a35;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+   ========================================================= */
+
+.admin-table thead th {
+    padding: 14px 15px;
+
+    background: #f2ebe4;
+
+    border-bottom: 1px solid #dbcec3;
+
+    color: #62554d;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.05px;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.admin-table thead th:first-child {
+    padding-left: 20px;
+}
+
+.admin-table thead th:last-child {
+    padding-right: 20px;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.admin-table tbody td {
+    padding: 16px 15px;
+
+    background: #fffdf9;
+
+    border-bottom: 1px solid #eee6df;
+
+    vertical-align: middle;
+
+    color: #514640;
+
+    font-size: 12px;
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr {
+    transition: background-color 0.18s ease;
+}
+
+.admin-table tbody tr:hover td {
+    background: #fcf8f4;
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.feedback-number {
+    width: 29px;
+    height: 29px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f1e8e0;
+
+    color: #7a273d;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CUSTOMER
+   ========================================================= */
+
+.feedback-customer {
+    min-width: 175px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.feedback-avatar {
+    width: 37px;
+    height: 37px;
+
+    flex: 0 0 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eadbd2;
+
+    color: #7a273d;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.feedback-customer strong {
+    display: block;
+
+    max-width: 145px;
+
+    overflow: hidden;
+
+    color: #352c28;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMAIL
+   ========================================================= */
+
+.feedback-email {
+    display: inline-block;
+
+    max-width: 190px;
+
+    overflow: hidden;
+
+    color: #725a50;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+.feedback-email:hover {
+    color: #7a273d;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   TYPE
+   ========================================================= */
+
+.feedback-type-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 9px;
+
+    background: #f4eee8;
+
+    border: 1px solid #e0d4ca;
+
+    border-radius: 20px;
+
+    color: #69584f;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.feedback-message {
+    width: 235px;
+    max-width: 235px;
+
+    overflow: hidden;
+
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    color: #625750;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.admin-status {
+    min-width: 82px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.admin-status-success {
+    background: #eaf4ed;
+
+    border: 1px solid #c8e0cf;
+
+    color: #2d7048;
+}
+
+.admin-status-warning {
+    background: #f8f0df;
+
+    border: 1px solid #e6d5a8;
+
+    color: #87691f;
+}
+
+.admin-status-danger {
+    background: #f8e9e7;
+
+    border: 1px solid #e8c7c3;
+
+    color: #a03e39;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.feedback-date {
+    display: inline-block;
+
+    color: #776b63;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.feedback-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    white-space: nowrap;
+}
+
+.feedback-action-btn {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #ffffff;
+
+    border: 1px solid #d7cbc1;
+
+    border-radius: 7px;
+
+    color: #66574f;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.feedback-action-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+/* VIEW */
+
+.feedback-view-btn:hover {
+    background: #f0ebf5;
+
+    border-color: #d1c3dc;
+
+    color: #65477e;
+}
+
+
+/* STATUS */
+
+.feedback-status-btn:hover {
+    background: #f8f1e2;
+
+    border-color: #e2d1a5;
+
+    color: #896a20;
+}
+
+
+/* DELETE */
+
+.feedback-delete-btn:hover {
+    background: #faeae8;
+
+    border-color: #e5bfba;
+
+    color: #a13c37;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.feedback-empty {
+    padding: 65px 30px !important;
+}
+
+.feedback-empty-content {
+    max-width: 420px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.feedback-empty-icon {
+    width: 62px;
+    height: 62px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f1e8e0;
+
+    color: #866b5d;
+
+    font-size: 23px;
+}
+
+.feedback-empty-content h3 {
+    margin: 0 0 8px;
+
+    color: #382e29;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+}
+
+.feedback-empty-content p {
+    margin: 0;
+
+    color: #81766e;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.admin-feedback-modal {
+    overflow: hidden;
+
+    background: #fffdf9;
+
+    border: 1px solid #dfd3c9;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 20px 60px rgba(45, 32, 25, 0.18);
+}
+
+.admin-feedback-modal .modal-header {
+    padding: 20px 23px;
+
+    background: #f6f0ea;
+
+    border-bottom: 1px solid #e4d8ce;
+}
+
+.admin-feedback-modal .modal-title {
+    margin: 4px 0 0;
+
+    color: #342a26;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.admin-modal-eyebrow {
+    display: block;
+
+    color: #7a273d;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+    text-transform: uppercase;
+}
+
+.admin-feedback-modal .modal-body {
+    padding: 24px;
+}
+
+.admin-feedback-modal .modal-footer {
+    padding: 16px 23px;
+
+    background: #faf6f1;
+
+    border-top: 1px solid #e5d9cf;
+}
+
+
+/* =========================================================
+   DETAIL GRID
+   ========================================================= */
+
+.feedback-detail-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 21px;
+}
+
+.feedback-detail-item {
+    padding: 14px 15px;
+
+    background: #f8f3ee;
+
+    border: 1px solid #e3d7cd;
+
+    border-radius: 9px;
+}
+
+.feedback-detail-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #897970;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+
+    text-transform: uppercase;
+}
+
+.feedback-detail-item strong {
+    display: block;
+
+    color: #3e342f;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   DETAIL MESSAGE
+   ========================================================= */
+
+.feedback-detail-message {
+    padding: 17px;
+
+    background: #fbf7f2;
+
+    border: 1px solid #e3d7cd;
+
+    border-radius: 9px;
+}
+
+.feedback-detail-message > span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #897970;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.7px;
+
+    text-transform: uppercase;
+}
+
+.feedback-detail-message p {
+    margin: 0;
+
+    color: #514740;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MODAL FORM
+   ========================================================= */
+
+.admin-feedback-modal .form-label {
+    margin-bottom: 7px;
+
+    color: #4c403a;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-feedback-modal .form-select {
+    min-height: 44px;
+
+    border-color: #d7cbc1;
+
+    border-radius: 8px;
+
+    color: #403630;
+
+    box-shadow: none;
+}
+
+.admin-feedback-modal .form-select:focus {
+    border-color: #a87563;
+
+    box-shadow:
+        0 0 0 3px rgba(122, 39, 61, 0.07);
+}
+
+
+/* =========================================================
+   DELETE MODAL
+   ========================================================= */
+
+.feedback-delete-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f8e9e7;
+
+    border: 1px solid #e8c7c3;
+
+    color: #a13c37;
+
+    font-size: 22px;
+}
+
+.admin-feedback-modal h4 {
+    margin-bottom: 8px;
+
+    color: #352b27;
+
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.admin-feedback-modal .text-center p {
+    max-width: 390px;
+
+    margin: 0 auto;
+
+    color: #7d7169;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+.feedback-delete-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 23px;
+}
+
+
+/* =========================================================
+   CLOSE
+   ========================================================= */
+
+.admin-feedback-modal .btn-close {
+    opacity: 0.55;
+
+    transition: opacity 0.2s ease;
+}
+
+.admin-feedback-modal .btn-close:hover {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   ALERT
+   ========================================================= */
+
+.admin-feedback-alert,
+.admin-alert {
+    margin-bottom: 25px;
+
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   BOOTSTRAP ROW SPACING FIX
+   ========================================================= */
+
+.admin-page > .row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.admin-page > .row > [class*="col-"] {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1199.98px) {
+
+    .admin-page {
+        padding: 34px 30px 55px;
+    }
+
+    .admin-page-title {
+        font-size: 37px;
+    }
+
+    .admin-table {
+        min-width: 1040px;
+    }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .admin-page {
+        padding: 30px 25px 50px;
+    }
+
+    .admin-page-header {
+        align-items: flex-start;
+
+        margin-bottom: 27px;
+    }
+
+    .admin-page-title {
+        font-size: 35px;
+    }
+
+    .admin-feedback-toolbar {
+        margin-top: 25px;
+    }
+
+    .admin-feedback-table-header {
+        padding: 19px 20px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .admin-page {
+        padding: 25px 18px 45px;
+    }
+
+    .admin-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 18px;
+
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+    }
+
+    .admin-page-title {
+        font-size: 31px;
+    }
+
+    .admin-page-description {
+        font-size: 13px;
+    }
+
+    .admin-page-header-actions {
+        width: 100%;
+    }
+
+    .admin-page-header-actions .admin-btn {
+        width: 100%;
+    }
+
+
+    /* STATS */
+
+    .admin-feedback-stat {
+        min-height: 94px;
+
+        padding: 16px 17px;
+    }
+
+    .admin-feedback-stat-icon {
+        width: 42px;
+        height: 42px;
+
+        flex-basis: 42px;
+
+        font-size: 17px;
+    }
+
+    .admin-feedback-stat strong {
+        font-size: 24px;
+    }
+
+
+    /* TOOLBAR */
+
+    .admin-feedback-toolbar {
+        margin-top: 22px;
+        margin-bottom: 22px;
+
+        padding: 13px;
+    }
+
+
+    /* TABLE */
+
+    .admin-feedback-table-card {
+        border-radius: 10px;
+    }
+
+    .admin-feedback-table-header {
+        padding: 17px 18px;
+    }
+
+    .admin-feedback-table-header h2 {
+        font-size: 20px;
+    }
+
+    .admin-feedback-table-header p {
+        font-size: 11px;
+    }
+
+
+    /* MODAL */
+
+    .admin-feedback-modal .modal-header {
+        padding: 17px 18px;
+    }
+
+    .admin-feedback-modal .modal-body {
+        padding: 19px;
+    }
+
+    .admin-feedback-modal .modal-footer {
+        padding: 14px 18px;
+    }
+
+    .feedback-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .admin-page {
+        padding: 22px 14px 40px;
+    }
+
+    .admin-page-title {
+        font-size: 28px;
+    }
+
+    .admin-page-eyebrow {
+        font-size: 10px;
+    }
+
+    .admin-page-description {
+        font-size: 12px;
+    }
+
+
+    .admin-feedback-stat {
+        gap: 12px;
+
+        padding: 15px;
+    }
+
+    .admin-feedback-stat-icon {
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+    }
+
+    .admin-feedback-stat span {
+        font-size: 11px;
+    }
+
+    .admin-feedback-stat strong {
+        font-size: 22px;
+    }
+
+
+    .admin-feedback-table-header {
+        padding: 16px;
+    }
+
+
+    .feedback-delete-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+    .feedback-delete-actions .admin-btn {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .admin-page {
+        padding-right: 11px;
+        padding-left: 11px;
+    }
+
+    .admin-page-title {
+        font-size: 26px;
+    }
+
+    .admin-feedback-stat {
+        padding: 14px;
+    }
+}

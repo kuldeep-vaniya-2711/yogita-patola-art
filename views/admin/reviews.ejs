@@ -1,0 +1,2152 @@
+<% layout("admin/layout") -%>
+
+<%
+    /*
+    =========================================================
+    YOGITA PATOLA ART
+    ADMIN — REVIEWS MANAGEMENT
+    =========================================================
+    Expected data:
+    - reviews
+    - success
+    - error
+    =========================================================
+    */
+%>
+
+<div class="admin-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="admin-page-header">
+
+        <div>
+
+            <span class="admin-page-eyebrow">
+                CUSTOMER MANAGEMENT
+            </span>
+
+            <h1 class="admin-page-title">
+                Reviews Management
+            </h1>
+
+            <p class="admin-page-description">
+                Review, approve, reject and manage customer reviews.
+            </p>
+
+        </div>
+
+        <div class="admin-page-header-actions">
+
+            <a
+                href="/admin/dashboard"
+                class="admin-btn admin-btn-outline"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ALERTS
+    ====================================================== -->
+
+    <% if (typeof success !== "undefined" && success) { %>
+
+        <div class="admin-alert admin-alert-success">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+                <%= success %>
+            </span>
+
+        </div>
+
+    <% } %>
+
+
+    <% if (typeof error !== "undefined" && error) { %>
+
+        <div class="admin-alert admin-alert-danger">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span>
+                <%= error %>
+            </span>
+
+        </div>
+
+    <% } %>
+
+
+    <!-- =====================================================
+         REVIEW SUMMARY
+    ====================================================== -->
+
+    <div class="admin-review-stats">
+
+        <%
+            const reviewList =
+                Array.isArray(reviews)
+                    ? reviews
+                    : [];
+
+            const totalReviews =
+                reviewList.length;
+
+            const approvedReviews =
+                reviewList.filter(
+                    review => review.approved === true
+                ).length;
+
+            const pendingReviews =
+                reviewList.filter(
+                    review => review.approved !== true
+                ).length;
+
+            let totalRating = 0;
+
+            reviewList.forEach(review => {
+
+                const rating =
+                    Number(review.rating) || 0;
+
+                totalRating += rating;
+
+            });
+
+            const averageRating =
+                totalReviews > 0
+                    ? (totalRating / totalReviews).toFixed(1)
+                    : "0.0";
+        %>
+
+
+        <!-- TOTAL -->
+
+        <div class="admin-review-stat-card">
+
+            <div class="admin-review-stat-icon">
+
+                <i class="bi bi-chat-square-text"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Total Reviews
+                </span>
+
+                <strong>
+                    <%= totalReviews %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPROVED -->
+
+        <div class="admin-review-stat-card">
+
+            <div class="admin-review-stat-icon success">
+
+                <i class="bi bi-check-circle"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Approved
+                </span>
+
+                <strong>
+                    <%= approvedReviews %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="admin-review-stat-card">
+
+            <div class="admin-review-stat-icon warning">
+
+                <i class="bi bi-clock"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Pending
+                </span>
+
+                <strong>
+                    <%= pendingReviews %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVERAGE -->
+
+        <div class="admin-review-stat-card">
+
+            <div class="admin-review-stat-icon gold">
+
+                <i class="bi bi-star-fill"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Average Rating
+                </span>
+
+                <strong>
+                    <%= averageRating %>
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FILTER / TOOLBAR
+    ====================================================== -->
+
+    <div class="admin-review-toolbar">
+
+        <div class="admin-review-toolbar-left">
+
+            <div class="admin-search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    id="reviewSearch"
+                    placeholder="Search reviews..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-review-toolbar-right">
+
+            <select
+                id="reviewStatusFilter"
+                class="admin-filter-select"
+            >
+
+                <option value="all">
+                    All Reviews
+                </option>
+
+                <option value="approved">
+                    Approved
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+            </select>
+
+
+            <select
+                id="reviewRatingFilter"
+                class="admin-filter-select"
+            >
+
+                <option value="all">
+                    All Ratings
+                </option>
+
+                <option value="5">
+                    ★★★★★ 5
+                </option>
+
+                <option value="4">
+                    ★★★★ 4
+                </option>
+
+                <option value="3">
+                    ★★★ 3
+                </option>
+
+                <option value="2">
+                    ★★ 2
+                </option>
+
+                <option value="1">
+                    ★ 1
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         REVIEWS TABLE
+    ====================================================== -->
+
+    <div class="admin-table-wrapper">
+
+        <% if (reviewList.length > 0) { %>
+
+            <table
+                class="admin-table admin-reviews-table"
+                id="reviewsTable"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Rating
+                        </th>
+
+                        <th>
+                            Review
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th class="text-end">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="reviewsTableBody">
+
+                    <% reviewList.forEach(review => { %>
+
+                        <%
+                            const customerName =
+                                review.name ||
+                                (review.user && review.user.name) ||
+                                "Anonymous";
+
+                            const customerEmail =
+                                review.email ||
+                                (review.user && review.user.email) ||
+                                "";
+
+                            const productName =
+                                review.product &&
+                                review.product.name
+                                    ? review.product.name
+                                    : "General Review";
+
+                            const rating =
+                                Number(review.rating) || 0;
+
+                            const reviewMessage =
+                                review.message ||
+                                review.comment ||
+                                "";
+
+                            const isApproved =
+                                review.approved === true;
+
+                            const reviewDate =
+                                review.createdAt
+                                    ? new Date(review.createdAt)
+                                    : null;
+
+                            const formattedDate =
+                                reviewDate &&
+                                !isNaN(reviewDate.getTime())
+                                    ? reviewDate.toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric"
+                                        }
+                                    )
+                                    : "-";
+                        %>
+
+
+                        <tr
+                            class="review-row"
+                            data-name="<%= customerName.toLowerCase() %>"
+                            data-email="<%= customerEmail.toLowerCase() %>"
+                            data-product="<%= productName.toLowerCase() %>"
+                            data-rating="<%= rating %>"
+                            data-status="<%= isApproved ? 'approved' : 'pending' %>"
+                        >
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <div class="admin-review-customer">
+
+                                    <div class="admin-review-avatar">
+
+                                        <%= customerName
+                                            .charAt(0)
+                                            .toUpperCase() %>
+
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            <%= customerName %>
+                                        </strong>
+
+                                        <% if (customerEmail) { %>
+
+                                            <small>
+                                                <%= customerEmail %>
+                                            </small>
+
+                                        <% } %>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- PRODUCT -->
+
+                            <td>
+
+                                <% if (
+                                    review.product &&
+                                    review.product._id
+                                ) { %>
+
+                                    <a
+                                        href="/products/<%= review.product._id %>"
+                                        target="_blank"
+                                        class="admin-review-product-link"
+                                    >
+                                        <%= productName %>
+                                        <i class="bi bi-box-arrow-up-right"></i>
+                                    </a>
+
+                                <% } else { %>
+
+                                    <span>
+                                        <%= productName %>
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+                            <!-- RATING -->
+
+                            <td>
+
+                                <div
+                                    class="admin-review-rating"
+                                    aria-label="Rating <%= rating %> out of 5"
+                                >
+
+                                    <% for (
+                                        let star = 1;
+                                        star <= 5;
+                                        star++
+                                    ) { %>
+
+                                        <% if (star <= rating) { %>
+
+                                            <i class="bi bi-star-fill"></i>
+
+                                        <% } else { %>
+
+                                            <i class="bi bi-star"></i>
+
+                                        <% } %>
+
+                                    <% } %>
+
+                                    <span>
+                                        <%= rating %>/5
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- REVIEW -->
+
+                            <td>
+
+                                <div class="admin-review-message">
+
+                                    <%= reviewMessage %>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <% if (isApproved) { %>
+
+                                    <span
+                                        class="admin-status admin-status-success"
+                                    >
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Approved
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span
+                                        class="admin-status admin-status-warning"
+                                    >
+                                        <i class="bi bi-clock me-1"></i>
+                                        Pending
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <span class="admin-review-date">
+                                    <%= formattedDate %>
+                                </span>
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td class="text-end">
+
+                                <div class="admin-review-actions">
+
+
+                                    <!-- VIEW -->
+
+                                    <button
+                                        type="button"
+                                        class="admin-icon-btn"
+                                        title="View Review"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        data-review-name="<%= customerName %>"
+                                        data-review-email="<%= customerEmail %>"
+                                        data-review-product="<%= productName %>"
+                                        data-review-rating="<%= rating %>"
+                                        data-review-message="<%= reviewMessage.replace(/"/g, '&quot;') %>"
+                                        data-review-status="<%= isApproved ? 'Approved' : 'Pending' %>"
+                                        data-review-date="<%= formattedDate %>"
+                                    >
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+
+                                    <!-- APPROVE / REJECT -->
+
+                                    <% if (!isApproved) { %>
+
+                                        <form
+                                            action="/admin/reviews/<%= review._id %>/approve"
+                                            method="POST"
+                                            class="d-inline"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="admin-icon-btn admin-icon-btn-success"
+                                                title="Approve Review"
+                                            >
+
+                                                <i class="bi bi-check-lg"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    <% } else { %>
+
+                                        <form
+                                            action="/admin/reviews/<%= review._id %>/reject"
+                                            method="POST"
+                                            class="d-inline"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="admin-icon-btn admin-icon-btn-warning"
+                                                title="Reject Review"
+                                            >
+
+                                                <i class="bi bi-x-lg"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    <% } %>
+
+
+                                    <!-- DELETE -->
+
+                                    <form
+                                        action="/admin/reviews/<%= review._id %>/delete"
+                                        method="POST"
+                                        class="d-inline delete-review-form"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="admin-icon-btn admin-icon-btn-danger"
+                                            title="Delete Review"
+                                        >
+
+                                            <i class="bi bi-trash"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+
+            <!-- NO FILTER RESULTS -->
+
+            <div
+                id="noReviewResults"
+                class="admin-empty-state d-none"
+            >
+
+                <div class="admin-empty-icon">
+
+                    <i class="bi bi-search"></i>
+
+                </div>
+
+                <h3>
+                    No reviews found
+                </h3>
+
+                <p>
+                    Try changing your search or filters.
+                </p>
+
+            </div>
+
+
+        <% } else { %>
+
+
+            <!-- NO REVIEWS -->
+
+            <div class="admin-empty-state">
+
+                <div class="admin-empty-icon">
+
+                    <i class="bi bi-chat-square-heart"></i>
+
+                </div>
+
+                <h3>
+                    No Reviews Yet
+                </h3>
+
+                <p>
+                    Customer reviews will appear here once they are submitted.
+                </p>
+
+            </div>
+
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     REVIEW DETAILS MODAL
+========================================================== -->
+
+<div
+    class="modal fade"
+    id="reviewModal"
+    tabindex="-1"
+    aria-labelledby="reviewModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content admin-review-modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="admin-modal-eyebrow">
+                        CUSTOMER REVIEW
+                    </span>
+
+                    <h5
+                        class="modal-title"
+                        id="reviewModalLabel"
+                    >
+                        Review Details
+                    </h5>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="admin-modal-customer">
+
+                    <div class="admin-review-avatar large">
+
+                        <span id="modalCustomerInitial">
+                            A
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <strong id="modalCustomerName">
+                            Customer
+                        </strong>
+
+                        <small id="modalCustomerEmail">
+                            -
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-modal-product">
+
+                    <span>
+                        PRODUCT
+                    </span>
+
+                    <strong id="modalProductName">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="admin-modal-rating">
+
+                    <span>
+                        RATING
+                    </span>
+
+                    <div id="modalRating">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="admin-modal-review">
+
+                    <span>
+                        REVIEW
+                    </span>
+
+                    <p id="modalReviewMessage">
+                        -
+                    </p>
+
+                </div>
+
+
+                <div class="admin-modal-meta">
+
+                    <div>
+
+                        <span>
+                            STATUS
+                        </span>
+
+                        <strong id="modalReviewStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            DATE
+                        </span>
+
+                        <strong id="modalReviewDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="admin-btn admin-btn-outline"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PAGE-SPECIFIC CSS
+========================================================== -->
+
+<style>
+
+    /* =====================================================
+       PAGE
+    ====================================================== */
+
+    .admin-page {
+        width: 100%;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .admin-page-eyebrow {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: var(--admin-gold);
+
+        font-size: 0.7rem;
+        font-weight: 600;
+
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+
+    .admin-page-header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+
+    /* =====================================================
+       ALERT
+    ====================================================== */
+
+    .admin-alert {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        margin-bottom: 24px;
+        padding: 13px 16px;
+
+        border-radius: 10px;
+
+        font-size: 0.88rem;
+    }
+
+
+    .admin-alert-success {
+        background: #eaf7ee;
+        border: 1px solid #cfe9d7;
+        color: #247442;
+    }
+
+
+    .admin-alert-danger {
+        background: #fdeaea;
+        border: 1px solid #f2cccc;
+        color: #a52b35;
+    }
+
+
+    /* =====================================================
+       REVIEW STATS
+    ====================================================== */
+
+    .admin-review-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 18px;
+
+        margin-bottom: 24px;
+    }
+
+
+    .admin-review-stat-card {
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+
+        padding: 20px;
+
+        background: var(--admin-white);
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 8px 25px rgba(
+                36,
+                27,
+                24,
+                0.04
+            );
+    }
+
+
+    .admin-review-stat-icon {
+        width: 44px;
+        height: 44px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 10px;
+
+        background: #f7e9ec;
+
+        color: var(--admin-red);
+
+        font-size: 18px;
+    }
+
+
+    .admin-review-stat-icon.success {
+        background: #e8f6ed;
+        color: #247442;
+    }
+
+
+    .admin-review-stat-icon.warning {
+        background: #fff4d8;
+        color: #8a6410;
+    }
+
+
+    .admin-review-stat-icon.gold {
+        background: #f7efdf;
+        color: var(--admin-gold);
+    }
+
+
+    .admin-review-stat-card span {
+        display: block;
+
+        margin-bottom: 2px;
+
+        color: var(--admin-muted);
+
+        font-size: 0.75rem;
+    }
+
+
+    .admin-review-stat-card strong {
+        display: block;
+
+        color: var(--admin-ink);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 1.55rem;
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       TOOLBAR
+    ====================================================== */
+
+    .admin-review-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 18px;
+
+        padding: 15px;
+
+        background: var(--admin-white);
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 12px;
+    }
+
+
+    .admin-review-toolbar-left,
+    .admin-review-toolbar-right {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+
+    .admin-search-box {
+        position: relative;
+
+        width: 280px;
+    }
+
+
+    .admin-search-box i {
+        position: absolute;
+
+        top: 50%;
+        left: 13px;
+
+        color: var(--admin-muted);
+
+        transform: translateY(-50%);
+    }
+
+
+    .admin-search-box input {
+        width: 100%;
+
+        height: 42px;
+
+        padding:
+            8px
+            12px
+            8px
+            38px;
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 8px;
+
+        outline: none;
+
+        background: #fff;
+
+        color: var(--admin-ink);
+
+        font-family: "Poppins", sans-serif;
+
+        font-size: 0.82rem;
+    }
+
+
+    .admin-search-box input:focus {
+        border-color: var(--admin-red);
+
+        box-shadow:
+            0 0 0 3px
+            rgba(
+                143,
+                29,
+                44,
+                0.08
+            );
+    }
+
+
+    .admin-filter-select {
+        min-width: 135px;
+
+        height: 42px;
+
+        padding: 0 12px;
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 8px;
+
+        outline: none;
+
+        background: #fff;
+
+        color: var(--admin-ink);
+
+        font-family: "Poppins", sans-serif;
+
+        font-size: 0.82rem;
+
+        cursor: pointer;
+    }
+
+
+    .admin-filter-select:focus {
+        border-color: var(--admin-red);
+    }
+
+
+    /* =====================================================
+       CUSTOMER
+    ====================================================== */
+
+    .admin-review-customer {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 180px;
+    }
+
+
+    .admin-review-avatar {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background: #f5e8e9;
+
+        color: var(--admin-red);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+
+    .admin-review-avatar.large {
+        width: 52px;
+        height: 52px;
+
+        font-size: 21px;
+    }
+
+
+    .admin-review-customer strong {
+        display: block;
+
+        margin-bottom: 1px;
+
+        color: var(--admin-ink);
+
+        font-size: 0.83rem;
+
+        font-weight: 600;
+    }
+
+
+    .admin-review-customer small {
+        display: block;
+
+        max-width: 160px;
+
+        overflow: hidden;
+
+        color: var(--admin-muted);
+
+        font-size: 0.68rem;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+    }
+
+
+    /* =====================================================
+       PRODUCT
+    ====================================================== */
+
+    .admin-review-product-link {
+        color: var(--admin-red);
+
+        font-size: 0.82rem;
+        font-weight: 500;
+
+        transition: 0.2s ease;
+    }
+
+
+    .admin-review-product-link:hover {
+        color: var(--admin-red-dark);
+    }
+
+
+    .admin-review-product-link i {
+        margin-left: 4px;
+
+        font-size: 0.7rem;
+    }
+
+
+    /* =====================================================
+       RATING
+    ====================================================== */
+
+    .admin-review-rating {
+        display: flex;
+        align-items: center;
+
+        gap: 2px;
+
+        white-space: nowrap;
+    }
+
+
+    .admin-review-rating i {
+        color: var(--admin-gold);
+
+        font-size: 0.72rem;
+    }
+
+
+    .admin-review-rating span {
+        margin-left: 5px;
+
+        color: var(--admin-muted);
+
+        font-size: 0.7rem;
+    }
+
+
+    /* =====================================================
+       MESSAGE
+    ====================================================== */
+
+    .admin-review-message {
+        width: 260px;
+        max-width: 260px;
+
+        display: -webkit-box;
+
+        overflow: hidden;
+
+        color: var(--admin-muted);
+
+        font-size: 0.8rem;
+
+        line-height: 1.5;
+
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+
+    /* =====================================================
+       DATE
+    ====================================================== */
+
+    .admin-review-date {
+        color: var(--admin-muted);
+
+        font-size: 0.75rem;
+
+        white-space: nowrap;
+    }
+
+
+    /* =====================================================
+       ACTIONS
+    ====================================================== */
+
+    .admin-review-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        gap: 5px;
+    }
+
+
+    .admin-icon-btn {
+        width: 34px;
+        height: 34px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 7px;
+
+        background: #fff;
+
+        color: var(--admin-muted);
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+    }
+
+
+    .admin-icon-btn:hover {
+        background: var(--admin-cream);
+
+        border-color: var(--admin-gold);
+
+        color: var(--admin-red);
+
+        transform: translateY(-1px);
+    }
+
+
+    .admin-icon-btn-success:hover {
+        background: #e8f6ed;
+
+        border-color: #b9dfc4;
+
+        color: #247442;
+    }
+
+
+    .admin-icon-btn-warning:hover {
+        background: #fff4d8;
+
+        border-color: #ecd99c;
+
+        color: #8a6410;
+    }
+
+
+    .admin-icon-btn-danger:hover {
+        background: #fdeaea;
+
+        border-color: #efc2c2;
+
+        color: #a52b35;
+    }
+
+
+    /* =====================================================
+       EMPTY STATE
+    ====================================================== */
+
+    .admin-empty-state {
+        padding: 70px 25px;
+
+        text-align: center;
+    }
+
+
+    .admin-empty-icon {
+        width: 65px;
+        height: 65px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 auto 18px;
+
+        border-radius: 50%;
+
+        background: #f6eee4;
+
+        color: var(--admin-gold);
+
+        font-size: 25px;
+    }
+
+
+    .admin-empty-state h3 {
+        margin-bottom: 7px;
+
+        color: var(--admin-ink);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 1.45rem;
+    }
+
+
+    .admin-empty-state p {
+        margin: 0;
+
+        color: var(--admin-muted);
+
+        font-size: 0.82rem;
+    }
+
+
+    /* =====================================================
+       MODAL
+    ====================================================== */
+
+    .admin-review-modal {
+        overflow: hidden;
+
+        border: 1px solid var(--admin-border);
+
+        border-radius: 14px;
+    }
+
+
+    .admin-review-modal .modal-header {
+        padding: 20px 22px;
+
+        border-bottom: 1px solid var(--admin-border);
+
+        background: #faf7f2;
+    }
+
+
+    .admin-modal-eyebrow {
+        display: block;
+
+        margin-bottom: 3px;
+
+        color: var(--admin-gold);
+
+        font-size: 0.63rem;
+        font-weight: 600;
+
+        letter-spacing: 0.12em;
+    }
+
+
+    .admin-review-modal .modal-title {
+        color: var(--admin-ink);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 1.35rem;
+    }
+
+
+    .admin-review-modal .modal-body {
+        padding: 25px;
+    }
+
+
+    .admin-modal-customer {
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .admin-modal-customer strong {
+        display: block;
+
+        color: var(--admin-ink);
+
+        font-size: 0.9rem;
+    }
+
+
+    .admin-modal-customer small {
+        display: block;
+
+        margin-top: 2px;
+
+        color: var(--admin-muted);
+
+        font-size: 0.72rem;
+    }
+
+
+    .admin-modal-product,
+    .admin-modal-rating,
+    .admin-modal-review {
+        padding: 15px 0;
+
+        border-top: 1px solid var(--admin-border);
+    }
+
+
+    .admin-modal-product span,
+    .admin-modal-rating > span,
+    .admin-modal-review > span,
+    .admin-modal-meta span {
+        display: block;
+
+        margin-bottom: 5px;
+
+        color: var(--admin-muted);
+
+        font-size: 0.63rem;
+        font-weight: 600;
+
+        letter-spacing: 0.08em;
+
+        text-transform: uppercase;
+    }
+
+
+    .admin-modal-product strong {
+        color: var(--admin-red);
+
+        font-size: 0.85rem;
+    }
+
+
+    .admin-modal-rating > div {
+        color: var(--admin-gold);
+
+        font-size: 0.9rem;
+    }
+
+
+    .admin-modal-review p {
+        margin: 0;
+
+        color: var(--admin-ink);
+
+        font-family: "Playfair Display", serif;
+
+        font-size: 1.05rem;
+
+        line-height: 1.6;
+    }
+
+
+    .admin-modal-meta {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 15px;
+
+        padding-top: 15px;
+
+        border-top: 1px solid var(--admin-border);
+    }
+
+
+    .admin-modal-meta strong {
+        display: block;
+
+        color: var(--admin-ink);
+
+        font-size: 0.78rem;
+    }
+
+
+    .admin-review-modal .modal-footer {
+        padding: 15px 22px;
+
+        border-top: 1px solid var(--admin-border);
+
+        background: #faf7f2;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 1199.98px) {
+
+        .admin-review-stats {
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+    }
+
+
+    @media (max-width: 991.98px) {
+
+        .admin-review-toolbar {
+            flex-direction: column;
+
+            align-items: stretch;
+        }
+
+
+        .admin-review-toolbar-left,
+        .admin-review-toolbar-right {
+            width: 100%;
+        }
+
+
+        .admin-search-box {
+            width: 100%;
+        }
+
+
+        .admin-filter-select {
+            flex: 1;
+        }
+
+    }
+
+
+    @media (max-width: 767.98px) {
+
+        .admin-review-stats {
+            grid-template-columns: 1fr;
+        }
+
+
+        .admin-review-toolbar-right {
+            flex-direction: column;
+        }
+
+
+        .admin-filter-select {
+            width: 100%;
+        }
+
+
+        .admin-table-wrapper {
+            border-radius: 10px;
+        }
+
+
+        .admin-review-message {
+            width: 220px;
+            max-width: 220px;
+        }
+
+    }
+
+
+    @media (max-width: 575.98px) {
+
+        .admin-review-stats {
+            gap: 12px;
+        }
+
+
+        .admin-review-stat-card {
+            padding: 16px;
+        }
+
+
+        .admin-page-header-actions .admin-btn {
+            width: auto;
+        }
+
+
+        .admin-modal-meta {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<!-- =========================================================
+     PAGE-SPECIFIC JAVASCRIPT
+========================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const searchInput =
+        document.getElementById("reviewSearch");
+
+    const statusFilter =
+        document.getElementById("reviewStatusFilter");
+
+    const ratingFilter =
+        document.getElementById("reviewRatingFilter");
+
+    const reviewRows =
+        document.querySelectorAll(".review-row");
+
+    const noResults =
+        document.getElementById("noReviewResults");
+
+
+    /* =====================================================
+       FILTER REVIEWS
+    ====================================================== */
+
+    function filterReviews() {
+
+        const searchValue =
+            searchInput
+                ? searchInput.value
+                    .trim()
+                    .toLowerCase()
+                : "";
+
+        const statusValue =
+            statusFilter
+                ? statusFilter.value
+                : "all";
+
+        const ratingValue =
+            ratingFilter
+                ? ratingFilter.value
+                : "all";
+
+
+        let visibleCount = 0;
+
+
+        reviewRows.forEach(row => {
+
+            const name =
+                row.dataset.name || "";
+
+            const email =
+                row.dataset.email || "";
+
+            const product =
+                row.dataset.product || "";
+
+            const rating =
+                row.dataset.rating || "";
+
+            const status =
+                row.dataset.status || "";
+
+
+            const matchesSearch =
+                !searchValue ||
+                name.includes(searchValue) ||
+                email.includes(searchValue) ||
+                product.includes(searchValue);
+
+
+            const matchesStatus =
+                statusValue === "all" ||
+                status === statusValue;
+
+
+            const matchesRating =
+                ratingValue === "all" ||
+                rating === ratingValue;
+
+
+            const shouldShow =
+                matchesSearch &&
+                matchesStatus &&
+                matchesRating;
+
+
+            if (shouldShow) {
+
+                row.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        if (noResults) {
+
+            if (
+                reviewRows.length > 0 &&
+                visibleCount === 0
+            ) {
+
+                noResults.classList.remove("d-none");
+
+            } else {
+
+                noResults.classList.add("d-none");
+
+            }
+
+        }
+
+    }
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            filterReviews
+        );
+
+    }
+
+
+    if (statusFilter) {
+
+        statusFilter.addEventListener(
+            "change",
+            filterReviews
+        );
+
+    }
+
+
+    if (ratingFilter) {
+
+        ratingFilter.addEventListener(
+            "change",
+            filterReviews
+        );
+
+    }
+
+
+    /* =====================================================
+       DELETE CONFIRMATION
+    ====================================================== */
+
+    const deleteForms =
+        document.querySelectorAll(
+            ".delete-review-form"
+        );
+
+
+    deleteForms.forEach(form => {
+
+        form.addEventListener(
+            "submit",
+            function (event) {
+
+                const confirmed =
+                    confirm(
+                        "Are you sure you want to delete this review?"
+                    );
+
+
+                if (!confirmed) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       REVIEW MODAL
+    ====================================================== */
+
+    const reviewModal =
+        document.getElementById("reviewModal");
+
+
+    if (reviewModal) {
+
+        reviewModal.addEventListener(
+            "show.bs.modal",
+            function (event) {
+
+                const button =
+                    event.relatedTarget;
+
+
+                if (!button) return;
+
+
+                const name =
+                    button.dataset.reviewName ||
+                    "Anonymous";
+
+
+                const email =
+                    button.dataset.reviewEmail ||
+                    "-";
+
+
+                const product =
+                    button.dataset.reviewProduct ||
+                    "-";
+
+
+                const rating =
+                    Number(
+                        button.dataset.reviewRating
+                    ) || 0;
+
+
+                const message =
+                    button.dataset.reviewMessage ||
+                    "-";
+
+
+                const status =
+                    button.dataset.reviewStatus ||
+                    "-";
+
+
+                const date =
+                    button.dataset.reviewDate ||
+                    "-";
+
+
+                const modalName =
+                    document.getElementById(
+                        "modalCustomerName"
+                    );
+
+
+                const modalEmail =
+                    document.getElementById(
+                        "modalCustomerEmail"
+                    );
+
+
+                const modalProduct =
+                    document.getElementById(
+                        "modalProductName"
+                    );
+
+
+                const modalRating =
+                    document.getElementById(
+                        "modalRating"
+                    );
+
+
+                const modalMessage =
+                    document.getElementById(
+                        "modalReviewMessage"
+                    );
+
+
+                const modalStatus =
+                    document.getElementById(
+                        "modalReviewStatus"
+                    );
+
+
+                const modalDate =
+                    document.getElementById(
+                        "modalReviewDate"
+                    );
+
+
+                const modalInitial =
+                    document.getElementById(
+                        "modalCustomerInitial"
+                    );
+
+
+                if (modalName) {
+
+                    modalName.textContent =
+                        name;
+
+                }
+
+
+                if (modalEmail) {
+
+                    modalEmail.textContent =
+                        email;
+
+                }
+
+
+                if (modalProduct) {
+
+                    modalProduct.textContent =
+                        product;
+
+                }
+
+
+                if (modalMessage) {
+
+                    modalMessage.textContent =
+                        message;
+
+                }
+
+
+                if (modalStatus) {
+
+                    modalStatus.textContent =
+                        status;
+
+                }
+
+
+                if (modalDate) {
+
+                    modalDate.textContent =
+                        date;
+
+                }
+
+
+                if (modalInitial) {
+
+                    modalInitial.textContent =
+                        name
+                            .charAt(0)
+                            .toUpperCase();
+
+                }
+
+
+                if (modalRating) {
+
+                    let stars = "";
+
+                    for (
+                        let i = 1;
+                        i <= 5;
+                        i++
+                    ) {
+
+                        if (i <= rating) {
+
+                            stars +=
+                                '<i class="bi bi-star-fill"></i>';
+
+                        } else {
+
+                            stars +=
+                                '<i class="bi bi-star"></i>';
+
+                        }
+
+                    }
+
+                    stars +=
+                        ` <span style="color:var(--admin-muted);font-size:.72rem;margin-left:5px;">${rating}/5</span>`;
+
+                    modalRating.innerHTML =
+                        stars;
+
+                }
+
+            }
+        );
+
+    }
+
+});
+
+</script>

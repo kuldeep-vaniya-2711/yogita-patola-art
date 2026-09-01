@@ -1,0 +1,604 @@
+<% layout("layout", { title: title || "Wishlist Management" }) %>
+
+<div class="admin-page wishlists-page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <div class="page-header-content">
+
+            <div>
+                <span class="page-eyebrow">
+                    CUSTOMER ACTIVITY
+                </span>
+
+                <h1>
+                    Wishlist Management
+                </h1>
+
+                <p>
+                    View products saved by customers in their wishlists.
+                </p>
+            </div>
+
+            <div class="page-header-icon">
+                <span>♥</span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SUMMARY -->
+    <div class="contact-stats">
+
+        <div class="contact-stat-card">
+
+            <div class="stat-icon">
+                ♥
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Total Wishlist Items
+                </span>
+
+                <strong class="stat-value">
+                    <%= wishlists ? wishlists.length : 0 %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-stat-card">
+
+            <div class="stat-icon new-icon">
+                👤
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Customers
+                </span>
+
+                <strong class="stat-value">
+                    <%= wishlists
+                        ? new Set(
+                            wishlists
+                                .filter(w => w.user)
+                                .map(w => String(w.user._id))
+                        ).size
+                        : 0
+                    %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="contact-stat-card">
+
+            <div class="stat-icon replied-icon">
+                ◈
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">
+                    Products Saved
+                </span>
+
+                <strong class="stat-value">
+                    <%= wishlists
+                        ? new Set(
+                            wishlists
+                                .filter(w => w.product)
+                                .map(w => String(w.product._id))
+                        ).size
+                        : 0
+                    %>
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+    <div class="contacts-toolbar">
+
+        <div class="toolbar-left">
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="search"
+                    id="wishlistSearch"
+                    placeholder="Search customer or product..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="clearWishlistSearch"
+                    class="clear-search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="toolbar-right">
+
+            <button
+                type="button"
+                class="refresh-btn"
+                onclick="window.location.reload()"
+            >
+                <span>↻</span>
+                Refresh
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- WISHLIST TABLE -->
+    <div class="contacts-card">
+
+        <div class="contacts-card-header">
+
+            <div>
+
+                <h2>
+                    Saved Products
+                </h2>
+
+                <p>
+                    Products currently saved by customers.
+                </p>
+
+            </div>
+
+            <div class="result-count">
+
+                <span id="visibleWishlistCount">
+                    <%= wishlists ? wishlists.length : 0 %>
+                </span>
+
+                items
+
+            </div>
+
+        </div>
+
+
+        <% if (wishlists && wishlists.length > 0) { %>
+
+            <div class="table-wrapper">
+
+                <table
+                    class="contacts-table"
+                    id="wishlistTable"
+                >
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Customer</th>
+                            <th>Email</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Saved On</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <% wishlists.forEach((wishlist, index) => { %>
+
+                            <%
+                                const user = wishlist.user || null;
+                                const product = wishlist.product || null;
+
+                                const customerName =
+                                    user && user.name
+                                        ? user.name
+                                        : "Unknown Customer";
+
+                                const customerEmail =
+                                    user && user.email
+                                        ? user.email
+                                        : "No email";
+
+                                const productName =
+                                    product && product.name
+                                        ? product.name
+                                        : "Product unavailable";
+
+                                const category =
+                                    product && product.category
+                                        ? product.category
+                                        : "-";
+
+                                const price =
+                                    product && product.price !== undefined
+                                        ? product.price
+                                        : null;
+                            %>
+
+
+                            <tr
+                                class="wishlist-row"
+                                data-search="
+                                    <%= (
+                                        customerName + " " +
+                                        customerEmail + " " +
+                                        productName + " " +
+                                        category
+                                    ).toLowerCase() %>
+                                "
+                            >
+
+                                <!-- NUMBER -->
+
+                                <td class="number-cell">
+                                    <%= index + 1 %>
+                                </td>
+
+
+                                <!-- CUSTOMER -->
+
+                                <td>
+
+                                    <div class="customer-info">
+
+                                        <div class="customer-avatar">
+
+                                            <%= customerName
+                                                .charAt(0)
+                                                .toUpperCase() %>
+
+                                        </div>
+
+
+                                        <div class="customer-details">
+
+                                            <strong>
+                                                <%= customerName %>
+                                            </strong>
+
+                                            <span>
+                                                Customer
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- EMAIL -->
+
+                                <td>
+
+                                    <% if (user && user.email) { %>
+
+                                        <a
+                                            href="mailto:<%= user.email %>"
+                                            class="email-link"
+                                        >
+                                            <%= user.email %>
+                                        </a>
+
+                                    <% } else { %>
+
+                                        <span class="empty-value">
+                                            No email
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <!-- PRODUCT -->
+
+                                <td>
+
+                                    <% if (product) { %>
+
+                                        <a
+                                            href="/products/<%= product._id %>"
+                                            class="subject-cell"
+                                        >
+                                            <%= product.name %>
+                                        </a>
+
+                                    <% } else { %>
+
+                                        <span class="empty-value">
+                                            Product unavailable
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <!-- CATEGORY -->
+
+                                <td>
+
+                                    <span class="status-badge">
+                                        <%= category %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- PRICE -->
+
+                                <td>
+
+                                    <% if (price !== null) { %>
+
+                                        <strong>
+                                            ₹<%= Number(price).toLocaleString("en-IN") %>
+                                        </strong>
+
+                                    <% } else { %>
+
+                                        <span class="empty-value">
+                                            -
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <div class="date-cell">
+
+                                        <% if (wishlist.createdAt) { %>
+
+                                            <%= new Date(
+                                                wishlist.createdAt
+                                            ).toLocaleDateString(
+                                                "en-IN",
+                                                {
+                                                    day: "2-digit",
+                                                    month: "short",
+                                                    year: "numeric"
+                                                }
+                                            ) %>
+
+                                            <span>
+
+                                                <%= new Date(
+                                                    wishlist.createdAt
+                                                ).toLocaleTimeString(
+                                                    "en-IN",
+                                                    {
+                                                        hour: "2-digit",
+                                                        minute: "2-digit"
+                                                    }
+                                                ) %>
+
+                                            </span>
+
+                                        <% } else { %>
+
+                                            -
+
+                                        <% } %>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- NO SEARCH RESULTS -->
+
+            <div
+                id="noWishlistResults"
+                class="no-search-results"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    ⌕
+                </div>
+
+                <h3>
+                    No wishlist items found
+                </h3>
+
+                <p>
+                    Try a different customer or product name.
+                </p>
+
+            </div>
+
+
+        <% } else { %>
+
+
+            <!-- EMPTY -->
+
+            <div class="empty-state">
+
+                <div class="empty-state-icon">
+                    ♥
+                </div>
+
+                <h3>
+                    No Wishlist Items Yet
+                </h3>
+
+                <p>
+                    Customer wishlist activity will appear here
+                    when products are saved.
+                </p>
+
+                <div class="empty-state-note">
+
+                    <span>
+                        YOGITA PATOLA ART
+                    </span>
+
+                    <small>
+                        Customer Wishlist Management
+                    </small>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const search =
+        document.getElementById("wishlistSearch");
+
+    const clear =
+        document.getElementById(
+            "clearWishlistSearch"
+        );
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                ".wishlist-row"
+            )
+        );
+
+    const count =
+        document.getElementById(
+            "visibleWishlistCount"
+        );
+
+    const noResults =
+        document.getElementById(
+            "noWishlistResults"
+        );
+
+
+    function filterWishlist() {
+
+        const query =
+            String(search?.value || "")
+                .trim()
+                .toLowerCase();
+
+        let visible = 0;
+
+
+        rows.forEach(row => {
+
+            const text =
+                String(
+                    row.dataset.search || ""
+                ).toLowerCase();
+
+
+            const show =
+                !query ||
+                text.includes(query);
+
+
+            row.style.display =
+                show ? "" : "none";
+
+
+            if (show) {
+                visible++;
+            }
+
+        });
+
+
+        if (count) {
+            count.textContent = visible;
+        }
+
+
+        if (noResults) {
+
+            noResults.style.display =
+                rows.length && visible === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+    }
+
+
+    search?.addEventListener(
+        "input",
+        filterWishlist
+    );
+
+
+    clear?.addEventListener(
+        "click",
+        function () {
+
+            if (search) {
+                search.value = "";
+            }
+
+            filterWishlist();
+
+            search?.focus();
+
+        }
+    );
+
+});
+
+</script>

@@ -1,0 +1,1031 @@
+
+<%
+    layout("layout", {
+        title: "Dashboard",
+        pageTitle: "Dashboard"
+    });
+%>
+
+
+<% /* =========================================================
+     DASHBOARD PAGE CSS
+     ========================================================= */ %>
+
+<% block("head").append(`
+    <link
+        rel="stylesheet"
+        href="/css/admin/dashboard.css"
+    >
+`); %>
+
+
+<section class="admin-dashboard-page">
+
+
+    <!-- =====================================================
+         WELCOME
+         ===================================================== -->
+
+    <section class="dashboard-welcome">
+
+        <div class="dashboard-welcome-content">
+
+            <span class="dashboard-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h2 class="dashboard-heading">
+                Welcome Back, Administrator
+            </h2>
+
+            <p class="dashboard-description">
+                Manage your products, reviews, feedback and
+                website activity from one place.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-date">
+
+            <span>
+                Today
+            </span>
+
+            <strong>
+                <%= new Date().toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }) %>
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+
+    <section class="dashboard-stats">
+
+        <div class="row g-4">
+
+            <%
+                const stats = [
+
+                    [
+                        "🛍️",
+                        "Total Products",
+                        typeof productCount !== "undefined"
+                            ? productCount
+                            : 0
+                    ],
+
+                    [
+                        "⭐",
+                        "Reviews",
+                        typeof reviewCount !== "undefined"
+                            ? reviewCount
+                            : 0
+                    ],
+
+                    [
+                        "💬",
+                        "Feedback",
+                        typeof feedbackCount !== "undefined"
+                            ? feedbackCount
+                            : 0
+                    ],
+
+                    [
+                        "👥",
+                        "Visitors",
+                        typeof visitorCount !== "undefined"
+                            ? visitorCount
+                            : 0
+                    ]
+
+                ];
+            %>
+
+
+            <% stats.forEach(function(stat) { %>
+
+                <div class="col-md-6 col-xl-3">
+
+                    <div class="dashboard-stat-card">
+
+                        <div class="dashboard-stat-icon">
+                            <%= stat[0] %>
+                        </div>
+
+                        <div class="dashboard-stat-content">
+
+                            <span>
+                                <%= stat[1] %>
+                            </span>
+
+                            <strong>
+                                <%= stat[2] || 0 %>
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }); %>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         QUICK ACTIONS + SHORTCUTS
+         ===================================================== -->
+
+    <section class="dashboard-main-section">
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 QUICK ACTIONS
+                 ================================================= -->
+
+            <div class="col-lg-8">
+
+                <div class="dashboard-panel">
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <span class="dashboard-panel-eyebrow">
+                                MANAGEMENT
+                            </span>
+
+                            <h3>
+                                Quick Actions
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        <%
+                            const actions = [
+
+                                [
+                                    "➕",
+                                    "Add Product",
+                                    "Add a new handcrafted product to your collection.",
+                                    "/admin/products/add"
+                                ],
+
+                                [
+                                    "🛍️",
+                                    "Manage Products",
+                                    "Edit prices, images, descriptions and availability.",
+                                    "/admin/products"
+                                ],
+
+                                [
+                                    "⭐",
+                                    "Manage Reviews",
+                                    "Review and manage customer product reviews.",
+                                    "/admin/reviews"
+                                ],
+
+                                [
+                                    "💬",
+                                    "View Feedback",
+                                    "Read feedback shared by your visitors.",
+                                    "/admin/feedback"
+                                ]
+
+                            ];
+                        %>
+
+
+                        <% actions.forEach(function(action) { %>
+
+                            <div class="col-md-6">
+
+                                <a
+                                    href="<%= action[3] %>"
+                                    class="dashboard-action-card"
+                                >
+
+                                    <span class="dashboard-action-icon">
+                                        <%= action[0] %>
+                                    </span>
+
+
+                                    <div class="dashboard-action-content">
+
+                                        <strong>
+                                            <%= action[1] %>
+                                        </strong>
+
+                                        <small>
+                                            <%= action[2] %>
+                                        </small>
+
+                                    </div>
+
+
+                                    <span class="dashboard-action-arrow">
+                                        →
+                                    </span>
+
+                                </a>
+
+                            </div>
+
+                        <% }); %>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 WEBSITE SHORTCUTS
+                 ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="dashboard-panel dashboard-shortcuts">
+
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <span class="dashboard-panel-eyebrow">
+                                WEBSITE
+                            </span>
+
+                            <h3>
+                                Shortcuts
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-shortcut-list">
+
+
+                        <a
+                            href="/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <span>
+                                🌐
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    View Website
+                                </strong>
+
+                                <small>
+                                    Open your public website
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+
+                        <a
+                            href="/collections"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <span>
+                                🧵
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Collections
+                                </strong>
+
+                                <small>
+                                    View product collections
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+
+                        <a
+                            href="/contact"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <span>
+                                ✉️
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Contact Page
+                                </strong>
+
+                                <small>
+                                    View public contact page
+                                </small>
+
+                            </div>
+
+                            <b>
+                                →
+                            </b>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ANALYTICS
+         ===================================================== -->
+
+    <section class="dashboard-analytics-section">
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 VISITOR OVERVIEW
+                 ================================================= -->
+
+            <div class="col-lg-8">
+
+                <div class="dashboard-panel">
+
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <span class="dashboard-panel-eyebrow">
+                                ANALYTICS
+                            </span>
+
+                            <h3>
+                                Visitor Overview
+                            </h3>
+
+                        </div>
+
+
+                        <a
+                            href="/admin/visitors"
+                            class="dashboard-view-link"
+                        >
+                            View Details →
+                        </a>
+
+                    </div>
+
+
+                    <div class="dashboard-chart-container">
+
+                        <canvas id="visitorChart"></canvas>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AVAILABILITY
+                 ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="dashboard-panel">
+
+
+                    <div class="dashboard-panel-header">
+
+                        <div>
+
+                            <span class="dashboard-panel-eyebrow">
+                                PRODUCTS
+                            </span>
+
+                            <h3>
+                                Availability
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <%
+                        const dashboardProducts =
+                            typeof recentProducts !== "undefined" &&
+                            Array.isArray(recentProducts)
+                                ? recentProducts
+                                : [];
+
+
+                        const inStock =
+                            dashboardProducts.filter(
+                                function(product) {
+                                    return product &&
+                                        product.availability === "In Stock";
+                                }
+                            ).length;
+
+
+                        const limited =
+                            dashboardProducts.filter(
+                                function(product) {
+                                    return product &&
+                                        product.availability === "Limited";
+                                }
+                            ).length;
+
+
+                        const outStock =
+                            dashboardProducts.filter(
+                                function(product) {
+                                    return product &&
+                                        product.availability === "Out of Stock";
+                                }
+                            ).length;
+                    %>
+
+
+                    <div class="dashboard-availability-list">
+
+
+                        <div class="availability-item">
+
+                            <div>
+
+                                <span class="availability-dot in-stock"></span>
+
+                                <span>
+                                    In Stock
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <%= inStock %>
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="availability-item">
+
+                            <div>
+
+                                <span class="availability-dot limited"></span>
+
+                                <span>
+                                    Limited
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <%= limited %>
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="availability-item">
+
+                            <div>
+
+                                <span class="availability-dot out-stock"></span>
+
+                                <span>
+                                    Out of Stock
+                                </span>
+
+                            </div>
+
+                            <strong>
+                                <%= outStock %>
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="dashboard-product-link">
+
+                        <a href="/admin/products">
+                            Manage Products →
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RECENT PRODUCTS
+         ===================================================== -->
+
+    <section class="dashboard-recent-section">
+
+        <div class="dashboard-panel">
+
+
+            <div class="dashboard-panel-header">
+
+                <div>
+
+                    <span class="dashboard-panel-eyebrow">
+                        RECENT ACTIVITY
+                    </span>
+
+                    <h3>
+                        Latest Products
+                    </h3>
+
+                </div>
+
+
+                <a
+                    href="/admin/products"
+                    class="dashboard-view-link"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+
+            <div class="table-responsive">
+
+
+                <table class="table dashboard-products-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Product
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+
+                            <th>
+                                Availability
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        <% if (
+                            typeof recentProducts !== "undefined" &&
+                            Array.isArray(recentProducts) &&
+                            recentProducts.length > 0
+                        ) { %>
+
+
+                            <% recentProducts.forEach(function(product) { %>
+
+
+                                <tr>
+
+
+                                    <!-- PRODUCT -->
+
+                                    <td>
+
+                                        <div class="dashboard-product-cell">
+
+
+                                            <% if (
+                                                product &&
+                                                Array.isArray(product.images) &&
+                                                product.images.length > 0
+                                            ) { %>
+
+
+                                                <img
+                                                    src="<%= product.images[0] %>"
+                                                    alt="<%= product.name || 'Product' %>"
+                                                    loading="lazy"
+                                                >
+
+
+                                            <% } else { %>
+
+
+                                                <div class="dashboard-product-placeholder">
+                                                    ✦
+                                                </div>
+
+
+                                            <% } %>
+
+
+                                            <strong>
+                                                <%= product.name || "Unnamed Product" %>
+                                            </strong>
+
+
+                                        </div>
+
+                                    </td>
+
+
+
+                                    <!-- CATEGORY -->
+
+                                    <td>
+
+                                        <%= product.category || "Patola" %>
+
+                                    </td>
+
+
+
+                                    <!-- PRICE -->
+
+                                    <td>
+
+                                        ₹<%= Number(
+                                            product.price || 0
+                                        ).toLocaleString("en-IN") %>
+
+                                    </td>
+
+
+
+                                    <!-- AVAILABILITY -->
+
+                                    <td>
+
+
+                                        <%
+                                            const availability =
+                                                product.availability ||
+                                                "In Stock";
+
+
+                                            let statusClass =
+                                                "status-out-stock";
+
+
+                                            if (availability === "In Stock") {
+
+                                                statusClass =
+                                                    "status-in-stock";
+
+                                            } else if (
+                                                availability === "Limited"
+                                            ) {
+
+                                                statusClass =
+                                                    "status-limited";
+
+                                            }
+                                        %>
+
+
+                                        <span
+                                            class="dashboard-status <%= statusClass %>"
+                                        >
+
+                                            <%= availability %>
+
+                                        </span>
+
+
+                                    </td>
+
+
+
+                                    <!-- ACTION -->
+
+                                    <td>
+
+                                        <a
+                                            href="/admin/products/edit/<%= product._id %>"
+                                            class="dashboard-table-action"
+                                        >
+                                            Edit
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+
+
+                            <% }); %>
+
+
+                        <% } else { %>
+
+
+                            <!-- EMPTY -->
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    class="text-center py-5"
+                                >
+
+                                    <div class="dashboard-empty-state">
+
+
+                                        <span>
+                                            ✦
+                                        </span>
+
+
+                                        <h4>
+                                            No Products Yet
+                                        </h4>
+
+
+                                        <p>
+                                            Add your first handcrafted
+                                            product to get started.
+                                        </p>
+
+
+                                        <a
+                                            href="/admin/products/add"
+                                            class="btn btn-dark"
+                                        >
+                                            Add Product
+                                        </a>
+
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                        <% } %>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     DASHBOARD JAVASCRIPT
+     ========================================================= -->
+
+<% block("scripts").append(`
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const canvas =
+                    document.getElementById(
+                        "visitorChart"
+                    );
+
+
+                if (!canvas) {
+                    return;
+                }
+
+
+                const ctx =
+                    canvas.getContext("2d");
+
+
+                if (!ctx) {
+                    return;
+                }
+
+
+                if (
+                    typeof window.visitorChartData ===
+                    "undefined"
+                ) {
+                    window.visitorChartData = {
+                        labels: [],
+                        values: []
+                    };
+                }
+
+
+                const labels =
+                    Array.isArray(
+                        window.visitorChartData.labels
+                    )
+                        ? window.visitorChartData.labels
+                        : [];
+
+
+                const values =
+                    Array.isArray(
+                        window.visitorChartData.values
+                    )
+                        ? window.visitorChartData.values
+                        : [];
+
+
+                new Chart(
+                    ctx,
+                    {
+
+                        type: "line",
+
+                        data: {
+
+                            labels: labels,
+
+                            datasets: [
+
+                                {
+
+                                    label: "Visitors",
+
+                                    data: values,
+
+                                    tension: 0.35,
+
+                                    fill: true,
+
+                                    borderWidth: 2,
+
+                                    pointRadius: 3,
+
+                                    pointHoverRadius: 5
+
+                                }
+
+                            ]
+
+                        },
+
+                        options: {
+
+                            responsive: true,
+
+                            maintainAspectRatio: false,
+
+                            interaction: {
+
+                                intersect: false,
+
+                                mode: "index"
+
+                            },
+
+                            plugins: {
+
+                                legend: {
+
+                                    display: false
+
+                                }
+
+                            },
+
+                            scales: {
+
+                                y: {
+
+                                    beginAtZero: true,
+
+                                    ticks: {
+
+                                        precision: 0
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+`); %>
+

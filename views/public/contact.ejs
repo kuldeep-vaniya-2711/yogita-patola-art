@@ -1,0 +1,355 @@
+
+<%
+layout("layout", {
+    title: title || "Contact Us | Yogita Patola Art"
+});
+%>
+
+
+<%
+/*
+ * =========================================================
+ * CONTACT PAGE CSS
+ * =========================================================
+ *
+ * IMPORTANT:
+ * Do NOT use pageCss / activePageCss.
+ * Layout uses native ejs-mate block("head").
+ * =========================================================
+ */
+
+block("head").append(`
+    <link
+        rel="stylesheet"
+        href="/css/pages/contact.css"
+    >
+`);
+%>
+
+
+<section class="contact-page">
+
+
+    <!-- =====================================================
+         CONTACT HERO
+         ===================================================== -->
+
+    <section class="contact-hero">
+
+        <div class="container text-center">
+
+            <span class="contact-subtitle">
+                GET IN TOUCH
+            </span>
+
+            <h1 class="contact-title">
+                Contact Us
+            </h1>
+
+            <p class="contact-description mx-auto">
+                Have a question about our Patola sarees
+                or products? Send us a message.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTACT FORM SECTION
+         ===================================================== -->
+
+    <section class="contact-section">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-8">
+
+
+                    <!-- =========================================
+                         SUCCESS MESSAGE
+                         ========================================= -->
+
+                    <% if (success) { %>
+
+                        <div
+                            class="alert alert-success contact-alert"
+                            role="alert"
+                        >
+
+                            <%= success %>
+
+                        </div>
+
+                    <% } %>
+
+
+                    <!-- =========================================
+                         ERROR MESSAGE
+                         ========================================= -->
+
+                    <% if (error) { %>
+
+                        <div
+                            class="alert alert-danger contact-alert"
+                            role="alert"
+                        >
+
+                            <%= error %>
+
+                        </div>
+
+                    <% } %>
+
+
+                    <!-- =========================================
+                         CONTACT FORM
+                         ========================================= -->
+
+                    <form
+                        action="/contact"
+                        method="POST"
+                        id="contactForm"
+                        class="contact-form"
+                    >
+
+
+                        <!-- =====================================
+                             NAME
+                             ===================================== -->
+
+                        <div class="contact-form-group">
+
+                            <label
+                                for="name"
+                                class="contact-label"
+                            >
+
+                                Full Name
+
+                                <span class="text-danger">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                name="name"
+                                placeholder="Enter your name"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- =====================================
+                             EMAIL
+                             ===================================== -->
+
+                        <div class="contact-form-group">
+
+                            <label
+                                for="email"
+                                class="contact-label"
+                            >
+
+                                Email Address
+
+                                <span class="text-danger">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- =====================================
+                             PHONE
+                             ===================================== -->
+
+                        <div class="contact-form-group">
+
+                            <label
+                                for="phone"
+                                class="contact-label"
+                            >
+
+                                Phone Number
+
+                            </label>
+
+
+                            <input
+                                type="tel"
+                                class="form-control"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter your phone number"
+                                maxlength="20"
+                            >
+
+                        </div>
+
+
+                        <!-- =====================================
+                             SUBJECT
+                             ===================================== -->
+
+                        <div class="contact-form-group">
+
+                            <label
+                                for="subject"
+                                class="contact-label"
+                            >
+
+                                Subject
+
+                                <span class="text-danger">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="subject"
+                                name="subject"
+                                placeholder="What would you like to know?"
+                                maxlength="200"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- =====================================
+                             MESSAGE
+                             ===================================== -->
+
+                        <div class="contact-form-group contact-message-group">
+
+                            <label
+                                for="message"
+                                class="contact-label"
+                            >
+
+                                Message
+
+                                <span class="text-danger">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <textarea
+                                class="form-control"
+                                id="message"
+                                name="message"
+                                rows="6"
+                                maxlength="3000"
+                                placeholder="Write your message..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- =====================================
+                             SUBMIT
+                             ===================================== -->
+
+                        <div class="contact-submit">
+
+                            <button
+                                type="submit"
+                                class="btn"
+                                id="submitBtn"
+                            >
+
+                                Send Message
+
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const contactForm =
+                document.getElementById(
+                    "contactForm"
+                );
+
+
+            const submitBtn =
+                document.getElementById(
+                    "submitBtn"
+                );
+
+
+            if (
+                contactForm &&
+                submitBtn
+            ) {
+
+                contactForm.addEventListener(
+                    "submit",
+                    function () {
+
+                        submitBtn.disabled =
+                            true;
+
+                        submitBtn.innerText =
+                            "Sending...";
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+</script>
+

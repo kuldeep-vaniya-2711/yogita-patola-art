@@ -1,0 +1,637 @@
+/* =========================================================
+   YOGITA PATOLA ART
+   ADMIN SIDEBAR CSS
+
+   File:
+   public/css/admin/sidebar.css
+
+   Purpose:
+   - Desktop sidebar
+   - Mobile sidebar
+   - Active navigation
+   - Sidebar header / brand
+   - Sidebar footer
+   - Responsive behavior
+   - Works with admin-layout.js `.show` class
+   ========================================================= */
+
+
+/* =========================================================
+   SIDEBAR BASE
+   ========================================================= */
+
+.admin-sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fffdf9;
+
+    border-right: 1px solid #e8dfd4;
+
+    z-index: 1000;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SIDEBAR HEADER
+   ========================================================= */
+
+.admin-sidebar-header {
+
+    position: relative;
+
+    min-height: 86px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #eee5db;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.admin-sidebar-brand {
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    color: #4a2026;
+
+    text-decoration: none;
+
+    line-height: 1.2;
+}
+
+
+.admin-sidebar-brand:hover {
+
+    color: #4a2026;
+
+    text-decoration: none;
+}
+
+
+.admin-sidebar-brand-main {
+
+    display: block;
+
+    color: inherit;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.01em;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+.admin-sidebar-brand-subtitle {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #927c68;
+
+    font-family:
+        "Poppins",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.14em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.admin-sidebar-close {
+
+    display: none;
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #e4d9cd;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #5a3035;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 24px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.admin-sidebar-close:hover {
+
+    background: #f8f1e9;
+
+    border-color: #d5c5b5;
+
+    color: #431b20;
+}
+
+
+.admin-sidebar-close:focus-visible {
+
+    outline: 2px solid #b99a68;
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.admin-sidebar-nav {
+
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    padding: 18px 12px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        #d8c8b8
+        transparent;
+}
+
+
+/* =========================================================
+   WEBKIT SCROLLBAR
+   ========================================================= */
+
+.admin-sidebar-nav::-webkit-scrollbar {
+
+    width: 6px;
+}
+
+
+.admin-sidebar-nav::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+
+.admin-sidebar-nav::-webkit-scrollbar-thumb {
+
+    background: #d8c8b8;
+
+    border-radius: 10px;
+}
+
+
+.admin-sidebar-nav::-webkit-scrollbar-thumb:hover {
+
+    background: #c6b4a3;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.admin-sidebar-section-title {
+
+    margin: 15px 10px 7px;
+
+    color: #9a8978;
+
+    font-family:
+        "Poppins",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.13em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+.admin-sidebar-section-title:first-child {
+
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR LINK
+   ========================================================= */
+
+.admin-sidebar-link {
+
+    position: relative;
+
+    width: 100%;
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    margin: 2px 0;
+
+    padding: 9px 11px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #514640;
+
+    font-family:
+        "Poppins",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.admin-sidebar-link:hover {
+
+    background: #f7efe7;
+
+    color: #4a2026;
+
+    text-decoration: none;
+}
+
+
+.admin-sidebar-link:focus-visible {
+
+    outline: 2px solid #b89a72;
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   SIDEBAR ICON
+   ========================================================= */
+
+.admin-sidebar-icon {
+
+    width: 30px;
+    min-width: 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 9px;
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   SIDEBAR TEXT
+   ========================================================= */
+
+.admin-sidebar-text {
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: inherit;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIVE LINK
+   ========================================================= */
+
+.admin-sidebar-link.active {
+
+    background: #642d35;
+
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+
+.admin-sidebar-link.active:hover {
+
+    background: #642d35;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   ACTIVE INDICATOR
+   ========================================================= */
+
+.admin-sidebar-link.active::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    bottom: 8px;
+
+    left: 0;
+
+    width: 3px;
+
+    border-radius:
+        0 3px 3px 0;
+
+    background: #b99a68;
+}
+
+
+/* =========================================================
+   ACTIVE ICON
+   ========================================================= */
+
+.admin-sidebar-link.active .admin-sidebar-icon {
+
+    transform: translateX(1px);
+}
+
+
+/* =========================================================
+   SIDEBAR FOOTER
+   ========================================================= */
+
+.admin-sidebar-footer {
+
+    flex: 0 0 auto;
+
+    padding: 12px;
+
+    background: #fffdf9;
+
+    border-top: 1px solid #eee5db;
+}
+
+
+/* =========================================================
+   VIEW WEBSITE
+   ========================================================= */
+
+.admin-view-site {
+
+    color: #66584e;
+}
+
+
+.admin-view-site:hover {
+
+    color: #4a2026;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.admin-logout {
+
+    color: #75454b;
+}
+
+
+.admin-logout:hover {
+
+    color: #68272f;
+
+    background: #f8eceb;
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+   Matches admin-layout.js <= 991px
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .admin-sidebar {
+
+        width: min(285px, 88vw);
+
+        transform: translateX(-100%);
+
+        box-shadow:
+            8px 0 30px
+            rgba(60, 35, 25, 0.12);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+
+    /*
+     * IMPORTANT:
+     * admin-layout.js uses `.show`
+     */
+
+    .admin-sidebar.show {
+
+        transform: translateX(0);
+    }
+
+
+    .admin-sidebar-header {
+
+        min-height: 80px;
+
+        padding-left: 18px;
+        padding-right: 14px;
+    }
+
+
+    .admin-sidebar-close {
+
+        display: inline-flex;
+    }
+
+
+    .admin-sidebar-nav {
+
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .admin-sidebar-footer {
+
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    .admin-sidebar {
+
+        width: 86vw;
+    }
+
+
+    .admin-sidebar-header {
+
+        padding: 16px;
+    }
+
+
+    .admin-sidebar-brand-main {
+
+        font-size: 17px;
+    }
+
+
+    .admin-sidebar-nav {
+
+        padding: 16px 9px;
+    }
+
+
+    .admin-sidebar-footer {
+
+        padding: 10px 9px;
+    }
+
+
+    .admin-sidebar-section-title {
+
+        margin-left: 9px;
+        margin-right: 9px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .admin-sidebar,
+    .admin-sidebar-link,
+    .admin-sidebar-close {
+
+        transition: none;
+    }
+
+}

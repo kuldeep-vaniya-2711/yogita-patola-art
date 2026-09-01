@@ -1,0 +1,594 @@
+
+<%
+    /*
+     * =========================================================
+     * FEEDBACK PAGE
+     * =========================================================
+     *
+     * Uses:
+     * views/layout.ejs
+     *
+     * Page CSS:
+     * /css/pages/feedback.css
+     *
+     * IMPORTANT:
+     * Do NOT use pageCss / activePageCss.
+     * Page CSS is loaded through native ejs-mate block("head").
+     *
+     */
+%>
+
+
+<%
+    layout("layout", {
+
+        title:
+            `Feedback | ${
+                typeof siteName !== "undefined"
+                    ? siteName
+                    : "Yogita Patola Art"
+            }`
+
+    });
+%>
+
+
+<%
+    /*
+     * =========================================================
+     * PAGE SPECIFIC CSS
+     * =========================================================
+     */
+
+    block("head").append(`
+        <link
+            rel="stylesheet"
+            href="/css/pages/feedback.css"
+        >
+    `);
+%>
+
+
+
+<!-- =========================================================
+     FEEDBACK PAGE
+     ========================================================= -->
+
+<section class="feedback-page">
+
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="feedback-hero">
+
+        <div class="container">
+
+            <div class="feedback-hero-content">
+
+
+                <span class="feedback-subtitle">
+
+                    YOGITA PATOLA ART
+
+                </span>
+
+
+                <h1 class="feedback-title">
+
+                    Share Your Feedback
+
+                </h1>
+
+
+                <p class="feedback-description">
+
+                    We would love to hear about your
+                    experience with Yogita Patola Art.
+
+                    Your feedback helps us improve
+                    our products and service.
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FEEDBACK SECTION
+         ===================================================== -->
+
+    <section class="feedback-section">
+
+        <div class="container">
+
+
+            <div class="feedback-wrapper">
+
+
+                <!-- =================================================
+                     SUCCESS MESSAGE
+                     ================================================= -->
+
+                <% if (
+                    typeof success !== "undefined" &&
+                    success
+                ) { %>
+
+
+                    <div
+                        class="feedback-success"
+                        role="alert"
+                    >
+
+                        <span class="feedback-success-icon">
+                            ✓
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+                                Thank you!
+                            </strong>
+
+                            <p>
+                                Your feedback has been
+                                submitted successfully.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                <% } %>
+
+
+
+                <!-- =================================================
+                     FEEDBACK CARD
+                     ================================================= -->
+
+                <div class="feedback-card">
+
+
+                    <!-- CARD HEADER -->
+
+                    <div class="feedback-card-header">
+
+                        <span class="feedback-card-eyebrow">
+
+                            YOUR EXPERIENCE
+
+                        </span>
+
+
+                        <h2>
+
+                            Tell Us What You Think
+
+                        </h2>
+
+
+                        <p>
+
+                            Your honest feedback helps us
+                            continue to improve our products
+                            and customer experience.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         FORM
+                         ================================================= -->
+
+                    <form
+                        action="/feedback"
+                        method="POST"
+                        class="feedback-form"
+                        id="feedbackForm"
+                    >
+
+
+                        <!-- =============================================
+                             NAME
+                             ============================================= -->
+
+                        <div class="feedback-form-group">
+
+                            <label
+                                for="feedbackName"
+                                class="feedback-label"
+                            >
+
+                                Your Name
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="feedbackName"
+                                name="name"
+                                class="feedback-input"
+                                placeholder="Enter your name"
+                                minlength="2"
+                                maxlength="50"
+                                autocomplete="name"
+                                value="<%= (
+                                    typeof user !== "undefined" &&
+                                    user
+                                ) ? (
+                                    user.name || ""
+                                ) : "" %>"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- =============================================
+                             EMAIL
+                             ============================================= -->
+
+                        <div class="feedback-form-group">
+
+                            <label
+                                for="feedbackEmail"
+                                class="feedback-label"
+                            >
+
+                                Email Address
+
+                            </label>
+
+
+                            <input
+                                type="email"
+                                id="feedbackEmail"
+                                name="email"
+                                class="feedback-input"
+                                placeholder="Enter your email"
+                                maxlength="100"
+                                autocomplete="email"
+                                value="<%= (
+                                    typeof user !== "undefined" &&
+                                    user
+                                ) ? (
+                                    user.email || ""
+                                ) : "" %>"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- =============================================
+                             RATING
+                             ============================================= -->
+
+                        <div class="feedback-form-group">
+
+                            <label
+                                class="feedback-label"
+                            >
+
+                                How would you rate your experience?
+
+                            </label>
+
+
+                            <div class="feedback-rating">
+
+
+                                <!-- STAR 5 -->
+
+                                <input
+                                    type="radio"
+                                    id="feedbackStar5"
+                                    name="rating"
+                                    value="5"
+                                    required
+                                >
+
+                                <label
+                                    for="feedbackStar5"
+                                    title="5 Stars"
+                                >
+                                    ★
+                                </label>
+
+
+
+                                <!-- STAR 4 -->
+
+                                <input
+                                    type="radio"
+                                    id="feedbackStar4"
+                                    name="rating"
+                                    value="4"
+                                >
+
+                                <label
+                                    for="feedbackStar4"
+                                    title="4 Stars"
+                                >
+                                    ★
+                                </label>
+
+
+
+                                <!-- STAR 3 -->
+
+                                <input
+                                    type="radio"
+                                    id="feedbackStar3"
+                                    name="rating"
+                                    value="3"
+                                >
+
+                                <label
+                                    for="feedbackStar3"
+                                    title="3 Stars"
+                                >
+                                    ★
+                                </label>
+
+
+
+                                <!-- STAR 2 -->
+
+                                <input
+                                    type="radio"
+                                    id="feedbackStar2"
+                                    name="rating"
+                                    value="2"
+                                >
+
+                                <label
+                                    for="feedbackStar2"
+                                    title="2 Stars"
+                                >
+                                    ★
+                                </label>
+
+
+
+                                <!-- STAR 1 -->
+
+                                <input
+                                    type="radio"
+                                    id="feedbackStar1"
+                                    name="rating"
+                                    value="1"
+                                >
+
+                                <label
+                                    for="feedbackStar1"
+                                    title="1 Star"
+                                >
+                                    ★
+                                </label>
+
+
+                            </div>
+
+
+                            <small class="feedback-rating-hint">
+
+                                Select a rating from 1 to 5 stars.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- =============================================
+                             MESSAGE
+                             ============================================= -->
+
+                        <div class="feedback-form-group feedback-message-group">
+
+                            <label
+                                for="feedbackMessage"
+                                class="feedback-label"
+                            >
+
+                                Your Feedback
+
+                            </label>
+
+
+                            <textarea
+                                id="feedbackMessage"
+                                name="message"
+                                class="feedback-input feedback-textarea"
+                                rows="6"
+                                placeholder="Write your feedback..."
+                                minlength="3"
+                                maxlength="1000"
+                                required
+                            ></textarea>
+
+
+                            <div class="feedback-help">
+
+                                Maximum 1000 characters.
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =============================================
+                             SUBMIT
+                             ============================================= -->
+
+                        <div class="feedback-submit-wrapper">
+
+                            <button
+                                type="submit"
+                                class="feedback-submit"
+                                id="feedbackSubmit"
+                            >
+
+                                <span>
+                                    Submit Feedback
+                                </span>
+
+                                <span
+                                    class="feedback-submit-arrow"
+                                    aria-hidden="true"
+                                >
+                                    →
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BOTTOM CTA
+         ===================================================== -->
+
+    <section class="feedback-cta">
+
+        <div class="container">
+
+            <div class="feedback-cta-inner">
+
+
+                <span class="feedback-cta-subtitle">
+
+                    YOGITA PATOLA ART
+
+                </span>
+
+
+                <h2>
+
+                    Thank You For Supporting
+                    Traditional Craftsmanship
+
+                </h2>
+
+
+                <p>
+
+                    Every message helps us preserve,
+                    celebrate and share the timeless
+                    beauty of Patola artistry.
+
+                </p>
+
+
+                <a
+                    href="/collections"
+                    class="feedback-cta-button"
+                >
+
+                    Explore Collections
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FEEDBACK FORM JS
+     ========================================================= -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const form =
+                document.getElementById(
+                    "feedbackForm"
+                );
+
+
+            const submitButton =
+                document.getElementById(
+                    "feedbackSubmit"
+                );
+
+
+            if (
+                form &&
+                submitButton
+            ) {
+
+                form.addEventListener(
+                    "submit",
+                    function () {
+
+                        submitButton.disabled =
+                            true;
+
+
+                        const text =
+                            submitButton.querySelector(
+                                "span:first-child"
+                            );
+
+
+                        if (text) {
+
+                            text.textContent =
+                                "Submitting...";
+
+                        }
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+</script>

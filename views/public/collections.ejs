@@ -1,0 +1,483 @@
+
+<%
+layout("layout", {
+    title:
+        typeof title !== "undefined" && title
+            ? title
+            : "Collections | Yogita Patola Art"
+});
+%>
+
+
+<%
+/*
+ * =========================================================
+ * COLLECTIONS PAGE CSS
+ * =========================================================
+ *
+ * IMPORTANT:
+ * Do NOT use pageCss / activePageCss.
+ * Layout uses native ejs-mate block("head").
+ * =========================================================
+ */
+
+block("head").append(`
+    <link
+        rel="stylesheet"
+        href="/css/pages/collections.css"
+    >
+`);
+%>
+
+
+<%
+    const collectionProducts =
+        typeof products !== "undefined" && Array.isArray(products)
+            ? products
+            : [];
+
+    const currentCategory =
+        typeof category !== "undefined"
+            ? category
+            : "";
+
+    const currentSearch =
+        typeof search !== "undefined"
+            ? search
+            : "";
+
+    const pageTitle =
+        typeof title !== "undefined"
+            ? title
+            : "Collections | Yogita Patola Art";
+%>
+
+
+<!-- ================================================= -->
+<!-- COLLECTIONS PAGE -->
+<!-- ================================================= -->
+
+<section class="collections-page">
+
+
+    <!-- ================================================= -->
+    <!-- PAGE HERO -->
+    <!-- ================================================= -->
+
+    <section class="collections-hero">
+
+        <div class="container">
+
+            <div class="collections-hero-content text-center">
+
+                <span class="collections-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
+
+                <h1 class="collections-title">
+                    Our Collections
+                </h1>
+
+                <p class="collections-description">
+                    Explore our collection of handcrafted
+                    Patola sarees and traditional Indian
+                    textiles, created with timeless artistry
+                    and heritage.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- COLLECTION CONTENT -->
+    <!-- ================================================= -->
+
+    <section class="collections-content py-5">
+
+        <div class="container">
+
+
+            <!-- ================================================= -->
+            <!-- FILTER / SEARCH BAR -->
+            <!-- ================================================= -->
+
+            <div class="collections-toolbar mb-5">
+
+                <div class="row g-3 align-items-center">
+
+
+                    <!-- SEARCH -->
+
+                    <div class="col-lg-6">
+
+                        <form
+                            action="/collections"
+                            method="GET"
+                            class="collections-search-form"
+                        >
+
+                            <div class="input-group">
+
+                                <input
+                                    type="search"
+                                    name="search"
+                                    value="<%= currentSearch %>"
+                                    class="form-control"
+                                    placeholder="Search collections..."
+                                    aria-label="Search collections"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-dark"
+                                >
+                                    Search
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="col-lg-4">
+
+                        <form
+                            action="/collections"
+                            method="GET"
+                            class="collections-category-form"
+                        >
+
+                            <select
+                                name="category"
+                                class="form-select"
+                                onchange="this.form.submit()"
+                            >
+
+                                <option value="">
+                                    All Collections
+                                </option>
+
+                                <option
+                                    value="Patola Sarees"
+                                    <%= currentCategory === "Patola Sarees"
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    Patola Sarees
+                                </option>
+
+                                <option
+                                    value="Double Ikat Sarees"
+                                    <%= currentCategory === "Double Ikat Sarees"
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    Double Ikat Sarees
+                                </option>
+
+                                <option
+                                    value="Single Ikat Sarees"
+                                    <%= currentCategory === "Single Ikat Sarees"
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    Single Ikat Sarees
+                                </option>
+
+                                <option
+                                    value="Dupattas"
+                                    <%= currentCategory === "Dupattas"
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    Dupattas
+                                </option>
+
+                                <option
+                                    value="Accessories"
+                                    <%= currentCategory === "Accessories"
+                                        ? "selected"
+                                        : "" %>
+                                >
+                                    Accessories
+                                </option>
+
+                            </select>
+
+                        </form>
+
+                    </div>
+
+
+
+                    <!-- RESET -->
+
+                    <div class="col-lg-2">
+
+                        <a
+                            href="/collections"
+                            class="btn btn-outline-dark w-100"
+                        >
+                            Reset
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- COLLECTION HEADER -->
+            <!-- ================================================= -->
+
+            <div class="collections-section-header mb-4">
+
+                <div>
+
+                    <span class="section-subtitle">
+                        HANDCRAFTED COLLECTION
+                    </span>
+
+                    <h2 class="section-title mb-0">
+                        Discover Our Patolas
+                    </h2>
+
+                </div>
+
+
+                <div class="collections-count">
+
+                    <%= collectionProducts.length %>
+
+                    <span>
+                        <%= collectionProducts.length === 1
+                            ? "Product"
+                            : "Products"
+                        %>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- PRODUCT GRID -->
+            <!-- ================================================= -->
+
+            <% if (collectionProducts.length > 0) { %>
+
+
+                <div
+                    class="row g-4 collections-product-grid"
+                    id="collectionsProductGrid"
+                >
+
+
+                    <% collectionProducts.forEach(product => { %>
+
+
+                        <div
+                            class="col-xl-4 col-lg-4 col-md-6 collection-product-item"
+                            data-category="<%= product.category || '' %>"
+                        >
+
+
+                            <%- include("../partials/product-card", {
+                                product: product
+                            }) %>
+
+
+                        </div>
+
+
+                    <% }); %>
+
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <!-- ================================================= -->
+                <!-- EMPTY STATE -->
+                <!-- ================================================= -->
+
+                <div class="collections-empty text-center">
+
+                    <div class="collections-empty-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        No Products Found
+                    </h3>
+
+                    <p>
+                        We could not find any products matching
+                        your current search or collection.
+                    </p>
+
+                    <a
+                        href="/collections"
+                        class="btn btn-dark"
+                    >
+                        View All Collections
+                    </a>
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- COLLECTION STORY -->
+    <!-- ================================================= -->
+
+    <section class="collections-story py-5">
+
+        <div class="container">
+
+            <div class="row align-items-center g-5">
+
+
+                <!-- TEXT -->
+
+                <div class="col-lg-6">
+
+                    <span class="section-subtitle">
+                        THE ART OF PATOLA
+                    </span>
+
+                    <h2 class="section-title">
+                        Woven With Patience.
+                        <br>
+                        Created With Passion.
+                    </h2>
+
+                    <p class="section-description">
+                        Every Patola carries the dedication of
+                        traditional craftsmanship. From carefully
+                        planned motifs to intricate weaving,
+                        each piece reflects India's rich textile
+                        heritage.
+                    </p>
+
+                    <p class="section-description">
+                        Discover pieces that are designed not
+                        simply to be worn, but to be cherished
+                        for generations.
+                    </p>
+
+                    <a
+                        href="/about"
+                        class="btn btn-dark"
+                    >
+                        Discover Our Story
+                    </a>
+
+                </div>
+
+
+
+                <!-- VISUAL -->
+
+                <div class="col-lg-6">
+
+                    <div
+                        class="collections-story-card"
+                        role="img"
+                        aria-label="Traditional Patola textile"
+                    >
+
+                        <div class="collections-story-overlay">
+
+                            <span>
+                                TRADITIONAL
+                            </span>
+
+                            <strong>
+                                PATOLA ART
+                            </strong>
+
+                            <small>
+                                Heritage • Craft • Elegance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- CALL TO ACTION -->
+    <!-- ================================================= -->
+
+    <section class="collections-cta py-5">
+
+        <div class="container">
+
+            <div class="text-center">
+
+                <span class="collections-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
+
+                <h2 class="section-title">
+                    Find A Piece Of Heritage
+                </h2>
+
+                <p class="section-description mx-auto">
+                    Explore our handcrafted collection and
+                    discover the timeless beauty of Patola.
+                </p>
+
+                <a
+                    href="/contact"
+                    class="btn btn-dark btn-lg"
+                >
+                    Enquire About A Piece
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</section>
+

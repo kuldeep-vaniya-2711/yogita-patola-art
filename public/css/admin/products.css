@@ -1,0 +1,2262 @@
+/* =========================================================
+   ADMIN PRODUCTS PAGE
+   Yogita Patola Art
+   Premium Responsive Admin UI
+   ========================================================= */
+
+
+/* =========================================================
+   BOOTSTRAP ICONS
+   ========================================================= */
+
+@import url(
+    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+);
+
+
+/* =========================================================
+   PAGE ROOT
+   ========================================================= */
+
+.admin-products-page {
+
+    width: 100%;
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding:
+        42px
+        48px
+        70px;
+
+    color: #332b28;
+
+    background: #faf8f4;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   BOX SIZING
+   ========================================================= */
+
+.admin-products-page *,
+.admin-products-page *::before,
+.admin-products-page *::after {
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.products-page-header {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 30px;
+
+    margin-bottom: 34px;
+
+    border-bottom:
+        1px solid #ddd2c7;
+
+}
+
+
+.products-eyebrow {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #8a2941;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+}
+
+
+.admin-page-title {
+
+    margin: 0;
+
+    color: #332b28;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 48px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+}
+
+
+.admin-page-description {
+
+    margin:
+        12px
+        0
+        0;
+
+    color: #756962;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   HEADER BUTTON
+   ========================================================= */
+
+.products-page-header > .admin-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    min-width: 145px;
+
+    min-height: 48px;
+
+    padding:
+        11px
+        20px;
+
+    background: #7b2438;
+
+    border:
+        1px solid #7b2438;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.products-page-header > .admin-btn:hover {
+
+    background: #641c2d;
+
+    border-color: #641c2d;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(123, 36, 56, 0.16);
+
+}
+
+
+.products-page-header > .admin-btn i {
+
+    margin-right: 8px;
+
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+   ========================================================= */
+
+.products-stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    width: 100%;
+
+    margin-bottom: 34px;
+
+}
+
+
+/* =========================================================
+   STAT CARD
+   ========================================================= */
+
+.product-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    min-width: 0;
+
+    min-height: 104px;
+
+    padding:
+        20px
+        22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffefa 0%,
+            #fffaf5 100%
+        );
+
+    border:
+        1px solid #ded3c8;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(67, 48, 39, 0.05);
+
+}
+
+
+.product-stat-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 48px;
+
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    border-radius: 10px;
+
+    background: #f0e4dc;
+
+    color: #7b2438;
+
+    font-size: 21px;
+
+}
+
+
+.product-stat-icon.success {
+
+    background: #e7f0e8;
+
+    color: #397149;
+
+}
+
+
+.product-stat-icon.warning {
+
+    background: #f5ead0;
+
+    color: #80621e;
+
+}
+
+
+.product-stat-icon.gold {
+
+    background: #f1e7d1;
+
+    color: #8b6824;
+
+}
+
+
+.product-stat-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 5px;
+
+}
+
+
+.product-stat-content span {
+
+    overflow: hidden;
+
+    color: #756962;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.product-stat-content strong {
+
+    color: #332b28;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   FILTER TOOLBAR
+   ========================================================= */
+
+.products-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin-bottom: 20px;
+
+    padding:
+        16px
+        18px;
+
+    background: #f3ede6;
+
+    border:
+        1px solid #dfd3c7;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(67, 48, 39, 0.035);
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.products-search {
+
+    position: relative;
+
+    flex: 1 1 420px;
+
+    min-width: 260px;
+
+}
+
+
+.products-search > i {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 15px;
+
+    z-index: 2;
+
+    color: #8e8179;
+
+    font-size: 15px;
+
+    pointer-events: none;
+
+    transform: translateY(-50%);
+
+}
+
+
+.products-search input,
+#productSearch {
+
+    display: block;
+
+    width: 100%;
+
+    height: 46px;
+
+    padding:
+        10px
+        15px
+        10px
+        42px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #d8cdc2;
+
+    border-radius: 7px;
+
+    color: #332b28;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    outline: none;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.products-search input::placeholder,
+#productSearch::placeholder {
+
+    color: #9a9089;
+
+}
+
+
+.products-search input:focus,
+#productSearch:focus {
+
+    border-color: #9b6c50;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(155, 108, 80, 0.12);
+
+}
+
+
+/* =========================================================
+   FILTER DROPDOWNS
+   ========================================================= */
+
+.products-filter {
+
+    flex:
+        0 0 220px;
+
+    min-width: 0;
+
+}
+
+
+.products-filter select,
+#categoryFilter,
+#availabilityFilter {
+
+    display: block;
+
+    width: 100%;
+
+    height: 46px;
+
+    padding:
+        10px
+        38px
+        10px
+        14px;
+
+    background-color: #ffffff;
+
+    border:
+        1px solid #d8cdc2;
+
+    border-radius: 7px;
+
+    color: #4a403b;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    outline: none;
+
+    box-shadow: none;
+
+}
+
+
+.products-filter select:focus,
+#categoryFilter:focus,
+#availabilityFilter:focus {
+
+    border-color: #9b6c50;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(155, 108, 80, 0.12);
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.products-reset-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    height: 46px;
+
+    min-width: 88px;
+
+    padding:
+        10px
+        17px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #bcaea2;
+
+    border-radius: 7px;
+
+    color: #5d5049;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+.products-reset-btn i {
+
+    margin-right: 6px;
+
+}
+
+
+.products-reset-btn:hover {
+
+    background: #7b2438;
+
+    border-color: #7b2438;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   RESULT BAR
+   ========================================================= */
+
+.products-result-bar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-height: 38px;
+
+    margin-bottom: 12px;
+
+    padding:
+        0
+        2px;
+
+    color: #82766f;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 12px;
+
+}
+
+
+.products-result-bar strong {
+
+    color: #332b28;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.filter-status {
+
+    color: #8a7d75;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   IMPORTANT FOR MOBILE
+   ========================================================= */
+
+.products-table-wrapper,
+.admin-products-table-wrapper {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    background: #fffdf9;
+
+    border:
+        1px solid #ddd2c7;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(67, 48, 39, 0.055);
+
+    -webkit-overflow-scrolling: touch;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.products-table-wrapper::-webkit-scrollbar,
+.admin-products-table-wrapper::-webkit-scrollbar {
+
+    height: 7px;
+
+}
+
+
+.products-table-wrapper::-webkit-scrollbar-track,
+.admin-products-table-wrapper::-webkit-scrollbar-track {
+
+    background: #f2ece6;
+
+}
+
+
+.products-table-wrapper::-webkit-scrollbar-thumb,
+.admin-products-table-wrapper::-webkit-scrollbar-thumb {
+
+    background: #bcaea2;
+
+    border-radius: 20px;
+
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.products-table {
+
+    width: 100%;
+
+    min-width: 1000px;
+
+    margin: 0;
+
+    border-collapse: collapse;
+
+    background: #fffdf9;
+
+}
+
+
+.products-table thead th {
+
+    height: 54px;
+
+    padding:
+        0
+        18px;
+
+    background: #eee6de;
+
+    border-bottom:
+        1px solid #d8ccc1;
+
+    color: #675951;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    vertical-align: middle;
+
+}
+
+
+.products-table tbody td {
+
+    padding:
+        15px
+        18px;
+
+    border-bottom:
+        1px solid #eee7e0;
+
+    color: #4d423c;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+
+}
+
+
+.products-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+.products-table tbody tr {
+
+    transition:
+        background-color 0.15s ease;
+
+}
+
+
+.products-table tbody tr:hover {
+
+    background: #fcf8f3;
+
+}
+
+
+/* =========================================================
+   PRODUCT COLUMN
+   ========================================================= */
+
+.product-table-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 270px;
+
+}
+
+
+.product-table-image {
+
+    width: 66px;
+
+    height: 78px;
+
+    flex: 0 0 66px;
+
+    overflow: hidden;
+
+    background: #f1ebe4;
+
+    border:
+        1px solid #d9ccc0;
+
+    border-radius: 8px;
+
+}
+
+
+.product-table-image img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.product-no-image {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: #f1ebe4;
+
+    color: #a38e7f;
+
+    font-size: 22px;
+
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS
+   ========================================================= */
+
+.product-table-details {
+
+    min-width: 0;
+
+}
+
+
+.product-table-details strong {
+
+    display: block;
+
+    max-width: 280px;
+
+    overflow: hidden;
+
+    color: #332b28;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.45;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.product-table-details small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #8b7e76;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+.product-category-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 30px;
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    padding:
+        5px
+        10px;
+
+    background: #f3ebe3;
+
+    border:
+        1px solid #dfd0c2;
+
+    border-radius: 6px;
+
+    color: #6c5041;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+.product-price {
+
+    color: #332b28;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   AVAILABILITY
+   ========================================================= */
+
+.admin-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 29px;
+
+    padding:
+        5px
+        10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.admin-status::before {
+
+    content: "";
+
+    width: 6px;
+
+    height: 6px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+}
+
+
+.admin-status-success {
+
+    background: #e8f2eb;
+
+    border:
+        1px solid #c9dfcf;
+
+    color: #397149;
+
+}
+
+
+.admin-status-danger {
+
+    background: #f7e9e8;
+
+    border:
+        1px solid #e8c9c6;
+
+    color: #9a4741;
+
+}
+
+
+.admin-status-muted {
+
+    background: #eeeae6;
+
+    border:
+        1px solid #ddd6d0;
+
+    color: #746b65;
+
+}
+
+
+/* =========================================================
+   FEATURED
+   ========================================================= */
+
+.featured-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 29px;
+
+    padding:
+        5px
+        10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.featured-badge.active {
+
+    background: #f5ead0;
+
+    border:
+        1px solid #e3cea0;
+
+    color: #80621e;
+
+}
+
+
+.featured-badge.active::before {
+
+    content: "★";
+
+    margin-right: 5px;
+
+    font-size: 9px;
+
+}
+
+
+.featured-badge:not(.active) {
+
+    background: #f0ece8;
+
+    border:
+        1px solid #ddd6d0;
+
+    color: #817770;
+
+}
+
+
+/* =========================================================
+   IMAGE COUNT
+   ========================================================= */
+
+.product-image-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 34px;
+
+    height: 30px;
+
+    padding:
+        4px
+        9px;
+
+    background: #f3ede7;
+
+    border:
+        1px solid #ded2c7;
+
+    border-radius: 6px;
+
+    color: #665850;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+.product-image-count i {
+
+    margin-right: 5px;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   IMPORTANT:
+   HTML uses .product-action-btn
+   ========================================================= */
+
+.product-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 7px;
+
+    white-space: nowrap;
+
+}
+
+
+.product-action-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 36px;
+
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    margin: 0;
+
+    padding: 0;
+
+    background: #ffffff;
+
+    border: 1px solid transparent;
+
+    border-radius: 7px;
+
+    color: #675d57;
+
+    font-size: 14px;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+
+}
+
+
+.product-action-btn i {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 !important;
+
+    font-size: 14px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.product-action-btn.view {
+
+    background: #ffffff;
+
+    border-color: #cfc3ba;
+
+    color: #675d57;
+
+}
+
+
+.product-action-btn.view:hover {
+
+    background: #eee8e2;
+
+    border-color: #9e8d81;
+
+    color: #403732;
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.product-action-btn.edit {
+
+    background: #ffffff;
+
+    border-color: #b99480;
+
+    color: #7b4c38;
+
+}
+
+
+.product-action-btn.edit:hover {
+
+    background: #7b2438;
+
+    border-color: #7b2438;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.product-action-btn.delete {
+
+    background: #ffffff;
+
+    border-color: #d6a7a2;
+
+    color: #a14b45;
+
+}
+
+
+.product-action-btn.delete:hover {
+
+    background: #a14b45;
+
+    border-color: #a14b45;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   DELETE FORM
+   ========================================================= */
+
+.delete-product-form {
+
+    display: inline;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+/* =========================================================
+   EMPTY CELL
+   ========================================================= */
+
+.products-empty-cell {
+
+    padding:
+        0 !important;
+
+    border-bottom: none !important;
+
+}
+
+
+.products-empty-state {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    min-height: 320px;
+
+    padding:
+        55px
+        25px;
+
+    text-align: center;
+
+}
+
+
+.products-empty-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 64px;
+
+    height: 64px;
+
+    margin-bottom: 18px;
+
+    background: #f1e8df;
+
+    border:
+        1px solid #dfd0c2;
+
+    border-radius: 50%;
+
+    color: #8a6755;
+
+    font-size: 25px;
+
+}
+
+
+.products-empty-state h3 {
+
+    margin:
+        0
+        0
+        8px;
+
+    color: #3c322d;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 23px;
+
+    font-weight: 600;
+
+}
+
+
+.products-empty-state p {
+
+    max-width: 430px;
+
+    margin:
+        0
+        0
+        22px;
+
+    color: #82766f;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   FILTER EMPTY STATE
+   ========================================================= */
+
+.products-filter-empty {
+
+    padding:
+        65px
+        25px;
+
+    background: #fffdf9;
+
+    text-align: center;
+
+}
+
+
+.products-filter-empty h3 {
+
+    margin:
+        0
+        0
+        8px;
+
+    color: #3c322d;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 22px;
+
+}
+
+
+.products-filter-empty p {
+
+    margin:
+        0
+        0
+        18px;
+
+    color: #82766f;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   OUTLINE BUTTON
+   ========================================================= */
+
+.admin-btn-outline {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding:
+        9px
+        17px;
+
+    background: #ffffff;
+
+    border:
+        1px solid #bcaea2;
+
+    border-radius: 7px;
+
+    color: #5d5049;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.admin-btn-outline:hover {
+
+    background: #7b2438;
+
+    border-color: #7b2438;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   DELETE MODAL
+   ========================================================= */
+
+.product-delete-modal {
+
+    overflow: hidden;
+
+    background: #fffdf9;
+
+    border:
+        1px solid #dfd3c8;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(45, 31, 25, 0.18);
+
+}
+
+
+.product-delete-modal .modal-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        22px
+        24px;
+
+    border-bottom:
+        1px solid #eee4db;
+
+}
+
+
+.delete-modal-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    background: #f7e9e8;
+
+    border:
+        1px solid #e8c9c6;
+
+    border-radius: 10px;
+
+    color: #a14b45;
+
+    font-size: 18px;
+
+}
+
+
+.product-delete-modal .modal-body {
+
+    padding:
+        24px;
+
+}
+
+
+.product-delete-modal .modal-body h4 {
+
+    margin:
+        0
+        0
+        10px;
+
+    color: #332b28;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 24px;
+
+    font-weight: 600;
+
+}
+
+
+.product-delete-modal .modal-body p {
+
+    margin: 0;
+
+    color: #756962;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+.product-delete-modal .modal-body strong {
+
+    color: #332b28;
+
+}
+
+
+.product-delete-modal .modal-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding:
+        18px
+        24px;
+
+    border-top:
+        1px solid #eee4db;
+
+}
+
+
+.delete-confirm-btn {
+
+    min-height: 42px;
+
+    padding:
+        9px
+        17px;
+
+    background: #a14b45;
+
+    border:
+        1px solid #a14b45;
+
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.delete-confirm-btn:hover {
+
+    background: #873b36;
+
+    border-color: #873b36;
+
+    color: #ffffff;
+
+}
+
+
+.delete-confirm-btn:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================================================
+   COLUMN WIDTHS
+   ========================================================= */
+
+.products-table th:nth-child(1),
+.products-table td:nth-child(1) {
+
+    width: 29%;
+
+}
+
+
+.products-table th:nth-child(2),
+.products-table td:nth-child(2) {
+
+    width: 14%;
+
+}
+
+
+.products-table th:nth-child(3),
+.products-table td:nth-child(3) {
+
+    width: 11%;
+
+}
+
+
+.products-table th:nth-child(4),
+.products-table td:nth-child(4) {
+
+    width: 14%;
+
+}
+
+
+.products-table th:nth-child(5),
+.products-table td:nth-child(5) {
+
+    width: 11%;
+
+}
+
+
+.products-table th:nth-child(6),
+.products-table td:nth-child(6) {
+
+    width: 8%;
+
+}
+
+
+.products-table th:nth-child(7),
+.products-table td:nth-child(7) {
+
+    width: 13%;
+
+}
+
+
+/* =========================================================
+   BUTTON ICON ALIGNMENT
+   ========================================================= */
+
+.admin-products-page .admin-btn i {
+
+    margin-right: 7px;
+
+}
+
+
+.admin-products-page button i {
+
+    margin-right: 7px;
+
+}
+
+
+.admin-products-page .product-actions i {
+
+    margin-right: 0 !important;
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .admin-products-page {
+
+        padding:
+            36px
+            32px
+            60px;
+
+    }
+
+
+    .products-stats-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .products-toolbar {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .products-search {
+
+        flex:
+            1 1 100%;
+
+    }
+
+
+    .products-filter {
+
+        flex:
+            1 1 calc(50% - 7px);
+
+    }
+
+
+    .products-reset-btn {
+
+        flex:
+            0 0 auto;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .admin-products-page {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        padding:
+            28px
+            20px
+            50px;
+
+    }
+
+
+    /* ---------------------------------------------
+       HEADER
+       --------------------------------------------- */
+
+    .products-page-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 20px;
+
+        padding-bottom: 24px;
+
+        margin-bottom: 26px;
+
+    }
+
+
+    .admin-page-title {
+
+        font-size: 38px;
+
+    }
+
+
+    .admin-page-description {
+
+        margin-top: 9px;
+
+        font-size: 13px;
+
+    }
+
+
+    .products-page-header > .admin-btn {
+
+        width: 100%;
+
+        min-height: 46px;
+
+    }
+
+
+    /* ---------------------------------------------
+       STATS
+       --------------------------------------------- */
+
+    .products-stats-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+        margin-bottom: 24px;
+
+    }
+
+
+    .product-stat-card {
+
+        min-height: 88px;
+
+        padding:
+            15px;
+
+        gap: 11px;
+
+        border-radius: 10px;
+
+    }
+
+
+    .product-stat-icon {
+
+        width: 40px;
+
+        height: 40px;
+
+        flex-basis: 40px;
+
+        font-size: 17px;
+
+        border-radius: 9px;
+
+    }
+
+
+    .product-stat-content span {
+
+        font-size: 10px;
+
+    }
+
+
+    .product-stat-content strong {
+
+        font-size: 20px;
+
+    }
+
+
+    /* ---------------------------------------------
+       TOOLBAR
+       --------------------------------------------- */
+
+    .products-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding: 13px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .products-search,
+    .products-filter {
+
+        width: 100%;
+
+        min-width: 0;
+
+        flex:
+            1 1 auto;
+
+    }
+
+
+    .products-reset-btn {
+
+        width: 100%;
+
+    }
+
+
+    /* ---------------------------------------------
+       RESULT BAR
+       --------------------------------------------- */
+
+    .products-result-bar {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    /* ---------------------------------------------
+       TABLE
+       --------------------------------------------- */
+
+    .products-table-wrapper,
+    .admin-products-table-wrapper {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        border-radius: 10px;
+
+    }
+
+
+    .products-table {
+
+        min-width: 1000px;
+
+    }
+
+
+    /* ---------------------------------------------
+       EMPTY STATE
+       --------------------------------------------- */
+
+    .products-empty-state {
+
+        min-height: 280px;
+
+        padding:
+            45px
+            20px;
+
+    }
+
+
+    /* ---------------------------------------------
+       MODAL
+       --------------------------------------------- */
+
+    .product-delete-modal .modal-footer {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+
+    }
+
+
+    .product-delete-modal .modal-footer .admin-btn,
+    .product-delete-modal .modal-footer button {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .admin-products-page {
+
+        padding:
+            22px
+            14px
+            40px;
+
+    }
+
+
+    .admin-page-title {
+
+        font-size: 32px;
+
+    }
+
+
+    .admin-page-description {
+
+        font-size: 12px;
+
+    }
+
+
+    .products-stats-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+    }
+
+
+    .product-stat-card {
+
+        min-height: 78px;
+
+        padding:
+            14px;
+
+    }
+
+
+    .product-stat-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        flex-basis: 38px;
+
+    }
+
+
+    .product-stat-content strong {
+
+        font-size: 19px;
+
+    }
+
+
+    .products-toolbar {
+
+        padding: 11px;
+
+    }
+
+
+    .products-search input,
+    #productSearch,
+    .products-filter select,
+    #categoryFilter,
+    #availabilityFilter,
+    .products-reset-btn {
+
+        height: 44px;
+
+    }
+
+
+    .products-result-bar {
+
+        font-size: 11px;
+
+    }
+
+
+    .filter-status {
+
+        max-width: 100%;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+
+    }
+
+
+    .product-delete-modal .modal-header,
+    .product-delete-modal .modal-body,
+    .product-delete-modal .modal-footer {
+
+        padding-left: 18px;
+
+        padding-right: 18px;
+
+    }
+
+}

@@ -1,0 +1,408 @@
+<%
+layout("layout", {
+
+
+title: "Create Account | Yogita Patola Art",
+
+description:
+    "Create your Yogita Patola Art account.",
+
+pageCss:
+    "/css/pages/register.css",
+
+pageJs:
+    "/js/pages/register.js"
+
+
+});
+%>
+
+<!-- =========================================================
+     REGISTER PAGE
+========================================================= -->
+
+<div class="register-page">
+
+
+<div class="register-container">
+
+
+    <!-- =================================================
+         REGISTER CARD
+    ================================================== -->
+
+    <div class="register-card">
+
+
+        <!-- =================================================
+             LEFT / BRAND PANEL
+        ================================================== -->
+
+        <div class="register-brand-panel">
+
+            <div class="register-brand-inner">
+
+                <div class="register-brand-symbol">
+                    ✦
+                </div>
+
+                <span class="register-brand-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
+
+                <h1 class="register-brand-title">
+
+                    Begin Your
+
+                    <em>
+                        Heritage Journey
+                    </em>
+
+                </h1>
+
+                <p class="register-brand-description">
+
+                    Create your account and discover
+                    handcrafted Patola artistry,
+                    timeless textiles and Indian heritage.
+
+                </p>
+
+
+                <div class="register-brand-decoration">
+
+                    <span></span>
+
+                    <i>✦</i>
+
+                    <span></span>
+
+                </div>
+
+
+                <p class="register-brand-note">
+
+                    Tradition woven into every thread.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REGISTER FORM PANEL
+        ================================================== -->
+
+        <div class="register-form-panel">
+
+            <div class="register-form-inner">
+
+
+                <!-- HEADER -->
+
+                <div class="register-form-header">
+
+                    <span class="register-eyebrow">
+                        CREATE ACCOUNT
+                    </span>
+
+                    <h2>
+
+                        Join Our
+
+                        <em>
+                            Collection
+                        </em>
+
+                    </h2>
+
+                    <p>
+                        Create your account to continue.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     ALERTS
+                ================================================== -->
+
+                <% if (typeof error !== "undefined" && error) { %>
+
+                    <div class="register-alert register-alert-error">
+                        <%= error %>
+                    </div>
+
+                <% } %>
+
+
+                <% if (typeof success !== "undefined" && success) { %>
+
+                    <div class="register-alert register-alert-success">
+                        <%= success %>
+                    </div>
+
+                <% } %>
+
+
+                <!-- =================================================
+                     REGISTER FORM
+                ================================================== -->
+
+                <form
+                    action="/user/register"
+                    method="POST"
+                    class="register-form"
+                    novalidate
+                >
+
+
+                    <!-- NAME -->
+
+                    <div class="register-field">
+
+                        <label
+                            for="name"
+                            class="register-label"
+                        >
+                            Full Name
+                        </label>
+
+
+                        <div class="register-input-wrap">
+
+                            <span class="register-input-icon">
+                                ♙
+                            </span>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="register-input"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="register-field">
+
+                        <label
+                            for="email"
+                            class="register-label"
+                        >
+                            Email Address
+                        </label>
+
+
+                        <div class="register-input-wrap">
+
+                            <span class="register-input-icon">
+                                @
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="register-input"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="register-field">
+
+                        <label
+                            for="password"
+                            class="register-label"
+                        >
+                            Password
+                        </label>
+
+
+                        <div class="register-input-wrap">
+
+                            <span class="register-input-icon">
+                                ◈
+                            </span>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="register-input"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="register-password-toggle"
+                                aria-label="Show password"
+                                data-target="password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="register-field">
+
+                        <label
+                            for="confirmPassword"
+                            class="register-label"
+                        >
+                            Confirm Password
+                        </label>
+
+
+                        <div class="register-input-wrap">
+
+                            <span class="register-input-icon">
+                                ◈
+                            </span>
+
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                class="register-input"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="register-password-toggle"
+                                aria-label="Show password"
+                                data-target="confirmPassword"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TERMS
+                    ================================================== -->
+
+                    <div class="register-terms">
+
+                        <label class="register-checkbox-label">
+
+                            <input
+                                type="checkbox"
+                                name="terms"
+                                value="accepted"
+                                required
+                            >
+
+                            <span>
+
+                                I agree to the
+
+                                <a href="/terms">
+                                    Terms &amp; Conditions
+                                </a>
+
+                                and
+
+                                <a href="/privacy">
+                                    Privacy Policy
+                                </a>.
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SUBMIT
+                    ================================================== -->
+
+                    <button
+                        type="submit"
+                        class="register-submit"
+                    >
+
+                        <span>
+                            Create Account
+                        </span>
+
+                        <span class="register-submit-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- =================================================
+                     LOGIN
+                ================================================== -->
+
+                <div class="register-login">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <a href="/user/login">
+
+                        Login
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</div>

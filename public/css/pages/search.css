@@ -1,0 +1,956 @@
+/* =========================================================
+   SEARCH PAGE
+   Yogita Patola Art
+   Premium / Elegant / Responsive
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.search-page {
+    width: 100%;
+
+    background: #fcfaf7;
+
+    color: #302923;
+}
+
+
+
+/* =========================================================
+   SEARCH HERO
+   ========================================================= */
+
+.search-hero {
+    position: relative;
+
+    padding: 82px 20px 76px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7f0e8 0%,
+            #f4ece3 100%
+        );
+
+    border-bottom: 1px solid #e7dcd1;
+
+    overflow: hidden;
+}
+
+
+.search-hero::before {
+    content: "";
+
+    position: absolute;
+
+    top: -250px;
+    left: 50%;
+
+    width: 560px;
+    height: 560px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgba(150, 118, 93, 0.11);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.search-hero::after {
+    content: "";
+
+    position: absolute;
+
+    right: -180px;
+    bottom: -250px;
+
+    width: 500px;
+    height: 500px;
+
+    border: 1px solid rgba(90, 24, 37, 0.06);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.search-hero .container {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.search-hero-content {
+    max-width: 760px;
+
+    margin: 0 auto;
+}
+
+
+.search-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: #96765d;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.20em;
+
+    line-height: 1.4;
+
+    text-transform: uppercase;
+}
+
+
+.search-title {
+    margin: 0 0 16px;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(2.5rem, 5vw, 4rem);
+
+    font-weight: 600;
+
+    line-height: 1.12;
+
+    letter-spacing: -0.02em;
+}
+
+
+.search-description {
+    max-width: 620px;
+
+    margin: 0 auto;
+
+    color: #756c64;
+
+    font-size: 0.94rem;
+
+    line-height: 1.8;
+}
+
+
+
+/* =========================================================
+   SEARCH CONTENT
+   ========================================================= */
+
+.search-content {
+    background: #fcfaf7;
+
+    padding-top: 75px !important;
+
+    padding-bottom: 85px !important;
+}
+
+
+
+/* =========================================================
+   SEARCH FORM
+   ========================================================= */
+
+.search-form-wrapper {
+    max-width: 920px;
+
+    margin-right: auto;
+
+    margin-left: auto;
+}
+
+
+.search-form {
+    width: 100%;
+}
+
+
+.search-form .input-group {
+    display: flex;
+
+    align-items: stretch;
+
+    background: #ffffff;
+
+    border: 1px solid #d9cec3;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 10px 30px rgba(63, 43, 30, 0.06);
+
+    overflow: hidden;
+}
+
+
+.search-form .form-control {
+    min-height: 56px;
+
+    padding: 14px 18px;
+
+    background: #ffffff;
+
+    border: 0 !important;
+
+    color: #332b26;
+
+    font-size: 0.88rem;
+
+    box-shadow: none !important;
+
+    outline: none;
+}
+
+
+.search-form .form-control::placeholder {
+    color: #a19a94;
+
+    opacity: 1;
+}
+
+
+.search-form .form-control:focus {
+    background: #ffffff;
+
+    border: 0 !important;
+
+    box-shadow: none !important;
+}
+
+
+.search-form .btn {
+    min-width: 125px;
+
+    min-height: 56px;
+
+    padding: 12px 22px;
+
+    background: #332b27;
+
+    border: 0;
+
+    border-left: 1px solid #332b27;
+
+    border-radius: 0;
+
+    color: #ffffff;
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+
+    transition:
+        background-color 0.25s ease;
+}
+
+
+.search-form .btn:hover {
+    background: #5a1825;
+
+    border-color: #5a1825;
+}
+
+
+.search-form .btn:focus {
+    background: #5a1825;
+
+    box-shadow: none;
+}
+
+
+
+/* =========================================================
+   RESULT HEADER
+   ========================================================= */
+
+.search-result-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #e4d9ce;
+}
+
+
+.search-result-header .section-subtitle {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #96765d;
+
+    font-size: 0.66rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+
+    line-height: 1.4;
+
+    text-transform: uppercase;
+}
+
+
+.search-result-header .section-title {
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(1.65rem, 3vw, 2.3rem);
+
+    font-weight: 600;
+
+    line-height: 1.25;
+}
+
+
+.search-result-count {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 5px;
+
+    flex-shrink: 0;
+
+    padding-bottom: 4px;
+
+    color: #887e76;
+
+    font-size: 0.76rem;
+
+    letter-spacing: 0.03em;
+}
+
+
+.search-result-count strong {
+    color: #4b151f;
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+}
+
+
+
+/* =========================================================
+   SEARCH GRID
+   ========================================================= */
+
+.search-grid {
+    margin-top: 0;
+}
+
+
+.search-grid-item {
+    display: flex;
+}
+
+
+.search-grid-item > * {
+    width: 100%;
+}
+
+
+
+/* =========================================================
+   PRODUCT CARD COMPATIBILITY
+   ========================================================= */
+
+.search-grid .product-card {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.search-empty {
+    max-width: 650px;
+
+    margin: 55px auto 10px;
+
+    padding: 60px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e4d9ce;
+
+    box-shadow:
+        0 12px 35px rgba(63, 43, 30, 0.05);
+}
+
+
+.search-empty-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 66px;
+    height: 66px;
+
+    margin: 0 auto 22px;
+
+    background: #f4ece3;
+
+    border: 1px solid #e0d1c4;
+
+    border-radius: 50%;
+
+    font-size: 1.45rem;
+}
+
+
+.search-empty h3 {
+    margin: 0 0 12px;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.65rem;
+
+    font-weight: 600;
+}
+
+
+.search-empty p {
+    max-width: 500px;
+
+    margin: 0 auto;
+
+    color: #786f68;
+
+    font-size: 0.84rem;
+
+    line-height: 1.8;
+}
+
+
+.search-empty p strong {
+    color: #4b151f;
+
+    font-weight: 600;
+}
+
+
+.search-empty .btn {
+    min-height: 46px;
+
+    padding: 11px 24px;
+
+    background: #332b27;
+
+    border-color: #332b27;
+
+    border-radius: 3px;
+
+    font-size: 0.74rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.search-empty .btn:hover {
+    background: #5a1825;
+
+    border-color: #5a1825;
+
+    transform: translateY(-1px);
+}
+
+
+
+/* =========================================================
+   SEARCH CTA
+   ========================================================= */
+
+.search-cta {
+    position: relative;
+
+    padding-top: 78px !important;
+
+    padding-bottom: 84px !important;
+
+    background: #f4ece3;
+
+    border-top: 1px solid #e7dcd1;
+
+    overflow: hidden;
+}
+
+
+.search-cta::before {
+    content: "";
+
+    position: absolute;
+
+    top: -270px;
+    left: 50%;
+
+    width: 540px;
+    height: 540px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgba(150, 118, 93, 0.10);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.search-cta .container {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.search-cta .search-eyebrow {
+    margin-bottom: 13px;
+}
+
+
+.search-cta .section-title {
+    max-width: 720px;
+
+    margin-right: auto;
+    margin-left: auto;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(1.9rem, 4vw, 2.75rem);
+
+    font-weight: 600;
+
+    line-height: 1.25;
+}
+
+
+.search-cta .section-description {
+    max-width: 620px;
+
+    margin-top: 15px;
+
+    margin-bottom: 27px;
+
+    color: #756c64;
+
+    font-size: 0.86rem;
+
+    line-height: 1.8;
+}
+
+
+.search-cta-buttons {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+.search-cta-buttons .btn {
+    min-width: 165px;
+
+    min-height: 49px;
+
+    padding: 12px 24px;
+
+    border-radius: 3px;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.search-cta-buttons .btn-dark {
+    background: #332b27;
+
+    border-color: #332b27;
+}
+
+
+.search-cta-buttons .btn-dark:hover {
+    background: #5a1825;
+
+    border-color: #5a1825;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(90, 24, 37, 0.14);
+}
+
+
+.search-cta-buttons .btn-outline-dark {
+    color: #332b27;
+
+    border-color: #8e8278;
+
+    background: transparent;
+}
+
+
+.search-cta-buttons .btn-outline-dark:hover {
+    background: #332b27;
+
+    border-color: #332b27;
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .search-hero {
+        padding-top: 68px;
+
+        padding-bottom: 64px;
+    }
+
+
+    .search-content {
+        padding-top: 60px !important;
+
+        padding-bottom: 70px !important;
+    }
+
+
+    .search-result-header {
+        align-items: center;
+    }
+
+
+    .search-cta {
+        padding-top: 65px !important;
+
+        padding-bottom: 70px !important;
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .search-hero {
+        padding: 56px 18px 52px;
+    }
+
+
+    .search-title {
+        font-size: 2.3rem;
+    }
+
+
+    .search-description {
+        font-size: 0.87rem;
+
+        line-height: 1.7;
+    }
+
+
+    .search-content {
+        padding-top: 45px !important;
+
+        padding-bottom: 58px !important;
+    }
+
+
+    .search-form-wrapper {
+        margin-bottom: 38px !important;
+    }
+
+
+    .search-form .input-group {
+        flex-direction: column;
+
+        overflow: visible;
+
+        border-radius: 3px;
+    }
+
+
+    .search-form .form-control {
+        min-height: 52px;
+
+        width: 100%;
+
+        border-bottom: 1px solid #e1d8d0 !important;
+
+        border-radius: 0;
+    }
+
+
+    .search-form .btn {
+        width: 100%;
+
+        min-height: 50px;
+
+        border-left: 0;
+
+        border-radius: 0;
+    }
+
+
+    .search-result-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding-bottom: 16px;
+    }
+
+
+    .search-result-count {
+        padding-bottom: 0;
+    }
+
+
+    .search-empty {
+        margin-top: 40px;
+
+        padding: 45px 22px;
+    }
+
+
+    .search-empty h3 {
+        font-size: 1.45rem;
+    }
+
+
+    .search-cta {
+        padding: 58px 18px 64px !important;
+    }
+
+
+    .search-cta .section-title {
+        font-size: 2rem;
+    }
+
+
+    .search-cta .section-description {
+        font-size: 0.81rem;
+    }
+
+
+    .search-cta-buttons {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .search-cta-buttons .btn {
+        width: 100%;
+
+        max-width: 310px;
+    }
+
+}
+
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .search-hero {
+        padding: 48px 15px 44px;
+    }
+
+
+    .search-eyebrow {
+        font-size: 0.61rem;
+
+        letter-spacing: 0.16em;
+    }
+
+
+    .search-title {
+        font-size: 2rem;
+    }
+
+
+    .search-description {
+        font-size: 0.82rem;
+    }
+
+
+    .search-content {
+        padding-top: 38px !important;
+
+        padding-bottom: 48px !important;
+    }
+
+
+    .search-form .form-control {
+        min-height: 49px;
+
+        padding: 11px 13px;
+
+        font-size: 0.80rem;
+    }
+
+
+    .search-form .btn {
+        min-height: 47px;
+
+        font-size: 0.70rem;
+    }
+
+
+    .search-result-header .section-title {
+        font-size: 1.55rem;
+    }
+
+
+    .search-empty {
+        padding: 38px 17px;
+    }
+
+
+    .search-empty-icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .search-empty h3 {
+        font-size: 1.35rem;
+    }
+
+
+    .search-empty p {
+        font-size: 0.77rem;
+    }
+
+
+    .search-cta {
+        padding: 48px 15px 55px !important;
+    }
+
+
+    .search-cta .section-title {
+        font-size: 1.75rem;
+    }
+
+}
+
+
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+.search-form .btn:focus-visible,
+.search-empty .btn:focus-visible,
+.search-cta-buttons .btn:focus-visible {
+    outline: 2px solid #96765d;
+
+    outline-offset: 3px;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .search-form .btn,
+    .search-empty .btn,
+    .search-cta-buttons .btn {
+        transition: none;
+    }
+
+
+    .search-empty .btn:hover,
+    .search-cta-buttons .btn:hover {
+        transform: none;
+    }
+
+}

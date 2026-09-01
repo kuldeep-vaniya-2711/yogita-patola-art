@@ -1,0 +1,1264 @@
+
+<%
+/*
+ * =========================================================
+ * ADMIN VISITORS PAGE
+ * =========================================================
+ *
+ * IMPORTANT:
+ * Do NOT pass pageCss/pageJs through layout().
+ *
+ * Layout is kept completely generic.
+ * This page injects ONLY its own CSS through ejs-mate block().
+ *
+ * CSS:
+ * /public/css/admin/visitors.css
+ * =========================================================
+ */
+
+layout("layout");
+
+
+/*
+ * =========================================================
+ * PAGE CSS
+ * =========================================================
+ */
+
+block("head").append(
+    '<link rel="stylesheet" href="/css/admin/visitors.css">'
+);
+
+
+/*
+ * =========================================================
+ * SAFE VISITOR DATA
+ * =========================================================
+ */
+
+const visitorList =
+    typeof visitors !== "undefined" &&
+    Array.isArray(visitors)
+        ? visitors
+        : [];
+
+
+/*
+ * =========================================================
+ * BASIC COUNTS
+ * =========================================================
+ */
+
+const totalVisitorCount =
+    visitorList.length;
+
+
+/*
+ * =========================================================
+ * DEVICE COUNTS
+ * =========================================================
+ */
+
+const desktopCount =
+    visitorList.filter(function (visitor) {
+
+        const device =
+            visitor && visitor.device
+                ? String(visitor.device).toLowerCase()
+                : "";
+
+        return device.includes("desktop");
+
+    }).length;
+
+
+const mobileCount =
+    visitorList.filter(function (visitor) {
+
+        const device =
+            visitor && visitor.device
+                ? String(visitor.device).toLowerCase()
+                : "";
+
+        return device.includes("mobile");
+
+    }).length;
+
+
+const tabletCount =
+    visitorList.filter(function (visitor) {
+
+        const device =
+            visitor && visitor.device
+                ? String(visitor.device).toLowerCase()
+                : "";
+
+        return device.includes("tablet");
+
+    }).length;
+
+
+/*
+ * =========================================================
+ * UNIQUE VISITORS
+ * =========================================================
+ */
+
+const uniqueIpSet =
+    new Set(
+        visitorList
+            .map(function (visitor) {
+
+                return visitor && visitor.ip
+                    ? String(visitor.ip)
+                    : "";
+
+            })
+            .filter(function (ip) {
+
+                return Boolean(ip);
+
+            })
+    );
+
+
+const uniqueVisitorCount =
+    uniqueIpSet.size;
+
+
+/*
+ * =========================================================
+ * PAGE COUNTS
+ * =========================================================
+ */
+
+const pageCounts = {};
+
+
+visitorList.forEach(function (visitor) {
+
+    const page =
+        visitor && visitor.page
+            ? String(visitor.page)
+            : "/";
+
+
+    pageCounts[page] =
+        (pageCounts[page] || 0) + 1;
+
+});
+
+
+const popularPages =
+    Object.entries(pageCounts)
+        .sort(function (a, b) {
+
+            return b[1] - a[1];
+
+        })
+        .slice(0, 5);
+
+
+/*
+ * =========================================================
+ * DEVICE PERCENTAGES
+ * =========================================================
+ */
+
+const desktopPercentage =
+    totalVisitorCount > 0
+        ? Math.round(
+            (desktopCount / totalVisitorCount) * 100
+        )
+        : 0;
+
+
+const mobilePercentage =
+    totalVisitorCount > 0
+        ? Math.round(
+            (mobileCount / totalVisitorCount) * 100
+        )
+        : 0;
+
+
+const tabletPercentage =
+    totalVisitorCount > 0
+        ? Math.round(
+            (tabletCount / totalVisitorCount) * 100
+        )
+        : 0;
+
+%>
+
+
+<div class="admin-visitors-page">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER                                            -->
+    <!-- ================================================= -->
+
+    <div class="admin-page-header">
+
+        <div class="admin-page-header-content">
+
+            <span class="admin-page-eyebrow">
+                WEBSITE ANALYTICS
+            </span>
+
+            <h1 class="admin-page-title">
+                Visitors
+            </h1>
+
+            <p class="admin-page-description">
+                Monitor website visitors, visited pages,
+                devices and browsing activity.
+            </p>
+
+        </div>
+
+
+        <div class="visitor-total-card">
+
+            <span class="visitor-total-label">
+                Total Visits
+            </span>
+
+            <strong
+                class="visitor-total-number"
+                id="totalVisitors"
+            >
+                <%= totalVisitorCount %>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- STATISTICS                                        -->
+    <!-- ================================================= -->
+
+    <div class="row g-4 visitors-stats-row">
+
+
+        <!-- TOTAL -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="visitor-stat-card">
+
+                <div class="visitor-stat-icon">
+                    ◉
+                </div>
+
+                <div class="visitor-stat-content">
+
+                    <span>
+                        Total Visits
+                    </span>
+
+                    <strong>
+                        <%= totalVisitorCount %>
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- UNIQUE -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="visitor-stat-card">
+
+                <div class="visitor-stat-icon">
+                    ◆
+                </div>
+
+                <div class="visitor-stat-content">
+
+                    <span>
+                        Unique Visitors
+                    </span>
+
+                    <strong>
+                        <%= uniqueVisitorCount %>
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESKTOP -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="visitor-stat-card">
+
+                <div class="visitor-stat-icon">
+                    ▣
+                </div>
+
+                <div class="visitor-stat-content">
+
+                    <span>
+                        Desktop
+                    </span>
+
+                    <strong>
+                        <%= desktopCount %>
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MOBILE / TABLET -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="visitor-stat-card">
+
+                <div class="visitor-stat-icon">
+                    ▯
+                </div>
+
+                <div class="visitor-stat-content">
+
+                    <span>
+                        Mobile / Tablet
+                    </span>
+
+                    <strong>
+                        <%= mobileCount + tabletCount %>
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ANALYTICS                                         -->
+    <!-- ================================================= -->
+
+    <div class="row g-4 mt-1">
+
+
+        <!-- ================================================= -->
+        <!-- DEVICE BREAKDOWN                                  -->
+        <!-- ================================================= -->
+
+        <div class="col-lg-5">
+
+            <div class="visitor-chart-card">
+
+                <div class="visitor-card-header">
+
+                    <div>
+
+                        <span class="visitor-card-eyebrow">
+                            DEVICE ANALYTICS
+                        </span>
+
+                        <h2>
+                            Device Breakdown
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="device-breakdown">
+
+
+                    <!-- DESKTOP -->
+
+                    <div class="device-row">
+
+                        <div class="device-row-info">
+
+                            <span>
+                                Desktop
+                            </span>
+
+                            <strong>
+                                <%= desktopCount %>
+                            </strong>
+
+                        </div>
+
+                        <div class="device-progress">
+
+                            <div
+                                class="device-progress-bar"
+                                style="width:<%= desktopPercentage %>%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+
+                    <div class="device-row">
+
+                        <div class="device-row-info">
+
+                            <span>
+                                Mobile
+                            </span>
+
+                            <strong>
+                                <%= mobileCount %>
+                            </strong>
+
+                        </div>
+
+                        <div class="device-progress">
+
+                            <div
+                                class="device-progress-bar"
+                                style="width:<%= mobilePercentage %>%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TABLET -->
+
+                    <div class="device-row">
+
+                        <div class="device-row-info">
+
+                            <span>
+                                Tablet
+                            </span>
+
+                            <strong>
+                                <%= tabletCount %>
+                            </strong>
+
+                        </div>
+
+                        <div class="device-progress">
+
+                            <div
+                                class="device-progress-bar"
+                                style="width:<%= tabletPercentage %>%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- MOST VISITED PAGES                               -->
+        <!-- ================================================= -->
+
+        <div class="col-lg-7">
+
+            <div class="visitor-chart-card">
+
+                <div class="visitor-card-header">
+
+                    <div>
+
+                        <span class="visitor-card-eyebrow">
+                            PAGE ANALYTICS
+                        </span>
+
+                        <h2>
+                            Most Visited Pages
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <% if (popularPages.length > 0) { %>
+
+
+                    <div class="popular-pages-list">
+
+                        <% popularPages.forEach(function (pageData, index) { %>
+
+                            <%
+                                const pageName =
+                                    pageData[0];
+
+                                const pageVisitCount =
+                                    pageData[1];
+                            %>
+
+
+                            <div class="popular-page-row">
+
+                                <div class="popular-page-number">
+                                    <%= index + 1 %>
+                                </div>
+
+
+                                <div
+                                    class="popular-page-name"
+                                    title="<%= pageName %>"
+                                >
+                                    <%= pageName %>
+                                </div>
+
+
+                                <div class="popular-page-count">
+                                    <%= pageVisitCount %>
+                                </div>
+
+                            </div>
+
+
+                        <% }); %>
+
+                    </div>
+
+
+                <% } else { %>
+
+
+                    <div class="analytics-empty">
+
+                        <span>
+                            ✦
+                        </span>
+
+                        <p>
+                            No page analytics available yet.
+                        </p>
+
+                    </div>
+
+
+                <% } %>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- VISITOR TABLE                                     -->
+    <!-- ================================================= -->
+
+    <div class="visitor-table-card mt-4">
+
+
+        <!-- ================================================= -->
+        <!-- TABLE HEADER                                      -->
+        <!-- ================================================= -->
+
+        <div class="visitor-table-header">
+
+            <div class="visitor-table-heading">
+
+                <span class="visitor-card-eyebrow">
+                    VISITOR ACTIVITY
+                </span>
+
+                <h2>
+                    Recent Visitors
+                </h2>
+
+                <p>
+                    Latest visitor activity recorded
+                    by the website.
+                </p>
+
+            </div>
+
+
+            <div class="visitor-table-controls">
+
+                <div class="visitor-search-wrapper">
+
+                    <label
+                        for="visitorSearch"
+                        class="visually-hidden"
+                    >
+                        Search visitors
+                    </label>
+
+                    <input
+                        type="search"
+                        id="visitorSearch"
+                        class="form-control"
+                        placeholder="Search visitors..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    id="clearVisitorSearch"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- TABLE                                              -->
+        <!-- ================================================= -->
+
+        <div class="table-responsive">
+
+            <table
+                class="table visitors-table"
+                id="visitorsTable"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            IP Address
+                        </th>
+
+                        <th>
+                            Page
+                        </th>
+
+                        <th>
+                            Device
+                        </th>
+
+                        <th>
+                            Browser
+                        </th>
+
+                        <th>
+                            Referrer
+                        </th>
+
+                        <th>
+                            Visited At
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <% if (visitorList.length > 0) { %>
+
+
+                        <% visitorList.forEach(function (visitor, index) { %>
+
+
+                            <%
+                                /*
+                                 * =========================================
+                                 * SAFE VALUES
+                                 * =========================================
+                                 */
+
+                                const visitorIp =
+                                    visitor && visitor.ip
+                                        ? String(visitor.ip)
+                                        : "Unknown";
+
+
+                                const visitorPage =
+                                    visitor && visitor.page
+                                        ? String(visitor.page)
+                                        : "/";
+
+
+                                const visitorDevice =
+                                    visitor && visitor.device
+                                        ? String(visitor.device)
+                                        : "Unknown";
+
+
+                                const visitorUserAgent =
+                                    visitor && visitor.userAgent
+                                        ? String(visitor.userAgent)
+                                        : "Unknown";
+
+
+                                const visitorReferrer =
+                                    visitor && visitor.referrer
+                                        ? String(visitor.referrer)
+                                        : "Direct";
+
+
+                                /*
+                                 * =========================================
+                                 * BROWSER DETECTION
+                                 * =========================================
+                                 */
+
+                                const userAgent =
+                                    visitorUserAgent;
+
+
+                                let browserName =
+                                    "Unknown";
+
+
+                                if (
+                                    userAgent.includes("Edg")
+                                ) {
+
+                                    browserName =
+                                        "Edge";
+
+                                } else if (
+                                    userAgent.includes("OPR") ||
+                                    userAgent.includes("Opera")
+                                ) {
+
+                                    browserName =
+                                        "Opera";
+
+                                } else if (
+                                    userAgent.includes("Chrome")
+                                ) {
+
+                                    browserName =
+                                        "Chrome";
+
+                                } else if (
+                                    userAgent.includes("Firefox")
+                                ) {
+
+                                    browserName =
+                                        "Firefox";
+
+                                } else if (
+                                    userAgent.includes("Safari")
+                                ) {
+
+                                    browserName =
+                                        "Safari";
+
+                                }
+
+
+                                /*
+                                 * =========================================
+                                 * DEVICE CLASS
+                                 * =========================================
+                                 */
+
+                                const normalizedDevice =
+                                    visitorDevice.toLowerCase();
+
+
+                                let deviceClass =
+                                    "visitor-device-other";
+
+
+                                if (
+                                    normalizedDevice.includes(
+                                        "desktop"
+                                    )
+                                ) {
+
+                                    deviceClass =
+                                        "visitor-device-desktop";
+
+                                } else if (
+                                    normalizedDevice.includes(
+                                        "mobile"
+                                    )
+                                ) {
+
+                                    deviceClass =
+                                        "visitor-device-mobile";
+
+                                } else if (
+                                    normalizedDevice.includes(
+                                        "tablet"
+                                    )
+                                ) {
+
+                                    deviceClass =
+                                        "visitor-device-tablet";
+
+                                }
+
+
+                                /*
+                                 * =========================================
+                                 * DATE
+                                 * =========================================
+                                 */
+
+                                let visitorDate =
+                                    "—";
+
+
+                                if (
+                                    visitor &&
+                                    visitor.visitedAt
+                                ) {
+
+                                    const parsedDate =
+                                        new Date(
+                                            visitor.visitedAt
+                                        );
+
+
+                                    if (
+                                        !isNaN(
+                                            parsedDate.getTime()
+                                        )
+                                    ) {
+
+                                        visitorDate =
+                                            parsedDate.toLocaleString(
+                                                "en-IN",
+                                                {
+                                                    day: "2-digit",
+                                                    month: "short",
+                                                    year: "numeric",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                }
+                                            );
+
+                                    }
+
+                                }
+
+
+                                /*
+                                 * =========================================
+                                 * SEARCH DATA
+                                 * =========================================
+                                 */
+
+                                const searchData = [
+                                    visitorIp,
+                                    visitorPage,
+                                    visitorDevice,
+                                    browserName,
+                                    visitorReferrer
+                                ]
+                                .join(" ")
+                                .toLowerCase();
+
+                            %>
+
+
+                            <tr
+                                class="visitor-row"
+                                data-search="<%= searchData %>"
+                            >
+
+
+                                <!-- NUMBER -->
+
+                                <td>
+
+                                    <span class="visitor-index">
+                                        <%= index + 1 %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- IP -->
+
+                                <td>
+
+                                    <span class="visitor-ip">
+                                        <%= visitorIp %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- PAGE -->
+
+                                <td>
+
+                                    <span
+                                        class="visitor-page"
+                                        title="<%= visitorPage %>"
+                                    >
+                                        <%= visitorPage %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- DEVICE -->
+
+                                <td>
+
+                                    <span
+                                        class="visitor-device <%= deviceClass %>"
+                                    >
+                                        <%= visitorDevice %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- BROWSER -->
+
+                                <td>
+
+                                    <span class="visitor-browser">
+                                        <%= browserName %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- REFERRER -->
+
+                                <td>
+
+                                    <span
+                                        class="visitor-referrer"
+                                        title="<%= visitorReferrer %>"
+                                    >
+                                        <%= visitorReferrer.length > 35
+                                            ? visitorReferrer.substring(0, 35) + "..."
+                                            : visitorReferrer
+                                        %>
+                                    </span>
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <span class="visitor-date">
+                                        <%= visitorDate %>
+                                    </span>
+
+                                </td>
+
+
+                            </tr>
+
+
+                        <% }); %>
+
+
+                    <% } else { %>
+
+
+                        <!-- ================================================= -->
+                        <!-- NO VISITORS                                      -->
+                        <!-- ================================================= -->
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="visitor-empty-cell"
+                            >
+
+                                <div class="visitor-empty">
+
+                                    <div class="visitor-empty-icon">
+                                        ◉
+                                    </div>
+
+                                    <h3>
+                                        No Visitors Yet
+                                    </h3>
+
+                                    <p>
+                                        Visitor activity will
+                                        appear here once users
+                                        start visiting your website.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    <% } %>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SEARCH EMPTY                                      -->
+        <!-- ================================================= -->
+
+        <div
+            class="visitor-search-empty"
+            id="visitorSearchEmpty"
+            hidden
+        >
+
+            <div class="visitor-search-empty-icon">
+                ✦
+            </div>
+
+            <h3>
+                No Matching Visitors
+            </h3>
+
+            <p>
+                Try searching with another IP,
+                page or device.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     VISITORS PAGE JAVASCRIPT
+========================================================= -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /*
+     * =====================================================
+     * DOM READY
+     * =====================================================
+     */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            /*
+             * =================================================
+             * ELEMENTS
+             * =================================================
+             */
+
+            const search =
+                document.getElementById(
+                    "visitorSearch"
+                );
+
+
+            const clearButton =
+                document.getElementById(
+                    "clearVisitorSearch"
+                );
+
+
+            const rows =
+                Array.from(
+                    document.querySelectorAll(
+                        ".visitor-row"
+                    )
+                );
+
+
+            const emptyState =
+                document.getElementById(
+                    "visitorSearchEmpty"
+                );
+
+
+            /*
+             * =================================================
+             * FILTER FUNCTION
+             * =================================================
+             */
+
+            function filterVisitors() {
+
+                const query =
+                    search
+                        ? String(search.value)
+                            .trim()
+                            .toLowerCase()
+                        : "";
+
+
+                let visibleCount =
+                    0;
+
+
+                rows.forEach(
+                    function (row) {
+
+                        const searchData =
+                            row.getAttribute(
+                                "data-search"
+                            ) || "";
+
+
+                        const normalizedData =
+                            String(searchData)
+                                .toLowerCase();
+
+
+                        const shouldShow =
+                            !query ||
+                            normalizedData.includes(
+                                query
+                            );
+
+
+                        row.style.display =
+                            shouldShow
+                                ? ""
+                                : "none";
+
+
+                        if (shouldShow) {
+
+                            visibleCount++;
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                 * =================================================
+                 * EMPTY SEARCH STATE
+                 * =================================================
+                 */
+
+                if (emptyState) {
+
+                    emptyState.hidden =
+                        !(
+                            rows.length > 0 &&
+                            visibleCount === 0
+                        );
+
+                }
+
+            }
+
+
+            /*
+             * =================================================
+             * SEARCH
+             * =================================================
+             */
+
+            if (search) {
+
+                search.addEventListener(
+                    "input",
+                    filterVisitors
+                );
+
+            }
+
+
+            /*
+             * =================================================
+             * CLEAR
+             * =================================================
+             */
+
+            if (clearButton) {
+
+                clearButton.addEventListener(
+                    "click",
+                    function () {
+
+                        if (search) {
+
+                            search.value =
+                                "";
+
+                            filterVisitors();
+
+                            search.focus();
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /*
+             * =================================================
+             * INITIAL FILTER
+             * =================================================
+             */
+
+            filterVisitors();
+
+        }
+    );
+
+})();
+
+</script>
+

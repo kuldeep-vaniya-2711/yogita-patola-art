@@ -1,0 +1,214 @@
+<%
+    const s = typeof websiteSettings !== "undefined" && websiteSettings
+        ? websiteSettings
+        : (typeof settings !== "undefined" ? settings : null);
+
+    const whatsapp = s?.whatsapp
+        ? String(s.whatsapp).replace(/\D/g, "")
+        : "";
+%>
+
+<footer class="footer-section">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- BRAND -->
+
+            <div class="col-lg-5 col-md-6">
+
+                <div class="footer-brand">
+
+                    <h3 class="footer-brand-title">
+                        <%= s?.siteName || "Yogita Patola Art" %>
+                    </h3>
+
+                    <p class="footer-description">
+                        <%= s?.siteDescription ||
+                            "Celebrating the beauty of traditional Indian textiles through timeless Patola artistry."
+                        %>
+                    </p>
+
+                    <% if (s?.address) { %>
+                        <p class="footer-contact-item">
+                            <strong>Address:</strong>
+                            <%= s.address %>
+                        </p>
+                    <% } %>
+
+                    <% if (s?.sitePhone) { %>
+                        <p class="footer-contact-item">
+                            <strong>Phone:</strong>
+                            <a href="tel:<%= s.sitePhone %>">
+                                <%= s.sitePhone %>
+                            </a>
+                        </p>
+                    <% } %>
+
+                    <% if (s?.siteEmail) { %>
+                        <p class="footer-contact-item">
+                            <strong>Email:</strong>
+                            <a href="mailto:<%= s.siteEmail %>">
+                                <%= s.siteEmail %>
+                            </a>
+                        </p>
+                    <% } %>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPLORE -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="footer-column">
+
+                    <h5 class="footer-heading">
+                        Explore
+                    </h5>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="/collections">Collections</a>
+                        </li>
+
+                        <li>
+                            <a href="/about">Our Story</a>
+                        </li>
+
+                        <% if (s?.showContact !== false) { %>
+                            <li>
+                                <a href="/contact">Contact</a>
+                            </li>
+                        <% } %>
+
+                        <% if (s?.showFeedback !== false) { %>
+                            <li>
+                                <a href="/feedback">Feedback</a>
+                            </li>
+                        <% } %>
+
+                        <% if (s?.showReviews !== false) { %>
+                            <li>
+                                <a href="/products">Reviews</a>
+                            </li>
+                        <% } %>
+
+                        <li>
+                            <a href="/search">Search</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONNECT -->
+
+            <div class="col-lg-4 col-md-12">
+
+                <div class="footer-column">
+
+                    <h5 class="footer-heading">
+                        Connect With Us
+                    </h5>
+
+                    <p class="footer-description">
+                        Follow our journey and discover
+                        the world of Patola.
+                    </p>
+
+                    <div class="footer-social-links">
+
+                        <% if (s?.instagram) { %>
+                            <a
+                                href="<%= s.instagram %>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                            >
+                                Instagram
+                            </a>
+                        <% } %>
+
+                        <% if (s?.facebook) { %>
+                            <a
+                                href="<%= s.facebook %>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Facebook"
+                            >
+                                Facebook
+                            </a>
+                        <% } %>
+
+                        <% if (s?.youtube) { %>
+                            <a
+                                href="<%= s.youtube %>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                            >
+                                YouTube
+                            </a>
+                        <% } %>
+
+                        <% if (whatsapp) { %>
+                            <a
+                                href="https://wa.me/<%= whatsapp %>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="WhatsApp"
+                            >
+                                WhatsApp
+                            </a>
+                        <% } %>
+
+                        <% if (s?.siteEmail) { %>
+                            <a
+                                href="mailto:<%= s.siteEmail %>"
+                                aria-label="Email"
+                            >
+                                Email
+                            </a>
+                        <% } %>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr class="footer-divider">
+
+
+        <div class="footer-bottom">
+
+            <p class="footer-copyright">
+                © <%= new Date().getFullYear() %>
+                <%= s?.siteName || "Yogita Patola Art" %>.
+                All Rights Reserved.
+            </p>
+
+            <p class="footer-made-text">
+                Crafted with tradition &amp; heritage.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>

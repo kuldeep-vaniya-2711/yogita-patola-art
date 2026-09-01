@@ -1,0 +1,517 @@
+/* =========================================================
+   EDIT PRODUCT PAGE
+   Yogita Patola Art - Admin
+   ========================================================= */
+
+.admin-edit-product-page {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.admin-page-eyebrow,
+.card-eyebrow {
+    display: block;
+    margin-bottom: 7px;
+    color: #8b2635;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.admin-page-title {
+    margin: 0;
+    color: #35151b;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.admin-page-description {
+    margin: 9px 0 0;
+    color: #756b67;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.admin-edit-card {
+    overflow: hidden;
+    background: #fffdf9;
+    border: 1px solid #eadfd2;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(62, 32, 24, 0.06);
+}
+
+.admin-edit-card-header {
+    padding: 24px 28px;
+    background: #fffaf3;
+    border-bottom: 1px solid #eee3d7;
+}
+
+.admin-edit-card-header h2 {
+    margin: 0;
+    color: #35151b;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.admin-edit-card-header p {
+    margin: 7px 0 0;
+    color: #81756e;
+    font-size: 13px;
+}
+
+.admin-edit-card-body {
+    padding: 28px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.admin-edit-product-page .form-label {
+    color: #422b27;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-edit-product-page .form-control,
+.admin-edit-product-page .form-select {
+    min-height: 46px;
+    border-color: #ded1c5;
+    border-radius: 9px;
+    background: #fff;
+    color: #38231f;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.admin-edit-product-page textarea.form-control {
+    min-height: 160px;
+    resize: vertical;
+}
+
+.admin-edit-product-page .form-control:focus,
+.admin-edit-product-page .form-select:focus {
+    border-color: #9b5964;
+    box-shadow: 0 0 0 3px rgba(139, 38, 53, 0.09);
+}
+
+.admin-edit-product-page .input-group-text {
+    border-color: #ded1c5;
+    background: #f8f1e8;
+    color: #6d4a3d;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DESCRIPTION COUNTER
+   ========================================================= */
+
+.description-counter {
+    margin-top: 7px;
+    color: #958982;
+    font-size: 12px;
+    text-align: right;
+}
+
+
+/* =========================================================
+   FEATURED SWITCH
+   ========================================================= */
+
+.featured-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 9px 14px;
+    border: 1px solid #eadfd2;
+    border-radius: 9px;
+    background: #fffaf5;
+}
+
+.featured-switch .form-check-input {
+    margin: 0;
+}
+
+.featured-switch .form-check-label {
+    color: #4b3731;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   CURRENT IMAGES
+   ========================================================= */
+
+.current-images-section {
+    padding-bottom: 24px;
+    border-bottom: 1px solid #eee3d7;
+}
+
+.image-section-title {
+    margin: 0 0 16px;
+    color: #43251f;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.current-images-grid,
+.image-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.current-image-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #e5d8cc;
+    border-radius: 12px;
+    background: #f5eee5;
+}
+
+.current-image-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.main-image-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #7d2232;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.current-image-number {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 253, 249, 0.94);
+    color: #512c28;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.image-help-text,
+.form-text {
+    color: #8a7d76;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.image-help-text {
+    margin: 13px 0 0;
+}
+
+.no-current-images {
+    padding: 35px 20px;
+    border: 1px dashed #d9c9bb;
+    border-radius: 12px;
+    background: #fcf8f2;
+    text-align: center;
+}
+
+.no-current-images span {
+    display: block;
+    margin-bottom: 8px;
+    color: #a8793d;
+    font-size: 25px;
+}
+
+.no-current-images p {
+    margin: 0;
+    color: #81746d;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.image-preview-grid:empty {
+    display: none;
+}
+
+.image-preview-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+}
+
+.image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.edit-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-bottom: 10px;
+}
+
+.edit-form-actions .btn {
+    min-width: 130px;
+    min-height: 44px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RIGHT PREVIEW
+   ========================================================= */
+
+.sticky-edit-card {
+    position: sticky;
+    top: 25px;
+}
+
+.product-summary-image {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 12px;
+    background: #f5eee5;
+}
+
+.product-summary-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.product-summary-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    color: #8b6c5c;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    text-align: center;
+}
+
+.product-summary-details {
+    padding-top: 20px;
+}
+
+.product-summary-category {
+    display: block;
+    margin-bottom: 7px;
+    color: #8b2635;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.product-summary-details h3 {
+    margin: 0 0 10px;
+    color: #35151b;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.product-summary-price {
+    margin-bottom: 9px;
+    color: #765025;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.product-summary-availability {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #f1e7d9;
+    color: #62462d;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PRODUCT ID
+   ========================================================= */
+
+.product-id-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-id-box span {
+    color: #806f66;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.product-id-box code {
+    overflow-wrap: anywhere;
+    padding: 10px 12px;
+    border: 1px solid #e8dbcf;
+    border-radius: 8px;
+    background: #faf5ef;
+    color: #633a31;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.admin-info-box {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid #e7d6b9;
+    border-radius: 14px;
+    background: #fff9ef;
+}
+
+.admin-info-icon {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #f0e0c5;
+    color: #8a612b;
+}
+
+.admin-info-box h3 {
+    margin: 0 0 6px;
+    color: #4a3028;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.admin-info-box p {
+    margin: 0;
+    color: #786a62;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1199px) {
+
+    .admin-edit-product-page {
+        padding: 24px;
+    }
+
+    .sticky-edit-card {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .admin-edit-product-page {
+        padding: 18px 14px;
+    }
+
+    .admin-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-page-title {
+        font-size: 34px;
+    }
+
+    .admin-edit-card-header,
+    .admin-edit-card-body {
+        padding: 20px;
+    }
+
+    .current-images-grid,
+    .image-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .edit-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .edit-form-actions .btn {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .current-images-grid,
+    .image-preview-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

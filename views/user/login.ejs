@@ -1,0 +1,697 @@
+<%
+/* =========================================================
+   YOGITA PATOLA ART
+   LOGIN PAGE
+   ========================================================= */
+
+layout("layout", {
+
+    title: "Login | Yogita Patola Art",
+
+    description:
+        "Sign in to your Yogita Patola Art account.",
+
+    pageCss:
+        "/css/pages/login.css"
+
+});
+%>
+
+
+<!-- =========================================================
+     LOGIN PAGE
+========================================================== -->
+
+<section class="login-page">
+
+
+    <div class="login-container">
+
+
+        <div class="login-card">
+
+
+            <!-- =================================================
+                 LEFT BRAND PANEL
+            ================================================== -->
+
+            <div class="login-brand-panel">
+
+                <div class="login-brand-inner">
+
+
+                    <!-- SYMBOL -->
+
+                    <div class="login-brand-symbol">
+                        ✦
+                    </div>
+
+
+                    <!-- EYEBROW -->
+
+                    <span class="login-brand-eyebrow">
+                        YOGITA PATOLA ART
+                    </span>
+
+
+                    <!-- TITLE -->
+
+                    <h1 class="login-brand-title">
+
+                        Welcome
+                        <em>Back</em>
+
+                    </h1>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <p class="login-brand-description">
+
+                        Sign in to continue your journey
+                        through handcrafted Patola artistry,
+                        timeless textiles and Indian heritage.
+
+                    </p>
+
+
+                    <!-- DECORATION -->
+
+                    <div class="login-brand-decoration">
+
+                        <span></span>
+
+                        <i>✦</i>
+
+                        <span></span>
+
+                    </div>
+
+
+                    <!-- NOTE -->
+
+                    <p class="login-brand-note">
+
+                        Tradition woven into every thread.
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT FORM PANEL
+            ================================================== -->
+
+            <div class="login-form-panel">
+
+
+                <div class="login-form-inner">
+
+
+                    <!-- =================================================
+                         LOGIN HEADER
+                    ================================================== -->
+
+                    <div class="login-header">
+
+
+                        <span class="login-eyebrow">
+                            WELCOME BACK
+                        </span>
+
+
+                        <h2 class="login-title">
+                            Login
+                        </h2>
+
+
+                        <p class="login-description">
+
+                            Sign in to your Yogita Patola Art
+                            account.
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ALERTS
+                    ================================================== -->
+
+                    <% if (
+                        typeof error !== "undefined" &&
+                        error
+                    ) { %>
+
+                        <div class="login-alert login-alert-error">
+
+                            <%= error %>
+
+                        </div>
+
+                    <% } %>
+
+
+
+                    <% if (
+                        typeof success !== "undefined" &&
+                        success
+                    ) { %>
+
+                        <div class="login-alert login-alert-success">
+
+                            <%= success %>
+
+                        </div>
+
+                    <% } %>
+
+
+
+                    <!-- =================================================
+                         LOGIN FORM
+                    ================================================== -->
+
+                    <form
+                        action="/user/login"
+                        method="POST"
+                        id="loginForm"
+                        novalidate
+                    >
+
+
+                        <!-- =================================================
+                             EMAIL
+                        ================================================== -->
+
+                        <div class="login-field">
+
+
+                            <label
+                                for="email"
+                                class="login-label"
+                            >
+                                Email Address
+                            </label>
+
+
+                            <div class="login-input-wrap">
+
+
+                                <span
+                                    class="login-input-icon"
+                                    aria-hidden="true"
+                                >
+                                    @
+                                </span>
+
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="login-input"
+                                    placeholder="Enter your email"
+                                    autocomplete="email"
+                                    required
+                                >
+
+
+                            </div>
+
+
+                            <div
+                                class="login-field-error"
+                                id="emailError"
+                            ></div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             PASSWORD
+                        ================================================== -->
+
+                        <div class="login-field">
+
+
+                            <label
+                                for="password"
+                                class="login-label"
+                            >
+                                Password
+                            </label>
+
+
+                            <div class="login-input-wrap">
+
+
+                                <span
+                                    class="login-input-icon"
+                                    aria-hidden="true"
+                                >
+                                    ◈
+                                </span>
+
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="login-input"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                    required
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="login-password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Show password"
+                                >
+                                    👁
+                                </button>
+
+
+                            </div>
+
+
+                            <div
+                                class="login-field-error"
+                                id="passwordError"
+                            ></div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             SAFE REDIRECT
+                        ================================================== -->
+
+                        <%
+                            const safeRedirect =
+                                typeof redirectUrl !== "undefined" &&
+                                redirectUrl
+                                    ? redirectUrl
+                                    : "";
+                        %>
+
+
+                        <% if (safeRedirect) { %>
+
+                            <input
+                                type="hidden"
+                                name="redirect"
+                                value="<%= safeRedirect %>"
+                            >
+
+                        <% } %>
+
+
+
+                        <!-- =================================================
+                             SUBMIT
+                        ================================================== -->
+
+                        <button
+                            type="submit"
+                            class="login-submit"
+                            id="loginSubmit"
+                        >
+
+                            <span id="loginButtonText">
+                                Login
+                            </span>
+
+                            <span
+                                class="login-submit-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+
+
+                    <!-- =================================================
+                         REGISTER LINK
+                    ================================================== -->
+
+                    <div class="login-register">
+
+
+                        <span>
+                            Don't have an account?
+                        </span>
+
+
+                        <a href="/user/register">
+                            Create Account
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         BACK TO WEBSITE
+                    ================================================== -->
+
+                    <div class="login-back">
+
+
+                        <a href="/">
+                            ← Back to Yogita Patola Art
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     LOGIN PAGE JAVASCRIPT
+========================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =====================================================
+           PASSWORD TOGGLE
+        ====================================================== */
+
+        const passwordToggle =
+            document.getElementById(
+                "passwordToggle"
+            );
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+
+        if (
+            passwordToggle &&
+            passwordInput
+        ) {
+
+            passwordToggle.addEventListener(
+                "click",
+                function () {
+
+
+                    const isPassword =
+                        passwordInput.type === "password";
+
+
+                    passwordInput.type =
+                        isPassword
+                            ? "text"
+                            : "password";
+
+
+                    passwordToggle.setAttribute(
+                        "aria-label",
+                        isPassword
+                            ? "Hide password"
+                            : "Show password"
+                    );
+
+
+                    passwordToggle.textContent =
+                        isPassword
+                            ? "🙈"
+                            : "👁";
+
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           LOGIN FORM VALIDATION
+        ====================================================== */
+
+        const loginForm =
+            document.getElementById(
+                "loginForm"
+            );
+
+
+        const emailInput =
+            document.getElementById(
+                "email"
+            );
+
+
+        const emailError =
+            document.getElementById(
+                "emailError"
+            );
+
+
+        const passwordError =
+            document.getElementById(
+                "passwordError"
+            );
+
+
+        if (loginForm) {
+
+
+            loginForm.addEventListener(
+                "submit",
+                function (event) {
+
+
+                    let valid = true;
+
+
+                    /* -----------------------------------------
+                       EMAIL
+                    ----------------------------------------- */
+
+                    const email =
+                        emailInput
+                            ? emailInput.value.trim()
+                            : "";
+
+
+                    const emailPattern =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+                    if (
+                        !email ||
+                        !emailPattern.test(email)
+                    ) {
+
+
+                        valid = false;
+
+
+                        if (emailInput) {
+
+                            emailInput.classList.add(
+                                "is-invalid"
+                            );
+
+                        }
+
+
+                        if (emailError) {
+
+                            emailError.textContent =
+                                "Please enter a valid email address.";
+
+                        }
+
+
+                    } else {
+
+
+                        if (emailInput) {
+
+                            emailInput.classList.remove(
+                                "is-invalid"
+                            );
+
+                        }
+
+
+                        if (emailError) {
+
+                            emailError.textContent = "";
+
+                        }
+
+                    }
+
+
+
+                    /* -----------------------------------------
+                       PASSWORD
+                    ----------------------------------------- */
+
+                    const password =
+                        passwordInput
+                            ? passwordInput.value
+                            : "";
+
+
+                    if (!password) {
+
+
+                        valid = false;
+
+
+                        if (passwordInput) {
+
+                            passwordInput.classList.add(
+                                "is-invalid"
+                            );
+
+                        }
+
+
+                        if (passwordError) {
+
+                            passwordError.textContent =
+                                "Please enter your password.";
+
+                        }
+
+
+                    } else {
+
+
+                        if (passwordInput) {
+
+                            passwordInput.classList.remove(
+                                "is-invalid"
+                            );
+
+                        }
+
+
+                        if (passwordError) {
+
+                            passwordError.textContent = "";
+
+                        }
+
+                    }
+
+
+
+                    /* -----------------------------------------
+                       STOP INVALID FORM
+                    ----------------------------------------- */
+
+                    if (!valid) {
+
+                        event.preventDefault();
+
+                    }
+
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           REMOVE ERROR WHILE TYPING
+        ====================================================== */
+
+        if (emailInput) {
+
+            emailInput.addEventListener(
+                "input",
+                function () {
+
+                    emailInput.classList.remove(
+                        "is-invalid"
+                    );
+
+                    if (emailError) {
+
+                        emailError.textContent = "";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        if (passwordInput) {
+
+            passwordInput.addEventListener(
+                "input",
+                function () {
+
+                    passwordInput.classList.remove(
+                        "is-invalid"
+                    );
+
+                    if (passwordError) {
+
+                        passwordError.textContent = "";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+    }
+);
+
+</script>

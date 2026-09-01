@@ -1,0 +1,212 @@
+<%
+layout("layout", {
+title: "My Wishlist | Yogita Patola Art",
+description: "Your saved products and favorite handcrafted Patola products."
+});
+%>
+
+<link
+    rel="stylesheet"
+    href="/css/pages/wishlist.css"
+>
+
+<section class="wishlist-page">
+
+```
+<section class="wishlist-hero">
+    <div class="container">
+        <div class="wishlist-hero-content text-center">
+
+            <span class="wishlist-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h1 class="wishlist-title">
+                My Wishlist
+            </h1>
+
+            <p class="wishlist-description">
+                Save the handcrafted pieces you love
+                and come back to them whenever you like.
+            </p>
+
+        </div>
+    </div>
+</section>
+
+
+<section class="wishlist-content py-5">
+
+    <div class="container">
+
+        <%
+            const wishlistItems =
+                typeof wishlist !== "undefined" &&
+                Array.isArray(wishlist)
+                    ? wishlist
+                    : [];
+        %>
+
+
+        <div class="wishlist-header mb-4">
+
+            <div>
+                <span class="section-subtitle">
+                    SAVED FOR LATER
+                </span>
+
+                <h2 class="section-title mb-0">
+                    Your Wishlist
+                </h2>
+            </div>
+
+            <div class="wishlist-count">
+                <strong>
+                    <%= wishlistItems.length %>
+                </strong>
+
+                <span>
+                    <%= wishlistItems.length === 1
+                        ? "Item"
+                        : "Items"
+                    %>
+                </span>
+            </div>
+
+        </div>
+
+
+        <% if (wishlistItems.length > 0) { %>
+
+            <div
+                class="row g-4 wishlist-grid"
+                id="wishlistGrid"
+            >
+
+                <% wishlistItems.forEach(function(item) { %>
+
+                    <%
+                        const product =
+                            item && item.product
+                                ? item.product
+                                : null;
+                    %>
+
+                    <% if (product) { %>
+
+                        <div
+                            class="col-xl-4 col-lg-4 col-md-6 wishlist-item"
+                            data-product-id="<%= product._id %>"
+                        >
+
+                            <div class="wishlist-product-wrapper">
+
+                                <%- include("../partials/product-card", {
+                                    product: product
+                                }) %>
+
+
+                                <form
+                                    action="/wishlist/remove/<%= product._id %>"
+                                    method="POST"
+                                    class="wishlist-remove-form"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="wishlist-remove-btn"
+                                        aria-label="Remove <%= product.name || 'product' %> from wishlist"
+                                        title="Remove from Wishlist"
+                                    >
+                                        <span aria-hidden="true">×</span>
+                                        Remove
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    <% } %>
+
+                <% }); %>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="wishlist-empty text-center">
+
+                <div
+                    class="wishlist-empty-icon"
+                    aria-hidden="true"
+                >
+                    ♡
+                </div>
+
+                <span class="wishlist-empty-eyebrow">
+                    YOUR WISHLIST IS EMPTY
+                </span>
+
+                <h3>
+                    Nothing Saved Yet
+                </h3>
+
+                <p>
+                    Explore our collection and save the
+                    handcrafted products you love.
+                </p>
+
+                <a
+                    href="/collections"
+                    class="btn btn-dark"
+                >
+                    Explore Collection
+                </a>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</section>
+
+
+<section class="wishlist-cta py-5">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <span class="wishlist-eyebrow">
+                DISCOVER PATOLA HERITAGE
+            </span>
+
+            <h2 class="section-title">
+                Find Something You Love
+            </h2>
+
+            <p class="section-description mx-auto">
+                Explore our handcrafted Patola sarees
+                and traditional Indian textiles.
+            </p>
+
+            <a
+                href="/collections"
+                class="btn btn-dark btn-lg"
+            >
+                Browse Collection
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+```
+
+</section>
+
+<script src="/js/pages/wishlist.js"></script>

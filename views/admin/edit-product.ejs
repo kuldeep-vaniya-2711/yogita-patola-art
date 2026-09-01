@@ -1,0 +1,625 @@
+<%
+    layout("admin/layout", {
+        title: "Edit Product | Admin",
+        pageCss: "/css/admin/edit-product.css",
+        pageJs: "/js/admin/edit-product.js"
+    });
+%>
+
+<div class="admin-edit-product-page">
+
+    <!-- HEADER -->
+    <div class="admin-page-header">
+
+        <div>
+            <span class="admin-page-eyebrow">PRODUCT MANAGEMENT</span>
+
+            <h1 class="admin-page-title">
+                Edit Product
+            </h1>
+
+            <p class="admin-page-description">
+                Update product information, pricing, availability and images.
+            </p>
+        </div>
+
+        <a href="/admin/products" class="btn btn-outline-dark">
+            ← Back to Products
+        </a>
+
+    </div>
+
+
+    <%- include("../partials/alerts") %>
+
+
+    <!-- FORM -->
+    <form
+        id="editProductForm"
+        action="/admin/products/edit/<%= product._id %>"
+        method="POST"
+        enctype="multipart/form-data"
+        novalidate
+    >
+
+        <div class="row g-4">
+
+            <!-- LEFT -->
+            <div class="col-xl-8">
+
+                <!-- BASIC INFORMATION -->
+                <div class="admin-edit-card">
+
+                    <div class="admin-edit-card-header">
+                        <div>
+                            <span class="card-eyebrow">BASIC INFORMATION</span>
+                            <h2>Product Details</h2>
+                        </div>
+                    </div>
+
+                    <div class="admin-edit-card-body">
+
+                        <div class="mb-4">
+
+                            <label for="productName" class="form-label">
+                                Product Name <span class="text-danger">*</span>
+                            </label>
+
+                            <input
+                                id="productName"
+                                name="name"
+                                type="text"
+                                class="form-control form-control-lg"
+                                value="<%= product.name || '' %>"
+                                placeholder="Enter product name"
+                                minlength="2"
+                                maxlength="150"
+                                autocomplete="off"
+                                required
+                            >
+
+                            <div class="invalid-feedback">
+                                Please enter a valid product name.
+                            </div>
+
+                        </div>
+
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label for="productCategory" class="form-label">
+                                    Category <span class="text-danger">*</span>
+                                </label>
+
+                                <select
+                                    id="productCategory"
+                                    name="category"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">Select Category</option>
+
+                                    <% [
+                                        "Patola Sarees",
+                                        "Double Ikat Sarees",
+                                        "Single Ikat Sarees",
+                                        "Dupattas",
+                                        "Accessories"
+                                    ].forEach(category => { %>
+
+                                        <option
+                                            value="<%= category %>"
+                                            <%= product.category === category ? "selected" : "" %>
+                                        >
+                                            <%= category %>
+                                        </option>
+
+                                    <% }) %>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Please select a category.
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label for="productTechnique" class="form-label">
+                                    Technique
+                                </label>
+
+                                <input
+                                    id="productTechnique"
+                                    name="technique"
+                                    type="text"
+                                    class="form-control"
+                                    value="<%= product.technique || '' %>"
+                                    placeholder="e.g. Double Ikat"
+                                    maxlength="100"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mt-4">
+
+                            <label for="productDescription" class="form-label">
+                                Description <span class="text-danger">*</span>
+                            </label>
+
+                            <textarea
+                                id="productDescription"
+                                name="description"
+                                class="form-control"
+                                rows="7"
+                                minlength="10"
+                                maxlength="3000"
+                                placeholder="Enter detailed product description..."
+                                required
+                            ><%= product.description || '' %></textarea>
+
+                            <div class="description-counter">
+                                <span id="descriptionCount">
+                                    <%= (product.description || "").length %>
+                                </span>
+                                / 3000
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please enter a valid product description.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SPECIFICATIONS -->
+                <div class="admin-edit-card mt-4">
+
+                    <div class="admin-edit-card-header">
+                        <div>
+                            <span class="card-eyebrow">
+                                PRODUCT SPECIFICATIONS
+                            </span>
+                            <h2>Details & Specifications</h2>
+                        </div>
+                    </div>
+
+                    <div class="admin-edit-card-body">
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+
+                                <label for="productPrice" class="form-label">
+                                    Price <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">₹</span>
+
+                                    <input
+                                        id="productPrice"
+                                        name="price"
+                                        type="number"
+                                        class="form-control"
+                                        value="<%= product.price || '' %>"
+                                        min="0"
+                                        step="1"
+                                        placeholder="0"
+                                        required
+                                    >
+
+                                </div>
+
+                                <div class="invalid-feedback">
+                                    Please enter a valid price.
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label for="productFabric" class="form-label">
+                                    Fabric
+                                </label>
+
+                                <input
+                                    id="productFabric"
+                                    name="fabric"
+                                    type="text"
+                                    class="form-control"
+                                    value="<%= product.fabric || '' %>"
+                                    placeholder="e.g. Silk"
+                                    maxlength="100"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label for="productColor" class="form-label">
+                                    Color
+                                </label>
+
+                                <input
+                                    id="productColor"
+                                    name="color"
+                                    type="text"
+                                    class="form-control"
+                                    value="<%= product.color || '' %>"
+                                    placeholder="e.g. Red & Gold"
+                                    maxlength="100"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label for="productDimensions" class="form-label">
+                                    Dimensions
+                                </label>
+
+                                <input
+                                    id="productDimensions"
+                                    name="dimensions"
+                                    type="text"
+                                    class="form-control"
+                                    value="<%= product.dimensions || '' %>"
+                                    placeholder="e.g. 6.3 meters"
+                                    maxlength="100"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label for="productAvailability" class="form-label">
+                                    Availability <span class="text-danger">*</span>
+                                </label>
+
+                                <select
+                                    id="productAvailability"
+                                    name="availability"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <% [
+                                        "In Stock",
+                                        "Limited",
+                                        "Out of Stock"
+                                    ].forEach(status => { %>
+
+                                        <option
+                                            value="<%= status %>"
+                                            <%= product.availability === status ? "selected" : "" %>
+                                        >
+                                            <%= status %>
+                                        </option>
+
+                                    <% }) %>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label class="form-label d-block">
+                                    Homepage Visibility
+                                </label>
+
+                                <div class="form-check form-switch featured-switch">
+
+                                    <input
+                                        id="featuredProduct"
+                                        name="featured"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        role="switch"
+                                        value="true"
+                                        <%= product.featured ? "checked" : "" %>
+                                    >
+
+                                    <label
+                                        for="featuredProduct"
+                                        class="form-check-label"
+                                    >
+                                        Show as Featured Product
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGES -->
+                <div class="admin-edit-card mt-4">
+
+                    <div class="admin-edit-card-header">
+
+                        <div>
+                            <span class="card-eyebrow">PRODUCT IMAGES</span>
+
+                            <h2>Update Product Photos</h2>
+
+                            <p>
+                                Uploading new images will replace all existing
+                                product images.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-edit-card-body">
+
+                        <% if (product.images?.length) { %>
+
+                            <div class="current-images-section">
+
+                                <h3 class="image-section-title">
+                                    Current Images
+                                </h3>
+
+                                <div class="current-images-grid">
+
+                                    <% product.images.forEach((image, index) => { %>
+
+                                        <div class="current-image-item">
+
+                                            <img
+                                                src="<%= image %>"
+                                                alt="<%= product.name || 'Product Image' %>"
+                                            >
+
+                                            <% if (index === 0) { %>
+
+                                                <span class="main-image-badge">
+                                                    Main Image
+                                                </span>
+
+                                            <% } %>
+
+                                            <span class="current-image-number">
+                                                <%= index + 1 %>
+                                            </span>
+
+                                        </div>
+
+                                    <% }) %>
+
+                                </div>
+
+                                <p class="image-help-text">
+                                    Current images remain unchanged if you
+                                    do not upload new images.
+                                </p>
+
+                            </div>
+
+                        <% } else { %>
+
+                            <div class="no-current-images">
+
+                                <span>✦</span>
+
+                                <p>No product images available.</p>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <div class="new-images-section mt-4">
+
+                            <label for="productImages" class="form-label">
+                                Upload New Images
+                            </label>
+
+                            <input
+                                id="productImages"
+                                name="productImages"
+                                type="file"
+                                class="form-control"
+                                accept="image/jpeg,image/jpg,image/png,image/webp"
+                                multiple
+                            >
+
+                            <div class="form-text">
+                                JPG, JPEG, PNG or WEBP.
+                                Maximum 5MB per image.
+                                Maximum 5 images.
+                            </div>
+
+                            <div
+                                id="imagePreview"
+                                class="image-preview-grid mt-4"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="edit-form-actions mt-4">
+
+                    <a
+                        href="/admin/products"
+                        class="btn btn-outline-dark"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        id="saveProductButton"
+                        class="btn btn-dark"
+                    >
+
+                        <span class="button-text">
+                            Save Changes
+                        </span>
+
+                        <span class="button-loading d-none">
+                            Saving...
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="col-xl-4">
+
+                <!-- PREVIEW -->
+                <div class="admin-edit-card sticky-edit-card">
+
+                    <div class="admin-edit-card-header">
+
+                        <div>
+                            <span class="card-eyebrow">
+                                CURRENT PRODUCT
+                            </span>
+
+                            <h2>Preview</h2>
+                        </div>
+
+                    </div>
+
+                    <div class="admin-edit-card-body">
+
+                        <div class="product-summary-image">
+
+                            <% if (product.images?.length) { %>
+
+                                <img
+                                    id="productMainPreview"
+                                    src="<%= product.images[0] %>"
+                                    alt="<%= product.name || 'Product' %>"
+                                >
+
+                            <% } else { %>
+
+                                <div
+                                    id="productMainPreview"
+                                    class="product-summary-placeholder"
+                                >
+                                    Yogita Patola Art
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <div class="product-summary-details">
+
+                            <span
+                                id="summaryCategory"
+                                class="product-summary-category"
+                            >
+                                <%= product.category || "Patola" %>
+                            </span>
+
+                            <h3 id="summaryName">
+                                <%= product.name || "Product Name" %>
+                            </h3>
+
+                            <div
+                                id="summaryPrice"
+                                class="product-summary-price"
+                            >
+                                ₹<%= Number(product.price || 0).toLocaleString("en-IN") %>
+                            </div>
+
+                            <span
+                                id="summaryAvailability"
+                                class="product-summary-availability"
+                            >
+                                <%= product.availability || "In Stock" %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT ID -->
+                <div class="admin-edit-card mt-4">
+
+                    <div class="admin-edit-card-body">
+
+                        <div class="product-id-box">
+
+                            <span>Product ID</span>
+
+                            <code>
+                                <%= product._id %>
+                            </code>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFO -->
+                <div class="admin-info-box mt-4">
+
+                    <div class="admin-info-icon">✦</div>
+
+                    <div>
+
+                        <h3>Editing Product</h3>
+
+                        <p>
+                            Review all changes carefully before saving.
+                            Product information will be updated in the
+                            database immediately.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

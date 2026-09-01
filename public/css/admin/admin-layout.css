@@ -1,0 +1,261 @@
+/* =========================================================
+   YOGITA PATOLA ART
+   ADMIN LAYOUT CSS
+
+   File:
+   public/css/admin/admin-layout.css
+
+   Purpose:
+   - Admin page structure
+   - Sidebar / main content relationship
+   - Content width and spacing
+   - Alert container
+   - Mobile sidebar overlay
+   - Responsive layout
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL BOX SIZING
+   ========================================================= */
+
+.admin-body *,
+.admin-body *::before,
+.admin-body *::after {
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ADMIN BODY
+   ========================================================= */
+
+.admin-body {
+
+    margin: 0;
+    padding: 0;
+
+    min-height: 100vh;
+
+    background: #f7f3ee;
+
+    color: #3f3732;
+
+    font-family:
+        "Poppins",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   ADMIN WRAPPER
+   ========================================================= */
+
+.admin-wrapper {
+
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    background: #f7f3ee;
+}
+
+
+/* =========================================================
+   ADMIN MAIN
+   Desktop:
+   Sidebar = 260px
+   ========================================================= */
+
+.admin-main {
+
+    width: calc(100% - 260px);
+
+    min-width: 0;
+    min-height: 100vh;
+
+    margin-left: 260px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #f7f3ee;
+}
+
+
+/* =========================================================
+   GLOBAL ALERT CONTAINER
+   ========================================================= */
+
+.admin-alert-container {
+
+    width: 100%;
+
+    padding:
+        0 30px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+   ========================================================= */
+
+.admin-content {
+
+    width: 100%;
+
+    max-width: 1500px;
+
+    margin:
+        0 auto;
+
+    padding:
+        28px 30px 40px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+   ========================================================= */
+
+.admin-sidebar-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(32, 22, 18, 0.42);
+
+    z-index: 999;
+}
+
+
+/*
+ * admin-layout.js adds `.show`
+ */
+
+.admin-sidebar-overlay.show {
+
+    display: block;
+}
+
+
+/* =========================================================
+   BODY SCROLL LOCK
+   admin-layout.js adds:
+   `.admin-sidebar-open`
+   ========================================================= */
+
+.admin-body.admin-sidebar-open {
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TABLET
+   JS considers <= 991px mobile
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .admin-main {
+
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+
+    .admin-alert-container {
+
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+
+    .admin-content {
+
+        max-width: 1500px;
+
+        padding:
+            24px 22px 36px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .admin-alert-container {
+
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+
+    .admin-content {
+
+        max-width: none;
+
+        padding:
+            20px 16px 32px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    .admin-alert-container {
+
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .admin-content {
+
+        padding:
+            18px 12px 28px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .admin-sidebar-overlay {
+
+        transition: none;
+    }
+
+}

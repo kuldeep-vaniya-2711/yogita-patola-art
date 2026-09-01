@@ -1,0 +1,1005 @@
+<% layout("admin/layout") -%>
+
+<!-- =========================================================
+     YOGITA PATOLA ART
+     ADMIN — FEEDBACK MANAGEMENT
+========================================================= -->
+
+
+<div class="admin-page-header">
+
+    <div>
+
+        <h1 class="admin-page-title">
+            Feedback Management
+        </h1>
+
+        <p class="admin-page-description">
+            Manage visitor feedback, suggestions and customer messages.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <a
+            href="/admin/dashboard"
+            class="admin-btn admin-btn-outline"
+        >
+
+            <i class="bi bi-arrow-left"></i>
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     STATISTICS
+========================================================= -->
+
+<div class="row g-4 mb-4">
+
+
+    <!-- TOTAL -->
+
+    <div class="col-md-4">
+
+        <div class="admin-feedback-stat">
+
+            <div class="admin-feedback-stat-icon">
+
+                <i class="bi bi-chat-square-text"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Total Feedback
+                </span>
+
+                <strong>
+                    <%= feedbacks ? feedbacks.length : 0 %>
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- NEW -->
+
+    <div class="col-md-4">
+
+        <div class="admin-feedback-stat">
+
+            <div class="admin-feedback-stat-icon">
+
+                <i class="bi bi-envelope"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    New Messages
+                </span>
+
+                <strong
+                    id="newFeedbackCount"
+                >
+                    <%= feedbacks
+                        ? feedbacks.filter(item => item.status === "New").length
+                        : 0
+                    %>
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RESOLVED -->
+
+    <div class="col-md-4">
+
+        <div class="admin-feedback-stat">
+
+            <div class="admin-feedback-stat-icon">
+
+                <i class="bi bi-check-circle"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Resolved
+                </span>
+
+                <strong>
+
+                    <%= feedbacks
+                        ? feedbacks.filter(item => item.status === "Resolved").length
+                        : 0
+                    %>
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     FILTER / SEARCH BAR
+========================================================= -->
+
+<div class="admin-card admin-feedback-toolbar">
+
+    <div class="row g-3 align-items-center">
+
+
+        <!-- SEARCH -->
+
+        <div class="col-lg-6">
+
+            <div class="admin-feedback-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    id="feedbackSearch"
+                    class="form-control"
+                    placeholder="Search by name, email or message..."
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="col-lg-3">
+
+            <select
+                id="feedbackStatusFilter"
+                class="form-select"
+            >
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="New">
+                    New
+                </option>
+
+                <option value="Read">
+                    Read
+                </option>
+
+                <option value="Resolved">
+                    Resolved
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- TYPE -->
+
+        <div class="col-lg-3">
+
+            <select
+                id="feedbackTypeFilter"
+                class="form-select"
+            >
+
+                <option value="all">
+                    All Types
+                </option>
+
+                <option value="General">
+                    General
+                </option>
+
+                <option value="Suggestion">
+                    Suggestion
+                </option>
+
+                <option value="Complaint">
+                    Complaint
+                </option>
+
+                <option value="Product">
+                    Product
+                </option>
+
+                <option value="Service">
+                    Service
+                </option>
+
+            </select>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     FEEDBACK TABLE
+========================================================= -->
+
+<div class="admin-feedback-table-card">
+
+
+    <div class="admin-feedback-table-header">
+
+        <div>
+
+            <h2>
+                Customer Feedback
+            </h2>
+
+            <p>
+                Review and manage messages received from visitors.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-table-wrapper">
+
+        <table
+            class="admin-table"
+            id="feedbackTable"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Customer
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Type
+                    </th>
+
+                    <th>
+                        Message
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="feedbackTableBody">
+
+
+                <% if (feedbacks && feedbacks.length > 0) { %>
+
+
+                    <% feedbacks.forEach((feedback, index) => { %>
+
+
+                        <tr
+                            class="feedback-row"
+                            data-name="<%= feedback.name || '' %>"
+                            data-email="<%= feedback.email || '' %>"
+                            data-message="<%= feedback.message || '' %>"
+                            data-status="<%= feedback.status || 'New' %>"
+                            data-type="<%= feedback.type || 'General' %>"
+                        >
+
+
+                            <!-- NUMBER -->
+
+                            <td>
+
+                                <span class="feedback-number">
+
+                                    <%= index + 1 %>
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <div class="feedback-customer">
+
+                                    <div class="feedback-avatar">
+
+                                        <%= (feedback.name || "U")
+                                            .charAt(0)
+                                            .toUpperCase()
+                                        %>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+
+                                            <%= feedback.name || "Anonymous" %>
+
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- EMAIL -->
+
+                            <td>
+
+                                <% if (feedback.email) { %>
+
+                                    <a
+                                        href="mailto:<%= feedback.email %>"
+                                        class="feedback-email"
+                                    >
+
+                                        <%= feedback.email %>
+
+                                    </a>
+
+                                <% } else { %>
+
+                                    <span class="text-muted">
+                                        No email
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+
+                            <!-- TYPE -->
+
+                            <td>
+
+                                <span class="feedback-type-badge">
+
+                                    <%= feedback.type || "General" %>
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- MESSAGE -->
+
+                            <td>
+
+                                <div class="feedback-message">
+
+                                    <%= feedback.message || "No message" %>
+
+                                </div>
+
+                            </td>
+
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <%
+                                    const currentStatus =
+                                        feedback.status || "New";
+                                %>
+
+
+                                <% if (currentStatus === "Resolved") { %>
+
+                                    <span
+                                        class="admin-status admin-status-success"
+                                    >
+
+                                        <i class="bi bi-check-circle me-1"></i>
+
+                                        Resolved
+
+                                    </span>
+
+
+                                <% } else if (currentStatus === "Read") { %>
+
+                                    <span
+                                        class="admin-status admin-status-warning"
+                                    >
+
+                                        <i class="bi bi-eye me-1"></i>
+
+                                        Read
+
+                                    </span>
+
+
+                                <% } else { %>
+
+                                    <span
+                                        class="admin-status admin-status-danger"
+                                    >
+
+                                        <i class="bi bi-envelope me-1"></i>
+
+                                        New
+
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <span class="feedback-date">
+
+                                    <%= feedback.createdAt
+                                        ? new Date(
+                                            feedback.createdAt
+                                        ).toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "2-digit",
+                                                month: "short",
+                                                year: "numeric"
+                                            }
+                                        )
+                                        : "-"
+                                    %>
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <div class="feedback-actions">
+
+
+                                    <!-- VIEW -->
+
+                                    <button
+                                        type="button"
+                                        class="feedback-action-btn feedback-view-btn"
+                                        data-id="<%= feedback._id %>"
+                                        title="View Feedback"
+                                    >
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </button>
+
+
+
+                                    <!-- STATUS -->
+
+                                    <button
+                                        type="button"
+                                        class="feedback-action-btn feedback-status-btn"
+                                        data-id="<%= feedback._id %>"
+                                        title="Change Status"
+                                    >
+
+                                        <i class="bi bi-arrow-repeat"></i>
+
+                                    </button>
+
+
+
+                                    <!-- DELETE -->
+
+                                    <button
+                                        type="button"
+                                        class="feedback-action-btn feedback-delete-btn"
+                                        data-id="<%= feedback._id %>"
+                                        title="Delete Feedback"
+                                    >
+
+                                        <i class="bi bi-trash"></i>
+
+                                    </button>
+
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    <% }); %>
+
+
+                <% } else { %>
+
+
+                    <!-- EMPTY STATE -->
+
+                    <tr id="feedbackEmptyRow">
+
+                        <td
+                            colspan="8"
+                            class="feedback-empty"
+                        >
+
+                            <div class="feedback-empty-content">
+
+                                <div class="feedback-empty-icon">
+
+                                    <i class="bi bi-chat-square-text"></i>
+
+                                </div>
+
+                                <h3>
+                                    No Feedback Yet
+                                </h3>
+
+                                <p>
+                                    Customer feedback will appear here
+                                    when visitors submit their messages.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                <% } %>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     VIEW FEEDBACK MODAL
+========================================================= -->
+
+<div
+    class="modal fade"
+    id="feedbackViewModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content admin-feedback-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="admin-modal-eyebrow">
+                        CUSTOMER MESSAGE
+                    </span>
+
+                    <h5 class="modal-title">
+                        Feedback Details
+                    </h5>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+
+            <div class="modal-body">
+
+
+                <div class="feedback-detail-grid">
+
+
+                    <div class="feedback-detail-item">
+
+                        <span>
+                            Customer
+                        </span>
+
+                        <strong id="modalFeedbackName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="feedback-detail-item">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong id="modalFeedbackEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="feedback-detail-item">
+
+                        <span>
+                            Type
+                        </span>
+
+                        <strong id="modalFeedbackType">
+                            -
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="feedback-detail-item">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong id="modalFeedbackStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="feedback-detail-message">
+
+                    <span>
+                        Message
+                    </span>
+
+                    <p id="modalFeedbackMessage">
+                        -
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="admin-btn admin-btn-outline"
+                    data-bs-dismiss="modal"
+                >
+
+                    Close
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     STATUS MODAL
+========================================================= -->
+
+<div
+    class="modal fade"
+    id="feedbackStatusModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content admin-feedback-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="admin-modal-eyebrow">
+                        FEEDBACK STATUS
+                    </span>
+
+                    <h5 class="modal-title">
+                        Update Status
+                    </h5>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+
+            <div class="modal-body">
+
+                <label
+                    for="feedbackStatusSelect"
+                    class="form-label"
+                >
+
+                    Select Status
+
+                </label>
+
+
+                <select
+                    id="feedbackStatusSelect"
+                    class="form-select"
+                >
+
+                    <option value="New">
+                        New
+                    </option>
+
+                    <option value="Read">
+                        Read
+                    </option>
+
+                    <option value="Resolved">
+                        Resolved
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="hidden"
+                    id="selectedFeedbackId"
+                >
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="admin-btn admin-btn-outline"
+                    data-bs-dismiss="modal"
+                >
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="saveFeedbackStatusBtn"
+                    class="admin-btn admin-btn-primary"
+                >
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Save Status
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     DELETE CONFIRMATION MODAL
+========================================================= -->
+
+<div
+    class="modal fade"
+    id="feedbackDeleteModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content admin-feedback-modal">
+
+
+            <div class="modal-body text-center p-4 p-md-5">
+
+
+                <div class="feedback-delete-icon">
+
+                    <i class="bi bi-trash"></i>
+
+                </div>
+
+
+                <h4>
+                    Delete Feedback?
+                </h4>
+
+
+                <p>
+
+                    This feedback will be permanently removed.
+                    This action cannot be undone.
+
+                </p>
+
+
+                <input
+                    type="hidden"
+                    id="deleteFeedbackId"
+                >
+
+
+                <div class="feedback-delete-actions">
+
+                    <button
+                        type="button"
+                        class="admin-btn admin-btn-outline"
+                        data-bs-dismiss="modal"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="confirmFeedbackDeleteBtn"
+                        class="admin-btn admin-btn-primary"
+                    >
+
+                        <i class="bi bi-trash"></i>
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     PAGE DATA
+========================================================= -->
+
+<script type="application/json" id="admin-feedback-data"><%- JSON.stringify({
+    feedbacks: typeof feedbacks !== 'undefined' ? feedbacks : []
+}).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026') %></script>
+
+<script>
+    window.adminFeedbackData = JSON.parse(
+        document.getElementById('admin-feedback-data').textContent
+    );
+</script>

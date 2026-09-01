@@ -1,0 +1,552 @@
+<%
+layout("layout");
+%>
+
+<!-- =========================================================
+     PAGE CSS
+     ========================================================= -->
+
+<% block("head").append(`    <link
+        rel="stylesheet"
+        href="/css/pages/products.css"     >`) %>
+
+<!-- ================================================= -->
+
+<!-- PRODUCTS PAGE                                     -->
+
+<!-- ================================================= -->
+
+<section class="products-page">
+
+```
+<!-- ================================================= -->
+<!-- PAGE HERO                                         -->
+<!-- ================================================= -->
+
+<section class="products-hero">
+
+    <div class="container">
+
+        <div class="products-hero-content text-center">
+
+            <span class="products-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h1 class="products-title">
+                Our Products
+            </h1>
+
+            <p class="products-description">
+                Discover handcrafted Patola sarees,
+                traditional textiles and timeless
+                Indian artistry.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- PRODUCTS CONTENT                                  -->
+<!-- ================================================= -->
+
+<section class="products-content py-5">
+
+    <div class="container">
+
+
+        <!-- ================================================= -->
+        <!-- FILTER TOOLBAR                                    -->
+        <!-- ================================================= -->
+
+        <div class="products-toolbar mb-5">
+
+            <form
+                action="/products"
+                method="GET"
+                class="products-filter-form"
+            >
+
+                <div class="row g-3 align-items-end">
+
+
+                    <!-- SEARCH -->
+
+                    <div class="col-lg-5">
+
+                        <label
+                            for="productSearch"
+                            class="form-label"
+                        >
+                            Search Products
+                        </label>
+
+                        <input
+                            type="search"
+                            id="productSearch"
+                            name="search"
+                            class="form-control"
+                            value="<%= typeof search !== 'undefined' ? search : '' %>"
+                            placeholder="Search products..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="col-lg-3">
+
+                        <label
+                            for="productCategory"
+                            class="form-label"
+                        >
+                            Category
+                        </label>
+
+                        <select
+                            id="productCategory"
+                            name="category"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            <option
+                                value="Patola Sarees"
+                                <%= typeof category !== "undefined" &&
+                                    category === "Patola Sarees"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Patola Sarees
+                            </option>
+
+                            <option
+                                value="Double Ikat Sarees"
+                                <%= typeof category !== "undefined" &&
+                                    category === "Double Ikat Sarees"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Double Ikat Sarees
+                            </option>
+
+                            <option
+                                value="Single Ikat Sarees"
+                                <%= typeof category !== "undefined" &&
+                                    category === "Single Ikat Sarees"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Single Ikat Sarees
+                            </option>
+
+                            <option
+                                value="Dupattas"
+                                <%= typeof category !== "undefined" &&
+                                    category === "Dupattas"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Dupattas
+                            </option>
+
+                            <option
+                                value="Accessories"
+                                <%= typeof category !== "undefined" &&
+                                    category === "Accessories"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Accessories
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- AVAILABILITY -->
+
+                    <div class="col-lg-2">
+
+                        <label
+                            for="productAvailability"
+                            class="form-label"
+                        >
+                            Availability
+                        </label>
+
+                        <select
+                            id="productAvailability"
+                            name="availability"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All
+                            </option>
+
+                            <option
+                                value="In Stock"
+                                <%= typeof availability !== "undefined" &&
+                                    availability === "In Stock"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                In Stock
+                            </option>
+
+                            <option
+                                value="Limited"
+                                <%= typeof availability !== "undefined" &&
+                                    availability === "Limited"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Limited
+                            </option>
+
+                            <option
+                                value="Out of Stock"
+                                <%= typeof availability !== "undefined" &&
+                                    availability === "Out of Stock"
+                                        ? "selected"
+                                        : "" %>
+                            >
+                                Out of Stock
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="col-lg-2">
+
+                        <div class="products-filter-buttons">
+
+                            <button
+                                type="submit"
+                                class="btn btn-dark"
+                            >
+                                Filter
+                            </button>
+
+                            <a
+                                href="/products"
+                                class="btn btn-outline-dark"
+                            >
+                                Reset
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCT HEADER                                    -->
+        <!-- ================================================= -->
+
+        <div class="products-header mb-4">
+
+            <div>
+
+                <span class="section-subtitle">
+                    OUR COLLECTION
+                </span>
+
+                <h2 class="section-title mb-0">
+                    Handcrafted Products
+                </h2>
+
+            </div>
+
+
+            <div class="products-count">
+
+                <%
+                    const productList =
+                        typeof products !== "undefined" &&
+                        Array.isArray(products)
+                            ? products
+                            : [];
+                %>
+
+                <strong>
+                    <%= productList.length %>
+                </strong>
+
+                <span>
+                    <%= productList.length === 1
+                        ? "Product"
+                        : "Products"
+                    %>
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCT GRID                                      -->
+        <!-- ================================================= -->
+
+        <% if (productList.length > 0) { %>
+
+
+            <div
+                class="row g-4 products-grid"
+                id="productsGrid"
+            >
+
+
+                <% productList.forEach(product => { %>
+
+
+                    <div
+                        class="col-xl-4 col-lg-4 col-md-6 product-grid-item"
+                        data-category="<%= product.category || '' %>"
+                        data-availability="<%= product.availability || '' %>"
+                    >
+
+
+                        <%- include("../partials/product-card", {
+                            product: product
+                        }) %>
+
+
+                    </div>
+
+
+                <% }); %>
+
+
+            </div>
+
+
+        <% } else { %>
+
+
+            <!-- ================================================= -->
+            <!-- EMPTY STATE                                       -->
+            <!-- ================================================= -->
+
+            <div class="products-empty text-center">
+
+                <div class="products-empty-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    No Products Found
+                </h3>
+
+                <p>
+                    We could not find any products matching
+                    your current filters.
+                </p>
+
+                <a
+                    href="/products"
+                    class="btn btn-dark"
+                >
+                    View All Products
+                </a>
+
+            </div>
+
+
+        <% } %>
+
+
+
+        <!-- ================================================= -->
+        <!-- PAGINATION                                        -->
+        <!-- ================================================= -->
+
+        <%
+            const currentPage =
+                typeof page !== "undefined"
+                    ? Number(page)
+                    : 1;
+
+            const totalPages =
+                typeof pages !== "undefined"
+                    ? Number(pages)
+                    : 1;
+        %>
+
+
+        <% if (totalPages > 1) { %>
+
+            <nav
+                class="products-pagination mt-5"
+                aria-label="Products pagination"
+            >
+
+                <ul class="pagination justify-content-center">
+
+
+                    <!-- PREVIOUS -->
+
+                    <li
+                        class="page-item
+                        <%= currentPage <= 1 ? 'disabled' : '' %>"
+                    >
+
+                        <% if (currentPage > 1) { %>
+
+                            <a
+                                class="page-link"
+                                href="/products?page=<%= currentPage - 1 %>"
+                            >
+                                Previous
+                            </a>
+
+                        <% } else { %>
+
+                            <span class="page-link">
+                                Previous
+                            </span>
+
+                        <% } %>
+
+                    </li>
+
+
+
+                    <!-- PAGE NUMBERS -->
+
+                    <% for (
+                        let pageNumber = 1;
+                        pageNumber <= totalPages;
+                        pageNumber++
+                    ) { %>
+
+                        <li
+                            class="page-item
+                            <%= pageNumber === currentPage
+                                ? 'active'
+                                : '' %>"
+                        >
+
+                            <a
+                                class="page-link"
+                                href="/products?page=<%= pageNumber %>"
+                            >
+                                <%= pageNumber %>
+                            </a>
+
+                        </li>
+
+                    <% } %>
+
+
+
+                    <!-- NEXT -->
+
+                    <li
+                        class="page-item
+                        <%= currentPage >= totalPages
+                            ? 'disabled'
+                            : '' %>"
+                    >
+
+                        <% if (currentPage < totalPages) { %>
+
+                            <a
+                                class="page-link"
+                                href="/products?page=<%= currentPage + 1 %>"
+                            >
+                                Next
+                            </a>
+
+                        <% } else { %>
+
+                            <span class="page-link">
+                                Next
+                            </span>
+
+                        <% } %>
+
+                    </li>
+
+
+                </ul>
+
+            </nav>
+
+        <% } %>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+<!-- PRODUCTS CTA                                      -->
+<!-- ================================================= -->
+
+<section class="products-cta py-5">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <span class="products-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h2 class="section-title">
+                Looking For Something Special?
+            </h2>
+
+            <p class="section-description mx-auto">
+                Get in touch with us to learn more about
+                our handcrafted Patolas and available
+                pieces.
+            </p>
+
+            <a
+                href="/contact"
+                class="btn btn-dark btn-lg"
+            >
+                Contact Us
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</section>

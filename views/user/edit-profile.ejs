@@ -1,0 +1,159 @@
+<% layout("layout") -%>
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-7 col-md-9">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="text-center mb-4">
+
+                            <h1 class="h3 mb-1">
+                                Edit Profile
+                            </h1>
+
+                            <p class="text-muted mb-0">
+                                Update your account information
+                            </p>
+
+                        </div>
+
+
+                        <% if (error) { %>
+
+                            <div class="alert alert-danger">
+                                <%= error %>
+                            </div>
+
+                        <% } %>
+
+
+                        <% if (success) { %>
+
+                            <div class="alert alert-success">
+                                <%= success %>
+                            </div>
+
+                        <% } %>
+
+
+                        <form
+                            action="/user/profile/edit"
+                            method="POST"
+                        >
+
+
+                            <!-- NAME -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="name"
+                                    class="form-label fw-semibold"
+                                >
+                                    Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    class="form-control"
+                                    value="<%= user.name || '' %>"
+                                    minlength="2"
+                                    maxlength="50"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="mb-3">
+
+                                <label
+                                    for="email"
+                                    class="form-label fw-semibold"
+                                >
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    class="form-control bg-light"
+                                    value="<%= user.email || '' %>"
+                                    readonly
+                                >
+
+                                <small class="text-muted">
+                                    Email cannot be changed here.
+                                </small>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="mb-4">
+
+                                <label
+                                    for="phone"
+                                    class="form-label fw-semibold"
+                                >
+                                    Phone
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control"
+                                    value="<%= user.phone || '' %>"
+                                    placeholder="Enter phone number"
+                                >
+
+                            </div>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="d-flex gap-2 flex-wrap">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-dark"
+                                >
+                                    Save Changes
+                                </button>
+
+                                <a
+                                    href="/user/profile"
+                                    class="btn btn-outline-dark"
+                                >
+                                    Cancel
+                                </a>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

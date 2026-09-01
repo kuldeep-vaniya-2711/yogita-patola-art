@@ -1,0 +1,73 @@
+<header class="admin-topbar">
+
+    <div class="admin-topbar-left">
+
+        <button
+            type="button"
+            class="admin-menu-toggle"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="admin-topbar-page-info">
+
+            <span class="admin-topbar-label">
+                Admin Panel
+            </span>
+
+            <h1 class="admin-topbar-title">
+                <%= typeof pageTitle !== "undefined" && pageTitle
+                    ? pageTitle
+                    : "Dashboard" %>
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <div class="admin-topbar-right">
+
+        <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="admin-topbar-site-link"
+            aria-label="Open website in new tab"
+        >
+            <span>🌐</span>
+            <span class="d-none d-md-inline">
+                View Website
+            </span>
+        </a>
+
+
+        <div class="admin-topbar-user">
+
+            <div class="admin-topbar-avatar" aria-hidden="true">
+                <%= typeof adminName !== "undefined" && adminName
+                    ? adminName.charAt(0).toUpperCase()
+                    : "A" %>
+            </div>
+
+            <div class="admin-topbar-user-info">
+
+                <strong>
+                    <%= typeof adminName !== "undefined" && adminName
+                        ? adminName
+                        : "Administrator" %>
+                </strong>
+
+                <small>Admin</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>

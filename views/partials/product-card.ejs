@@ -1,0 +1,194 @@
+<%
+    /*
+     * =====================================================
+     * PRODUCT CARD COMPONENT
+     * =====================================================
+     *
+     * Required:
+     * product
+     *
+     * Used by:
+     * home.ejs
+     * collections.ejs
+     * products.ejs
+     * search.ejs
+     *
+     */
+%>
+
+
+<div class="product-card h-100">
+
+
+    <!-- ================================================= -->
+    <!-- PRODUCT IMAGE -->
+    <!-- ================================================= -->
+
+    <div class="product-image position-relative overflow-hidden">
+
+
+        <% if (
+            product &&
+            product.images &&
+            product.images.length > 0
+        ) { %>
+
+
+            <img
+                src="<%= product.images[0] %>"
+                alt="<%= product.name || 'Patola Product' %>"
+                class="img-fluid w-100"
+                loading="lazy"
+            >
+
+
+        <% } else { %>
+
+
+            <div
+                class="no-product-image
+                d-flex
+                align-items-center
+                justify-content-center"
+            >
+
+                <span>
+                    Yogita Patola Art
+                </span>
+
+            </div>
+
+
+        <% } %>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCT BADGE -->
+        <!-- ================================================= -->
+
+        <span class="product-badge">
+
+            Handcrafted
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- PRODUCT INFORMATION -->
+    <!-- ================================================= -->
+
+    <div class="product-info">
+
+
+        <!-- ================================================= -->
+        <!-- CATEGORY -->
+        <!-- ================================================= -->
+
+        <span class="product-category">
+
+            <%= product.category || "Patola" %>
+
+        </span>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCT NAME -->
+        <!-- ================================================= -->
+
+        <h3 class="product-name">
+
+            <%= product.name || "Handcrafted Patola" %>
+
+        </h3>
+
+
+
+        <!-- ================================================= -->
+        <!-- DESCRIPTION -->
+        <!-- ================================================= -->
+
+        <p class="product-description">
+
+            <%= product.description
+                ? (
+                    product.description.length > 120
+                        ? product.description.substring(0, 120) + "..."
+                        : product.description
+                )
+                : "A beautifully handcrafted Patola created with traditional artistry."
+            %>
+
+        </p>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRICE + AVAILABILITY -->
+        <!-- ================================================= -->
+
+        <div
+            class="product-meta
+            d-flex
+            justify-content-between
+            align-items-center
+            mb-3"
+        >
+
+
+            <!-- PRICE -->
+
+            <span class="product-price">
+
+                ₹<%= Number(
+                    product.price || 0
+                ).toLocaleString("en-IN") %>
+
+            </span>
+
+
+
+            <!-- AVAILABILITY -->
+
+            <span
+                class="badge
+                <%= product.availability === 'In Stock'
+                    ? 'bg-success'
+                    : product.availability === 'Limited'
+                        ? 'bg-warning text-dark'
+                        : 'bg-secondary'
+                %>"
+            >
+
+                <%= product.availability || "In Stock" %>
+
+            </span>
+
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- VIEW DETAILS -->
+        <!-- ================================================= -->
+
+        <a
+            href="/products/<%= product._id %>"
+            class="btn btn-dark w-100"
+        >
+
+            View Details
+
+        </a>
+
+
+    </div>
+
+
+</div>

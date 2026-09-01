@@ -1,0 +1,1147 @@
+
+/* =========================================================
+   YOGITA PATOLA ART
+   PREMIUM COLORFUL PATOLA NAVBAR
+   File:
+   public/css/components/navbar.css
+   ========================================================= */
+
+
+/* =========================================================
+   1. NAVBAR BASE
+   ========================================================= */
+
+.patola-navbar {
+
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+
+    min-height: 82px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fffaf1 0%,
+            #ffffff 22%,
+            #fffdf8 50%,
+            #ffffff 78%,
+            #fff8ed 100%
+        ) !important;
+
+    border-bottom:
+        1px solid rgba(176, 138, 74, 0.30);
+
+    box-shadow:
+        0 5px 22px rgba(65, 28, 32, 0.08);
+
+    overflow: visible;
+
+}
+
+
+/* =========================================================
+   2. PATOLA DECORATIVE STRIPE
+   ========================================================= */
+
+.patola-navbar::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -2px;
+
+    height: 3px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+
+            #651f2a 0px,
+            #651f2a 28px,
+
+            #b08a4a 28px,
+            #b08a4a 34px,
+
+            #7c2858 34px,
+            #7c2858 62px,
+
+            #d66a3d 62px,
+            #d66a3d 68px,
+
+            #1f706b 68px,
+            #1f706b 96px,
+
+            #b08a4a 96px,
+            #b08a4a 102px
+        );
+
+    opacity: 0.85;
+
+}
+
+
+/* =========================================================
+   3. SUBTLE WOVEN BACKGROUND
+   ========================================================= */
+
+.patola-navbar::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.18;
+
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            rgba(101, 31, 42, 0.035) 0px,
+            rgba(101, 31, 42, 0.035) 1px,
+            transparent 1px,
+            transparent 8px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            rgba(176, 138, 74, 0.035) 0px,
+            rgba(176, 138, 74, 0.035) 1px,
+            transparent 1px,
+            transparent 8px
+        );
+
+}
+
+
+/* =========================================================
+   4. CONTAINER
+   ========================================================= */
+
+.patola-navbar .container {
+
+    position: relative;
+    z-index: 2;
+
+    min-height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   5. BRAND
+   ========================================================= */
+
+.patola-navbar-brand {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-right: 28px;
+
+    padding: 6px 0;
+
+    color:
+        #651f2a !important;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+/* Brand decorative dot */
+
+.patola-navbar-brand::before {
+
+    content: "✦";
+
+    margin-right: 8px;
+
+    color:
+        #b08a4a;
+
+    font-size: 13px;
+
+}
+
+
+/* Brand hover */
+
+.patola-navbar-brand:hover {
+
+    color:
+        #7c2858 !important;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   6. NAVBAR CONTENT
+   ========================================================= */
+
+.patola-navbar .navbar-collapse {
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   7. NAVIGATION LIST
+   ========================================================= */
+
+.patola-navbar .navbar-nav {
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   8. NAV ITEMS
+   ========================================================= */
+
+.patola-navbar .nav-item {
+
+    position: relative;
+
+}
+
+
+/* =========================================================
+   9. NORMAL NAV LINKS
+   ========================================================= */
+
+.patola-navbar .nav-link {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding:
+        8px 10px !important;
+
+    margin:
+        0 1px;
+
+    color:
+        #4d3b38 !important;
+
+    font-family:
+        "Poppins",
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.015em;
+
+    white-space: nowrap;
+
+    border-radius: 8px;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+/* =========================================================
+   10. NAV HOVER
+   ========================================================= */
+
+.patola-navbar .nav-link:hover {
+
+    color:
+        #651f2a !important;
+
+    background:
+        rgba(176, 138, 74, 0.09);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   11. NAV ACTIVE
+   ========================================================= */
+
+.patola-navbar .nav-link.active {
+
+    color:
+        #651f2a !important;
+
+    font-weight: 600;
+
+    background:
+        rgba(176, 138, 74, 0.11);
+
+}
+
+
+/* =========================================================
+   12. ACTIVE DECORATION
+   ========================================================= */
+
+.patola-navbar .nav-link::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 3px;
+
+    width: 18px;
+
+    height: 2px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #651f2a,
+            #b08a4a,
+            #7c2858
+        );
+
+    transform:
+        translateX(-50%)
+        scaleX(0);
+
+    transform-origin: center;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.patola-navbar .nav-link:hover::after,
+.patola-navbar .nav-link.active::after {
+
+    transform:
+        translateX(-50%)
+        scaleX(1);
+
+}
+
+
+/* =========================================================
+   13. SEARCH POSITION
+   ========================================================= */
+
+/*
+   Search is kept visually compact.
+*/
+
+.patola-navbar .navbar-search-item {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   14. DESKTOP SEARCH
+   ========================================================= */
+
+.navbar-search-form {
+
+    width: 205px;
+
+    margin:
+        0 10px;
+
+}
+
+
+/* =========================================================
+   15. SEARCH GROUP
+   ========================================================= */
+
+.navbar-search-form .input-group {
+
+    position: relative;
+
+    height: 38px;
+
+    border-radius: 40%;
+
+}
+
+
+/* =========================================================
+   16. SEARCH INPUT
+   ========================================================= */
+
+.navbar-search-form .form-control {
+
+    height: 38px;
+
+    min-width: 0;
+
+    padding:
+        7px 13px;
+
+    border:
+        1px solid rgba(176, 138, 74, 0.45);
+
+    border-right:
+        0;
+
+    border-radius:
+        40px 0 0 40px;
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    color:
+        #332a27;
+
+    font-family:
+        "Poppins",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    box-shadow:
+        inset 0 1px 3px rgba(50, 30, 25, 0.04);
+
+    transition:
+        border-color 0.25s ease,
+        background-color 0.25s ease;
+
+}
+
+
+.navbar-search-form .form-control::placeholder {
+
+    color:
+        #9a8d85;
+
+}
+
+
+.navbar-search-form .form-control:focus {
+
+    border-color:
+        #b08a4a;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(176, 138, 74, 0.10);
+
+}
+
+
+/* =========================================================
+   17. SEARCH BUTTON
+   ========================================================= */
+
+.navbar-search-form .btn {
+
+    flex:
+        0 0 42px;
+
+    width: 42px;
+
+    height: 38px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid #651f2a;
+
+    border-left:
+        0;
+
+    border-radius:
+        0 40px 40px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #651f2a,
+            #7c2858
+        );
+
+    color:
+        #ffffff;
+
+    font-size: 13px;
+
+    box-shadow:
+        none;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.navbar-search-form .btn:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4d1720,
+            #651f2a
+        );
+
+    color:
+        #ffffff;
+
+    transform:
+        scale(1.02);
+
+}
+
+
+/* =========================================================
+   18. REGISTER BUTTON
+   ========================================================= */
+
+.patola-navbar .btn-dark {
+
+    min-height: 36px;
+
+    padding:
+        7px 15px !important;
+
+    border:
+        1px solid #651f2a;
+
+    border-radius:
+        22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #651f2a,
+            #7c2858
+        );
+
+    color:
+        #ffffff !important;
+
+    font-family:
+        "Poppins",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing:
+        0.02em;
+
+    box-shadow:
+        0 4px 12px rgba(101, 31, 42, 0.16);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+
+}
+
+
+.patola-navbar .btn-dark:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c2858,
+            #651f2a
+        );
+
+    border-color:
+        #651f2a;
+
+    color:
+        #ffffff !important;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(101, 31, 42, 0.22);
+
+}
+
+
+/* =========================================================
+   19. ACCOUNT / LOGIN
+   ========================================================= */
+
+.patola-navbar .nav-link[href="/user/profile"] {
+
+    color:
+        #7c2858 !important;
+
+}
+
+
+.patola-navbar .nav-link[href="/user/profile"]:hover {
+
+    background:
+        rgba(124, 40, 88, 0.08);
+
+}
+
+
+/* =========================================================
+   20. WISHLIST
+   ========================================================= */
+
+.patola-navbar .nav-link[href="/wishlist"] {
+
+    color:
+        #8a3d50 !important;
+
+}
+
+
+.patola-navbar .nav-link[href="/wishlist"]:hover {
+
+    background:
+        rgba(138, 61, 80, 0.08);
+
+}
+
+
+/* =========================================================
+   21. MOBILE TOGGLE
+   ========================================================= */
+
+.patola-navbar .navbar-toggler {
+
+    position: relative;
+
+    z-index: 5;
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid rgba(101, 31, 42, 0.30);
+
+    border-radius:
+        10px;
+
+    background:
+        #fffaf3;
+
+    box-shadow:
+        none;
+
+}
+
+
+.patola-navbar .navbar-toggler:hover {
+
+    border-color:
+        #b08a4a;
+
+}
+
+
+.patola-navbar .navbar-toggler:focus {
+
+    box-shadow:
+        0 0 0 3px rgba(176, 138, 74, 0.13);
+
+}
+
+
+/* Bootstrap toggler icon */
+
+.patola-navbar .navbar-toggler-icon {
+
+    width: 20px;
+
+    height: 20px;
+
+}
+
+
+/* =========================================================
+   22. MOBILE SEARCH
+   ========================================================= */
+
+.mobile-search {
+
+    display:
+        none;
+
+}
+
+
+/* =========================================================
+   23. TABLET
+   ========================================================= */
+
+@media (max-width: 1199.98px) {
+
+    .patola-navbar-brand {
+
+        margin-right:
+            16px;
+
+        font-size:
+            21px;
+
+    }
+
+
+    .navbar-search-form {
+
+        width:
+            175px;
+
+        margin:
+            0 5px;
+
+    }
+
+
+    .patola-navbar .nav-link {
+
+        padding:
+            8px 8px !important;
+
+        font-size:
+            12px;
+
+    }
+
+}
+
+
+/* =========================================================
+   24. MOBILE / TABLET NAVIGATION
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .patola-navbar {
+
+        min-height:
+            70px;
+
+    }
+
+
+    .patola-navbar .container {
+
+        min-height:
+            70px;
+
+    }
+
+
+    .patola-navbar-brand {
+
+        margin-right:
+            0;
+
+        font-size:
+            20px;
+
+    }
+
+
+    .patola-navbar .navbar-collapse {
+
+        margin-top:
+            10px;
+
+        padding:
+            14px 0 18px;
+
+        border-top:
+            1px solid rgba(176, 138, 74, 0.18);
+
+    }
+
+
+    .patola-navbar .navbar-nav {
+
+        width:
+            100%;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .patola-navbar .nav-item {
+
+        width:
+            100%;
+
+    }
+
+
+    .patola-navbar .nav-link {
+
+        width:
+            100%;
+
+        justify-content:
+            flex-start;
+
+        min-height:
+            42px;
+
+        margin:
+            1px 0;
+
+        padding:
+            9px 10px !important;
+
+        border-radius:
+            8px;
+
+    }
+
+
+    .patola-navbar .nav-link::after {
+
+        left:
+            10px;
+
+        bottom:
+            5px;
+
+        width:
+            20px;
+
+        transform:
+            scaleX(0);
+
+    }
+
+
+    .patola-navbar .nav-link:hover::after,
+    .patola-navbar .nav-link.active::after {
+
+        transform:
+            scaleX(1);
+
+    }
+
+
+    /* Hide desktop search */
+
+    .patola-navbar .navbar-search-form {
+
+        display:
+            none;
+
+    }
+
+
+    /* Register */
+
+    .patola-navbar .nav-item .btn {
+
+        display:
+            inline-flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        width:
+            100%;
+
+        margin:
+            7px 0;
+
+    }
+
+
+    /* Mobile search */
+
+    .mobile-search {
+
+        display:
+            block;
+
+        width:
+            100%;
+
+        margin-top:
+            12px;
+
+    }
+
+
+    .mobile-search form {
+
+        display:
+            flex;
+
+        width:
+            100%;
+
+        height:
+            42px;
+
+    }
+
+
+    .mobile-search input {
+
+        flex:
+            1;
+
+        width:
+            100%;
+
+        min-width:
+            0;
+
+        height:
+            42px;
+
+        padding:
+            8px 14px;
+
+        border:
+            1px solid rgba(176, 138, 74, 0.45);
+
+        border-right:
+            0;
+
+        border-radius:
+            40px 0 0 40px;
+
+        background:
+            #ffffff;
+
+        outline:
+            none;
+
+        font-size:
+            13px;
+
+    }
+
+
+    .mobile-search input:focus {
+
+        border-color:
+            #b08a4a;
+
+    }
+
+
+    .mobile-search button {
+
+        flex:
+            0 0 46px;
+
+        width:
+            46px;
+
+        height:
+            42px;
+
+        padding:
+            0;
+
+        border:
+            1px solid #651f2a;
+
+        border-left:
+            0;
+
+        border-radius:
+            0 40px 40px 0;
+
+        background:
+            linear-gradient(
+                135deg,
+                #651f2a,
+                #7c2858
+            );
+
+        color:
+            #ffffff;
+
+        font-size:
+            14px;
+
+    }
+
+}
+
+
+/* =========================================================
+   25. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .patola-navbar-brand {
+
+        max-width:
+            calc(100% - 58px);
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+
+        font-size:
+            18px;
+
+    }
+
+
+    .patola-navbar-brand::before {
+
+        margin-right:
+            5px;
+
+        font-size:
+            11px;
+
+    }
+
+
+    .patola-navbar .navbar-collapse {
+
+        padding:
+            12px 0 16px;
+
+    }
+
+
+    .mobile-search {
+
+        margin-top:
+            10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   26. EXTRA SMALL
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .patola-navbar-brand {
+
+        font-size:
+            16px;
+
+    }
+
+}
+
+
+/* =========================================================
+   27. ACCESSIBILITY
+   ========================================================= */
+
+.patola-navbar a:focus-visible,
+.patola-navbar button:focus-visible,
+.patola-navbar input:focus-visible {
+
+    outline:
+        2px solid #b08a4a;
+
+    outline-offset:
+        2px;
+
+}
+
+
+/* =========================================================
+   28. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .patola-navbar *,
+    .patola-navbar *::before,
+    .patola-navbar *::after {
+
+        transition:
+            none !important;
+
+    }
+
+}
+

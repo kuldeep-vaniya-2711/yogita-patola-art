@@ -1,0 +1,2303 @@
+
+/* =========================================================
+   YOGITA PATOLA ART
+   ADMIN CONTACTS / INQUIRIES CSS
+
+   File:
+   public/css/admin/contacts.css
+
+   Page:
+   /admin/contacts
+
+   Purpose:
+   - Contact page header
+   - Inquiry statistics
+   - Search and filters
+   - Contacts table
+   - Status badges
+   - Action buttons
+   - Empty states
+   - Business contact card
+   - Responsive layout
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.contacts-page {
+
+    width: 100%;
+
+    color: #403732;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.contacts-page .page-header {
+
+    width: 100%;
+
+    margin-bottom: 24px;
+
+    padding: 22px 24px;
+
+    border: 1px solid #e5dbd0;
+
+    border-radius: 10px;
+
+    background: #fffdf9;
+
+    box-shadow:
+        0 2px 8px rgba(72, 48, 35, 0.035);
+}
+
+
+.contacts-page .page-header-content {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+
+.contacts-page .page-eyebrow {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #a08468;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+.contacts-page .page-header h1 {
+
+    margin: 0;
+
+    color: #4d292f;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 29px;
+
+    font-weight: 600;
+
+    line-height: 1.25;
+}
+
+
+.contacts-page .page-header p {
+
+    max-width: 700px;
+
+    margin: 7px 0 0;
+
+    color: #786c63;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   HEADER ICON
+   ========================================================= */
+
+.contacts-page .page-header-icon {
+
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e1d3c5;
+
+    border-radius: 9px;
+
+    background: #f6eee6;
+
+    color: #77464d;
+
+    font-size: 22px;
+}
+
+
+.contacts-page .page-header-icon span {
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.contacts-page .alert-message {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    padding: 12px 14px;
+
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+}
+
+
+.contacts-page .alert-success {
+
+    border-color: #d7e5d4;
+
+    background: #f3f8f1;
+
+    color: #4f694a;
+}
+
+
+.contacts-page .alert-error {
+
+    border-color: #ead4d4;
+
+    background: #fbf3f3;
+
+    color: #805050;
+}
+
+
+.contacts-page .alert-icon {
+
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.contacts-page .alert-success .alert-icon {
+
+    background: #dfeedd;
+
+    color: #55724f;
+}
+
+
+.contacts-page .alert-error .alert-icon {
+
+    background: #f0dede;
+
+    color: #875050;
+}
+
+
+.contacts-page .alert-content {
+
+    min-width: 0;
+
+    flex: 1 1 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.contacts-page .alert-content strong {
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.contacts-page .alert-content span {
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+.contacts-page .alert-close {
+
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: inherit;
+
+    font-size: 19px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: 0.65;
+}
+
+
+.contacts-page .alert-close:hover {
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   CONTACT STATISTICS
+   ========================================================= */
+
+.contacts-page .contact-stats {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-bottom: 24px;
+}
+
+
+.contacts-page .contact-stat-card {
+
+    min-width: 0;
+
+    min-height: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    border: 1px solid #e5dbd0;
+
+    border-radius: 9px;
+
+    background: #fffdf9;
+
+    box-shadow:
+        0 2px 8px rgba(72, 48, 35, 0.035);
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.contacts-page .contact-stat-card:hover {
+
+    border-color: #d7c5b3;
+
+    box-shadow:
+        0 5px 16px rgba(72, 48, 35, 0.06);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   STAT ICON
+   ========================================================= */
+
+.contacts-page .stat-icon {
+
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #f5ece3;
+
+    color: #795058;
+
+    font-size: 17px;
+
+    line-height: 1;
+}
+
+
+.contacts-page .stat-icon.new-icon {
+
+    background: #f7f0df;
+
+    color: #a27b37;
+}
+
+
+.contacts-page .stat-icon.replied-icon {
+
+    background: #edf4eb;
+
+    color: #5d7957;
+}
+
+
+.contacts-page .stat-icon.closed-icon {
+
+    background: #f1eeee;
+
+    color: #796b6b;
+}
+
+
+/* =========================================================
+   STAT CONTENT
+   ========================================================= */
+
+.contacts-page .stat-content {
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.contacts-page .stat-label {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: #897b70;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .stat-value {
+
+    display: block;
+
+    color: #4d292f;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 24px;
+
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.contacts-page .contacts-toolbar {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+
+    padding: 14px 16px;
+
+    border: 1px solid #e5dbd0;
+
+    border-radius: 9px;
+
+    background: #fffdf9;
+}
+
+
+.contacts-page .toolbar-left {
+
+    min-width: 0;
+
+    flex: 1 1 auto;
+}
+
+
+.contacts-page .toolbar-right {
+
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.contacts-page .search-box {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 600px;
+}
+
+
+.contacts-page .search-icon {
+
+    position: absolute;
+
+    top: 50%;
+    left: 13px;
+
+    z-index: 2;
+
+    color: #9a897b;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+}
+
+
+.contacts-page .search-box input {
+
+    width: 100%;
+
+    height: 40px;
+
+    padding:
+        0 38px
+        0 38px;
+
+    border: 1px solid #ded3c8;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #fffefa;
+
+    color: #4c403a;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 11px;
+}
+
+
+.contacts-page .search-box input::placeholder {
+
+    color: #a4978c;
+
+    opacity: 1;
+}
+
+
+.contacts-page .search-box input:focus {
+
+    border-color: #b79b7c;
+
+    box-shadow:
+        0 0 0 3px rgba(183, 155, 124, 0.10);
+}
+
+
+.contacts-page .clear-search {
+
+    position: absolute;
+
+    top: 50%;
+    right: 9px;
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #8f8075;
+
+    font-size: 17px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+}
+
+
+.contacts-page .clear-search:hover {
+
+    background: #f2e9e1;
+
+    color: #5d4743;
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+.contacts-page .filter-group {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.contacts-page .filter-group label {
+
+    margin: 0;
+
+    color: #75675e;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .filter-group select {
+
+    min-width: 110px;
+
+    height: 38px;
+
+    padding:
+        0 30px
+        0 10px;
+
+    border: 1px solid #ded3c8;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background-color: #fffefa;
+
+    color: #554942;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+.contacts-page .filter-group select:focus {
+
+    border-color: #b79b7c;
+
+    box-shadow:
+        0 0 0 3px rgba(183, 155, 124, 0.10);
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
+.contacts-page .refresh-btn {
+
+    height: 38px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding:
+        0 13px;
+
+    border: 1px solid #d7c8b9;
+
+    border-radius: 7px;
+
+    background: #f8f1ea;
+
+    color: #65434a;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease;
+}
+
+
+.contacts-page .refresh-btn span {
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+.contacts-page .refresh-btn:hover {
+
+    border-color: #c7b29d;
+
+    background: #f2e7dd;
+}
+
+
+/* =========================================================
+   CONTACTS CARD
+   ========================================================= */
+
+.contacts-page .contacts-card {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid #e5dbd0;
+
+    border-radius: 10px;
+
+    background: #fffdf9;
+
+    box-shadow:
+        0 2px 8px rgba(72, 48, 35, 0.035);
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.contacts-page .contacts-card-header {
+
+    min-height: 74px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 20px;
+
+    border-bottom: 1px solid #e9e0d7;
+}
+
+
+.contacts-page .contacts-card-header h2 {
+
+    margin: 0;
+
+    color: #503036;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+.contacts-page .contacts-card-header p {
+
+    margin: 4px 0 0;
+
+    color: #8a7d73;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+.contacts-page .result-count {
+
+    flex: 0 0 auto;
+
+    color: #8b7c71;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .result-count span {
+
+    color: #5a343a;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.contacts-page .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.contacts-page .contacts-table {
+
+    width: 100%;
+
+    min-width: 1120px;
+
+    margin: 0;
+
+    border-collapse: collapse;
+
+    color: #554a44;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+   ========================================================= */
+
+.contacts-page .contacts-table thead th {
+
+    height: 43px;
+
+    padding:
+        0 12px;
+
+    border-bottom: 1px solid #e4d9ce;
+
+    background: #faf5ef;
+
+    color: #8a7a6e;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.07em;
+
+    line-height: 1.3;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .contacts-table thead th:first-child {
+
+    padding-left: 20px;
+}
+
+
+.contacts-page .contacts-table thead th:last-child {
+
+    padding-right: 20px;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.contacts-page .contacts-table tbody td {
+
+    padding:
+        13px 12px;
+
+    border-bottom: 1px solid #eee6de;
+
+    background: #fffdf9;
+
+    color: #5e524b;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+
+    vertical-align: middle;
+}
+
+
+.contacts-page .contacts-table tbody tr:last-child td {
+
+    border-bottom: 0;
+}
+
+
+.contacts-page .contacts-table tbody tr {
+
+    transition:
+        background-color 0.15s ease;
+}
+
+
+.contacts-page .contacts-table tbody tr:hover td {
+
+    background: #fcf8f3;
+}
+
+
+.contacts-page .contacts-table tbody td:first-child {
+
+    padding-left: 20px;
+}
+
+
+.contacts-page .contacts-table tbody td:last-child {
+
+    padding-right: 20px;
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.contacts-page .number-cell {
+
+    width: 45px;
+
+    color: #a08f80 !important;
+
+    font-size: 10px !important;
+
+    font-weight: 500 !important;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   CUSTOMER INFO
+   ========================================================= */
+
+.contacts-page .customer-info {
+
+    min-width: 175px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+.contacts-page .customer-avatar {
+
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ddcfc1;
+
+    border-radius: 50%;
+
+    background: #f5ebe2;
+
+    color: #6e464d;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.contacts-page .customer-details {
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.contacts-page .customer-details strong {
+
+    max-width: 155px;
+
+    overflow: hidden;
+
+    color: #513239;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .customer-details span {
+
+    max-width: 155px;
+
+    overflow: hidden;
+
+    color: #96877c;
+
+    font-size: 8px;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTACT INFO
+   ========================================================= */
+
+.contacts-page .contact-info {
+
+    min-width: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.contacts-page .email-link,
+.contacts-page .phone-link {
+
+    display: block;
+
+    max-width: 170px;
+
+    overflow: hidden;
+
+    color: #735057;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+
+    text-decoration: none;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .email-link:hover,
+.contacts-page .phone-link:hover {
+
+    color: #4f2930;
+
+    text-decoration: underline;
+}
+
+
+.contacts-page .phone-link {
+
+    color: #89786c;
+}
+
+
+.contacts-page .empty-value {
+
+    color: #a29489;
+
+    font-size: 9px;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   SUBJECT
+   ========================================================= */
+
+.contacts-page .subject-cell {
+
+    width: 150px;
+
+    max-width: 180px;
+
+    overflow: hidden;
+
+    color: #584942;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    line-height: 1.45;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.contacts-page .message-preview {
+
+    width: 210px;
+
+    max-width: 210px;
+
+    display: -webkit-box;
+
+    overflow: hidden;
+
+    color: #756960;
+
+    font-size: 9px;
+
+    line-height: 1.55;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 2;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.contacts-page .status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    min-height: 23px;
+
+    padding:
+        4px 8px;
+
+    border-radius: 20px;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    text-transform: capitalize;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .status-dot {
+
+    width: 6px;
+    height: 6px;
+
+    flex: 0 0 6px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+
+/* New */
+
+.contacts-page .status-new {
+
+    background: #f8eee0;
+
+    color: #956c31;
+}
+
+
+.contacts-page .status-new .status-dot {
+
+    background: #b78336;
+}
+
+
+/* Read */
+
+.contacts-page .status-read {
+
+    background: #edf1f3;
+
+    color: #5e6e77;
+}
+
+
+.contacts-page .status-read .status-dot {
+
+    background: #738791;
+}
+
+
+/* Replied */
+
+.contacts-page .status-replied {
+
+    background: #edf4eb;
+
+    color: #587451;
+}
+
+
+.contacts-page .status-replied .status-dot {
+
+    background: #698b61;
+}
+
+
+/* Closed */
+
+.contacts-page .status-closed {
+
+    background: #efeeee;
+
+    color: #716969;
+}
+
+
+.contacts-page .status-closed .status-dot {
+
+    background: #817777;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.contacts-page .date-cell {
+
+    min-width: 95px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    color: #6e625b;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+.contacts-page .date-cell span {
+
+    color: #9a8b80;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.contacts-page .action-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.contacts-page .action-btn {
+
+    width: 29px;
+    height: 29px;
+
+    flex: 0 0 29px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #ded3c8;
+
+    border-radius: 6px;
+
+    background: #fffdfa;
+
+    color: #73565b;
+
+    font-size: 12px;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.contacts-page .action-btn:hover {
+
+    text-decoration: none;
+}
+
+
+.contacts-page .view-btn:hover {
+
+    border-color: #cdb9a5;
+
+    background: #f4ebe2;
+
+    color: #5d373e;
+}
+
+
+.contacts-page .reply-btn:hover {
+
+    border-color: #c8d9c3;
+
+    background: #edf4eb;
+
+    color: #55704f;
+}
+
+
+.contacts-page .delete-btn:hover {
+
+    border-color: #e0c5c5;
+
+    background: #f8eded;
+
+    color: #875050;
+}
+
+
+/* =========================================================
+   HIDDEN DELETE FORM
+   ========================================================= */
+
+.contacts-page .hidden-delete-form {
+
+    display: none;
+}
+
+
+/* =========================================================
+   NO SEARCH RESULTS
+   ========================================================= */
+
+.contacts-page .no-search-results {
+
+    padding:
+        55px 20px;
+
+    border-top: 1px solid #eee6de;
+
+    text-align: center;
+}
+
+
+.contacts-page .no-search-results .empty-icon {
+
+    width: 46px;
+    height: 46px;
+
+    margin:
+        0 auto 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f5ece3;
+
+    color: #a0866c;
+
+    font-size: 20px;
+}
+
+
+.contacts-page .no-search-results h3 {
+
+    margin: 0 0 5px;
+
+    color: #553238;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+.contacts-page .no-search-results p {
+
+    margin: 0;
+
+    color: #8a7c72;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.contacts-page .empty-state {
+
+    padding:
+        65px 25px;
+
+    text-align: center;
+}
+
+
+.contacts-page .empty-state-icon {
+
+    width: 62px;
+    height: 62px;
+
+    margin:
+        0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e0d2c4;
+
+    border-radius: 50%;
+
+    background: #f7efe7;
+
+    color: #89606a;
+
+    font-size: 24px;
+}
+
+
+.contacts-page .empty-state h3 {
+
+    margin: 0 0 7px;
+
+    color: #513037;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 21px;
+
+    font-weight: 600;
+}
+
+
+.contacts-page .empty-state p {
+
+    max-width: 450px;
+
+    margin:
+        0 auto 20px;
+
+    color: #887a70;
+
+    font-size: 10px;
+
+    line-height: 1.65;
+}
+
+
+.contacts-page .empty-state-note {
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    padding:
+        9px 15px;
+
+    border: 1px solid #e6dcd2;
+
+    border-radius: 7px;
+
+    background: #fffaf5;
+}
+
+
+.contacts-page .empty-state-note span {
+
+    color: #886b50;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+
+.contacts-page .empty-state-note small {
+
+    color: #988a80;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   BUSINESS CONTACT CARD
+   ========================================================= */
+
+.contacts-page .business-contact-card {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 10px;
+
+    padding:
+        19px 21px;
+
+    border: 1px solid #dfd0c0;
+
+    border-radius: 10px;
+
+    background: #f8f1ea;
+
+    box-shadow:
+        0 2px 7px rgba(72, 48, 35, 0.025);
+}
+
+
+/* =========================================================
+   BUSINESS ICON
+   ========================================================= */
+
+.contacts-page .business-icon {
+
+    width: 45px;
+    height: 45px;
+
+    flex: 0 0 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #d9c6b2;
+
+    border-radius: 8px;
+
+    background: #fffaf5;
+
+    color: #9a7957;
+
+    font-size: 19px;
+}
+
+
+/* =========================================================
+   BUSINESS CONTENT
+   ========================================================= */
+
+.contacts-page .business-content {
+
+    min-width: 0;
+
+    flex: 1 1 auto;
+}
+
+
+.contacts-page .business-label {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #9b7c5d;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+}
+
+
+.contacts-page .business-content h3 {
+
+    margin: 0 0 5px;
+
+    color: #583238;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+.contacts-page .business-content p {
+
+    max-width: 680px;
+
+    margin: 0;
+
+    color: #786c62;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUSINESS ACTIONS
+   ========================================================= */
+
+.contacts-page .business-actions {
+
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.contacts-page .business-btn {
+
+    min-height: 34px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    padding:
+        0 11px;
+
+    border: 1px solid #d5c3b1;
+
+    border-radius: 6px;
+
+    background: #fffaf5;
+
+    color: #65434a;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+
+.contacts-page .business-btn:hover {
+
+    border-color: #c2aa93;
+
+    background: #f4e9de;
+
+    color: #4e2c32;
+
+    text-decoration: none;
+}
+
+
+.contacts-page .business-btn span {
+
+    font-size: 13px;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1199.98px) {
+
+    .contacts-page .contact-stats {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .contacts-page .contacts-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .contacts-page .toolbar-left {
+
+        width: 100%;
+    }
+
+
+    .contacts-page .search-box {
+
+        max-width: none;
+    }
+
+
+    .contacts-page .toolbar-right {
+
+        justify-content: flex-end;
+    }
+
+
+    .contacts-page .business-contact-card {
+
+        align-items: flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .contacts-page .page-header {
+
+        padding: 20px;
+    }
+
+
+    .contacts-page .page-header h1 {
+
+        font-size: 26px;
+    }
+
+
+    .contacts-page .contacts-card-header {
+
+        padding:
+            16px 18px;
+    }
+
+
+    .contacts-page .contacts-table thead th:first-child {
+
+        padding-left: 18px;
+    }
+
+
+    .contacts-page .contacts-table tbody td:first-child {
+
+        padding-left: 18px;
+    }
+
+
+    .contacts-page .contacts-table thead th:last-child {
+
+        padding-right: 18px;
+    }
+
+
+    .contacts-page .contacts-table tbody td:last-child {
+
+        padding-right: 18px;
+    }
+
+
+    .contacts-page .business-contact-card {
+
+        flex-wrap: wrap;
+    }
+
+
+    .contacts-page .business-content {
+
+        flex: 1 1 calc(100% - 80px);
+    }
+
+
+    .contacts-page .business-actions {
+
+        width: 100%;
+
+        margin-left: 63px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .contacts-page .page-header {
+
+        margin-bottom: 18px;
+
+        padding: 17px;
+    }
+
+
+    .contacts-page .page-header-content {
+
+        align-items: flex-start;
+    }
+
+
+    .contacts-page .page-eyebrow {
+
+        font-size: 8px;
+    }
+
+
+    .contacts-page .page-header h1 {
+
+        font-size: 23px;
+    }
+
+
+    .contacts-page .page-header p {
+
+        font-size: 10px;
+
+        line-height: 1.6;
+    }
+
+
+    .contacts-page .page-header-icon {
+
+        width: 44px;
+        height: 44px;
+
+        flex-basis: 44px;
+
+        font-size: 18px;
+    }
+
+
+    .contacts-page .contact-stats {
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 10px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .contacts-page .contact-stat-card {
+
+        min-height: 88px;
+
+        gap: 10px;
+
+        padding: 13px;
+    }
+
+
+    .contacts-page .stat-icon {
+
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+
+        font-size: 14px;
+    }
+
+
+    .contacts-page .stat-label {
+
+        font-size: 9px;
+    }
+
+
+    .contacts-page .stat-value {
+
+        font-size: 21px;
+    }
+
+
+    .contacts-page .contacts-toolbar {
+
+        gap: 12px;
+
+        padding: 12px;
+    }
+
+
+    .contacts-page .toolbar-right {
+
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+
+    .contacts-page .filter-group {
+
+        flex: 1 1 auto;
+    }
+
+
+    .contacts-page .filter-group select {
+
+        flex: 1 1 auto;
+
+        min-width: 0;
+    }
+
+
+    .contacts-page .refresh-btn {
+
+        flex: 0 0 auto;
+    }
+
+
+    .contacts-page .contacts-card {
+
+        margin-bottom: 18px;
+    }
+
+
+    .contacts-page .contacts-card-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 8px;
+
+        padding: 15px;
+    }
+
+
+    .contacts-page .contacts-card-header h2 {
+
+        font-size: 18px;
+    }
+
+
+    .contacts-page .result-count {
+
+        align-self: flex-start;
+    }
+
+
+    .contacts-page .table-wrapper {
+
+        overflow-x: auto;
+    }
+
+
+    .contacts-page .business-contact-card {
+
+        gap: 12px;
+
+        padding: 16px;
+    }
+
+
+    .contacts-page .business-icon {
+
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+    }
+
+
+    .contacts-page .business-content {
+
+        flex-basis:
+            calc(100% - 52px);
+    }
+
+
+    .contacts-page .business-content h3 {
+
+        font-size: 16px;
+    }
+
+
+    .contacts-page .business-actions {
+
+        margin-left: 0;
+
+        gap: 6px;
+    }
+
+
+    .contacts-page .business-btn {
+
+        flex: 1 1 auto;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    .contacts-page .page-header {
+
+        padding: 15px;
+    }
+
+
+    .contacts-page .page-header-content {
+
+        gap: 12px;
+    }
+
+
+    .contacts-page .page-header h1 {
+
+        font-size: 21px;
+    }
+
+
+    .contacts-page .page-header-icon {
+
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+
+        font-size: 16px;
+    }
+
+
+    .contacts-page .contact-stats {
+
+        gap: 8px;
+    }
+
+
+    .contacts-page .contact-stat-card {
+
+        min-height: 82px;
+
+        padding: 11px;
+    }
+
+
+    .contacts-page .stat-icon {
+
+        width: 34px;
+        height: 34px;
+
+        flex-basis: 34px;
+
+        font-size: 13px;
+    }
+
+
+    .contacts-page .stat-label {
+
+        font-size: 8px;
+    }
+
+
+    .contacts-page .stat-value {
+
+        font-size: 19px;
+    }
+
+
+    .contacts-page .toolbar-right {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .contacts-page .filter-group {
+
+        width: 100%;
+    }
+
+
+    .contacts-page .refresh-btn {
+
+        width: 100%;
+    }
+
+
+    .contacts-page .business-actions {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .contacts-page .business-btn {
+
+        width: 100%;
+    }
+
+
+    .contacts-page .empty-state {
+
+        padding:
+            50px 18px;
+    }
+
+
+    .contacts-page .empty-state h3 {
+
+        font-size: 19px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .contacts-page .contact-stat-card,
+    .contacts-page .refresh-btn,
+    .contacts-page .action-btn,
+    .contacts-page .business-btn {
+
+        transition: none;
+    }
+
+}
+

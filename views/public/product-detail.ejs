@@ -1,0 +1,1072 @@
+<%
+/*
+* =========================================================
+* PRODUCT DETAIL PAGE
+* =========================================================
+*
+* EJS-MATE LAYOUT
+* ---------------------------------------------------------
+* CSS and JS are injected through ejs-mate block().
+* DO NOT use endblock.
+* DO NOT use layout("layout", {...}).
+* =========================================================
+*/
+
+
+layout("layout");
+
+block("head").append(
+    '<link rel="stylesheet" href="/css/pages/product-detail.css">'
+);
+
+block("scripts").append(
+    '<script src="/js/pages/product-detail.js" defer></script>'
+);
+
+
+/*
+ * =========================================================
+ * SAFE PRODUCT DATA
+ * =========================================================
+ */
+
+var currentProduct =
+    typeof product !== "undefined" && product
+        ? product
+        : null;
+
+
+var ratingValue = 0;
+
+
+if (
+    typeof averageRating !== "undefined" &&
+    averageRating !== null &&
+    averageRating !== ""
+) {
+    ratingValue = Number(averageRating);
+
+    if (isNaN(ratingValue)) {
+        ratingValue = 0;
+    }
+}
+
+
+var reviewList =
+    typeof reviews !== "undefined" &&
+    Array.isArray(reviews)
+        ? reviews
+        : [];
+
+
+var wishlistStatus =
+    typeof isInWishlist !== "undefined"
+        ? Boolean(isInWishlist)
+        : false;
+
+
+var fullStars =
+    Math.floor(ratingValue);
+
+
+var hasHalfStar =
+    ratingValue % 1 >= 0.5;
+
+
+%>
+
+<% if (currentProduct) { %>
+
+<section class="product-detail-page">
+
+
+<!-- =========================================================
+     BREADCRUMB
+     ========================================================= -->
+
+<section class="product-breadcrumb-section">
+
+    <div class="container">
+
+        <nav
+            class="product-breadcrumb"
+            aria-label="breadcrumb"
+        >
+
+            <a href="/">
+                Home
+            </a>
+
+            <span>/</span>
+
+            <a href="/products">
+                Products
+            </a>
+
+            <span>/</span>
+
+            <span class="current">
+                <%= currentProduct.name %>
+            </span>
+
+        </nav>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCT MAIN
+     ========================================================= -->
+
+<section class="product-main-section py-5">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+
+            <!-- =================================================
+                 PRODUCT GALLERY
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="product-gallery">
+
+
+                    <!-- MAIN IMAGE -->
+
+                    <div
+                        class="product-main-image"
+                        id="productMainImageWrapper"
+                    >
+
+                        <% if (
+                            currentProduct.images &&
+                            Array.isArray(currentProduct.images) &&
+                            currentProduct.images.length > 0
+                        ) { %>
+
+                            <img
+                                src="<%= currentProduct.images[0] %>"
+                                alt="<%= currentProduct.name %>"
+                                id="mainProductImage"
+                                class="img-fluid"
+                                data-index="0"
+                            >
+
+                        <% } else { %>
+
+                            <div class="product-image-placeholder">
+
+                                <span>
+                                    Yogita Patola Art
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+                    </div>
+
+
+
+                    <!-- THUMBNAILS -->
+
+                    <% if (
+                        currentProduct.images &&
+                        Array.isArray(currentProduct.images) &&
+                        currentProduct.images.length > 1
+                    ) { %>
+
+                        <div
+                            class="product-thumbnails"
+                            id="productThumbnails"
+                        >
+
+                            <% currentProduct.images.forEach(function(image, index) { %>
+
+                                <button
+                                    type="button"
+                                    class="product-thumbnail <%= index === 0 ? 'active' : '' %>"
+                                    data-image="<%= image %>"
+                                    data-index="<%= index %>"
+                                    aria-label="View product image <%= index + 1 %>"
+                                >
+
+                                    <img
+                                        src="<%= image %>"
+                                        alt="<%= currentProduct.name %> image <%= index + 1 %>"
+                                        loading="lazy"
+                                    >
+
+                                </button>
+
+                            <% }); %>
+
+                        </div>
+
+                    <% } %>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="product-detail-info">
+
+
+                    <!-- CATEGORY -->
+
+                    <span class="product-detail-category">
+                        <%= currentProduct.category || "Patola" %>
+                    </span>
+
+
+
+                    <!-- NAME -->
+
+                    <h1 class="product-detail-title">
+                        <%= currentProduct.name %>
+                    </h1>
+
+
+
+                    <!-- =================================================
+                         RATING
+                         ================================================= -->
+
+                    <div class="product-rating-summary">
+
+                        <div class="product-stars">
+
+                            <% for (
+                                var star = 1;
+                                star <= 5;
+                                star++
+                            ) { %>
+
+                                <% if (star <= fullStars) { %>
+
+                                    <span class="star filled">
+                                        ★
+                                    </span>
+
+                                <% } else if (
+                                    star === fullStars + 1 &&
+                                    hasHalfStar
+                                ) { %>
+
+                                    <span class="star half">
+                                        ★
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="star">
+                                        ☆
+                                    </span>
+
+                                <% } %>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <span class="rating-number">
+                            <%= ratingValue.toFixed(1) %>
+                        </span>
+
+
+                        <a
+                            href="#reviews"
+                            class="review-count"
+                        >
+                            (
+                            <%= reviewList.length %>
+                            <%= reviewList.length === 1
+                                ? "Review"
+                                : "Reviews"
+                            %>
+                            )
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="product-detail-price">
+
+                        ₹<%= Number(
+                            currentProduct.price || 0
+                        ).toLocaleString("en-IN") %>
+
+                    </div>
+
+
+
+                    <!-- AVAILABILITY -->
+
+                    <div class="product-availability">
+
+                        <span class="availability-label">
+                            Availability:
+                        </span>
+
+                        <span
+                            class="availability-badge <%= currentProduct.availability === 'In Stock'
+                                ? 'in-stock'
+                                : currentProduct.availability === 'Limited'
+                                    ? 'limited'
+                                    : 'out-of-stock'
+                            %>"
+                        >
+                            <%= currentProduct.availability || "In Stock" %>
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="product-detail-description">
+
+                        <p>
+                            <%= currentProduct.description ||
+                                "A beautifully handcrafted Patola created with traditional Indian artistry and timeless craftsmanship."
+                            %>
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SPECIFICATIONS
+                         ================================================= -->
+
+                    <div class="product-specifications">
+
+
+                        <% if (currentProduct.fabric) { %>
+
+                            <div class="product-spec-row">
+
+                                <span class="spec-label">
+                                    Fabric
+                                </span>
+
+                                <span class="spec-value">
+                                    <%= currentProduct.fabric %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <% if (currentProduct.technique) { %>
+
+                            <div class="product-spec-row">
+
+                                <span class="spec-label">
+                                    Technique
+                                </span>
+
+                                <span class="spec-value">
+                                    <%= currentProduct.technique %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <% if (currentProduct.color) { %>
+
+                            <div class="product-spec-row">
+
+                                <span class="spec-label">
+                                    Color
+                                </span>
+
+                                <span class="spec-value">
+                                    <%= currentProduct.color %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <% if (currentProduct.dimensions) { %>
+
+                            <div class="product-spec-row">
+
+                                <span class="spec-label">
+                                    Dimensions
+                                </span>
+
+                                <span class="spec-value">
+                                    <%= currentProduct.dimensions %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ACTION BUTTONS
+                         ================================================= -->
+
+                    <div class="product-detail-actions">
+
+
+                        <!-- WISHLIST -->
+
+                        <%
+                            var wishlistProductId =
+                                currentProduct._id;
+                        %>
+
+
+                        <% if (wishlistStatus) { %>
+
+                            <form
+                                action="/wishlist/remove/<%= wishlistProductId %>"
+                                method="POST"
+                                class="wishlist-action-form"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-dark wishlist-btn wishlist-added"
+                                    aria-label="Remove <%= currentProduct.name %> from wishlist"
+                                >
+
+                                    <span class="wishlist-icon">
+                                        ♥
+                                    </span>
+
+                                    <span>
+                                        Added to Wishlist
+                                    </span>
+
+                                </button>
+
+                            </form>
+
+                        <% } else { %>
+
+                            <form
+                                action="/wishlist/add/<%= wishlistProductId %>"
+                                method="POST"
+                                class="wishlist-action-form"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-dark wishlist-btn"
+                                    aria-label="Add <%= currentProduct.name %> to wishlist"
+                                >
+
+                                    <span class="wishlist-icon">
+                                        ♡
+                                    </span>
+
+                                    <span>
+                                        Add to Wishlist
+                                    </span>
+
+                                </button>
+
+                            </form>
+
+                        <% } %>
+
+
+
+                        <!-- WHATSAPP -->
+
+                        <%
+                            var whatsappMessage =
+                                encodeURIComponent(
+                                    "Hello, I am interested in " +
+                                    currentProduct.name +
+                                    "."
+                                );
+                        %>
+
+                        <a
+                            href="https://wa.me/?text=<%= whatsappMessage %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-dark inquiry-btn"
+                        >
+                            Enquire About This Product
+                        </a>
+
+
+                    </div>
+
+
+
+                    <!-- WISHLIST STATUS -->
+
+                    <% if (wishlistStatus) { %>
+
+                        <div class="wishlist-status-message">
+                            ♥ This product is saved in your wishlist.
+                        </div>
+
+                    <% } %>
+
+
+
+                    <!-- BACK -->
+
+                    <div class="back-to-products">
+
+                        <a href="/products">
+                            ← Back to Collection
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCT STORY
+     ========================================================= -->
+
+<section class="product-story-section py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9 text-center">
+
+                <span class="section-subtitle">
+                    THE ART BEHIND THE WEAVE
+                </span>
+
+                <h2 class="section-title">
+                    Crafted With Patience &amp; Tradition
+                </h2>
+
+                <p class="section-description mx-auto">
+                    Every Patola reflects the patience,
+                    precision and artistry of traditional
+                    Indian weaving. Each motif and colour
+                    comes together through careful
+                    craftsmanship, creating a textile meant
+                    to be cherished for generations.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     REVIEWS
+     ========================================================= -->
+
+<section
+    class="product-reviews-section py-5"
+    id="reviews"
+>
+
+    <div class="container">
+
+
+        <!-- REVIEW HEADER -->
+
+        <div class="reviews-header text-center">
+
+            <span class="section-subtitle">
+                CUSTOMER REVIEWS
+            </span>
+
+            <h2 class="section-title">
+                What People Say
+            </h2>
+
+
+            <% if (reviewList.length > 0) { %>
+
+                <div class="reviews-overall-rating">
+
+                    <span class="overall-rating-number">
+                        <%= ratingValue.toFixed(1) %>
+                    </span>
+
+
+                    <div class="overall-stars">
+
+                        <% for (
+                            var overallStar = 1;
+                            overallStar <= 5;
+                            overallStar++
+                        ) { %>
+
+                            <span
+                                class="<%= overallStar <= Math.round(ratingValue)
+                                    ? 'filled'
+                                    : ''
+                                %>"
+                            >
+                                ★
+                            </span>
+
+                        <% } %>
+
+                    </div>
+
+
+                    <span class="overall-review-count">
+
+                        Based on
+                        <%= reviewList.length %>
+                        <%= reviewList.length === 1
+                            ? "review"
+                            : "reviews"
+                        %>
+
+                    </span>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+
+
+        <!-- =================================================
+             REVIEW LIST
+             ================================================= -->
+
+        <% if (reviewList.length > 0) { %>
+
+            <div class="reviews-list mt-5">
+
+                <% reviewList.forEach(function(review) { %>
+
+                    <article class="review-card">
+
+                        <div class="review-card-header">
+
+                            <div>
+
+                                <h3 class="reviewer-name">
+                                    <%= review.name || "Customer" %>
+                                </h3>
+
+
+                                <div class="review-stars">
+
+                                    <% for (
+                                        var reviewStar = 1;
+                                        reviewStar <= 5;
+                                        reviewStar++
+                                    ) { %>
+
+                                        <span
+                                            class="<%= reviewStar <= Number(review.rating || 0)
+                                                ? 'filled'
+                                                : ''
+                                            %>"
+                                        >
+                                            ★
+                                        </span>
+
+                                    <% } %>
+
+                                </div>
+
+                            </div>
+
+
+                            <% if (review.createdAt) { %>
+
+                                <%
+                                    var reviewDate =
+                                        new Date(review.createdAt);
+
+                                    var reviewDateValid =
+                                        !isNaN(
+                                            reviewDate.getTime()
+                                        );
+                                %>
+
+                                <% if (reviewDateValid) { %>
+
+                                    <time
+                                        class="review-date"
+                                        datetime="<%= reviewDate.toISOString() %>"
+                                    >
+                                        <%= reviewDate.toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "numeric",
+                                                month: "short",
+                                                year: "numeric"
+                                            }
+                                        ) %>
+                                    </time>
+
+                                <% } %>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <p class="review-message">
+
+                            <%= review.comment ||
+                                review.message ||
+                                ""
+                            %>
+
+                        </p>
+
+                    </article>
+
+                <% }); %>
+
+            </div>
+
+        <% } else { %>
+
+
+            <!-- EMPTY REVIEWS -->
+
+            <div class="reviews-empty text-center">
+
+                <div class="reviews-empty-icon">
+                    ☆
+                </div>
+
+                <h3>
+                    Be The First To Review
+                </h3>
+
+                <p>
+                    Share your experience with this
+                    beautiful Patola.
+                </p>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- =================================================
+             REVIEW FORM
+             ================================================= -->
+
+        <div class="review-form-wrapper mt-5">
+
+            <div class="review-form-header text-center">
+
+                <span class="section-subtitle">
+                    SHARE YOUR EXPERIENCE
+                </span>
+
+                <h2 class="section-title">
+                    Write A Review
+                </h2>
+
+            </div>
+
+
+            <form
+                action="/products/<%= currentProduct._id %>/review"
+                method="POST"
+                class="review-form"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="reviewName"
+                        class="form-label"
+                    >
+                        Your Name
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reviewName"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter your name"
+                        minlength="2"
+                        maxlength="50"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- RATING -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="reviewRating"
+                        class="form-label"
+                    >
+                        Your Rating
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <select
+                        id="reviewRating"
+                        name="rating"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="">
+                            Select Rating
+                        </option>
+
+                        <option value="5">
+                            ★★★★★ — Excellent
+                        </option>
+
+                        <option value="4">
+                            ★★★★☆ — Very Good
+                        </option>
+
+                        <option value="3">
+                            ★★★☆☆ — Good
+                        </option>
+
+                        <option value="2">
+                            ★★☆☆☆ — Fair
+                        </option>
+
+                        <option value="1">
+                            ★☆☆☆☆ — Poor
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="reviewMessage"
+                        class="form-label"
+                    >
+                        Your Review
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <textarea
+                        id="reviewMessage"
+                        name="message"
+                        class="form-control"
+                        rows="5"
+                        placeholder="Tell us about your experience..."
+                        minlength="3"
+                        maxlength="500"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-dark btn-lg px-5"
+                    >
+                        Submit Review
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRODUCT CTA
+     ========================================================= -->
+
+<section class="product-detail-cta py-5">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <span class="products-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h2 class="section-title">
+                Looking For Something Special?
+            </h2>
+
+            <p class="section-description mx-auto">
+                Contact us to learn more about this
+                handcrafted piece and its availability.
+            </p>
+
+            <a
+                href="/contact"
+                class="btn btn-dark btn-lg"
+            >
+                Contact Us
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     LIGHTBOX
+     ========================================================= -->
+
+<div
+    id="productLightbox"
+    class="product-lightbox"
+    aria-hidden="true"
+    role="dialog"
+    aria-label="Image Preview"
+>
+
+    <button
+        type="button"
+        class="lightbox-close"
+        aria-label="Close image preview"
+    >
+        &times;
+    </button>
+
+    <div class="lightbox-dialog">
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt="<%= currentProduct.name %> - full preview"
+        >
+
+    </div>
+
+</div>
+
+
+</section>
+
+<% } else { %>
+
+<!-- =========================================================
+     PRODUCT NOT FOUND
+     ========================================================= -->
+
+<section class="product-not-found py-5">
+
+
+<div class="container">
+
+    <div class="text-center py-5">
+
+        <div class="product-not-found-icon">
+            ✦
+        </div>
+
+        <h1 class="section-title">
+            Product Not Found
+        </h1>
+
+        <p class="section-description mx-auto">
+            Sorry, the product you are looking for
+            could not be found.
+        </p>
+
+        <a
+            href="/products"
+            class="btn btn-dark"
+        >
+            View All Products
+        </a>
+
+    </div>
+
+</div>
+
+
+</section>
+
+<% } %>

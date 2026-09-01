@@ -1,0 +1,778 @@
+/* =========================================================
+   ABOUT PAGE
+   Yogita Patola Art
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE WRAPPER
+   ========================================================= */
+
+.about-page {
+    width: 100%;
+
+    background: #fcfaf7;
+
+    color: #2d2520;
+}
+
+
+
+/* =========================================================
+   SHARED ABOUT TYPOGRAPHY
+   ========================================================= */
+
+.about-page .section-subtitle {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #96765d;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+}
+
+
+.about-page .section-title {
+    margin-top: 0;
+
+    margin-bottom: 16px;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    letter-spacing: -0.01em;
+}
+
+
+.about-page .section-description {
+    max-width: 680px;
+
+    margin-bottom: 18px;
+
+    color: #70675f;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.94rem;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+}
+
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.about-hero {
+    position: relative;
+
+    padding-top: 82px !important;
+
+    padding-bottom: 78px !important;
+
+    background: #f5eee6;
+
+    border-bottom: 1px solid #ebe1d6;
+
+    overflow: hidden;
+}
+
+
+.about-hero::before {
+    content: "";
+
+    position: absolute;
+
+    top: -120px;
+    left: 50%;
+
+    width: 480px;
+    height: 480px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgba(150, 118, 93, 0.10);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.about-hero .container {
+    position: relative;
+
+    z-index: 1;
+}
+
+
+.about-hero .section-subtitle {
+    margin-bottom: 12px;
+}
+
+
+.about-hero .section-title {
+    margin-bottom: 16px;
+
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+}
+
+
+.about-hero .section-description {
+    margin-right: auto;
+    margin-left: auto;
+
+    font-size: 1rem;
+
+    line-height: 1.75;
+}
+
+
+
+/* =========================================================
+   STORY SECTION
+   ========================================================= */
+
+.about-story {
+    padding-top: 80px !important;
+
+    padding-bottom: 80px !important;
+
+    background: #ffffff;
+}
+
+
+.about-story .row {
+    align-items: center;
+}
+
+
+.about-story .section-title {
+    margin-bottom: 22px;
+}
+
+
+.about-story .section-description:last-child {
+    margin-bottom: 0;
+}
+
+
+
+/* =========================================================
+   STORY CARD
+   ========================================================= */
+
+.about-story-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 430px;
+
+    padding: 40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5eee6 0%,
+            #eadfd2 100%
+        );
+
+    border: 1px solid #e5d9cc;
+
+    overflow: hidden;
+}
+
+
+.about-story-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 28px;
+    right: 28px;
+    bottom: 28px;
+    left: 28px;
+
+    border: 1px solid rgba(90, 24, 37, 0.16);
+
+    pointer-events: none;
+}
+
+
+.about-story-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    border: 1px solid rgba(150, 118, 93, 0.16);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.about-story-content {
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.about-story-content span {
+    margin-bottom: 12px;
+
+    color: #96765d;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+}
+
+
+.about-story-content strong {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: 0.02em;
+}
+
+
+.about-story-content small {
+    color: #70675f;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.08em;
+}
+
+
+
+/* =========================================================
+   VALUES SECTION
+   ========================================================= */
+
+.about-values {
+    padding-top: 80px !important;
+
+    padding-bottom: 80px !important;
+
+    background: #f9f5f0;
+
+    border-top: 1px solid #eee5dc;
+
+    border-bottom: 1px solid #eee5dc;
+}
+
+
+.about-values .text-center.mb-5 {
+    margin-bottom: 42px !important;
+}
+
+
+.about-values .section-title {
+    margin-bottom: 0;
+}
+
+
+
+/* =========================================================
+   VALUE CARDS
+   ========================================================= */
+
+.about-value-card {
+    height: 100%;
+
+    padding: 34px 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8ddd2;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.about-value-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #d8c8b8;
+
+    box-shadow:
+        0 12px 28px rgba(60, 42, 30, 0.08);
+}
+
+
+.about-value-card h3 {
+    margin: 0 0 13px;
+
+    color: #4b151f;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 1.35rem;
+
+    font-weight: 600;
+
+    line-height: 1.35;
+}
+
+
+.about-value-card p {
+    max-width: 330px;
+
+    margin: 0 auto;
+
+    color: #756c64;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.86rem;
+
+    line-height: 1.75;
+}
+
+
+
+/* =========================================================
+   CTA SECTION
+   ========================================================= */
+
+.about-cta {
+    padding-top: 82px !important;
+
+    padding-bottom: 82px !important;
+
+    background: #ffffff;
+
+    text-align: center;
+}
+
+
+.about-cta .section-title {
+    max-width: 760px;
+
+    margin-right: auto;
+    margin-left: auto;
+
+    margin-bottom: 15px;
+}
+
+
+.about-cta .section-description {
+    max-width: 650px;
+
+    margin-right: auto;
+    margin-bottom: 28px;
+    margin-left: auto;
+}
+
+
+.about-cta .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 11px 28px;
+
+    background: #332b27;
+
+    border: 1px solid #332b27;
+    border-radius: 2px;
+
+    color: #ffffff;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.04em;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.about-cta .btn:hover {
+    background: #5a1825;
+
+    border-color: #5a1825;
+
+    color: #ffffff;
+}
+
+
+.about-cta .btn:active {
+    transform: translateY(1px);
+}
+
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .about-hero {
+        padding-top: 65px !important;
+
+        padding-bottom: 62px !important;
+    }
+
+
+    .about-story {
+        padding-top: 65px !important;
+
+        padding-bottom: 65px !important;
+    }
+
+
+    .about-story-card {
+        min-height: 380px;
+    }
+
+
+    .about-values {
+        padding-top: 65px !important;
+
+        padding-bottom: 65px !important;
+    }
+
+
+    .about-cta {
+        padding-top: 65px !important;
+
+        padding-bottom: 65px !important;
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .about-page .section-subtitle {
+        font-size: 0.66rem;
+
+        letter-spacing: 0.11em;
+    }
+
+
+    .about-page .section-title {
+        font-size: 1.8rem;
+
+        line-height: 1.3;
+    }
+
+
+    .about-page .section-description {
+        font-size: 0.86rem;
+
+        line-height: 1.7;
+    }
+
+
+    .about-hero {
+        padding-top: 52px !important;
+
+        padding-bottom: 48px !important;
+    }
+
+
+    .about-hero .section-title {
+        font-size: 2.15rem;
+    }
+
+
+    .about-hero .section-description {
+        font-size: 0.88rem;
+    }
+
+
+    .about-story {
+        padding-top: 50px !important;
+
+        padding-bottom: 50px !important;
+    }
+
+
+    .about-story .row {
+        --bs-gutter-y: 2.5rem;
+    }
+
+
+    .about-story .section-title {
+        margin-bottom: 17px;
+    }
+
+
+    .about-story-card {
+        min-height: 320px;
+
+        padding: 30px 20px;
+    }
+
+
+    .about-story-card::before {
+        top: 20px;
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+    }
+
+
+    .about-story-content strong {
+        font-size: 2.2rem;
+    }
+
+
+    .about-values {
+        padding-top: 52px !important;
+
+        padding-bottom: 52px !important;
+    }
+
+
+    .about-values .text-center.mb-5 {
+        margin-bottom: 30px !important;
+    }
+
+
+    .about-values .row {
+        --bs-gutter-y: 1rem;
+    }
+
+
+    .about-value-card {
+        padding: 28px 22px;
+    }
+
+
+    .about-value-card h3 {
+        font-size: 1.25rem;
+    }
+
+
+    .about-value-card p {
+        font-size: 0.82rem;
+    }
+
+
+    .about-cta {
+        padding-top: 52px !important;
+
+        padding-bottom: 55px !important;
+    }
+
+
+    .about-cta .section-title {
+        font-size: 1.75rem;
+    }
+
+
+    .about-cta .section-description {
+        margin-bottom: 24px;
+    }
+
+
+    .about-cta .btn {
+        width: auto;
+
+        min-height: 44px;
+
+        padding: 10px 22px;
+
+        font-size: 0.76rem;
+    }
+
+}
+
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .about-hero {
+        padding-right: 16px !important;
+
+        padding-left: 16px !important;
+    }
+
+
+    .about-hero .section-title {
+        font-size: 1.95rem;
+    }
+
+
+    .about-story-card {
+        min-height: 280px;
+    }
+
+
+    .about-story-content strong {
+        font-size: 1.9rem;
+    }
+
+
+    .about-story-content small {
+        font-size: 0.68rem;
+    }
+
+
+    .about-value-card {
+        padding: 25px 18px;
+    }
+
+
+    .about-cta {
+        padding-right: 16px !important;
+
+        padding-left: 16px !important;
+    }
+
+}
+
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.about-cta .btn:focus-visible {
+    outline: 2px solid #96765d;
+
+    outline-offset: 3px;
+}
+
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .about-value-card,
+    .about-cta .btn {
+        transition: none;
+    }
+
+
+    .about-value-card:hover {
+        transform: none;
+    }
+
+}   

@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login | Yogita Patola Art</title>
+
+
+    <!-- GOOGLE FONTS -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ADMIN LOGIN CSS -->
+
+    <link
+    rel="stylesheet"
+    href="/css/admin/admin-login.css"
+>
+</head>
+
+
+<body class="admin-login-body">
+
+
+    <!-- BACKGROUND DECORATION -->
+
+    <div class="admin-decoration admin-decoration-left"></div>
+
+    <div class="admin-decoration admin-decoration-right"></div>
+
+
+    <!-- PAGE -->
+
+    <main class="admin-login-page">
+
+
+        <div class="admin-login-container">
+
+
+            <div class="admin-login-card">
+
+
+                <!-- =========================================
+                     LEFT BRAND PANEL
+                ========================================== -->
+
+                <section class="admin-brand-panel">
+
+
+                    <div class="admin-brand-inner">
+
+
+                        <div class="admin-brand-symbol">
+                            ✦
+                        </div>
+
+
+                        <span class="admin-brand-eyebrow">
+                            YOGITA PATOLA ART
+                        </span>
+
+
+                        <h1 class="admin-brand-title">
+
+                            Welcome to
+
+                            <em>Patola Art</em>
+
+                        </h1>
+
+
+                        <p class="admin-brand-description">
+
+                            A refined space to manage your
+                            collections, products, reviews
+                            and website content.
+
+                        </p>
+
+
+                        <div class="admin-brand-decoration">
+
+                            <span></span>
+
+                            <i>◆</i>
+
+                            <span></span>
+
+                        </div>
+
+
+                        <p class="admin-brand-note">
+
+                            Preserving the art of timeless
+                            Indian craftsmanship.
+
+                        </p>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================================
+                     RIGHT LOGIN PANEL
+                ========================================== -->
+
+                <section class="admin-form-panel">
+
+
+                    <div class="admin-form-inner">
+
+
+                        <!-- HEADER -->
+
+                        <div class="admin-form-header">
+
+
+                            <span class="admin-form-eyebrow">
+                                ADMINISTRATION
+                            </span>
+
+
+                            <h2>
+
+                                Sign In to
+
+                                <em>Admin Panel</em>
+
+                            </h2>
+
+
+                            <p>
+
+                                Enter your credentials to
+                                continue securely.
+
+                            </p>
+
+
+                        </div>
+
+
+
+                        <!-- SUCCESS -->
+
+                        <% if (
+                            typeof success !== "undefined" &&
+                            success
+                        ) { %>
+
+                            <div class="admin-alert admin-alert-success">
+
+                                <span class="admin-alert-icon">
+                                    ✓
+                                </span>
+
+                                <span>
+                                    <%= success %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+
+                        <!-- ERROR -->
+
+                        <% if (
+                            typeof error !== "undefined" &&
+                            error
+                        ) { %>
+
+                            <div class="admin-alert admin-alert-error">
+
+                                <span class="admin-alert-icon">
+                                    !
+                                </span>
+
+                                <span>
+                                    <%= error %>
+                                </span>
+
+                            </div>
+
+                        <% } %>
+
+
+
+                        <!-- LOGIN FORM -->
+
+                        <form
+                            action="/admin/login"
+                            method="POST"
+                            autocomplete="on"
+                        >
+
+
+                            <!-- REDIRECT -->
+
+                            <input
+                                type="hidden"
+                                name="redirect"
+                                value="<%= typeof redirectUrl !== 'undefined' ? redirectUrl : '/admin/dashboard' %>"
+                            >
+
+
+
+                            <!-- EMAIL -->
+
+                            <div class="admin-field">
+
+
+                                <div class="admin-label-row">
+
+                                    <label
+                                        for="adminEmail"
+                                        class="admin-label"
+                                    >
+                                        Email Address
+                                    </label>
+
+                                    <span class="admin-secure-label">
+                                        SECURE
+                                    </span>
+
+                                </div>
+
+
+                                <div class="admin-input-wrap">
+
+
+                                    <span class="admin-input-icon">
+                                        ✉
+                                    </span>
+
+
+                                    <input
+                                        type="email"
+                                        id="adminEmail"
+                                        name="email"
+                                        class="admin-input"
+                                        placeholder="Enter your admin email"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- PASSWORD -->
+
+                            <div class="admin-field">
+
+
+                                <div class="admin-label-row">
+
+                                    <label
+                                        for="adminPassword"
+                                        class="admin-label"
+                                    >
+                                        Password
+                                    </label>
+
+                                    <span class="admin-secure-label">
+                                        PRIVATE
+                                    </span>
+
+                                </div>
+
+
+                                <div class="admin-input-wrap">
+
+
+                                    <span class="admin-input-icon">
+                                        ◆
+                                    </span>
+
+
+                                    <input
+                                        type="password"
+                                        id="adminPassword"
+                                        name="password"
+                                        class="admin-input"
+                                        placeholder="Enter your password"
+                                        autocomplete="current-password"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        class="admin-password-toggle"
+                                        id="adminPasswordToggle"
+                                        aria-label="Show password"
+                                    >
+                                        ◉
+                                    </button>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- SUBMIT -->
+
+                            <button
+                                type="submit"
+                                class="admin-login-submit"
+                            >
+
+                                <span>
+                                    Sign In to Admin Panel
+                                </span>
+
+                                <span class="admin-submit-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+
+                        </form>
+
+
+
+                        <!-- SECURITY -->
+
+                        <div class="admin-security-note">
+
+                            <span class="admin-security-icon">
+                                ◆
+                            </span>
+
+                            <span>
+                                Secure administrator access
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- FOOTER -->
+
+                        <div class="admin-login-footer">
+
+                            <a href="/">
+                                ← Back to Website
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- PASSWORD TOGGLE -->
+
+    <script>
+
+        const passwordInput =
+            document.getElementById("adminPassword");
+
+        const passwordToggle =
+            document.getElementById("adminPasswordToggle");
+
+
+        if (
+            passwordInput &&
+            passwordToggle
+        ) {
+
+            passwordToggle.addEventListener(
+                "click",
+                function () {
+
+                    const isPassword =
+                        passwordInput.type === "password";
+
+
+                    passwordInput.type =
+                        isPassword
+                            ? "text"
+                            : "password";
+
+
+                    passwordToggle.textContent =
+                        isPassword
+                            ? "◉"
+                            : "◉";
+
+
+                    passwordToggle.setAttribute(
+                        "aria-label",
+                        isPassword
+                            ? "Hide password"
+                            : "Show password"
+                    );
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+
