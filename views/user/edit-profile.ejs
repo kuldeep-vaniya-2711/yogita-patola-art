@@ -1,154 +1,282 @@
-<% layout("layout") -%>
-
-<section class="py-5">
-
-    <div class="container">
-
-        <div class="row justify-content-center">
-
-            <div class="col-lg-7 col-md-9">
-
-                <div class="card border-0 shadow-sm">
-
-                    <div class="card-body p-4 p-md-5">
-
-                        <div class="text-center mb-4">
-
-                            <h1 class="h3 mb-1">
-                                Edit Profile
-                            </h1>
-
-                            <p class="text-muted mb-0">
-                                Update your account information
-                            </p>
-
-                        </div>
+<%
+    layout("layout", {
+        title: "Edit Profile | Yogita Patola Art",
+        description: "Update your Yogita Patola Art account information."
+    });
+%>
 
 
-                        <% if (error) { %>
+<!-- =========================================================
+     EDIT PROFILE CSS
+========================================================= -->
 
-                            <div class="alert alert-danger">
-                                <%= error %>
-                            </div>
-
-                        <% } %>
-
-
-                        <% if (success) { %>
-
-                            <div class="alert alert-success">
-                                <%= success %>
-                            </div>
-
-                        <% } %>
+<link
+    rel="stylesheet"
+    href="/css/pages/edit-profile.css"
+>
 
 
-                        <form
-                            action="/user/profile/edit"
-                            method="POST"
+<!-- =========================================================
+     EDIT PROFILE PAGE
+========================================================= -->
+
+<section class="edit-profile-page">
+
+    <div class="edit-profile-container">
+
+        <div class="edit-profile-card">
+
+
+            <!-- =================================================
+                 HEADER
+            ================================================== -->
+
+            <div class="edit-profile-header">
+
+                <div class="edit-profile-icon">
+                    ✦
+                </div>
+
+                <span class="edit-profile-label">
+                    MY ACCOUNT
+                </span>
+
+                <h1>
+                    Edit Profile
+                </h1>
+
+                <p>
+                    Update your account information
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 MESSAGES
+            ================================================== -->
+
+            <% if (typeof error !== "undefined" && error) { %>
+
+                <div class="edit-profile-alert edit-profile-alert-error">
+
+                    <span class="edit-alert-icon">
+                        !
+                    </span>
+
+                    <div>
+                        <strong>
+                            Unable to update profile
+                        </strong>
+
+                        <p>
+                            <%= error %>
+                        </p>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <% if (typeof success !== "undefined" && success) { %>
+
+                <div class="edit-profile-alert edit-profile-alert-success">
+
+                    <span class="edit-alert-icon">
+                        ✓
+                    </span>
+
+                    <div>
+                        <strong>
+                            Profile updated successfully
+                        </strong>
+
+                        <p>
+                            <%= success %>
+                        </p>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- =================================================
+                 FORM
+            ================================================== -->
+
+            <form
+                action="/user/profile/edit"
+                method="POST"
+                class="edit-profile-form"
+            >
+
+
+                <!-- NAME -->
+
+                <div class="edit-form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="edit-input-wrapper">
+
+                        <span class="edit-input-icon">
+                            ◇
+                        </span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="<%= user.name || '' %>"
+                            minlength="2"
+                            maxlength="50"
+                            placeholder="Enter your name"
+                            required
                         >
-
-
-                            <!-- NAME -->
-
-                            <div class="mb-3">
-
-                                <label
-                                    for="name"
-                                    class="form-label fw-semibold"
-                                >
-                                    Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    class="form-control"
-                                    value="<%= user.name || '' %>"
-                                    minlength="2"
-                                    maxlength="50"
-                                    required
-                                >
-
-                            </div>
-
-
-                            <!-- EMAIL -->
-
-                            <div class="mb-3">
-
-                                <label
-                                    for="email"
-                                    class="form-label fw-semibold"
-                                >
-                                    Email
-                                </label>
-
-                                <input
-                                    type="email"
-                                    id="email"
-                                    class="form-control bg-light"
-                                    value="<%= user.email || '' %>"
-                                    readonly
-                                >
-
-                                <small class="text-muted">
-                                    Email cannot be changed here.
-                                </small>
-
-                            </div>
-
-
-                            <!-- PHONE -->
-
-                            <div class="mb-4">
-
-                                <label
-                                    for="phone"
-                                    class="form-label fw-semibold"
-                                >
-                                    Phone
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    class="form-control"
-                                    value="<%= user.phone || '' %>"
-                                    placeholder="Enter phone number"
-                                >
-
-                            </div>
-
-
-                            <!-- BUTTONS -->
-
-                            <div class="d-flex gap-2 flex-wrap">
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-dark"
-                                >
-                                    Save Changes
-                                </button>
-
-                                <a
-                                    href="/user/profile"
-                                    class="btn btn-outline-dark"
-                                >
-                                    Cancel
-                                </a>
-
-                            </div>
-
-
-                        </form>
 
                     </div>
 
                 </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="edit-form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="edit-input-wrapper">
+
+                        <span class="edit-input-icon">
+                            @
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            value="<%= user.email || '' %>"
+                            readonly
+                        >
+
+                        <span class="edit-input-lock">
+                            🔒
+                        </span>
+
+                    </div>
+
+                    <small>
+                        Email address cannot be changed here.
+                    </small>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="edit-form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <div class="edit-input-wrapper">
+
+                        <span class="edit-input-icon">
+                            ☎
+                        </span>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="<%= user.phone || '' %>"
+                            placeholder="Enter your phone number"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     BUTTONS
+                ================================================== -->
+
+                <div class="edit-profile-actions">
+
+                    <button
+                        type="submit"
+                        class="edit-save-btn"
+                    >
+
+                        <span>
+                            Save Changes
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <a
+                        href="/user/profile"
+                        class="edit-cancel-btn"
+                    >
+
+                        <span>
+                            Cancel
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- =================================================
+                 SECURITY NOTE
+            ================================================== -->
+
+            <div class="edit-security-note">
+
+                <span>
+                    🔒
+                </span>
+
+                <div>
+
+                    <strong>
+                        Your information is secure
+                    </strong>
+
+                    <p>
+                        Your account information is kept private
+                        and is only used to manage your account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <div class="edit-profile-footer">
+
+                <a href="/user/profile">
+                    ← Back to My Account
+                </a>
 
             </div>
 

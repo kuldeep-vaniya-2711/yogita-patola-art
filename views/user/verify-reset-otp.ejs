@@ -1,0 +1,295 @@
+<%
+    layout("layout", {
+        title: "Verify OTP | Yogita Patola Art",
+        description: "Verify your password reset OTP."
+    });
+%>
+
+<!-- =========================================================
+     PAGE CSS
+========================================================= -->
+
+<link rel="stylesheet" href="/css/pages/password.css">
+
+
+<!-- =========================================================
+     VERIFY RESET OTP PAGE
+========================================================= -->
+
+<section class="password-page">
+
+    <div class="password-container">
+
+
+        <!-- =================================================
+             BRAND SIDE
+        ================================================== -->
+
+        <div class="password-brand">
+
+            <div class="brand-icon">
+                ✦
+            </div>
+
+            <span class="brand-eyebrow">
+                YOGITA PATOLA ART
+            </span>
+
+            <h1>
+                Verify your<br>
+                <span>Identity.</span>
+            </h1>
+
+            <p>
+                We've sent a secure verification code to your
+                registered email address. Enter the OTP to
+                continue resetting your password.
+            </p>
+
+            <div class="brand-divider"></div>
+
+            <div class="brand-note">
+                <span>✦</span>
+                OTP is valid for a limited time.
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             OTP CARD
+        ================================================== -->
+
+        <div class="password-card">
+
+
+            <!-- =================================================
+                 HEADER
+            ================================================== -->
+
+            <div class="password-card-header">
+
+                <span class="card-label">
+                    EMAIL VERIFICATION
+                </span>
+
+                <h2>
+                    Enter OTP
+                </h2>
+
+                <p>
+                    Enter the 6-digit verification code sent
+                    to your email address.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <% if (typeof error !== "undefined" && error) { %>
+
+                <div class="password-alert password-alert-error">
+
+                    <span class="alert-icon">
+                        !
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Verification failed
+                        </strong>
+
+                        <p>
+                            <%= error %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- =================================================
+                 SUCCESS
+            ================================================== -->
+
+            <% if (typeof success !== "undefined" && success) { %>
+
+                <div class="password-alert password-alert-success">
+
+                    <span class="alert-icon">
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            OTP Sent
+                        </strong>
+
+                        <p>
+                            <%= success %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- =================================================
+                 EMAIL INFORMATION
+            ================================================== -->
+
+            <div class="otp-info">
+
+                OTP sent to
+
+                <span class="otp-email">
+                    <%= typeof email !== "undefined" && email
+                        ? email
+                        : (
+                            typeof passwordResetEmail !== "undefined"
+                                ? passwordResetEmail
+                                : "your registered email"
+                        )
+                    %>
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 OTP FORM
+            ================================================== -->
+
+            <form
+                action="/user/verify-reset-otp"
+                method="POST"
+                class="password-form"
+                autocomplete="off"
+            >
+
+                <div class="form-group">
+
+                    <label for="otp">
+                        Verification Code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otp"
+                        name="otp"
+                        class="otp-input"
+                        placeholder="Enter 6-digit OTP"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        minlength="6"
+                        maxlength="6"
+                        autocomplete="one-time-code"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- =================================================
+                     SUBMIT
+                ================================================== -->
+
+                <button
+                    type="submit"
+                    class="password-submit-btn"
+                >
+
+                    <span>
+                        Verify OTP
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- =================================================
+                 RESEND OTP
+            ================================================== -->
+
+            <div class="otp-actions">
+
+                <span>
+                    Didn't receive the code?
+                </span>
+
+                <form
+                    action="/user/resend-reset-otp"
+                    method="POST"
+                    style="display: inline;"
+                >
+
+                    <button type="submit">
+                        Resend OTP
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- =================================================
+                 OTP COUNTDOWN NOTE
+            ================================================== -->
+
+            <div class="otp-countdown">
+                OTP expires in 10 minutes.
+            </div>
+
+
+            <!-- =================================================
+                 BACK TO LOGIN
+            ================================================== -->
+
+            <div class="password-footer">
+
+                <span>
+                    Remember your password?
+                </span>
+
+                <a href="/user/login">
+                    Back to Login
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECURITY NOTE
+            ================================================== -->
+
+            <div class="security-note">
+
+                <span class="security-icon">
+                    🔒
+                </span>
+
+                <span>
+                    Never share your OTP with anyone.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
