@@ -94,18 +94,15 @@
 
     <section class="products-page-header">
 
-
         <div class="products-header-content">
 
             <span class="products-eyebrow">
                 PRODUCT MANAGEMENT
             </span>
 
-
             <h1 class="admin-page-title">
                 Products
             </h1>
-
 
             <p class="admin-page-description">
                 Manage your handcrafted Patola collection.
@@ -114,20 +111,16 @@
         </div>
 
 
-
         <a
             href="/admin/products/add"
             class="admin-btn admin-btn-primary products-add-btn"
         >
-
             <i class="bi bi-plus-lg"></i>
 
             <span>
                 Add Product
             </span>
-
         </a>
-
 
     </section>
 
@@ -145,18 +138,14 @@
         <div class="product-stat-card">
 
             <div class="product-stat-icon">
-
                 <i class="bi bi-box-seam"></i>
-
             </div>
-
 
             <div class="product-stat-content">
 
                 <span>
                     Total Products
                 </span>
-
 
                 <strong id="totalProducts">
                     <%= totalProducts %>
@@ -173,18 +162,14 @@
         <div class="product-stat-card">
 
             <div class="product-stat-icon success">
-
                 <i class="bi bi-check-circle"></i>
-
             </div>
-
 
             <div class="product-stat-content">
 
                 <span>
                     In Stock
                 </span>
-
 
                 <strong id="inStockProducts">
                     <%= inStockProducts %>
@@ -201,18 +186,14 @@
         <div class="product-stat-card">
 
             <div class="product-stat-icon warning">
-
                 <i class="bi bi-star"></i>
-
             </div>
-
 
             <div class="product-stat-content">
 
                 <span>
                     Featured
                 </span>
-
 
                 <strong id="featuredProducts">
                     <%= featuredProducts %>
@@ -229,18 +210,14 @@
         <div class="product-stat-card">
 
             <div class="product-stat-icon gold">
-
                 <i class="bi bi-eye"></i>
-
             </div>
-
 
             <div class="product-stat-content">
 
                 <span>
                     Visible
                 </span>
-
 
                 <strong id="visibleProducts">
                     <%= visibleProducts %>
@@ -267,7 +244,6 @@
         <div class="products-search">
 
             <i class="bi bi-search"></i>
-
 
             <input
                 type="search"
@@ -323,21 +299,17 @@
                     All Availability
                 </option>
 
-
                 <option value="in stock">
                     In Stock
                 </option>
-
 
                 <option value="limited">
                     Limited
                 </option>
 
-
                 <option value="out of stock">
                     Out of Stock
                 </option>
-
 
                 <option value="hidden">
                     Hidden
@@ -376,7 +348,6 @@
 
     <section class="products-result-bar">
 
-
         <div class="products-result-count">
 
             Showing
@@ -397,7 +368,6 @@
             All products
         </div>
 
-
     </section>
 
 
@@ -416,7 +386,6 @@
                 id="productsTable"
             >
 
-
                 <thead>
 
                     <tr>
@@ -425,31 +394,25 @@
                             Product
                         </th>
 
-
                         <th>
                             Category
                         </th>
-
 
                         <th>
                             Price
                         </th>
 
-
                         <th>
                             Availability
                         </th>
-
 
                         <th>
                             Featured
                         </th>
 
-
                         <th>
                             Images
                         </th>
-
 
                         <th class="text-end">
                             Actions
@@ -474,6 +437,12 @@
 
                                 const safeProduct =
                                     product || {};
+
+
+                                const productId =
+                                    safeProduct._id
+                                        ? String(safeProduct._id)
+                                        : "";
 
 
                                 const availability =
@@ -579,7 +548,6 @@
 
                                         <div class="product-table-details">
 
-
                                             <strong>
                                                 <%= safeProduct.name || "Unnamed Product" %>
                                             </strong>
@@ -643,26 +611,21 @@
 
                                 <td data-label="Availability">
 
-
                                     <span
                                         class="admin-status <%= availabilityClass %>"
                                     >
-
 
                                         <% if (availability === "in stock") { %>
 
                                             <i class="bi bi-check-circle"></i>
 
-
                                         <% } else if (availability === "limited") { %>
 
                                             <i class="bi bi-exclamation-circle"></i>
 
-
                                         <% } else if (availability === "out of stock") { %>
 
                                             <i class="bi bi-x-circle"></i>
-
 
                                         <% } else { %>
 
@@ -673,9 +636,7 @@
 
                                         <%= safeProduct.availability || "In Stock" %>
 
-
                                     </span>
-
 
                                 </td>
 
@@ -692,7 +653,6 @@
                                         safeProduct.featured === true
                                     ) { %>
 
-
                                         <span class="featured-badge active">
 
                                             <i class="bi bi-star-fill"></i>
@@ -701,9 +661,7 @@
 
                                         </span>
 
-
                                     <% } else { %>
-
 
                                         <span class="featured-badge">
 
@@ -712,7 +670,6 @@
                                             No
 
                                         </span>
-
 
                                     <% } %>
 
@@ -748,14 +705,13 @@
                                     class="products-actions-cell"
                                 >
 
-
                                     <div class="product-actions">
 
 
                                         <!-- VIEW -->
 
                                         <a
-                                            href="/products/<%= safeProduct._id %>"
+                                            href="/products/<%= productId %>"
                                             class="product-action-btn view"
                                             title="View Product"
                                             aria-label="View Product"
@@ -772,7 +728,7 @@
                                         <!-- EDIT -->
 
                                         <a
-                                            href="/admin/products/edit/<%= safeProduct._id %>"
+                                            href="/admin/products/edit/<%= productId %>"
                                             class="product-action-btn edit"
                                             title="Edit Product"
                                             aria-label="Edit Product"
@@ -784,33 +740,32 @@
 
 
 
-                                        <!-- DELETE -->
-
-                                        <button
-                                            type="button"
-                                            class="product-action-btn delete delete-product-trigger"
-                                            title="Delete Product"
-                                            aria-label="Delete Product"
-                                            data-id="<%= safeProduct._id %>"
-                                            data-name="<%= safeProduct.name || 'this product' %>"
-                                        >
-
-                                            <i class="bi bi-trash3"></i>
-
-                                        </button>
-
-
+                                        <!-- =================================
+                                             DELETE FORM
+                                        ================================== -->
 
                                         <form
-                                            id="deleteProductForm-<%= safeProduct._id %>"
-                                            action="/admin/products/delete/<%= safeProduct._id %>"
+                                            action="/admin/products/delete/<%= productId %>"
                                             method="POST"
                                             class="delete-product-form"
-                                        ></form>
+                                            data-product-name="<%= safeProduct.name || 'this product' %>"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="product-action-btn delete"
+                                                title="Delete Product"
+                                                aria-label="Delete Product"
+                                            >
+
+                                                <i class="bi bi-trash3"></i>
+
+                                            </button>
+
+                                        </form>
 
 
                                     </div>
-
 
                                 </td>
 
@@ -835,9 +790,7 @@
                                 class="products-empty-cell"
                             >
 
-
                                 <div class="products-empty-state">
-
 
                                     <div class="products-empty-icon">
 
@@ -845,18 +798,15 @@
 
                                     </div>
 
-
                                     <h3>
                                         No Products Yet
                                     </h3>
-
 
                                     <p>
                                         Start building your collection
                                         by adding your first handcrafted
                                         product.
                                     </p>
-
 
                                     <a
                                         href="/admin/products/add"
@@ -869,9 +819,7 @@
 
                                     </a>
 
-
                                 </div>
-
 
                             </td>
 
@@ -882,7 +830,6 @@
 
 
                 </tbody>
-
 
             </table>
 
@@ -900,23 +847,19 @@
             style="display:none;"
         >
 
-
             <div class="products-empty-icon">
 
                 <i class="bi bi-search"></i>
 
             </div>
 
-
             <h3>
                 No Matching Products
             </h3>
 
-
             <p>
                 Try changing your search or filter.
             </p>
-
 
             <button
                 type="button"
@@ -925,7 +868,6 @@
             >
                 Clear Filters
             </button>
-
 
         </div>
 
@@ -938,25 +880,23 @@
 
 
 <!-- =========================================================
-     DELETE PRODUCT MODAL
+     DELETE PRODUCT CONFIRMATION MODAL
 ========================================================= -->
 
 <div
     class="modal fade"
     id="deleteProductModal"
     tabindex="-1"
+    aria-labelledby="deleteProductModalLabel"
     aria-hidden="true"
 >
 
-
     <div class="modal-dialog modal-dialog-centered">
-
 
         <div class="modal-content product-delete-modal">
 
 
             <div class="modal-header">
-
 
                 <div class="delete-modal-icon">
 
@@ -972,15 +912,13 @@
                     aria-label="Close"
                 ></button>
 
-
             </div>
 
 
 
             <div class="modal-body">
 
-
-                <h4>
+                <h4 id="deleteProductModalLabel">
                     Delete Product?
                 </h4>
 
@@ -997,13 +935,11 @@
 
                 </p>
 
-
             </div>
 
 
 
             <div class="modal-footer">
-
 
                 <button
                     type="button"
@@ -1022,15 +958,12 @@
                     Delete Product
                 </button>
 
-
             </div>
 
 
         </div>
 
-
     </div>
-
 
 </div>
 
@@ -1039,8 +972,6 @@
 <!-- =========================================================
      PRODUCTS JAVASCRIPT
 ========================================================= -->
-
-<% block("scripts").append(`
 
 <script>
 
@@ -1342,7 +1273,6 @@ document.addEventListener(
         }
 
 
-
         if (search) {
 
             search.addEventListener(
@@ -1440,79 +1370,141 @@ document.addEventListener(
            DELETE BUTTONS
         ================================================== */
 
-        document
-            .querySelectorAll(
-                ".delete-product-trigger"
-            )
-            .forEach(
-                function (button) {
+        const deleteForms =
+            document.querySelectorAll(
+                ".delete-product-form"
+            );
 
 
-                    button.addEventListener(
-                        "click",
-                        function () {
+        deleteForms.forEach(
+            function (form) {
 
 
-                            const id =
-                                button.dataset.id;
+                form.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        /*
+                         * Stop the normal form submit temporarily.
+                         * We show the confirmation modal first.
+                         */
+
+                        event.preventDefault();
 
 
-                            const name =
-                                button.dataset.name ||
-                                "this product";
+                        selectedDeleteForm =
+                            form;
 
 
-                            selectedDeleteForm =
-                                document.getElementById(
-                                    "deleteProductForm-" +
-                                    id
-                                );
+                        const productName =
+                            form.dataset.productName ||
+                            "this product";
 
 
-                            if (deleteProductName) {
+                        if (deleteProductName) {
 
-                                deleteProductName.textContent =
-                                    name;
-
-                            }
-
-
-                            if (deleteModal) {
-
-                                deleteModal.show();
-
-                            } else {
-
-
-                                const confirmed =
-                                    window.confirm(
-                                        'Are you sure you want to delete "' +
-                                        name +
-                                        '"?'
-                                    );
-
-
-                                if (
-                                    confirmed &&
-                                    selectedDeleteForm
-                                ) {
-
-                                    selectedDeleteForm.submit();
-
-                                }
-
-                            }
+                            deleteProductName.textContent =
+                                productName;
 
                         }
-                    );
+
+
+                        /*
+                         * Bootstrap modal available
+                         */
+
+                        if (deleteModal) {
+
+                            deleteModal.show();
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * Fallback if Bootstrap modal
+                         * is not available.
+                         */
+
+                        const confirmed =
+                            window.confirm(
+                                'Are you sure you want to delete "' +
+                                productName +
+                                '"?'
+                            );
+
+
+                        if (confirmed) {
+
+                            submitDeleteForm(form);
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* ==================================================
+           REAL DELETE SUBMIT
+        ================================================== */
+
+        function submitDeleteForm(form) {
+
+
+            if (!form) {
+
+                return;
+
+            }
+
+
+            /*
+             * Disable all delete buttons so user
+             * cannot submit twice.
+             */
+
+            deleteForms.forEach(
+                function (deleteForm) {
+
+                    const button =
+                        deleteForm.querySelector(
+                            "button[type='submit']"
+                        );
+
+                    if (button) {
+
+                        button.disabled = true;
+
+                    }
 
                 }
             );
 
 
+            /*
+             * Use native HTML form submission.
+             *
+             * This bypasses any custom JavaScript
+             * interference and directly sends:
+             *
+             * POST /admin/products/delete/:id
+             */
+
+            HTMLFormElement.prototype.submit.call(
+                form
+            );
+
+        }
+
+
 
         /* ==================================================
-           CONFIRM DELETE
+           CONFIRM DELETE BUTTON
         ================================================== */
 
         if (confirmDelete) {
@@ -1538,7 +1530,53 @@ document.addEventListener(
                         "Deleting...";
 
 
-                    selectedDeleteForm.submit();
+                    /*
+                     * Hide modal first.
+                     */
+
+                    if (deleteModal) {
+
+                        deleteModal.hide();
+
+                    }
+
+
+                    /*
+                     * Submit actual POST form.
+                     */
+
+                    submitDeleteForm(
+                        selectedDeleteForm
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* ==================================================
+           MODAL RESET
+        ================================================== */
+
+        if (deleteModalElement) {
+
+
+            deleteModalElement.addEventListener(
+                "hidden.bs.modal",
+                function () {
+
+
+                    if (confirmDelete) {
+
+                        confirmDelete.disabled =
+                            false;
+
+                        confirmDelete.textContent =
+                            "Delete Product";
+
+                    }
 
                 }
             );
@@ -1553,10 +1591,7 @@ document.addEventListener(
 
         filterProducts();
 
-
     }
 );
 
 </script>
-
-`); %>
