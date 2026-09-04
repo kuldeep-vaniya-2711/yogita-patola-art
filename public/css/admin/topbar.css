@@ -1,6 +1,8 @@
+
 /* =========================================================
+   YOGITA PATOLA ART
    ADMIN TOPBAR
-   Yogita Patola Art — Admin Panel
+   Premium Responsive Admin Interface
    ========================================================= */
 
 
@@ -22,6 +24,7 @@
     padding: 12px 30px;
 
     background: #fffdf9;
+
     border-bottom: 1px solid #e8dfd4;
 
     z-index: 900;
@@ -45,7 +48,7 @@
 
 
 /* =========================================================
-   MOBILE MENU TOGGLE
+   MOBILE MENU BUTTON
    ========================================================= */
 
 .admin-menu-toggle {
@@ -65,29 +68,48 @@
     padding: 0;
 
     border: 1px solid #e1d6ca;
-    border-radius: 8px;
+    border-radius: 9px;
 
     background: #ffffff;
 
+    color: #5b3036;
+
     cursor: pointer;
+
+    appearance: none;
 
     transition:
         background-color 0.18s ease,
-        border-color 0.18s ease;
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .admin-menu-toggle:hover {
     background: #f8f1e9;
-    border-color: #cfbfae;
+
+    border-color: #cdbda9;
+
+    box-shadow:
+        0 4px 14px rgba(65, 42, 34, 0.08);
+}
+
+
+.admin-menu-toggle:active {
+    transform: scale(0.96);
 }
 
 
 .admin-menu-toggle:focus-visible {
     outline: 2px solid #b99a68;
-    outline-offset: 2px;
+    outline-offset: 3px;
 }
 
+
+/* =========================================================
+   HAMBURGER LINES
+   ========================================================= */
 
 .admin-menu-toggle span {
     display: block;
@@ -95,13 +117,34 @@
     width: 18px;
     height: 2px;
 
-    border-radius: 2px;
+    flex: 0 0 2px;
+
+    border-radius: 10px;
 
     background: #5b3036;
 
     transition:
         transform 0.2s ease,
         opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   OPTIONAL OPEN STATE
+   ========================================================= */
+
+.admin-menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+
+.admin-menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+
+.admin-menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 
@@ -114,8 +157,14 @@
 
     display: flex;
     flex-direction: column;
+
+    justify-content: center;
 }
 
+
+/* =========================================================
+   SMALL LABEL
+   ========================================================= */
 
 .admin-topbar-label {
     display: block;
@@ -128,11 +177,16 @@
     font-weight: 600;
 
     letter-spacing: 0.13em;
+
     line-height: 1.2;
 
     text-transform: uppercase;
 }
 
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
 
 .admin-topbar-title {
     margin: 0;
@@ -155,6 +209,7 @@
     line-height: 1.25;
 
     text-overflow: ellipsis;
+
     white-space: nowrap;
 }
 
@@ -170,11 +225,27 @@
     align-items: center;
 
     gap: 18px;
+
+    margin-left: 20px;
 }
 
 
 /* =========================================================
-   VIEW WEBSITE LINK
+   TOPBAR DIVIDER
+   ========================================================= */
+
+.admin-topbar-divider {
+    width: 1px;
+    height: 30px;
+
+    flex: 0 0 1px;
+
+    background: #e4d9cd;
+}
+
+
+/* =========================================================
+   VIEW WEBSITE
    ========================================================= */
 
 .admin-topbar-site-link {
@@ -189,7 +260,7 @@
     gap: 7px;
 
     border: 1px solid #e1d6ca;
-    border-radius: 7px;
+    border-radius: 8px;
 
     background: #ffffff;
 
@@ -207,27 +278,87 @@
     transition:
         background-color 0.18s ease,
         border-color 0.18s ease,
-        color 0.18s ease;
+        color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .admin-topbar-site-link:hover {
     color: #4f252b;
+
     background: #f8f1e9;
+
     border-color: #cfbfae;
+
+    box-shadow:
+        0 4px 14px rgba(65, 42, 34, 0.07);
 
     text-decoration: none;
 }
 
 
-.admin-topbar-site-link:focus-visible {
-    outline: 2px solid #b99a68;
-    outline-offset: 2px;
+.admin-topbar-site-link:active {
+    transform: translateY(1px);
 }
 
 
-.admin-topbar-site-link > span:first-child {
+.admin-topbar-site-link:focus-visible {
+    outline: 2px solid #b99a68;
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   WEBSITE ICON
+   ========================================================= */
+
+.admin-topbar-site-icon {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
+
+    color: #6a3038;
+
     font-size: 15px;
+
+    line-height: 1;
+}
+
+
+.admin-topbar-site-icon i {
+    display: block;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   WEBSITE TEXT
+   ========================================================= */
+
+.admin-topbar-site-text {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   EXTERNAL LINK ICON
+   ========================================================= */
+
+.admin-topbar-external-icon {
+    margin-left: 1px;
+
+    color: #a38d78;
+
+    font-size: 11px;
+
     line-height: 1;
 }
 
@@ -260,6 +391,8 @@
     align-items: center;
     justify-content: center;
 
+    border: 1px solid rgba(176, 138, 74, 0.28);
+
     border-radius: 50%;
 
     background: #642d35;
@@ -269,6 +402,7 @@
     font-family:
         "Playfair Display",
         Georgia,
+        "Times New Roman",
         serif;
 
     font-size: 15px;
@@ -279,7 +413,7 @@
 
 
 /* =========================================================
-   USER INFO
+   USER INFORMATION
    ========================================================= */
 
 .admin-topbar-user-info {
@@ -304,7 +438,10 @@
     font-size: 12px;
     font-weight: 600;
 
+    line-height: 1.25;
+
     text-overflow: ellipsis;
+
     white-space: nowrap;
 }
 
@@ -332,10 +469,13 @@
     .admin-topbar {
         min-height: 70px;
 
-        padding-left: 22px;
-        padding-right: 22px;
+        padding: 11px 22px;
     }
 
+
+    /* ---------------------------------------------
+       MOBILE MENU
+       --------------------------------------------- */
 
     .admin-menu-toggle {
         display: inline-flex;
@@ -344,8 +484,14 @@
 
     .admin-topbar-left {
         gap: 12px;
+
+        flex: 1 1 auto;
     }
 
+
+    /* ---------------------------------------------
+       PAGE TITLE
+       --------------------------------------------- */
 
     .admin-topbar-title {
         max-width: 420px;
@@ -354,8 +500,14 @@
     }
 
 
+    /* ---------------------------------------------
+       RIGHT AREA
+       --------------------------------------------- */
+
     .admin-topbar-right {
         gap: 12px;
+
+        margin-left: 14px;
     }
 
 }
@@ -374,23 +526,48 @@
     }
 
 
+    /* ---------------------------------------------
+       LEFT
+       --------------------------------------------- */
+
     .admin-topbar-left {
         gap: 10px;
+
+        overflow: hidden;
     }
 
+
+    /* ---------------------------------------------
+       MENU BUTTON
+       --------------------------------------------- */
 
     .admin-menu-toggle {
         width: 38px;
         height: 38px;
 
-        flex-basis: 38px;
+        flex: 0 0 38px;
     }
 
 
+    .admin-menu-toggle span {
+        width: 17px;
+    }
+
+
+    /* ---------------------------------------------
+       PAGE LABEL
+       --------------------------------------------- */
+
     .admin-topbar-label {
+        margin-bottom: 1px;
+
         font-size: 9px;
     }
 
+
+    /* ---------------------------------------------
+       PAGE TITLE
+       --------------------------------------------- */
 
     .admin-topbar-title {
         max-width: 250px;
@@ -399,10 +576,29 @@
     }
 
 
+    /* ---------------------------------------------
+       RIGHT
+       --------------------------------------------- */
+
     .admin-topbar-right {
         gap: 9px;
+
+        margin-left: 8px;
     }
 
+
+    /* ---------------------------------------------
+       DIVIDER
+       --------------------------------------------- */
+
+    .admin-topbar-divider {
+        height: 26px;
+    }
+
+
+    /* ---------------------------------------------
+       VIEW WEBSITE
+       --------------------------------------------- */
 
     .admin-topbar-site-link {
         width: 38px;
@@ -412,22 +608,37 @@
 
         padding: 0;
 
+        gap: 0;
+
         border-radius: 8px;
     }
 
 
-    .admin-topbar-site-link > span:first-child {
+    .admin-topbar-site-icon {
+        width: 18px;
+        height: 18px;
+
         font-size: 16px;
     }
 
+
+    /* ---------------------------------------------
+       AVATAR
+       --------------------------------------------- */
 
     .admin-topbar-avatar {
         width: 36px;
         height: 36px;
 
         flex-basis: 36px;
+
+        font-size: 14px;
     }
 
+
+    /* ---------------------------------------------
+       USER TEXT HIDDEN
+       --------------------------------------------- */
 
     .admin-topbar-user-info {
         display: none;
@@ -443,10 +654,43 @@
 @media (max-width: 479.98px) {
 
     .admin-topbar {
-        padding-left: 12px;
-        padding-right: 12px;
+        min-height: 64px;
+
+        padding: 9px 12px;
     }
 
+
+    /* ---------------------------------------------
+       MENU
+       --------------------------------------------- */
+
+    .admin-menu-toggle {
+        width: 36px;
+        height: 36px;
+
+        flex-basis: 36px;
+    }
+
+
+    .admin-menu-toggle span {
+        width: 16px;
+
+        height: 2px;
+    }
+
+
+    /* ---------------------------------------------
+       LEFT
+       --------------------------------------------- */
+
+    .admin-topbar-left {
+        gap: 8px;
+    }
+
+
+    /* ---------------------------------------------
+       TITLE
+       --------------------------------------------- */
 
     .admin-topbar-title {
         max-width: 180px;
@@ -457,14 +701,53 @@
 
     .admin-topbar-label {
         font-size: 8px;
+
         letter-spacing: 0.1em;
     }
 
 
+    /* ---------------------------------------------
+       RIGHT
+       --------------------------------------------- */
+
     .admin-topbar-right {
         gap: 6px;
+
+        margin-left: 5px;
     }
 
+
+    /* ---------------------------------------------
+       DIVIDER
+       --------------------------------------------- */
+
+    .admin-topbar-divider {
+        display: none;
+    }
+
+
+    /* ---------------------------------------------
+       WEBSITE BUTTON
+       --------------------------------------------- */
+
+    .admin-topbar-site-link {
+        width: 34px;
+        height: 34px;
+
+        min-height: 34px;
+
+        border-radius: 7px;
+    }
+
+
+    .admin-topbar-site-icon {
+        font-size: 15px;
+    }
+
+
+    /* ---------------------------------------------
+       AVATAR
+       --------------------------------------------- */
 
     .admin-topbar-avatar {
         width: 34px;
@@ -473,6 +756,58 @@
         flex-basis: 34px;
 
         font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 359.98px) {
+
+    .admin-topbar {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+
+    .admin-topbar-title {
+        max-width: 135px;
+
+        font-size: 16px;
+    }
+
+
+    .admin-topbar-right {
+        gap: 4px;
+    }
+
+
+    .admin-menu-toggle {
+        width: 34px;
+        height: 34px;
+
+        flex-basis: 34px;
+    }
+
+
+    .admin-topbar-site-link {
+        width: 32px;
+        height: 32px;
+
+        min-height: 32px;
+    }
+
+
+    .admin-topbar-avatar {
+        width: 32px;
+        height: 32px;
+
+        flex-basis: 32px;
+
+        font-size: 13px;
     }
 
 }
@@ -491,3 +826,4 @@
     }
 
 }
+

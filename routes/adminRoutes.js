@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -307,7 +306,9 @@ const settingsUpload =
             fileSize:
                 5 * 1024 * 1024,
 
-            files: 3
+            // Hero + About + Favicon
+            // + 3 Heritage images
+            files: 6
 
         },
 
@@ -847,20 +848,6 @@ router.post(
             } = req.body;
 
 
-            // --------------------------------------------------
-            // FEATURED PRODUCT
-            // --------------------------------------------------
-            // Checkbox checked:
-            // req.body.featured = "true"
-            //
-            // Checkbox unchecked:
-            // req.body.featured = undefined
-            //
-            // Therefore:
-            // true  = checked
-            // false = unchecked
-            // --------------------------------------------------
-
             const featured =
                 req.body.featured === "true" ||
                 req.body.featured === "on" ||
@@ -1128,10 +1115,6 @@ router.post(
             } = req.body;
 
 
-            // --------------------------------------------------
-            // CATEGORY SAFETY
-            // --------------------------------------------------
-
             const submittedCategory =
                 String(
                     category ||
@@ -1164,10 +1147,6 @@ router.post(
 
             }
 
-
-            // --------------------------------------------------
-            // FEATURED PRODUCT
-            // --------------------------------------------------
 
             const featured =
                 req.body.featured === "true" ||
@@ -1230,10 +1209,6 @@ router.post(
                 }
             );
 
-
-            // --------------------------------------------------
-            // NEW IMAGES
-            // --------------------------------------------------
 
             const newImages =
                 imagePaths(
@@ -1389,10 +1364,6 @@ router.post(
 // ==================================================
 // REVIEWS
 // ==================================================
-//
-// Review business logic:
-// controllers/reviewController.js
-// ==================================================
 
 router.get(
     "/reviews",
@@ -1476,20 +1447,6 @@ router.get(
 // ==================================================
 // FEEDBACK MANAGEMENT
 // ==================================================
-//
-// IMPORTANT:
-// Feedback business logic is now inside:
-// controllers/feedbackController.js
-//
-// This route file only handles:
-// URL + middleware + controller call.
-// ==================================================
-
-
-// --------------------------------------------------
-// GET FEEDBACK
-// GET /admin/feedback
-// --------------------------------------------------
 
 router.get(
     "/feedback",
@@ -1498,22 +1455,12 @@ router.get(
 );
 
 
-// --------------------------------------------------
-// UPDATE FEEDBACK STATUS
-// POST /admin/feedback/status/:id
-// --------------------------------------------------
-
 router.post(
     "/feedback/status/:id",
     adminAuth,
     feedbackController.updateFeedbackStatus
 );
 
-
-// --------------------------------------------------
-// DELETE FEEDBACK
-// POST /admin/feedback/delete/:id
-// --------------------------------------------------
 
 router.post(
     "/feedback/delete/:id",
@@ -1969,6 +1916,7 @@ router.get(
 router.post(
     "/settings",
     adminAuth,
+
     settingsUpload.fields([
 
         {
@@ -1990,9 +1938,31 @@ router.post(
                 "faviconFile",
 
             maxCount: 1
+        },
+
+        {
+            name:
+                "heritageHandcraftedImageFile",
+
+            maxCount: 1
+        },
+
+        {
+            name:
+                "heritageIntricateImageFile",
+
+            maxCount: 1
+        },
+
+        {
+            name:
+                "heritageTimelessImageFile",
+
+            maxCount: 1
         }
 
     ]),
+
     async (req, res) => {
 
         try {
@@ -2024,6 +1994,10 @@ router.post(
                 aboutHeading,
                 aboutDescription,
                 aboutImage,
+
+                heritageHandcraftedImage,
+                heritageIntricateImage,
+                heritageTimelessImage,
 
                 address,
 
@@ -2104,6 +2078,21 @@ router.post(
                 aboutImage:
                     clean(aboutImage),
 
+                heritageHandcraftedImage:
+                    clean(
+                        heritageHandcraftedImage
+                    ),
+
+                heritageIntricateImage:
+                    clean(
+                        heritageIntricateImage
+                    ),
+
+                heritageTimelessImage:
+                    clean(
+                        heritageTimelessImage
+                    ),
+
                 address:
                     clean(address),
 
@@ -2133,6 +2122,10 @@ router.post(
 
             };
 
+
+            // ==================================================
+            // BASIC VALIDATION
+            // ==================================================
 
             if (!data.siteName) {
 
@@ -2374,6 +2367,148 @@ router.post(
             }
 
 
+            // ==================================================
+            // HERITAGE — HANDCRAFTED
+            // ==================================================
+
+            const newHeritageHandcraftedFile =
+                req.files
+                    ?.heritageHandcraftedImageFile
+                    ?.[0];
+
+
+            if (
+                newHeritageHandcraftedFile
+            ) {
+
+                const oldImage =
+                    settings.heritageHandcraftedImage;
+
+
+                data.heritageHandcraftedImage =
+                    "/uploads/settings/" +
+                    newHeritageHandcraftedFile.filename;
+
+
+                if (
+                    oldImage &&
+                    oldImage !==
+                        data.heritageHandcraftedImage
+                ) {
+
+                    deleteImageFile(
+                        oldImage
+                    );
+
+                }
+
+            } else {
+
+                data.heritageHandcraftedImage =
+                    clean(
+                        heritageHandcraftedImage ||
+                        settings.heritageHandcraftedImage
+                    );
+
+            }
+
+
+            // ==================================================
+            // HERITAGE — INTRICATE ART
+            // ==================================================
+
+            const newHeritageIntricateFile =
+                req.files
+                    ?.heritageIntricateImageFile
+                    ?.[0];
+
+
+            if (
+                newHeritageIntricateFile
+            ) {
+
+                const oldImage =
+                    settings.heritageIntricateImage;
+
+
+                data.heritageIntricateImage =
+                    "/uploads/settings/" +
+                    newHeritageIntricateFile.filename;
+
+
+                if (
+                    oldImage &&
+                    oldImage !==
+                        data.heritageIntricateImage
+                ) {
+
+                    deleteImageFile(
+                        oldImage
+                    );
+
+                }
+
+            } else {
+
+                data.heritageIntricateImage =
+                    clean(
+                        heritageIntricateImage ||
+                        settings.heritageIntricateImage
+                    );
+
+            }
+
+
+            // ==================================================
+            // HERITAGE — TIMELESS
+            // ==================================================
+
+            const newHeritageTimelessFile =
+                req.files
+                    ?.heritageTimelessImageFile
+                    ?.[0];
+
+
+            if (
+                newHeritageTimelessFile
+            ) {
+
+                const oldImage =
+                    settings.heritageTimelessImage;
+
+
+                data.heritageTimelessImage =
+                    "/uploads/settings/" +
+                    newHeritageTimelessFile.filename;
+
+
+                if (
+                    oldImage &&
+                    oldImage !==
+                        data.heritageTimelessImage
+                ) {
+
+                    deleteImageFile(
+                        oldImage
+                    );
+
+                }
+
+            } else {
+
+                data.heritageTimelessImage =
+                    clean(
+                        heritageTimelessImage ||
+                        settings.heritageTimelessImage
+                    );
+
+            }
+
+
+            // ==================================================
+            // SAVE
+            // ==================================================
+
             Object.assign(
                 settings,
                 data
@@ -2512,4 +2647,3 @@ router.get(
 // ==================================================
 
 module.exports = router;
-

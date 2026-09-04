@@ -1,3 +1,4 @@
+
 /* =========================================================
    YOGITA PATOLA ART
    ADMIN LAYOUT JAVASCRIPT
@@ -12,11 +13,7 @@
    - Escape key support
    - Active menu handling
    - Responsive sidebar behavior
-   ========================================================= */
-
-
-/* =========================================================
-   DOM READY
+   - Body scroll lock
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -38,9 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".admin-sidebar-close");
 
     const sidebarLinks =
-        document.querySelectorAll(
-            ".admin-sidebar a"
-        );
+        document.querySelectorAll(".admin-sidebar a");
 
 
     /* =====================================================
@@ -53,20 +48,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
+       MOBILE BREAKPOINT
+       ===================================================== */
+
+    const MOBILE_BREAKPOINT = 991;
+
+
+    /* =====================================================
+       CHECK MOBILE
+       ===================================================== */
+
+    function isMobile() {
+        return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
+
+    /* =====================================================
+       UPDATE ARIA
+       ===================================================== */
+
+    function updateAria(isOpen) {
+
+        if (menuToggle) {
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
+
+        }
+
+        if (sidebarClose) {
+
+            sidebarClose.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
        OPEN SIDEBAR
        ===================================================== */
 
     function openSidebar() {
 
-        sidebar.classList.add(
-            "show"
-        );
+        if (!isMobile()) {
+            return;
+        }
+
+
+        sidebar.classList.add("show");
 
 
         if (overlay) {
 
-            overlay.classList.add(
-                "show"
+            overlay.classList.add("show");
+            overlay.setAttribute(
+                "aria-hidden",
+                "false"
             );
 
         }
@@ -75,6 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.add(
             "admin-sidebar-open"
         );
+
+
+        updateAria(true);
 
     }
 
@@ -85,15 +131,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function closeSidebar() {
 
-        sidebar.classList.remove(
-            "show"
-        );
+        sidebar.classList.remove("show");
 
 
         if (overlay) {
 
-            overlay.classList.remove(
-                "show"
+            overlay.classList.remove("show");
+            overlay.setAttribute(
+                "aria-hidden",
+                "true"
             );
 
         }
@@ -102,6 +148,35 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.remove(
             "admin-sidebar-open"
         );
+
+
+        updateAria(false);
+
+    }
+
+
+    /* =====================================================
+       TOGGLE SIDEBAR
+       ===================================================== */
+
+    function toggleSidebar() {
+
+        if (!isMobile()) {
+            return;
+        }
+
+
+        if (
+            sidebar.classList.contains("show")
+        ) {
+
+            closeSidebar();
+
+        } else {
+
+            openSidebar();
+
+        }
 
     }
 
@@ -118,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-                openSidebar();
+                toggleSidebar();
 
             }
         );
@@ -172,7 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
         "keydown",
         function (event) {
 
-            if (event.key === "Escape") {
+            if (
+                event.key === "Escape" &&
+                sidebar.classList.contains("show")
+            ) {
 
                 closeSidebar();
 
@@ -194,33 +272,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 function () {
 
                     /*
-                     * Active menu handling
+                     * Do not manually force active class
+                     * here for external/new page navigation.
+                     *
+                     * EJS currentPath + setActiveMenu()
+                     * will determine the correct active item
+                     * after the new page loads.
                      */
 
-                    sidebarLinks.forEach(
-                        function (item) {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    link.classList.add(
-                        "active"
-                    );
-
-
-                    /*
-                     * Mobile par
-                     * sidebar automatically close
-                     */
-
-                    if (
-                        window.innerWidth <= 991
-                    ) {
+                    if (isMobile()) {
 
                         closeSidebar();
 
@@ -243,11 +303,15 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.pathname;
 
 
-        let activeFound = false;
+        let exactMatch = null;
+        let parentMatch = null;
 
 
         sidebarLinks.forEach(
             function (link) {
+
+                link.classList.remove("active");
+
 
                 const href =
                     link.getAttribute("href");
@@ -265,6 +329,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
+                 * Ignore external links
+                 */
+
+                if (
+                    href.startsWith("http://") ||
+                    href.startsWith("https://")
+                ) {
+
+                    return;
+
+                }
+
+
+                /*
                  * Remove query string
                  */
 
@@ -273,47 +351,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 /*
-                 * Exact match
+                 * Remove trailing slash
+                 * except root
                  */
 
+                const normalizedHref =
+                    cleanHref.length > 1
+                        ? cleanHref.replace(/\/+$/, "")
+                        : cleanHref;
+
+
+                const normalizedPath =
+                    currentPath.length > 1
+                        ? currentPath.replace(/\/+$/, "")
+                        : currentPath;
+
+
+                /* -----------------------------------------
+                   EXACT MATCH
+                   ----------------------------------------- */
+
                 if (
-                    cleanHref === currentPath
+                    normalizedHref === normalizedPath
                 ) {
 
-                    link.classList.add(
-                        "active"
-                    );
-
-                    activeFound = true;
+                    exactMatch = link;
 
                     return;
 
                 }
 
 
-                /*
-                 * Admin section match
-                 *
-                 * Example:
-                 *
-                 * /admin/products
-                 * /admin/products/edit/123
-                 *
-                 * dono par Products menu active rahega.
-                 */
+                /* -----------------------------------------
+                   PARENT / SECTION MATCH
+                   ----------------------------------------- */
 
                 if (
-                    cleanHref !== "/admin" &&
-                    currentPath.startsWith(
-                        cleanHref + "/"
+                    normalizedHref !== "/admin" &&
+                    normalizedPath.startsWith(
+                        normalizedHref + "/"
                     )
                 ) {
 
-                    link.classList.add(
-                        "active"
-                    );
+                    /*
+                     * Keep the longest matching path.
+                     *
+                     * Example:
+                     *
+                     * /admin/products
+                     * /admin/products/edit/123
+                     *
+                     * Products remains active.
+                     */
 
-                    activeFound = true;
+                    if (
+                        !parentMatch ||
+                        normalizedHref.length >
+                        parentMatch.dataset.hrefLength
+                    ) {
+
+                        link.dataset.hrefLength =
+                            normalizedHref.length;
+
+                        parentMatch = link;
+
+                    }
 
                 }
 
@@ -321,13 +423,25 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /*
-         * Dashboard fallback
-         */
+        /* =================================================
+           PRIORITY:
+           1. Exact match
+           2. Parent match
+           3. Dashboard
+           ================================================= */
 
-        if (
-            !activeFound &&
-            currentPath === "/admin"
+        if (exactMatch) {
+
+            exactMatch.classList.add("active");
+
+        }
+        else if (parentMatch) {
+
+            parentMatch.classList.add("active");
+
+        }
+        else if (
+            normalizedAdminPath(currentPath) === "/admin"
         ) {
 
             sidebarLinks.forEach(
@@ -342,9 +456,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         href === "/admin/"
                     ) {
 
-                        link.classList.add(
-                            "active"
-                        );
+                        link.classList.add("active");
 
                     }
 
@@ -356,7 +468,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    setActiveMenu();
+    /* =====================================================
+       NORMALIZE ADMIN PATH
+       ===================================================== */
+
+    function normalizedAdminPath(path) {
+
+        if (!path) {
+            return "";
+        }
+
+
+        if (path.length > 1) {
+
+            return path.replace(/\/+$/, "");
+
+        }
+
+
+        return path;
+
+    }
 
 
     /* =====================================================
@@ -368,13 +500,12 @@ document.addEventListener("DOMContentLoaded", function () {
         function () {
 
             /*
-             * Desktop par
-             * mobile sidebar state reset karein
+             * Desktop:
+             * Sidebar should always be in normal
+             * desktop state.
              */
 
-            if (
-                window.innerWidth > 991
-            ) {
+            if (!isMobile()) {
 
                 closeSidebar();
 
@@ -385,13 +516,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       PREVENT BODY SCROLL ON MOBILE SIDEBAR
+       BODY SCROLL LOCK
        ===================================================== */
 
     function updateBodyScroll() {
 
         if (
-            window.innerWidth <= 991 &&
+            isMobile() &&
             sidebar.classList.contains("show")
         ) {
 
@@ -417,7 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       SIDEBAR LOGO / BRAND CLICK
+       SIDEBAR BRAND CLICK
        ===================================================== */
 
     const sidebarBrand =
@@ -432,9 +563,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "click",
             function () {
 
-                if (
-                    window.innerWidth <= 991
-                ) {
+                if (isMobile()) {
 
                     closeSidebar();
 
@@ -447,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       ADMIN LOGOUT CONFIRMATION
+       LOGOUT CONFIRMATION
        ===================================================== */
 
     const logoutLinks =
@@ -524,13 +653,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
 
-                    dropdown.classList.toggle(
-                        "show"
-                    );
+                    const isOpen =
+                        dropdown.classList.toggle(
+                            "show"
+                        );
 
 
                     toggle.classList.toggle(
-                        "open"
+                        "open",
+                        isOpen
+                    );
+
+
+                    toggle.setAttribute(
+                        "aria-expanded",
+                        isOpen ? "true" : "false"
                     );
 
                 }
@@ -541,13 +678,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       INITIALIZE TOOLTIP
+       BOOTSTRAP TOOLTIP
        ===================================================== */
-
-    /*
-     * Bootstrap available ho to
-     * Bootstrap tooltips initialize karenge.
-     */
 
     if (
         typeof bootstrap !== "undefined"
@@ -573,10 +705,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       INITIALIZE
+       INITIAL STATE
        ===================================================== */
+
+    if (overlay) {
+
+        overlay.classList.remove("show");
+
+        overlay.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    updateAria(false);
+
+    setActiveMenu();
 
     updateBodyScroll();
 
-
 });
+

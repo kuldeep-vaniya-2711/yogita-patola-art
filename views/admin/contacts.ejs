@@ -1,1063 +1,391 @@
-
 <%
 /*
- * =========================================================
- * ADMIN CONTACT & INQUIRIES
- * =========================================================
- *
- * IMPORTANT:
- * - Uses ejs-mate layout
- * - Uses ejs-mate block('head').append(...)
- * - NO template literals
- * - NO ${...}
- * - NO layout("layout", {...})
- * =========================================================
- */
 
-layout("layout");
+* =========================================================
+* ADMIN CONTACT & INQUIRIES
+* =========================================================
+*
+* Uses the separate ADMIN layout.
+* Public navbar/footer are NOT loaded here.
+* =========================================================
+  */
 
-block("head").append(`
-    <link
-        rel="stylesheet"
-        href="/css/admin/contacts.css"
-    >
-`);
-
+layout("admin/layout", {
+title: "Contact & Inquiries",
+pageTitle: "Contact & Inquiries",
+pageCss: "/css/admin/contacts.css"
+});
 
 /* =========================================================
-   SAFE CONTACT DATA
+SAFE CONTACT DATA
 ========================================================= */
 
 const contactList =
-    typeof contacts !== "undefined" &&
-    Array.isArray(contacts)
-        ? contacts
-        : [];
-
-
-/* =========================================================
-   PAGE TITLE
-========================================================= */
-
-const pageTitle =
-    typeof title !== "undefined" && title
-        ? title
-        : "Contact & Inquiries";
-
+typeof contacts !== "undefined" &&
+Array.isArray(contacts)
+? contacts
+: [];
 
 /* =========================================================
-   CONTACT STATISTICS
+CONTACT STATISTICS
 ========================================================= */
 
 const totalContacts =
-    contactList.length;
-
+contactList.length;
 
 const newContacts =
-    contactList.filter(function (contact) {
+contactList.filter(function (contact) {
 
-        return String(
-            contact && contact.status
-                ? contact.status
-                : "new"
-        ).toLowerCase() === "new";
 
-    }).length;
+    return String(
+        contact && contact.status
+            ? contact.status
+            : "new"
+    ).toLowerCase() === "new";
+
+}).length;
 
 
 const repliedContacts =
-    contactList.filter(function (contact) {
+contactList.filter(function (contact) {
 
-        return String(
-            contact && contact.status
-                ? contact.status
-                : ""
-        ).toLowerCase() === "replied";
 
-    }).length;
+    return String(
+        contact && contact.status
+            ? contact.status
+            : ""
+    ).toLowerCase() === "replied";
 
+}).length;
 
 const closedContacts =
-    contactList.filter(function (contact) {
+contactList.filter(function (contact) {
 
-        return String(
-            contact && contact.status
-                ? contact.status
-                : ""
-        ).toLowerCase() === "closed";
 
-    }).length;
+    return String(
+        contact && contact.status
+            ? contact.status
+            : ""
+    ).toLowerCase() === "closed";
+
+}).length;
+
 
 %>
 
-
 <div class="admin-page contacts-page">
 
+<!-- ================================================= -->
+<!-- HEADER                                            -->
+<!-- ================================================= -->
 
-    <!-- ================================================= -->
-    <!-- HEADER                                            -->
-    <!-- ================================================= -->
+<div class="page-header">
 
-    <div class="page-header">
+    <div class="page-header-content">
 
-        <div class="page-header-content">
+        <div>
 
-            <div>
-
-                <span class="page-eyebrow">
-                    CUSTOMER COMMUNICATION
-                </span>
-
-                <h1>
-                    Contact &amp; Inquiries
-                </h1>
-
-                <p>
-                    Manage customer questions, saree inquiries
-                    and other messages received from your website.
-                </p>
-
-            </div>
-
-
-            <div class="page-header-icon">
-                <span>✉</span>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================================================= -->
-    <!-- ALERTS                                            -->
-    <!-- ================================================= -->
-
-    <% if (
-        typeof success !== "undefined" &&
-        success
-    ) { %>
-
-        <div
-            class="alert-message alert-success"
-            id="successMessage"
-        >
-
-            <div class="alert-icon">
-                ✓
-            </div>
-
-            <div class="alert-content">
-
-                <strong>
-                    Success
-                </strong>
-
-                <span>
-                    <%= success %>
-                </span>
-
-            </div>
-
-            <button
-                type="button"
-                class="alert-close"
-                onclick="closeAlert('successMessage')"
-                aria-label="Close"
-            >
-                ×
-            </button>
-
-        </div>
-
-    <% } %>
-
-
-    <% if (
-        typeof error !== "undefined" &&
-        error
-    ) { %>
-
-        <div
-            class="alert-message alert-error"
-            id="errorMessage"
-        >
-
-            <div class="alert-icon">
-                !
-            </div>
-
-            <div class="alert-content">
-
-                <strong>
-                    Error
-                </strong>
-
-                <span>
-                    <%= error %>
-                </span>
-
-            </div>
-
-            <button
-                type="button"
-                class="alert-close"
-                onclick="closeAlert('errorMessage')"
-                aria-label="Close"
-            >
-                ×
-            </button>
-
-        </div>
-
-    <% } %>
-
-
-    <!-- ================================================= -->
-    <!-- STATISTICS                                        -->
-    <!-- ================================================= -->
-
-    <div class="contact-stats">
-
-
-        <!-- TOTAL -->
-
-        <div class="contact-stat-card">
-
-            <div class="stat-icon">
-                ✉
-            </div>
-
-            <div class="stat-content">
-
-                <span class="stat-label">
-                    Total Inquiries
-                </span>
-
-                <strong class="stat-value">
-                    <%= totalContacts %>
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- NEW -->
-
-        <div class="contact-stat-card">
-
-            <div class="stat-icon new-icon">
-                ●
-            </div>
-
-            <div class="stat-content">
-
-                <span class="stat-label">
-                    New
-                </span>
-
-                <strong class="stat-value">
-                    <%= newContacts %>
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- REPLIED -->
-
-        <div class="contact-stat-card">
-
-            <div class="stat-icon replied-icon">
-                ✓
-            </div>
-
-            <div class="stat-content">
-
-                <span class="stat-label">
-                    Replied
-                </span>
-
-                <strong class="stat-value">
-                    <%= repliedContacts %>
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- CLOSED -->
-
-        <div class="contact-stat-card">
-
-            <div class="stat-icon closed-icon">
-                ✓
-            </div>
-
-            <div class="stat-content">
-
-                <span class="stat-label">
-                    Closed
-                </span>
-
-                <strong class="stat-value">
-                    <%= closedContacts %>
-                </strong>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-    <!-- ================================================= -->
-    <!-- TOOLBAR                                           -->
-    <!-- ================================================= -->
-
-    <div class="contacts-toolbar">
-
-
-        <div class="toolbar-left">
-
-            <div class="search-box">
-
-                <span
-                    class="search-icon"
-                    aria-hidden="true"
-                >
-                    ⌕
-                </span>
-
-                <input
-                    type="search"
-                    id="contactSearch"
-                    placeholder="Search name, email, phone or subject..."
-                    autocomplete="off"
-                >
-
-                <button
-                    type="button"
-                    id="clearSearch"
-                    class="clear-search"
-                    title="Clear search"
-                    aria-label="Clear search"
-                >
-                    ×
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="toolbar-right">
-
-
-            <div class="filter-group">
-
-                <label for="statusFilter">
-                    Status
-                </label>
-
-                <select id="statusFilter">
-
-                    <option value="all">
-                        All
-                    </option>
-
-                    <option value="new">
-                        New
-                    </option>
-
-                    <option value="read">
-                        Read
-                    </option>
-
-                    <option value="replied">
-                        Replied
-                    </option>
-
-                    <option value="closed">
-                        Closed
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="refresh-btn"
-                id="refreshContacts"
-                title="Refresh"
-            >
-
-                <span>
-                    ↻
-                </span>
-
-                Refresh
-
-            </button>
-
-
-        </div>
-
-
-    </div>
-
-
-    <!-- ================================================= -->
-    <!-- CONTACT CARD                                      -->
-    <!-- ================================================= -->
-
-    <div class="contacts-card">
-
-
-        <!-- CARD HEADER -->
-
-        <div class="contacts-card-header">
-
-            <div>
-
-                <h2>
-                    Customer Inquiries
-                </h2>
-
-                <p>
-                    Messages received from your website visitors.
-                </p>
-
-            </div>
-
-
-            <div class="result-count">
-
-                <span id="visibleContactCount">
-                    <%= totalContacts %>
-                </span>
-
-                inquiries
-
-            </div>
-
-
-        </div>
-
-
-        <!-- ================================================= -->
-        <!-- CONTACT TABLE                                     -->
-        <!-- ================================================= -->
-
-        <% if (contactList.length > 0) { %>
-
-
-            <div class="table-wrapper">
-
-                <table
-                    class="contacts-table"
-                    id="contactsTable"
-                >
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                #
-                            </th>
-
-                            <th>
-                                Customer
-                            </th>
-
-                            <th>
-                                Contact
-                            </th>
-
-                            <th>
-                                Subject
-                            </th>
-
-                            <th>
-                                Message
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Actions
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <% contactList.forEach(function (contact, index) { %>
-
-
-                            <%
-                                /* =====================================
-                                   SAFE CONTACT VALUES
-                                ===================================== */
-
-                                const status =
-                                    String(
-                                        contact &&
-                                        contact.status
-                                            ? contact.status
-                                            : "new"
-                                    ).toLowerCase();
-
-
-                                const name =
-                                    String(
-                                        contact &&
-                                        contact.name
-                                            ? contact.name
-                                            : ""
-                                    );
-
-
-                                const email =
-                                    String(
-                                        contact &&
-                                        contact.email
-                                            ? contact.email
-                                            : ""
-                                    );
-
-
-                                const phone =
-                                    String(
-                                        contact &&
-                                        contact.phone
-                                            ? contact.phone
-                                            : ""
-                                    );
-
-
-                                const subject =
-                                    String(
-                                        contact &&
-                                        contact.subject
-                                            ? contact.subject
-                                            : "General Inquiry"
-                                    );
-
-
-                                const message =
-                                    String(
-                                        contact &&
-                                        contact.message
-                                            ? contact.message
-                                            : ""
-                                    );
-
-
-                                const source =
-                                    String(
-                                        contact &&
-                                        contact.source
-                                            ? contact.source
-                                            : "Website Contact Form"
-                                    );
-
-
-                                const contactId =
-                                    contact &&
-                                    contact._id
-                                        ? String(contact._id)
-                                        : "";
-
-
-                                const avatarLetter =
-                                    (
-                                        name ||
-                                        "C"
-                                    )
-                                        .charAt(0)
-                                        .toUpperCase();
-
-
-                                const searchName =
-                                    name.toLowerCase();
-
-
-                                const searchEmail =
-                                    email.toLowerCase();
-
-
-                                const searchPhone =
-                                    phone.toLowerCase();
-
-
-                                const searchSubject =
-                                    subject.toLowerCase();
-
-
-                                const searchMessage =
-                                    message.toLowerCase();
-
-
-                                /* =====================================
-                                   DATE
-                                ===================================== */
-
-                                let visitorDate = "—";
-                                let visitorTime = "";
-
-
-                                if (
-                                    contact &&
-                                    contact.createdAt
-                                ) {
-
-                                    const parsedDate =
-                                        new Date(
-                                            contact.createdAt
-                                        );
-
-
-                                    if (
-                                        !isNaN(
-                                            parsedDate.getTime()
-                                        )
-                                    ) {
-
-                                        visitorDate =
-                                            parsedDate.toLocaleDateString(
-                                                "en-IN",
-                                                {
-                                                    day: "2-digit",
-                                                    month: "short",
-                                                    year: "numeric"
-                                                }
-                                            );
-
-
-                                        visitorTime =
-                                            parsedDate.toLocaleTimeString(
-                                                "en-IN",
-                                                {
-                                                    hour: "2-digit",
-                                                    minute: "2-digit"
-                                                }
-                                            );
-
-                                    }
-
-                                }
-
-                            %>
-
-
-                            <tr
-                                class="contact-row"
-                                data-name="<%= searchName %>"
-                                data-email="<%= searchEmail %>"
-                                data-phone="<%= searchPhone %>"
-                                data-subject="<%= searchSubject %>"
-                                data-message="<%= searchMessage %>"
-                                data-status="<%= status %>"
-                            >
-
-
-                                <!-- NUMBER -->
-
-                                <td class="number-cell">
-
-                                    <%= index + 1 %>
-
-                                </td>
-
-
-                                <!-- CUSTOMER -->
-
-                                <td>
-
-                                    <div class="customer-info">
-
-                                        <div class="customer-avatar">
-
-                                            <%= avatarLetter %>
-
-                                        </div>
-
-
-                                        <div class="customer-details">
-
-                                            <strong>
-                                                <%= name || "Unknown Customer" %>
-                                            </strong>
-
-                                            <span>
-                                                <%= source %>
-                                            </span>
-
-                                        </div>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- CONTACT -->
-
-                                <td>
-
-                                    <div class="contact-info">
-
-
-                                        <% if (email) { %>
-
-                                            <a
-                                                href="mailto:<%= email %>"
-                                                class="email-link"
-                                            >
-                                                <%= email %>
-                                            </a>
-
-                                        <% } else { %>
-
-                                            <span class="empty-value">
-                                                No email
-                                            </span>
-
-                                        <% } %>
-
-
-                                        <% if (phone) { %>
-
-                                            <a
-                                                href="tel:<%= phone %>"
-                                                class="phone-link"
-                                            >
-                                                <%= phone %>
-                                            </a>
-
-                                        <% } %>
-
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- SUBJECT -->
-
-                                <td>
-
-                                    <div class="subject-cell">
-
-                                        <%= subject %>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- MESSAGE -->
-
-                                <td>
-
-                                    <div
-                                        class="message-preview"
-                                        title="<%= message %>"
-                                    >
-
-                                        <%= message || "No message" %>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- STATUS -->
-
-                                <td>
-
-                                    <span
-                                        class="status-badge status-<%= status %>"
-                                    >
-
-                                        <span
-                                            class="status-dot"
-                                            aria-hidden="true"
-                                        ></span>
-
-                                        <%= status %>
-
-                                    </span>
-
-                                </td>
-
-
-                                <!-- DATE -->
-
-                                <td>
-
-                                    <div class="date-cell">
-
-                                        <%= visitorDate %>
-
-                                        <% if (visitorTime) { %>
-
-                                            <span>
-                                                <%= visitorTime %>
-                                            </span>
-
-                                        <% } %>
-
-                                    </div>
-
-                                </td>
-
-
-                                <!-- ACTIONS -->
-
-                                <td>
-
-                                    <div class="action-buttons">
-
-
-                                        <!-- VIEW -->
-
-                                        <% if (contactId) { %>
-
-                                            <a
-                                                href="/admin/contacts/view/<%= contactId %>"
-                                                class="action-btn view-btn"
-                                                title="View inquiry"
-                                                aria-label="View inquiry"
-                                            >
-
-                                                <span>
-                                                    👁
-                                                </span>
-
-                                            </a>
-
-                                        <% } %>
-
-
-                                        <!-- REPLY -->
-
-                                        <% if (email) { %>
-
-                                            <a
-                                                href="mailto:<%= email %>?subject=<%= encodeURIComponent('Re: ' + subject) %>"
-                                                class="action-btn reply-btn"
-                                                title="Reply by email"
-                                                aria-label="Reply by email"
-                                            >
-
-                                                <span>
-                                                    ✉
-                                                </span>
-
-                                            </a>
-
-                                        <% } %>
-
-
-                                        <!-- DELETE -->
-
-                                        <% if (contactId) { %>
-
-                                            <button
-                                                type="button"
-                                                class="action-btn delete-btn"
-                                                title="Delete inquiry"
-                                                aria-label="Delete inquiry"
-                                                data-contact-id="<%= contactId %>"
-                                                data-contact-name="<%= name || 'this inquiry' %>"
-                                            >
-
-                                                <span>
-                                                    🗑
-                                                </span>
-
-                                            </button>
-
-
-                                            <form
-                                                id="deleteContactForm-<%= contactId %>"
-                                                action="/admin/contacts/delete/<%= contactId %>"
-                                                method="POST"
-                                                class="hidden-delete-form"
-                                            ></form>
-
-                                        <% } %>
-
-
-                                    </div>
-
-                                </td>
-
-
-                            </tr>
-
-
-                        <% }); %>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            <!-- ================================================= -->
-            <!-- NO SEARCH RESULTS                                 -->
-            <!-- ================================================= -->
-
-            <div
-                id="noSearchResults"
-                class="no-search-results"
-                style="display:none;"
-            >
-
-                <div class="empty-icon">
-                    ⌕
-                </div>
-
-                <h3>
-                    No inquiries found
-                </h3>
-
-                <p>
-                    Try changing your search or status filter.
-                </p>
-
-            </div>
-
-
-        <% } else { %>
-
-
-            <!-- ================================================= -->
-            <!-- EMPTY STATE                                       -->
-            <!-- ================================================= -->
-
-            <div class="empty-state">
-
-                <div class="empty-state-icon">
-                    ✉
-                </div>
-
-                <h3>
-                    No Contact Inquiries Yet
-                </h3>
-
-                <p>
-                    Customer messages and inquiries submitted
-                    through your website will appear here.
-                </p>
-
-                <div class="empty-state-note">
-
-                    <span>
-                        YOGITA PATOLA ART
-                    </span>
-
-                    <small>
-                        Customer Communication
-                    </small>
-
-                </div>
-
-            </div>
-
-
-        <% } %>
-
-
-    </div>
-
-
-    <!-- ================================================= -->
-    <!-- BUSINESS CONTACT                                  -->
-    <!-- ================================================= -->
-
-    <div class="business-contact-card">
-
-
-        <div class="business-icon">
-            ✦
-        </div>
-
-
-        <div class="business-content">
-
-            <span class="business-label">
-                YOGITA PATOLA ART
+            <span class="page-eyebrow">
+                CUSTOMER COMMUNICATION
             </span>
 
-            <h3>
-                Customer Inquiry Management
-            </h3>
+            <h1>
+                Contact &amp; Inquiries
+            </h1>
 
             <p>
-                Use this section to manage customer questions
-                about Patola sarees, accessories, availability,
-                pricing and other product-related inquiries.
+                Manage customer questions, saree inquiries
+                and other messages received from your website.
             </p>
 
         </div>
 
 
-        <div class="business-actions">
+        <div class="page-header-icon">
+            <span>✉</span>
+        </div>
+
+    </div>
+
+</div>
 
 
-            <a
-                href="tel:09725548527"
-                class="business-btn"
-            >
+<!-- ================================================= -->
+<!-- ALERTS                                            -->
+<!-- ================================================= -->
 
-                <span>
-                    ☎
-                </span>
+<% if (
+    typeof success !== "undefined" &&
+    success
+) { %>
 
-                097255 48527
+    <div
+        class="alert-message alert-success"
+        id="successMessage"
+    >
 
-            </a>
+        <div class="alert-icon">
+            ✓
+        </div>
 
+        <div class="alert-content">
 
-            <a
-                href="https://www.instagram.com/yogita_patola_art"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="business-btn"
-            >
+            <strong>
+                Success
+            </strong>
 
-                <span>
-                    ◎
-                </span>
-
-                Instagram
-
-            </a>
-
+            <span>
+                <%= success %>
+            </span>
 
         </div>
+
+        <button
+            type="button"
+            class="alert-close"
+            onclick="closeAlert('successMessage')"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+    </div>
+
+<% } %>
+
+
+<% if (
+    typeof error !== "undefined" &&
+    error
+) { %>
+
+    <div
+        class="alert-message alert-error"
+        id="errorMessage"
+    >
+
+        <div class="alert-icon">
+            !
+        </div>
+
+        <div class="alert-content">
+
+            <strong>
+                Error
+            </strong>
+
+            <span>
+                <%= error %>
+            </span>
+
+        </div>
+
+        <button
+            type="button"
+            class="alert-close"
+            onclick="closeAlert('errorMessage')"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+    </div>
+
+<% } %>
+
+
+<!-- ================================================= -->
+<!-- STATISTICS                                        -->
+<!-- ================================================= -->
+
+<div class="contact-stats">
+
+
+    <!-- TOTAL -->
+
+    <div class="contact-stat-card">
+
+        <div class="stat-icon">
+            ✉
+        </div>
+
+        <div class="stat-content">
+
+            <span class="stat-label">
+                Total Inquiries
+            </span>
+
+            <strong class="stat-value">
+                <%= totalContacts %>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- NEW -->
+
+    <div class="contact-stat-card">
+
+        <div class="stat-icon new-icon">
+            ●
+        </div>
+
+        <div class="stat-content">
+
+            <span class="stat-label">
+                New
+            </span>
+
+            <strong class="stat-value">
+                <%= newContacts %>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- REPLIED -->
+
+    <div class="contact-stat-card">
+
+        <div class="stat-icon replied-icon">
+            ✓
+        </div>
+
+        <div class="stat-content">
+
+            <span class="stat-label">
+                Replied
+            </span>
+
+            <strong class="stat-value">
+                <%= repliedContacts %>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- CLOSED -->
+
+    <div class="contact-stat-card">
+
+        <div class="stat-icon closed-icon">
+            ✓
+        </div>
+
+        <div class="stat-content">
+
+            <span class="stat-label">
+                Closed
+            </span>
+
+            <strong class="stat-value">
+                <%= closedContacts %>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- TOOLBAR                                           -->
+<!-- ================================================= -->
+
+<div class="contacts-toolbar">
+
+
+    <div class="toolbar-left">
+
+        <div class="search-box">
+
+            <span
+                class="search-icon"
+                aria-hidden="true"
+            >
+                ⌕
+            </span>
+
+            <input
+                type="search"
+                id="contactSearch"
+                placeholder="Search name, email, phone or subject..."
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                id="clearSearch"
+                class="clear-search"
+                title="Clear search"
+                aria-label="Clear search"
+            >
+                ×
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="toolbar-right">
+
+
+        <div class="filter-group">
+
+            <label for="statusFilter">
+                Status
+            </label>
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All
+                </option>
+
+                <option value="new">
+                    New
+                </option>
+
+                <option value="read">
+                    Read
+                </option>
+
+                <option value="replied">
+                    Replied
+                </option>
+
+                <option value="closed">
+                    Closed
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="refresh-btn"
+            id="refreshContacts"
+            title="Refresh"
+        >
+
+            <span>
+                ↻
+            </span>
+
+            Refresh
+
+        </button>
 
 
     </div>
@@ -1065,6 +393,658 @@ const closedContacts =
 
 </div>
 
+
+<!-- ================================================= -->
+<!-- CONTACT CARD                                      -->
+<!-- ================================================= -->
+
+<div class="contacts-card">
+
+
+    <!-- CARD HEADER -->
+
+    <div class="contacts-card-header">
+
+        <div>
+
+            <h2>
+                Customer Inquiries
+            </h2>
+
+            <p>
+                Messages received from your website visitors.
+            </p>
+
+        </div>
+
+
+        <div class="result-count">
+
+            <span id="visibleContactCount">
+                <%= totalContacts %>
+            </span>
+
+            inquiries
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CONTACT TABLE                                     -->
+    <!-- ================================================= -->
+
+    <% if (contactList.length > 0) { %>
+
+
+        <div class="table-wrapper">
+
+            <table
+                class="contacts-table"
+                id="contactsTable"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Contact
+                        </th>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th>
+                            Message
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <% contactList.forEach(function (contact, index) { %>
+
+
+                        <%
+                            /* =====================================
+                               SAFE CONTACT VALUES
+                            ===================================== */
+
+                            const status =
+                                String(
+                                    contact &&
+                                    contact.status
+                                        ? contact.status
+                                        : "new"
+                                ).toLowerCase();
+
+
+                            const name =
+                                String(
+                                    contact &&
+                                    contact.name
+                                        ? contact.name
+                                        : ""
+                                );
+
+
+                            const email =
+                                String(
+                                    contact &&
+                                    contact.email
+                                        ? contact.email
+                                        : ""
+                                );
+
+
+                            const phone =
+                                String(
+                                    contact &&
+                                    contact.phone
+                                        ? contact.phone
+                                        : ""
+                                );
+
+
+                            const subject =
+                                String(
+                                    contact &&
+                                    contact.subject
+                                        ? contact.subject
+                                        : "General Inquiry"
+                                );
+
+
+                            const message =
+                                String(
+                                    contact &&
+                                    contact.message
+                                        ? contact.message
+                                        : ""
+                                );
+
+
+                            const source =
+                                String(
+                                    contact &&
+                                    contact.source
+                                        ? contact.source
+                                        : "Website Contact Form"
+                                );
+
+
+                            const contactId =
+                                contact &&
+                                contact._id
+                                    ? String(contact._id)
+                                    : "";
+
+
+                            const avatarLetter =
+                                (
+                                    name ||
+                                    "C"
+                                )
+                                    .charAt(0)
+                                    .toUpperCase();
+
+
+                            const searchName =
+                                name.toLowerCase();
+
+
+                            const searchEmail =
+                                email.toLowerCase();
+
+
+                            const searchPhone =
+                                phone.toLowerCase();
+
+
+                            const searchSubject =
+                                subject.toLowerCase();
+
+
+                            const searchMessage =
+                                message.toLowerCase();
+
+
+                            /* =====================================
+                               DATE
+                            ===================================== */
+
+                            let visitorDate = "—";
+                            let visitorTime = "";
+
+
+                            if (
+                                contact &&
+                                contact.createdAt
+                            ) {
+
+                                const parsedDate =
+                                    new Date(
+                                        contact.createdAt
+                                    );
+
+
+                                if (
+                                    !isNaN(
+                                        parsedDate.getTime()
+                                    )
+                                ) {
+
+                                    visitorDate =
+                                        parsedDate.toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "2-digit",
+                                                month: "short",
+                                                year: "numeric"
+                                            }
+                                        );
+
+
+                                    visitorTime =
+                                        parsedDate.toLocaleTimeString(
+                                            "en-IN",
+                                            {
+                                                hour: "2-digit",
+                                                minute: "2-digit"
+                                            }
+                                        );
+
+                                }
+
+                            }
+
+                        %>
+
+
+                        <tr
+                            class="contact-row"
+                            data-name="<%= searchName %>"
+                            data-email="<%= searchEmail %>"
+                            data-phone="<%= searchPhone %>"
+                            data-subject="<%= searchSubject %>"
+                            data-message="<%= searchMessage %>"
+                            data-status="<%= status %>"
+                        >
+
+
+                            <!-- NUMBER -->
+
+                            <td class="number-cell">
+
+                                <%= index + 1 %>
+
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <div class="customer-info">
+
+                                    <div class="customer-avatar">
+
+                                        <%= avatarLetter %>
+
+                                    </div>
+
+
+                                    <div class="customer-details">
+
+                                        <strong>
+                                            <%= name || "Unknown Customer" %>
+                                        </strong>
+
+                                        <span>
+                                            <%= source %>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- CONTACT -->
+
+                            <td>
+
+                                <div class="contact-info">
+
+
+                                    <% if (email) { %>
+
+                                        <a
+                                            href="mailto:<%= email %>"
+                                            class="email-link"
+                                        >
+                                            <%= email %>
+                                        </a>
+
+                                    <% } else { %>
+
+                                        <span class="empty-value">
+                                            No email
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <% if (phone) { %>
+
+                                        <a
+                                            href="tel:<%= phone %>"
+                                            class="phone-link"
+                                        >
+                                            <%= phone %>
+                                        </a>
+
+                                    <% } %>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- SUBJECT -->
+
+                            <td>
+
+                                <div class="subject-cell">
+
+                                    <%= subject %>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- MESSAGE -->
+
+                            <td>
+
+                                <div
+                                    class="message-preview"
+                                    title="<%= message %>"
+                                >
+
+                                    <%= message || "No message" %>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span
+                                    class="status-badge status-<%= status %>"
+                                >
+
+                                    <span
+                                        class="status-dot"
+                                        aria-hidden="true"
+                                    ></span>
+
+                                    <%= status %>
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <div class="date-cell">
+
+                                    <%= visitorDate %>
+
+                                    <% if (visitorTime) { %>
+
+                                        <span>
+                                            <%= visitorTime %>
+                                        </span>
+
+                                    <% } %>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <div class="action-buttons">
+
+
+                                    <!-- VIEW -->
+
+                                    <% if (contactId) { %>
+
+                                        <a
+                                            href="/admin/contacts/view/<%= contactId %>"
+                                            class="action-btn view-btn"
+                                            title="View inquiry"
+                                            aria-label="View inquiry"
+                                        >
+
+                                            <span>
+                                                👁
+                                            </span>
+
+                                        </a>
+
+                                    <% } %>
+
+
+                                    <!-- REPLY -->
+
+                                    <% if (email) { %>
+
+                                        <a
+                                            href="mailto:<%= email %>?subject=<%= encodeURIComponent('Re: ' + subject) %>"
+                                            class="action-btn reply-btn"
+                                            title="Reply by email"
+                                            aria-label="Reply by email"
+                                        >
+
+                                            <span>
+                                                ✉
+                                            </span>
+
+                                        </a>
+
+                                    <% } %>
+
+
+                                    <!-- DELETE -->
+
+                                    <% if (contactId) { %>
+
+                                        <button
+                                            type="button"
+                                            class="action-btn delete-btn"
+                                            title="Delete inquiry"
+                                            aria-label="Delete inquiry"
+                                            data-contact-id="<%= contactId %>"
+                                            data-contact-name="<%= name || 'this inquiry' %>"
+                                        >
+
+                                            <span>
+                                                🗑
+                                            </span>
+
+                                        </button>
+
+
+                                        <form
+                                            id="deleteContactForm-<%= contactId %>"
+                                            action="/admin/contacts/delete/<%= contactId %>"
+                                            method="POST"
+                                            class="hidden-delete-form"
+                                        ></form>
+
+                                    <% } %>
+
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    <% }); %>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- NO SEARCH RESULTS                                 -->
+        <!-- ================================================= -->
+
+        <div
+            id="noSearchResults"
+            class="no-search-results"
+            style="display:none;"
+        >
+
+            <div class="empty-icon">
+                ⌕
+            </div>
+
+            <h3>
+                No inquiries found
+            </h3>
+
+            <p>
+                Try changing your search or status filter.
+            </p>
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <!-- ================================================= -->
+        <!-- EMPTY STATE                                       -->
+        <!-- ================================================= -->
+
+        <div class="empty-state">
+
+            <div class="empty-state-icon">
+                ✉
+            </div>
+
+            <h3>
+                No Contact Inquiries Yet
+            </h3>
+
+            <p>
+                Customer messages and inquiries submitted
+                through your website will appear here.
+            </p>
+
+            <div class="empty-state-note">
+
+                <span>
+                    YOGITA PATOLA ART
+                </span>
+
+                <small>
+                    Customer Communication
+                </small>
+
+            </div>
+
+        </div>
+
+
+    <% } %>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- BUSINESS CONTACT                                  -->
+<!-- ================================================= -->
+
+<div class="business-contact-card">
+
+
+    <div class="business-icon">
+        ✦
+    </div>
+
+
+    <div class="business-content">
+
+        <span class="business-label">
+            YOGITA PATOLA ART
+        </span>
+
+        <h3>
+            Customer Inquiry Management
+        </h3>
+
+        <p>
+            Use this section to manage customer questions
+            about Patola sarees, accessories, availability,
+            pricing and other product-related inquiries.
+        </p>
+
+    </div>
+
+
+    <div class="business-actions">
+
+
+        <a
+            href="tel:09725548527"
+            class="business-btn"
+        >
+
+            <span>
+                ☎
+            </span>
+
+            097255 48527
+
+        </a>
+
+
+        <a
+            href="https://www.instagram.com/yogita_patola_art"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="business-btn"
+        >
+
+            <span>
+                ◎
+            </span>
+
+            Instagram
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</div>
 
 <!-- =========================================================
      CONTACT PAGE JAVASCRIPT

@@ -87,6 +87,23 @@ const settingsSchema = new mongoose.Schema(
         },
 
 
+        // HERITAGE SECTION IMAGES
+        heritageHandcraftedImage: {
+            type: String,
+            default: ""
+        },
+
+        heritageIntricateImage: {
+            type: String,
+            default: ""
+        },
+
+        heritageTimelessImage: {
+            type: String,
+            default: ""
+        },
+
+
         // CONTACT
         address: {
             type: String,
@@ -142,6 +159,7 @@ const settingsSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+
 
 module.exports =
     mongoose.model(
