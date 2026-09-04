@@ -885,7 +885,8 @@
 
     background: #fdf9f5;
 
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 
 }
 
@@ -960,35 +961,30 @@
 
 /* =========================================================
    CHECKED SWITCH
-   IMPORTANT:
-   Direct adjacent sibling selector.
+   IMPORTANT
+   Use + because .switch-slider is the
+   immediate sibling of the checkbox.
 ========================================================= */
 
-.admin-settings-page
-.settings-switch
-input[type="checkbox"]:checked
-+ .switch-slider {
+.admin-settings-page .settings-switch input[type="checkbox"]:checked + .switch-slider {
 
-    background: #7e6140;
+    background: #6f2c35 !important;
 
     box-shadow:
         0 3px 9px rgba(
-            126,
-            97,
-            64,
-            0.20
-        );
+            111,
+            44,
+            53,
+            0.25
+        ) !important;
 
 }
 
 
-.admin-settings-page
-.settings-switch
-input[type="checkbox"]:checked
-+ .switch-slider::after {
+.admin-settings-page .settings-switch input[type="checkbox"]:checked + .switch-slider::after {
 
     transform:
-        translateX(18px);
+        translateX(18px) !important;
 
 }
 
@@ -997,18 +993,13 @@ input[type="checkbox"]:checked
    KEYBOARD FOCUS
 ========================================================= */
 
-.admin-settings-page
-.settings-switch
-input[type="checkbox"]:focus-visible
-+ .switch-slider {
+.admin-settings-page .settings-switch input[type="checkbox"]:focus-visible + .switch-slider {
 
-    box-shadow:
-        0 0 0 3px rgba(
-            126,
-            97,
-            64,
-            0.16
-        );
+    outline:
+        2px solid #b08d57;
+
+    outline-offset:
+        3px;
 
 }
 
@@ -1017,8 +1008,7 @@ input[type="checkbox"]:focus-visible
    ACTIVE SWITCH CARD
 ========================================================= */
 
-.admin-settings-page
-.settings-switch.is-on {
+.admin-settings-page .settings-switch.is-on {
 
     border-color: #d5c3af;
 
@@ -1032,8 +1022,7 @@ input[type="checkbox"]:focus-visible
 }
 
 
-.admin-settings-page
-.settings-switch.is-off {
+.admin-settings-page .settings-switch.is-off {
 
     background: #fffdfb;
 
@@ -1125,7 +1114,7 @@ input[type="checkbox"]:focus-visible
 
 .admin-settings-page .switch-status.is-on {
 
-    color: #7e6140;
+    color: #6f2c35;
 
 }
 
@@ -1239,11 +1228,17 @@ input[type="checkbox"]:focus-visible
 @keyframes settings-spin {
 
     from {
-        transform: rotate(0deg);
+
+        transform:
+            rotate(0deg);
+
     }
 
     to {
-        transform: rotate(360deg);
+
+        transform:
+            rotate(360deg);
+
     }
 
 }
