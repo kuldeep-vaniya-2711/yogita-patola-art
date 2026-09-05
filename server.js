@@ -4,333 +4,200 @@ const path = require("path");
 const session = require("express-session");
 const engine = require("ejs-mate");
 const dotenv = require("dotenv");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
+
+const visitorTracker = require("./middleware/visitorTracker");
 
 dotenv.config();
 
 const app = express();
+const isProduction = process.env.NODE_ENV === "production";
 
-
-// ==================================================
-// PATHS
-// ==================================================
-
-const VIEWS_PATH =
-    path.join(__dirname, "views");
-
-const PUBLIC_PATH =
-    path.join(__dirname, "public");
-
-const UPLOADS_PATH =
-    path.join(__dirname, "uploads");
-
-
-// ==================================================
-// EJS
-// ==================================================
+const VIEWS_PATH = path.join(__dirname, "views");
+const PUBLIC_PATH = path.join(__dirname, "public");
+const UPLOADS_PATH = path.join(__dirname, "uploads");
 
 app.engine("ejs", engine);
+app.set("view engine", "ejs");
+app.set("views", VIEWS_PATH);
+app.disable("x-powered-by");
 
-app.set(
-    "view engine",
-    "ejs"
-);
-
-app.set(
-    "views",
-    VIEWS_PATH
-);
-
-
-// ==================================================
-// MIDDLEWARE
-// ==================================================
+app.use(helmet());
 
 app.use(
     express.urlencoded({
-        extended: true
+        extended: true,
+        limit: "100kb"
     })
 );
 
 app.use(
-    express.json()
+    express.json({
+        limit: "100kb"
+    })
 );
 
-
-// ==================================================
-// STATIC FILES
-// ==================================================
+app.use(mongoSanitize());
+app.use(hpp());
 
 app.use(
-    express.static(PUBLIC_PATH)
+    rateLimit({
+        windowMs: 15 * 60 * 1000,
+        limit: 300,
+        standardHeaders: "draft-8",
+        legacyHeaders: false,
+        message: "Too many requests. Please try again later."
+    })
 );
 
-app.use(
-    "/uploads",
-    express.static(UPLOADS_PATH)
-);
-
-
-// ==================================================
-// SESSION
-// ==================================================
+app.use(express.static(PUBLIC_PATH));
+app.use("/uploads", express.static(UPLOADS_PATH));
 
 app.use(
     session({
-
+        name: "ypa.sid",
         secret:
             process.env.SESSION_SECRET ||
             "yogita-patola-secret",
-
         resave: false,
-
-        saveUninitialized: false
-
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: isProduction,
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        }
     })
 );
 
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session?.userId
+        ? {
+            _id: req.session.userId,
+            name: req.session.userName || "Account"
+        }
+        : null;
 
-// ==================================================
-// GLOBAL LOCALS
-// ==================================================
+    res.locals.currentPath = req.path || "/";
 
-app.use(
-    (req, res, next) => {
+    next();
+});
 
-        res.locals.currentUser =
-            req.session?.userId
-                ? {
+/*
+ * VISITOR TRACKING
+ *
+ * Tracks public GET page visits.
+ * Admin, uploads, CSS, JS, images and other
+ * static files are ignored by visitorTracker.
+ */
+app.use(visitorTracker);
 
-                    _id:
-                        req.session.userId,
-
-                    name:
-                        req.session.userName ||
-                        "Account"
-
-                }
-                : null;
-
-
-        res.locals.currentPath =
-            req.path || "/";
-
-
-        next();
-
-    }
-);
-
-
-// ==================================================
-// ADMIN ROUTES
-// ==================================================
-
+/*
+ * ADMIN
+ */
 app.use(
     "/admin",
     require("./routes/adminRoutes")
 );
 
-
-// ==================================================
-// USER ROUTES
-// ==================================================
-
+/*
+ * USER
+ */
 app.use(
     "/user",
     require("./routes/userRoutes")
 );
-
-
-// ==================================================
-// PASSWORD ROUTES
-//
-// Forgot Password
-// Verify Reset OTP
-// Reset Password
-// Change Password
-//
-// passwordRoutes.js contains:
-//
-// /forgot-password
-// /verify-reset-otp
-// /resend-reset-otp
-// /reset-password
-// /change-password
-//
-// Because it is mounted at /user,
-// final URLs become:
-//
-// /user/forgot-password
-// /user/verify-reset-otp
-// /user/resend-reset-otp
-// /user/reset-password
-// /user/change-password
-// ==================================================
 
 app.use(
     "/user",
     require("./routes/passwordRoutes")
 );
 
-
-// ==================================================
-// WISHLIST ROUTES
-// ==================================================
-
+/*
+ * WISHLIST
+ */
 app.use(
     "/wishlist",
     require("./routes/wishlistRoutes")
 );
 
-
-// ==================================================
-// REVIEW ROUTES
-// IMPORTANT
-//
-// reviewRoutes.js contains:
-//
-// router.post(
-//     "/:productId/review",
-//     ...
-// )
-//
-// Therefore it MUST be mounted at /products.
-//
-// Final URL:
-//
-// POST /products/:productId/review
-// ==================================================
-
+/*
+ * PRODUCTS / REVIEWS
+ */
 app.use(
     "/products",
     require("./routes/reviewRoutes")
 );
-
-
-// ==================================================
-// PRODUCT ROUTES
-// ==================================================
 
 app.use(
     "/products",
     require("./routes/productRoutes")
 );
 
-
-// ==================================================
-// PUBLIC ROUTES
-//
-// MUST ALWAYS BE LAST
-//
-// publicRoutes contains the public 404
-// catch-all route.
-// ==================================================
-
+/*
+ * PUBLIC WEBSITE
+ */
 app.use(
     "/",
     require("./routes/publicRoutes")
 );
 
+/*
+ * GLOBAL ERROR HANDLER
+ */
+app.use((err, req, res, next) => {
+    console.error(
+        "SERVER ERROR:",
+        err
+    );
 
-// ==================================================
-// GLOBAL ERROR HANDLER
-// ==================================================
+    if (res.headersSent)
+        return next(err);
 
-app.use(
-    (err, req, res, next) => {
-
-        console.error(
-            "================================"
-        );
-
-        console.error(
-            "SERVER ERROR:",
-            err
-        );
-
-        console.error(
-            "================================"
-        );
-
-
-        if (res.headersSent) {
-
-            return next(err);
-
-        }
-
-
-        res
-            .status(500)
-            .send(
-                "Server Error: " +
-                err.message
-            );
-
-    }
-);
-
-
-// ==================================================
-// DATABASE + SERVER
-// ==================================================
+    res.status(500).send(
+        isProduction
+            ? "Server Error"
+            : `Server Error: ${err.message}`
+    );
+});
 
 const PORT =
-    process.env.PORT || 5000;
-
+    process.env.PORT ||
+    5000;
 
 async function startServer() {
-
     try {
-
         console.log(
             "Connecting to MongoDB..."
         );
-
 
         await mongoose.connect(
             process.env.MONGODB_URI
         );
 
-
         console.log(
             "MongoDB connected successfully"
         );
 
-
         app.listen(
             PORT,
             () => {
-
-                console.log(
-                    "================================"
-                );
-
                 console.log(
                     `Server running at http://localhost:${PORT}`
                 );
-
-                console.log(
-                    "================================"
-                );
-
             }
         );
-
-
     } catch (error) {
-
         console.error(
             "MongoDB connection error:",
             error
         );
 
-
         process.exit(1);
-
     }
-
 }
-
 
 startServer();
