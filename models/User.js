@@ -130,6 +130,46 @@ const userSchema = new mongoose.Schema(
 
 
         // ------------------------------------------
+        // PASSWORD RESET OTP
+        // Used ONLY for Forgot Password flow
+        // ------------------------------------------
+
+        passwordResetOTP: {
+
+            type: String,
+
+            default: ""
+
+        },
+
+
+        // ------------------------------------------
+        // PASSWORD RESET OTP EXPIRY
+        // ------------------------------------------
+
+        passwordResetOTPExpires: {
+
+            type: Date,
+
+            default: null
+
+        },
+
+
+        // ------------------------------------------
+        // PASSWORD RESET VERIFIED
+        // ------------------------------------------
+
+        passwordResetVerified: {
+
+            type: Boolean,
+
+            default: false
+
+        },
+
+
+        // ------------------------------------------
         // ACCOUNT STATUS
         // ------------------------------------------
 

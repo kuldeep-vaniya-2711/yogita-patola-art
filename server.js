@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -139,6 +138,39 @@ app.use(
 app.use(
     "/user",
     require("./routes/userRoutes")
+);
+
+
+// ==================================================
+// PASSWORD ROUTES
+//
+// Forgot Password
+// Verify Reset OTP
+// Resend Reset OTP
+// Reset Password
+// Change Password
+//
+// passwordRoutes.js contains:
+//
+// /forgot-password
+// /verify-reset-otp
+// /resend-reset-otp
+// /reset-password
+// /change-password
+//
+// Because it is mounted at /user,
+// final URLs become:
+//
+// /user/forgot-password
+// /user/verify-reset-otp
+// /user/resend-reset-otp
+// /user/reset-password
+// /user/change-password
+// ==================================================
+
+app.use(
+    "/user",
+    require("./routes/passwordRoutes")
 );
 
 
@@ -303,4 +335,3 @@ async function startServer() {
 
 
 startServer();
-
