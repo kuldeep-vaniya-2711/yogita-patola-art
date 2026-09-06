@@ -77,9 +77,31 @@ const reviewSchema = new mongoose.Schema(
             trim: true,
             minlength: 3,
             maxlength: 500
+        },
+
+
+        // ------------------------------------------
+        // APPROVAL STATUS
+        // ------------------------------------------
+        //
+        // false = Pending
+        // true  = Approved
+        //
+        // This is the ONLY field used to determine
+        // whether a review is approved or pending.
+        // ------------------------------------------
+
+        approved: {
+            type: Boolean,
+            default: false
         }
 
     },
+
+
+    // ------------------------------------------
+    // TIMESTAMPS
+    // ------------------------------------------
 
     {
         timestamps: true
