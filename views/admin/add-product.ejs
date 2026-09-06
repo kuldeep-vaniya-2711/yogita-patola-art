@@ -1,454 +1,502 @@
 <% layout("admin/layout", {
-title: "Add Product",
-pageCss: "/css/admin/add-product.css",
-pageJs: "/js/admin/add-product.js"
+    title: "Add Product",
+    pageCss: "/css/admin/add-product.css",
+    pageJs: "/js/admin/add-product.js"
 }) -%>
+
 
 <div class="admin-page add-product-page">
 
-<!-- ====================================================
-     PAGE HEADER
-====================================================== -->
 
-<div class="admin-page-header">
+    <!-- ====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-    <div>
+    <div class="admin-page-header">
 
-        <span class="admin-page-eyebrow">
-            PRODUCT MANAGEMENT
-        </span>
+        <div>
 
-        <h1 class="admin-page-title">
-            Add Product
-        </h1>
+            <span class="admin-page-eyebrow">
+                PRODUCT MANAGEMENT
+            </span>
 
-        <p class="admin-page-description">
-            Add a new handcrafted Patola product.
-        </p>
+            <h1 class="admin-page-title">
+                Add Product
+            </h1>
 
-    </div>
+            <p class="admin-page-description">
+                Add a new handcrafted Patola product.
+            </p>
 
-
-    <div class="admin-page-header-actions">
-
-        <a
-            href="/admin/products"
-            class="admin-btn admin-btn-outline"
-        >
-            <i class="bi bi-arrow-left"></i>
-            Back to Products
-        </a>
-
-    </div>
-
-</div>
+        </div>
 
 
-<!-- =====================================================
-     ERROR
-====================================================== -->
+        <div class="admin-page-header-actions">
 
-<% if (
-    typeof error !== "undefined" &&
-    error
-) { %>
+            <a
+                href="/admin/products"
+                class="admin-btn admin-btn-outline"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Products
+            </a>
 
-    <div class="admin-alert admin-alert-danger">
-
-        <i class="bi bi-exclamation-circle-fill"></i>
-
-        <span>
-            <%= error %>
-        </span>
+        </div>
 
     </div>
 
-<% } %>
 
 
-<!-- =====================================================
-     FORM
-====================================================== -->
+    <!-- =====================================================
+         ERROR
+    ====================================================== -->
 
-<form
-    id="addProductForm"
-    action="/admin/products/add"
-    method="POST"
-    enctype="multipart/form-data"
->
+    <% if (
+        typeof error !== "undefined" &&
+        error
+    ) { %>
+
+        <div class="admin-alert admin-alert-danger">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            <span>
+                <%= error %>
+            </span>
+
+        </div>
+
+    <% } %>
 
 
-    <!-- =================================================
-         PRODUCT INFORMATION
-    ================================================== -->
 
-    <div class="admin-card settings-card">
+    <!-- =====================================================
+         FORM
+    ====================================================== -->
 
-        <div class="settings-card-header">
+    <form
+        id="addProductForm"
+        action="/admin/products/add"
+        method="POST"
+        enctype="multipart/form-data"
+    >
 
-            <div class="settings-icon">
-                <i class="bi bi-box-seam"></i>
+
+        <!-- =================================================
+             PRODUCT INFORMATION
+        ================================================== -->
+
+        <div class="admin-card settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Product Information
+                    </h2>
+
+                    <p>
+                        Basic details of the product.
+                    </p>
+
+                </div>
+
             </div>
 
-            <div>
 
-                <h2>
-                    Product Information
-                </h2>
+            <div class="settings-grid">
 
-                <p>
-                    Basic details of the product.
-                </p>
+
+                <!-- PRODUCT NAME -->
+
+                <div class="settings-field">
+
+                    <label for="productName">
+                        Product Name
+                    </label>
+
+                    <input
+                        id="productName"
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="Enter product name"
+                    >
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="settings-field">
+
+                    <label for="productCategory">
+                        Category
+                    </label>
+
+                    <input
+                        id="productCategory"
+                        type="text"
+                        name="category"
+                        required
+                        placeholder="Patola Sarees"
+                    >
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="settings-field settings-full">
+
+                    <label for="productDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="productDescription"
+                        name="description"
+                        rows="5"
+                        placeholder="Describe the product..."
+                    ></textarea>
+
+                </div>
+
 
             </div>
 
         </div>
 
 
-        <div class="settings-grid">
 
+        <!-- =================================================
+             PRODUCT DETAILS
+        ================================================== -->
 
-            <div class="settings-field">
+        <div class="admin-card settings-card">
 
-                <label for="productName">
-                    Product Name
-                </label>
+            <div class="settings-card-header">
 
-                <input
-                    id="productName"
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Enter product name"
-                >
+                <div class="settings-icon">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Product Details
+                    </h2>
+
+                    <p>
+                        Price, fabric, technique and specifications.
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <div class="settings-field">
+            <div class="settings-grid">
 
-                <label for="productCategory">
-                    Category
-                </label>
 
-                <input
-                    id="productCategory"
-                    type="text"
-                    name="category"
-                    required
-                    placeholder="Patola Sarees"
-                >
+                <!-- PRICE -->
+
+                <div class="settings-field">
+
+                    <label for="productPrice">
+                        Price
+                    </label>
+
+                    <input
+                        id="productPrice"
+                        type="number"
+                        name="price"
+                        min="0"
+                        step="0.01"
+                        required
+                        placeholder="50000"
+                    >
+
+                </div>
+
+
+
+                <!-- FABRIC -->
+
+                <div class="settings-field">
+
+                    <label for="productFabric">
+                        Fabric
+                    </label>
+
+                    <input
+                        id="productFabric"
+                        type="text"
+                        name="fabric"
+                        placeholder="Pure Silk"
+                    >
+
+                </div>
+
+
+
+                <!-- TECHNIQUE -->
+
+                <div class="settings-field">
+
+                    <label for="productTechnique">
+                        Technique
+                    </label>
+
+                    <input
+                        id="productTechnique"
+                        type="text"
+                        name="technique"
+                        placeholder="Double Ikat"
+                    >
+
+                </div>
+
+
+
+                <!-- COLOR -->
+
+                <div class="settings-field">
+
+                    <label for="productColor">
+                        Color
+                    </label>
+
+                    <input
+                        id="productColor"
+                        type="text"
+                        name="color"
+                        placeholder="Red & Gold"
+                    >
+
+                </div>
+
+
+
+                <!-- DIMENSIONS -->
+
+                <div class="settings-field">
+
+                    <label for="productDimensions">
+                        Dimensions
+                    </label>
+
+                    <input
+                        id="productDimensions"
+                        type="text"
+                        name="dimensions"
+                        placeholder="6.3 meters"
+                    >
+
+                </div>
+
+
+
+                <!-- AVAILABILITY -->
+
+                <div class="settings-field">
+
+                    <label for="availability">
+                        Availability
+                    </label>
+
+                    <select
+                        id="availability"
+                        name="availability"
+                    >
+
+                        <option value="In Stock">
+                            In Stock
+                        </option>
+
+                        <option value="Limited">
+                            Limited
+                        </option>
+
+                        <option value="Out of Stock">
+                            Out of Stock
+                        </option>
+
+                        <option value="Hidden">
+                            Hidden
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PRODUCT IMAGES
+        ================================================== -->
+
+        <div class="admin-card settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-icon">
+                    <i class="bi bi-images"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Product Images
+                    </h2>
+
+                    <p>
+                        Upload up to 5 product images.
+                    </p>
+
+                </div>
 
             </div>
 
 
             <div class="settings-field settings-full">
 
-                <label for="productDescription">
-                    Description
-                </label>
-
-                <textarea
-                    id="productDescription"
-                    name="description"
-                    rows="5"
-                    placeholder="Describe the product..."
-                ></textarea>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         PRODUCT DETAILS
-    ================================================== -->
-
-    <div class="admin-card settings-card">
-
-        <div class="settings-card-header">
-
-            <div class="settings-icon">
-                <i class="bi bi-info-circle"></i>
-            </div>
-
-            <div>
-
-                <h2>
-                    Product Details
-                </h2>
-
-                <p>
-                    Price, fabric, technique and specifications.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="settings-grid">
-
-
-            <div class="settings-field">
-
-                <label for="productPrice">
-                    Price
+                <label for="productImages">
+                    Select Images
                 </label>
 
                 <input
-                    id="productPrice"
-                    type="number"
-                    name="price"
-                    min="0"
-                    step="0.01"
-                    required
-                    placeholder="50000"
+                    id="productImages"
+                    type="file"
+                    name="productImages"
+                    accept="image/jpeg,image/jpg,image/png,image/webp"
+                    multiple
                 >
 
-            </div>
-
-
-            <div class="settings-field">
-
-                <label for="productFabric">
-                    Fabric
-                </label>
-
-                <input
-                    id="productFabric"
-                    type="text"
-                    name="fabric"
-                    placeholder="Pure Silk"
-                >
-
-            </div>
-
-
-            <div class="settings-field">
-
-                <label for="productTechnique">
-                    Technique
-                </label>
-
-                <input
-                    id="productTechnique"
-                    type="text"
-                    name="technique"
-                    placeholder="Double Ikat"
-                >
-
-            </div>
-
-
-            <div class="settings-field">
-
-                <label for="productColor">
-                    Color
-                </label>
-
-                <input
-                    id="productColor"
-                    type="text"
-                    name="color"
-                    placeholder="Red & Gold"
-                >
-
-            </div>
-
-
-            <div class="settings-field">
-
-                <label for="productDimensions">
-                    Dimensions
-                </label>
-
-                <input
-                    id="productDimensions"
-                    type="text"
-                    name="dimensions"
-                    placeholder="6.3 meters"
-                >
-
-            </div>
-
-
-            <div class="settings-field">
-
-                <label for="availability">
-                    Availability
-                </label>
-
-                <select
-                    id="availability"
-                    name="availability"
-                >
-
-                    <option value="In Stock">
-                        In Stock
-                    </option>
-
-                    <option value="Out of Stock">
-                        Out of Stock
-                    </option>
-
-                    <option value="Hidden">
-                        Hidden
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         PRODUCT IMAGES
-    ================================================== -->
-
-    <div class="admin-card settings-card">
-
-        <div class="settings-card-header">
-
-            <div class="settings-icon">
-                <i class="bi bi-images"></i>
-            </div>
-
-            <div>
-
-                <h2>
-                    Product Images
-                </h2>
-
-                <p>
-                    Upload up to 5 product images.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="settings-field settings-full">
-
-            <label for="productImages">
-                Select Images
-            </label>
-
-            <input
-                id="productImages"
-                type="file"
-                name="productImages"
-                accept="image/jpeg,image/jpg,image/png,image/webp"
-                multiple
-            >
-
-            <small class="form-text">
-                JPG, JPEG, PNG or WEBP. Maximum 5MB per image.
-            </small>
-
-        </div>
-
-
-        <div
-            id="imagePreview"
-            class="add-product-image-preview"
-        ></div>
-
-    </div>
-
-
-    <!-- =================================================
-         PRODUCT OPTIONS
-    ================================================== -->
-
-    <div class="admin-card settings-card">
-
-        <div class="settings-card-header">
-
-            <div class="settings-icon">
-                <i class="bi bi-star"></i>
-            </div>
-
-            <div>
-
-                <h2>
-                    Product Options
-                </h2>
-
-                <p>
-                    Control product visibility and featured status.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <label class="settings-switch">
-
-            <input
-                type="checkbox"
-                name="featured"
-                value="on"
-            >
-
-            <span class="switch-slider"></span>
-
-            <span class="switch-content">
-
-                <strong>
-                    Featured Product
-                </strong>
-
-                <small>
-                    Display this product in featured collections.
+                <small class="form-text">
+                    JPG, JPEG, PNG or WEBP.
+                    Maximum 5MB per image.
                 </small>
 
-            </span>
-
-        </label>
-
-    </div>
+            </div>
 
 
-    <!-- =================================================
-         ACTIONS
-    ================================================== -->
+            <div
+                id="imagePreview"
+                class="add-product-image-preview"
+            ></div>
 
-    <div class="settings-actions">
-
-        <a
-            href="/admin/products"
-            class="admin-btn admin-btn-outline"
-        >
-            Cancel
-        </a>
+        </div>
 
 
-        <button
-            type="submit"
-            id="saveProductBtn"
-            class="admin-btn admin-btn-primary"
-        >
 
-            <i class="bi bi-check-circle-fill"></i>
+        <!-- =================================================
+             PRODUCT OPTIONS
+        ================================================== -->
 
-            <span>
-                Add Product
-            </span>
+        <div class="admin-card settings-card">
 
-        </button>
+            <div class="settings-card-header">
 
-    </div>
+                <div class="settings-icon">
+                    <i class="bi bi-star"></i>
+                </div>
+
+                <div>
+
+                    <h2>
+                        Product Options
+                    </h2>
+
+                    <p>
+                        Control product visibility and featured status.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-</form>
+            <!-- =================================================
+                 FEATURED PRODUCT SWITCH
+            ================================================== -->
+
+            <label
+                class="settings-switch"
+                for="featuredProduct"
+            >
+
+                <input
+                    id="featuredProduct"
+                    type="checkbox"
+                    name="featured"
+                    value="true"
+                >
+
+                <span class="switch-slider"></span>
+
+                <span class="switch-content">
+
+                    <strong>
+                        Featured Product
+                    </strong>
+
+                    <small>
+                        Display this product in featured collections.
+                    </small>
+
+                </span>
+
+            </label>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="settings-actions">
+
+            <a
+                href="/admin/products"
+                class="admin-btn admin-btn-outline"
+            >
+                Cancel
+            </a>
+
+
+            <button
+                type="submit"
+                id="saveProductBtn"
+                class="admin-btn admin-btn-primary"
+            >
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span>
+                    Add Product
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </form>
 
 
 </div>

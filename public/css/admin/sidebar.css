@@ -1,18 +1,8 @@
+
 /* =========================================================
    YOGITA PATOLA ART
-   ADMIN SIDEBAR CSS
-
-   File:
-   public/css/admin/sidebar.css
-
-   Purpose:
-   - Desktop sidebar
-   - Mobile sidebar
-   - Active navigation
-   - Sidebar header / brand
-   - Sidebar footer
-   - Responsive behavior
-   - Works with admin-layout.js `.show` class
+   ADMIN SIDEBAR
+   Premium Responsive Admin Navigation
    ========================================================= */
 
 
@@ -21,37 +11,41 @@
    ========================================================= */
 
 .admin-sidebar {
-
     position: fixed;
 
     top: 0;
     left: 0;
 
     width: 260px;
+
     height: 100vh;
+    height: 100dvh;
 
     display: flex;
     flex-direction: column;
 
     background: #fffdf9;
 
-    border-right: 1px solid #e8dfd4;
+    border-right: 1px solid #e5dbcf;
 
-    z-index: 1000;
+    z-index: 1100;
 
     overflow: hidden;
 
     box-sizing: border-box;
+
+    isolation: isolate;
 }
 
 
 /* =========================================================
-   SIDEBAR HEADER
+   HEADER
    ========================================================= */
 
 .admin-sidebar-header {
-
     position: relative;
+
+    flex: 0 0 auto;
 
     min-height: 86px;
 
@@ -59,7 +53,9 @@
     align-items: center;
     justify-content: space-between;
 
-    padding: 18px 20px;
+    padding: 18px 19px;
+
+    background: #fffdf9;
 
     border-bottom: 1px solid #eee5db;
 
@@ -72,7 +68,6 @@
    ========================================================= */
 
 .admin-sidebar-brand {
-
     min-width: 0;
 
     display: flex;
@@ -87,15 +82,21 @@
 
 
 .admin-sidebar-brand:hover {
-
     color: #4a2026;
 
     text-decoration: none;
 }
 
 
-.admin-sidebar-brand-main {
+.admin-sidebar-brand:focus-visible {
+    outline: 2px solid #b99a68;
+    outline-offset: 4px;
 
+    border-radius: 4px;
+}
+
+
+.admin-sidebar-brand-main {
     display: block;
 
     color: inherit;
@@ -119,12 +120,11 @@
 
 
 .admin-sidebar-brand-subtitle {
-
     display: block;
 
     margin-top: 5px;
 
-    color: #927c68;
+    color: #a08770;
 
     font-family:
         "Poppins",
@@ -133,11 +133,11 @@
         "Segoe UI",
         sans-serif;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: 600;
 
-    letter-spacing: 0.14em;
+    letter-spacing: 0.18em;
 
     line-height: 1.3;
 
@@ -150,7 +150,6 @@
    ========================================================= */
 
 .admin-sidebar-close {
-
     display: none;
 
     width: 34px;
@@ -163,60 +162,63 @@
 
     padding: 0;
 
-    border: 1px solid #e4d9cd;
+    border: 1px solid #e0d4c7;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
     background: #ffffff;
 
-    color: #5a3035;
-
-    font-family: Arial, sans-serif;
-
-    font-size: 24px;
-
-    font-weight: 300;
-
-    line-height: 1;
+    color: #5b3037;
 
     cursor: pointer;
 
+    appearance: none;
+
     transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .admin-sidebar-close:hover {
+    background: #f7eee5;
 
-    background: #f8f1e9;
-
-    border-color: #d5c5b5;
+    border-color: #cdbba8;
 
     color: #431b20;
 }
 
 
+.admin-sidebar-close:active {
+    transform: scale(0.95);
+}
+
+
 .admin-sidebar-close:focus-visible {
-
     outline: 2px solid #b99a68;
+    outline-offset: 3px;
+}
 
-    outline-offset: 2px;
+
+.admin-sidebar-close i {
+    font-size: 15px;
+
+    line-height: 1;
 }
 
 
 /* =========================================================
-   SIDEBAR NAVIGATION
+   NAVIGATION
    ========================================================= */
 
 .admin-sidebar-nav {
-
     flex: 1 1 auto;
 
     min-height: 0;
 
-    padding: 18px 12px;
+    padding: 16px 11px;
 
     overflow-x: hidden;
     overflow-y: auto;
@@ -226,38 +228,44 @@
     scrollbar-width: thin;
 
     scrollbar-color:
-        #d8c8b8
+        #d5c4b2
         transparent;
 }
 
 
-/* =========================================================
-   WEBKIT SCROLLBAR
-   ========================================================= */
-
 .admin-sidebar-nav::-webkit-scrollbar {
-
-    width: 6px;
+    width: 5px;
 }
 
 
 .admin-sidebar-nav::-webkit-scrollbar-track {
-
     background: transparent;
 }
 
 
 .admin-sidebar-nav::-webkit-scrollbar-thumb {
-
-    background: #d8c8b8;
+    background: #d5c4b2;
 
     border-radius: 10px;
 }
 
 
 .admin-sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: #bea994;
+}
 
-    background: #c6b4a3;
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.admin-sidebar-section {
+    margin: 0 0 10px;
+}
+
+
+.admin-sidebar-section:last-child {
+    margin-bottom: 0;
 }
 
 
@@ -266,8 +274,7 @@
    ========================================================= */
 
 .admin-sidebar-section-title {
-
-    margin: 15px 10px 7px;
+    margin: 16px 10px 7px;
 
     color: #9a8978;
 
@@ -278,11 +285,11 @@
         "Segoe UI",
         sans-serif;
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: 600;
 
-    letter-spacing: 0.13em;
+    letter-spacing: 0.15em;
 
     line-height: 1.3;
 
@@ -290,21 +297,26 @@
 }
 
 
-.admin-sidebar-section-title:first-child {
+/*
+ * IMPORTANT:
+ * First section title starts at the top.
+ */
 
+.admin-sidebar-section:first-child
+.admin-sidebar-section-title {
     margin-top: 0;
 }
 
 
 /* =========================================================
-   SIDEBAR LINK
+   NAVIGATION LINK
    ========================================================= */
 
 .admin-sidebar-link {
-
     position: relative;
 
     width: 100%;
+
     min-height: 44px;
 
     display: flex;
@@ -316,7 +328,7 @@
 
     border: 0;
 
-    border-radius: 8px;
+    border-radius: 7px;
 
     background: transparent;
 
@@ -337,13 +349,13 @@
 
     transition:
         background-color 0.18s ease,
-        color 0.18s ease;
+        color 0.18s ease,
+        transform 0.18s ease;
 }
 
 
 .admin-sidebar-link:hover {
-
-    background: #f7efe7;
+    background: #f6eee6;
 
     color: #4a2026;
 
@@ -352,29 +364,34 @@
 
 
 .admin-sidebar-link:focus-visible {
-
     outline: 2px solid #b89a72;
-
     outline-offset: 2px;
 }
 
 
+.admin-sidebar-link:active {
+    transform: translateX(1px);
+}
+
+
 /* =========================================================
-   SIDEBAR ICON
+   ICON
    ========================================================= */
 
 .admin-sidebar-icon {
-
-    width: 30px;
-    min-width: 30px;
+    width: 31px;
+    min-width: 31px;
 
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
-    margin-right: 9px;
+    margin-right: 8px;
 
-    font-size: 17px;
+    color: inherit;
+
+    font-size: 15px;
 
     line-height: 1;
 
@@ -382,19 +399,27 @@
 }
 
 
+.admin-sidebar-icon i {
+    display: block;
+
+    font-size: 15px;
+
+    line-height: 1;
+}
+
+
 /* =========================================================
-   SIDEBAR TEXT
+   TEXT
    ========================================================= */
 
 .admin-sidebar-text {
-
     min-width: 0;
 
     overflow: hidden;
 
     color: inherit;
 
-    font-size: 13px;
+    font-size: 12.5px;
 
     font-weight: 500;
 
@@ -407,21 +432,22 @@
 
 
 /* =========================================================
-   ACTIVE LINK
+   ACTIVE
    ========================================================= */
 
 .admin-sidebar-link.active {
-
     background: #642d35;
 
     color: #ffffff;
 
     font-weight: 600;
+
+    box-shadow:
+        0 4px 12px rgba(100, 45, 53, 0.12);
 }
 
 
 .admin-sidebar-link.active:hover {
-
     background: #642d35;
 
     color: #ffffff;
@@ -429,11 +455,10 @@
 
 
 /* =========================================================
-   ACTIVE INDICATOR
+   ACTIVE GOLD INDICATOR
    ========================================================= */
 
 .admin-sidebar-link.active::before {
-
     content: "";
 
     position: absolute;
@@ -448,7 +473,7 @@
     border-radius:
         0 3px 3px 0;
 
-    background: #b99a68;
+    background: #c2a06b;
 }
 
 
@@ -457,8 +482,25 @@
    ========================================================= */
 
 .admin-sidebar-link.active .admin-sidebar-icon {
+    color: #ffffff;
 
     transform: translateX(1px);
+}
+
+
+/* =========================================================
+   WEBSITE SETTINGS
+   ========================================================= */
+
+.admin-settings-link {
+    border: 1px solid transparent;
+}
+
+
+.admin-settings-link:not(.active):hover {
+    border-color: #e5d7c9;
+
+    background: #f7efe7;
 }
 
 
@@ -467,10 +509,9 @@
    ========================================================= */
 
 .admin-sidebar-footer {
-
     flex: 0 0 auto;
 
-    padding: 12px;
+    padding: 11px;
 
     background: #fffdf9;
 
@@ -483,13 +524,11 @@
    ========================================================= */
 
 .admin-view-site {
-
     color: #66584e;
 }
 
 
 .admin-view-site:hover {
-
     color: #4a2026;
 }
 
@@ -499,13 +538,11 @@
    ========================================================= */
 
 .admin-logout {
-
     color: #75454b;
 }
 
 
 .admin-logout:hover {
-
     color: #68272f;
 
     background: #f8eceb;
@@ -513,64 +550,110 @@
 
 
 /* =========================================================
-   TABLET / MOBILE
-   Matches admin-layout.js <= 991px
+   MOBILE / TABLET
    ========================================================= */
 
 @media (max-width: 991.98px) {
 
     .admin-sidebar {
+        width: min(300px, 88vw);
 
-        width: min(285px, 88vw);
+        transform:
+            translate3d(-105%, 0, 0);
 
-        transform: translateX(-100%);
+        visibility: hidden;
+
+        pointer-events: none;
 
         box-shadow:
-            8px 0 30px
-            rgba(60, 35, 25, 0.12);
+            12px 0 40px rgba(48, 28, 22, 0.16);
 
         transition:
-            transform 0.25s ease;
+            transform 0.28s ease,
+            visibility 0s linear 0.28s;
     }
 
 
-    /*
-     * IMPORTANT:
-     * admin-layout.js uses `.show`
-     */
+    /* =====================================================
+       OPEN STATE
+       ===================================================== */
 
     .admin-sidebar.show {
+        transform:
+            translate3d(0, 0, 0);
 
-        transform: translateX(0);
+        visibility: visible;
+
+        pointer-events: auto;
+
+        transition:
+            transform 0.28s ease,
+            visibility 0s linear 0s;
     }
 
 
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
     .admin-sidebar-header {
+        min-height: 78px;
 
-        min-height: 80px;
+        padding:
+            16px
+            14px
+            16px
+            18px;
+    }
 
-        padding-left: 18px;
-        padding-right: 14px;
+
+    .admin-sidebar-brand-main {
+        font-size: 17px;
     }
 
 
     .admin-sidebar-close {
-
         display: inline-flex;
     }
 
 
-    .admin-sidebar-nav {
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
 
-        padding-left: 10px;
-        padding-right: 10px;
+    .admin-sidebar-nav {
+        padding:
+            15px
+            10px
+            18px;
     }
 
 
-    .admin-sidebar-footer {
+    /* =====================================================
+       FOOTER
+       ===================================================== */
 
-        padding-left: 10px;
-        padding-right: 10px;
+    .admin-sidebar-footer {
+        padding:
+            10px;
+    }
+
+
+    /* =====================================================
+       TOUCH TARGET
+       ===================================================== */
+
+    .admin-sidebar-link {
+        min-height: 46px;
+
+        padding:
+            10px
+            11px;
+    }
+
+
+    .admin-sidebar-text {
+        font-size: 13px;
     }
 
 }
@@ -583,39 +666,96 @@
 @media (max-width: 479.98px) {
 
     .admin-sidebar {
-
-        width: 86vw;
+        width: min(310px, 88vw);
     }
 
 
     .admin-sidebar-header {
-
-        padding: 16px;
+        padding:
+            15px
+            12px
+            15px
+            16px;
     }
 
 
     .admin-sidebar-brand-main {
+        font-size: 16px;
+    }
 
-        font-size: 17px;
+
+    .admin-sidebar-brand-subtitle {
+        font-size: 8px;
+
+        letter-spacing: 0.16em;
     }
 
 
     .admin-sidebar-nav {
-
-        padding: 16px 9px;
+        padding:
+            13px
+            8px
+            16px;
     }
 
 
     .admin-sidebar-footer {
-
-        padding: 10px 9px;
+        padding:
+            9px
+            8px;
     }
 
 
     .admin-sidebar-section-title {
+        margin-left: 8px;
+        margin-right: 8px;
 
-        margin-left: 9px;
-        margin-right: 9px;
+        font-size: 8px;
+    }
+
+
+    .admin-sidebar-icon {
+        width: 30px;
+        min-width: 30px;
+
+        margin-right: 7px;
+    }
+
+
+    .admin-sidebar-text {
+        font-size: 12.5px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 359.98px) {
+
+    .admin-sidebar {
+        width: 88vw;
+    }
+
+
+    .admin-sidebar-brand-main {
+        font-size: 15px;
+    }
+
+
+    .admin-sidebar-link {
+        min-height: 44px;
+
+        padding:
+            9px
+            10px;
+    }
+
+
+    .admin-sidebar-text {
+        font-size: 12px;
     }
 
 }
@@ -630,8 +770,8 @@
     .admin-sidebar,
     .admin-sidebar-link,
     .admin-sidebar-close {
-
-        transition: none;
+        transition: none !important;
     }
 
 }
+

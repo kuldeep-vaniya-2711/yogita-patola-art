@@ -1,11 +1,19 @@
+
 <header class="admin-topbar">
 
+    <!-- =====================================================
+         LEFT SIDE
+         ===================================================== -->
+
     <div class="admin-topbar-left">
+
+        <!-- MOBILE MENU BUTTON -->
 
         <button
             type="button"
             class="admin-menu-toggle"
-            aria-label="Open navigation"
+            aria-label="Open admin navigation"
+            aria-controls="adminSidebar"
             aria-expanded="false"
         >
             <span></span>
@@ -13,10 +21,13 @@
             <span></span>
         </button>
 
+
+        <!-- PAGE INFORMATION -->
+
         <div class="admin-topbar-page-info">
 
             <span class="admin-topbar-label">
-                Admin Panel
+                ADMIN PANEL
             </span>
 
             <h1 class="admin-topbar-title">
@@ -30,7 +41,14 @@
     </div>
 
 
+    <!-- =====================================================
+         RIGHT SIDE
+         ===================================================== -->
+
     <div class="admin-topbar-right">
+
+
+        <!-- VIEW WEBSITE -->
 
         <a
             href="/"
@@ -39,20 +57,41 @@
             class="admin-topbar-site-link"
             aria-label="Open website in new tab"
         >
-            <span>🌐</span>
-            <span class="d-none d-md-inline">
+
+            <span class="admin-topbar-site-icon">
+                <i class="bi bi-globe2"></i>
+            </span>
+
+            <span class="admin-topbar-site-text d-none d-md-inline">
                 View Website
             </span>
+
+            <i class="bi bi-box-arrow-up-right admin-topbar-external-icon d-none d-lg-inline"></i>
+
         </a>
 
 
+        <!-- DIVIDER -->
+
+        <span
+            class="admin-topbar-divider"
+            aria-hidden="true"
+        ></span>
+
+
+        <!-- ADMIN USER -->
+
         <div class="admin-topbar-user">
 
-            <div class="admin-topbar-avatar" aria-hidden="true">
+            <div
+                class="admin-topbar-avatar"
+                aria-hidden="true"
+            >
                 <%= typeof adminName !== "undefined" && adminName
                     ? adminName.charAt(0).toUpperCase()
                     : "A" %>
             </div>
+
 
             <div class="admin-topbar-user-info">
 
@@ -62,7 +101,9 @@
                         : "Administrator" %>
                 </strong>
 
-                <small>Admin</small>
+                <small>
+                    Administrator
+                </small>
 
             </div>
 
@@ -71,3 +112,4 @@
     </div>
 
 </header>
+
