@@ -14,18 +14,76 @@ const visitorTracker = require("./middleware/visitorTracker");
 dotenv.config();
 
 const app = express();
-const isProduction = process.env.NODE_ENV === "production";
 
-const VIEWS_PATH = path.join(__dirname, "views");
-const PUBLIC_PATH = path.join(__dirname, "public");
-const UPLOADS_PATH = path.join(__dirname, "uploads");
+const isProduction =
+    process.env.NODE_ENV === "production";
+
+
+/*
+ * =========================================================
+ * PATHS
+ * =========================================================
+ */
+
+const VIEWS_PATH =
+    path.join(__dirname, "views");
+
+const PUBLIC_PATH =
+    path.join(__dirname, "public");
+
+const UPLOADS_PATH =
+    path.join(__dirname, "uploads");
+
+
+/*
+ * =========================================================
+ * EXPRESS CONFIG
+ * =========================================================
+ */
 
 app.engine("ejs", engine);
+
 app.set("view engine", "ejs");
-app.set("views", VIEWS_PATH);
+
+app.set(
+    "views",
+    VIEWS_PATH
+);
+
 app.disable("x-powered-by");
 
-app.use(helmet());
+
+/*
+ * =========================================================
+ * RAILWAY / REVERSE PROXY
+ * =========================================================
+ *
+ * Railway sits behind a reverse proxy.
+ *
+ * This is IMPORTANT for secure HTTPS session cookies.
+ */
+
+if (isProduction) {
+    app.set("trust proxy", 1);
+}
+
+
+/*
+ * =========================================================
+ * SECURITY
+ * =========================================================
+ */
+
+app.use(
+    helmet()
+);
+
+
+/*
+ * =========================================================
+ * BODY PARSING
+ * =========================================================
+ */
 
 app.use(
     express.urlencoded({
@@ -40,8 +98,27 @@ app.use(
     })
 );
 
-app.use(mongoSanitize());
-app.use(hpp());
+
+/*
+ * =========================================================
+ * REQUEST SECURITY
+ * =========================================================
+ */
+
+app.use(
+    mongoSanitize()
+);
+
+app.use(
+    hpp()
+);
+
+
+/*
+ * =========================================================
+ * RATE LIMIT
+ * =========================================================
+ */
 
 app.use(
     rateLimit({
@@ -49,63 +126,128 @@ app.use(
         limit: 300,
         standardHeaders: "draft-8",
         legacyHeaders: false,
-        message: "Too many requests. Please try again later."
+        message:
+            "Too many requests. Please try again later."
     })
 );
 
-app.use(express.static(PUBLIC_PATH));
-app.use("/uploads", express.static(UPLOADS_PATH));
+
+/*
+ * =========================================================
+ * STATIC FILES
+ * =========================================================
+ */
+
+app.use(
+    express.static(PUBLIC_PATH)
+);
+
+app.use(
+    "/uploads",
+    express.static(UPLOADS_PATH)
+);
+
+
+/*
+ * =========================================================
+ * SESSION
+ * =========================================================
+ */
 
 app.use(
     session({
         name: "ypa.sid",
+
         secret:
             process.env.SESSION_SECRET ||
             "yogita-patola-secret",
+
         resave: false,
+
         saveUninitialized: false,
+
         cookie: {
             httpOnly: true,
+
             sameSite: "lax",
+
             secure: isProduction,
-            maxAge: 7 * 24 * 60 * 60 * 1000
+
+            maxAge:
+                7 *
+                24 *
+                60 *
+                60 *
+                1000
         }
     })
 );
 
-app.use((req, res, next) => {
-    res.locals.currentUser = req.session?.userId
-        ? {
-            _id: req.session.userId,
-            name: req.session.userName || "Account"
-        }
-        : null;
-
-    res.locals.currentPath = req.path || "/";
-
-    next();
-});
 
 /*
+ * =========================================================
+ * GLOBAL LOCALS
+ * =========================================================
+ */
+
+app.use(
+    (req, res, next) => {
+
+        res.locals.currentUser =
+            req.session?.userId
+                ? {
+                    _id:
+                        req.session.userId,
+
+                    name:
+                        req.session.userName ||
+                        "Account"
+                }
+                : null;
+
+
+        res.locals.currentPath =
+            req.path || "/";
+
+
+        next();
+    }
+);
+
+
+/*
+ * =========================================================
  * VISITOR TRACKING
+ * =========================================================
  *
  * Tracks public GET page visits.
  * Admin, uploads, CSS, JS, images and other
  * static files are ignored by visitorTracker.
  */
-app.use(visitorTracker);
+
+app.use(
+    visitorTracker
+);
+
 
 /*
+ * =========================================================
  * ADMIN
+ * =========================================================
  */
+
 app.use(
     "/admin",
     require("./routes/adminRoutes")
 );
 
+
 /*
+ * =========================================================
  * USER
+ * =========================================================
  */
+
 app.use(
     "/user",
     require("./routes/userRoutes")
@@ -116,17 +258,25 @@ app.use(
     require("./routes/passwordRoutes")
 );
 
+
 /*
+ * =========================================================
  * WISHLIST
+ * =========================================================
  */
+
 app.use(
     "/wishlist",
     require("./routes/wishlistRoutes")
 );
 
+
 /*
+ * =========================================================
  * PRODUCTS / REVIEWS
+ * =========================================================
  */
+
 app.use(
     "/products",
     require("./routes/reviewRoutes")
@@ -137,67 +287,106 @@ app.use(
     require("./routes/productRoutes")
 );
 
+
 /*
+ * =========================================================
  * PUBLIC WEBSITE
+ * =========================================================
  */
+
 app.use(
     "/",
     require("./routes/publicRoutes")
 );
 
+
 /*
+ * =========================================================
  * GLOBAL ERROR HANDLER
+ * =========================================================
  */
-app.use((err, req, res, next) => {
-    console.error(
-        "SERVER ERROR:",
-        err
-    );
 
-    if (res.headersSent)
-        return next(err);
+app.use(
+    (err, req, res, next) => {
 
-    res.status(500).send(
-        isProduction
-            ? "Server Error"
-            : `Server Error: ${err.message}`
-    );
-});
+        console.error(
+            "SERVER ERROR:",
+            err
+        );
+
+
+        if (res.headersSent) {
+            return next(err);
+        }
+
+
+        res.status(500).send(
+            isProduction
+                ? "Server Error"
+                : `Server Error: ${err.message}`
+        );
+    }
+);
+
+
+/*
+ * =========================================================
+ * PORT
+ * =========================================================
+ */
 
 const PORT =
     process.env.PORT ||
     5000;
 
+
+/*
+ * =========================================================
+ * START SERVER
+ * =========================================================
+ */
+
 async function startServer() {
+
     try {
+
         console.log(
             "Connecting to MongoDB..."
         );
+
 
         await mongoose.connect(
             process.env.MONGODB_URI
         );
 
+
         console.log(
             "MongoDB connected successfully"
         );
 
+
         app.listen(
             PORT,
             () => {
+
                 console.log(
                     `Server running at http://localhost:${PORT}`
                 );
+
             }
         );
+
     } catch (error) {
+
         console.error(
             "MongoDB connection error:",
             error
         );
 
+
         process.exit(1);
     }
 }
+
 
 startServer();
