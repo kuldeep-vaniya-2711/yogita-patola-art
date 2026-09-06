@@ -5,6 +5,8 @@ const session = require("express-session");
 const engine = require("ejs-mate");
 const dotenv = require("dotenv");
 
+const visitorTracker = require("./middleware/visitorTracker");
+
 dotenv.config();
 
 const app = express();
@@ -118,6 +120,30 @@ app.use(
         next();
 
     }
+);
+
+
+// ==================================================
+// VISITOR TRACKING
+// ==================================================
+//
+// Tracks public GET page visits.
+//
+// visitorTracker itself ignores:
+// - /admin
+// - /uploads
+// - CSS
+// - JS
+// - images
+// - fonts
+// - favicon
+// - other static assets
+//
+// Tracking errors never crash the website.
+// ==================================================
+
+app.use(
+    visitorTracker
 );
 
 
