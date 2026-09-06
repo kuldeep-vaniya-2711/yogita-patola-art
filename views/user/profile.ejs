@@ -1,265 +1,146 @@
-<%
-    layout("layout", {
-        title: "My Profile | Yogita Patola Art",
-        description: "Manage your Yogita Patola Art account profile and password."
-    });
-%>
+<% layout("layout") -%>
 
 
-<!-- =========================================================
-     PROFILE PAGE CSS
-     Loaded directly for this page
-========================================================= -->
+<section class="py-5">
 
-<link
-    rel="stylesheet"
-    href="/css/pages/password.css"
->
+    <div class="container">
 
+        <div class="row justify-content-center">
 
-<!-- =========================================================
-     PROFILE PAGE
-========================================================= -->
+            <div class="col-lg-7 col-md-9">
 
-<section class="password-page profile-page">
+                <div class="card border-0 shadow-sm">
 
-    <div class="password-container">
+                    <div class="card-body p-4 p-md-5">
 
 
-        <!-- =====================================================
-             PROFILE CARD
-        ====================================================== -->
+                        <!-- PROFILE HEADER -->
 
-        <div class="password-card profile-card">
+                        <div class="text-center mb-4">
 
+                            <div class="fs-1">
+                                👤
+                            </div>
 
-            <!-- =================================================
-                 HEADER
-            ================================================== -->
+                            <h1 class="h3 mb-1">
+                                My Profile
+                            </h1>
 
-            <div class="password-card-header profile-header">
+                            <p class="text-muted mb-0">
+                                Your account information
+                            </p>
 
-                <div class="brand-icon">
-                    👤
-                </div>
-
-                <span class="card-label">
-                    MY ACCOUNT
-                </span>
-
-                <h1>
-                    My Profile
-                </h1>
-
-                <p>
-                    Manage your account information and security.
-                </p>
-
-            </div>
+                        </div>
 
 
+                        <!-- NAME -->
 
-            <!-- =================================================
-                 PROFILE INFORMATION
-            ================================================== -->
+                        <div class="mb-3">
 
-            <div class="profile-information">
+                            <label class="form-label fw-semibold">
+                                Name
+                            </label>
+
+                            <div class="form-control bg-light">
+                                <%= user.name || "—" %>
+                            </div>
+
+                        </div>
 
 
-                <!-- NAME -->
+                        <!-- EMAIL -->
 
-                <div class="form-group">
+                        <div class="mb-3">
 
-                    <label class="password-label">
-                        Name
-                    </label>
+                            <label class="form-label fw-semibold">
+                                Email
+                            </label>
 
-                    <div class="profile-value">
-                        <%= user.name || "—" %>
+                            <div class="form-control bg-light">
+                                <%= user.email || "—" %>
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Phone
+                            </label>
+
+                            <div class="form-control bg-light">
+                                <%= user.phone || "Not provided" %>
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMAIL VERIFICATION -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Email Verification
+                            </label>
+
+                            <div class="form-control bg-light">
+
+                                <%= user.emailVerified
+                                    ? "✓ Verified"
+                                    : "Not Verified"
+                                %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="d-flex flex-wrap gap-2">
+
+
+                            <!-- EDIT PROFILE -->
+
+                            <a
+                                href="/user/profile/edit"
+                                class="btn btn-dark"
+                            >
+                                Edit Profile
+                            </a>
+
+
+                            <!-- WISHLIST -->
+
+                            <a
+                                href="/wishlist"
+                                class="btn btn-outline-dark"
+                            >
+                                ❤️ Wishlist
+                            </a>
+
+
+                            <!-- LOGOUT -->
+
+                            <a
+                                href="/user/logout"
+                                class="btn btn-outline-dark"
+                            >
+                                Logout
+                            </a>
+
+
+                        </div>
+
+
                     </div>
 
                 </div>
 
-
-
-                <!-- EMAIL -->
-
-                <div class="form-group">
-
-                    <label class="password-label">
-                        Email Address
-                    </label>
-
-                    <div class="profile-value">
-                        <%= user.email || "—" %>
-                    </div>
-
-                </div>
-
-
-
-                <!-- PHONE -->
-
-                <div class="form-group">
-
-                    <label class="password-label">
-                        Phone
-                    </label>
-
-                    <div class="profile-value">
-                        <%= user.phone || "Not provided" %>
-                    </div>
-
-                </div>
-
-
-
-                <!-- EMAIL VERIFICATION -->
-
-                <div class="form-group">
-
-                    <label class="password-label">
-                        Email Verification
-                    </label>
-
-                    <div class="profile-value">
-
-                        <% if (user.emailVerified) { %>
-
-                            <span class="profile-status verified">
-                                ✓ Verified
-                            </span>
-
-                        <% } else { %>
-
-                            <span class="profile-status not-verified">
-                                Not Verified
-                            </span>
-
-                        <% } %>
-
-                    </div>
-
-                </div>
-
-
             </div>
-
-
-
-            <!-- =================================================
-                 ACCOUNT ACTIONS
-            ================================================== -->
-
-            <div class="profile-actions">
-
-
-                <!-- EDIT PROFILE -->
-
-                <a
-                    href="/user/profile/edit"
-                    class="password-submit-btn profile-action-primary"
-                >
-
-                    <span>
-                        Edit Profile
-                    </span>
-
-                    <span>
-                        →
-                    </span>
-
-                </a>
-
-
-
-                <!-- CHANGE PASSWORD -->
-
-                <a
-                    href="/user/change-password"
-                    class="password-secondary-btn profile-action-secondary"
-                >
-
-                    <span>
-                        🔐 Change Password
-                    </span>
-
-                </a>
-
-
-
-                <!-- WISHLIST -->
-
-                <a
-                    href="/wishlist"
-                    class="password-secondary-btn profile-action-secondary"
-                >
-
-                    <span>
-                        ❤️ Wishlist
-                    </span>
-
-                </a>
-
-
-
-                <!-- LOGOUT -->
-
-                <a
-                    href="/user/logout"
-                    class="password-secondary-btn profile-action-secondary"
-                >
-
-                    <span>
-                        Logout
-                    </span>
-
-                </a>
-
-
-            </div>
-
-
-
-            <!-- =================================================
-                 SECURITY NOTE
-            ================================================== -->
-
-            <div class="security-note">
-
-                <span class="security-note-icon">
-                    🔒
-                </span>
-
-                <div>
-
-                    <strong>
-                        Account Security
-                    </strong>
-
-                    <p>
-                        Keep your password private and use a strong,
-                        unique password to protect your account.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 BACK TO WEBSITE
-            ================================================== -->
-
-            <div class="password-footer">
-
-                <a href="/">
-                    ← Back to Yogita Patola Art
-                </a>
-
-            </div>
-
 
         </div>
 

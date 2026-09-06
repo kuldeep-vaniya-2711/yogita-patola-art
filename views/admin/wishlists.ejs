@@ -1,32 +1,8 @@
-
-<%
-/*
- * =========================================================
- * ADMIN WISHLIST MANAGEMENT
- * =========================================================
- *
- * Direct CSS loading is intentionally used here for testing.
- * =========================================================
- */
-
-layout("admin/layout", {
-    title: title || "Wishlist Management",
-    pageTitle: "Wishlist Management"
-});
-%>
-
-<!-- =========================================================
-     WISHLIST PAGE CSS
-     Directly loaded from this page
-     ========================================================= -->
-
-<link
-    rel="stylesheet"
-    href="/css/admin/wishlists.css"
->
+<% layout("layout", { title: title || "Wishlist Management" }) %>
 
 <div class="admin-page wishlists-page">
 
+    <!-- HEADER -->
     <div class="page-header">
         <div class="page-header-content">
 
@@ -52,10 +28,7 @@ layout("admin/layout", {
     </div>
 
 
-    <!-- =====================================================
-         STATISTICS
-         ===================================================== -->
-
+    <!-- SUMMARY -->
     <div class="contact-stats">
 
         <div class="contact-stat-card">
@@ -137,20 +110,14 @@ layout("admin/layout", {
     </div>
 
 
-    <!-- =====================================================
-         TOOLBAR
-         ===================================================== -->
-
+    <!-- TOOLBAR -->
     <div class="contacts-toolbar">
 
         <div class="toolbar-left">
 
             <div class="search-box">
 
-                <span
-                    class="search-icon"
-                    aria-hidden="true"
-                >
+                <span class="search-icon">
                     ⌕
                 </span>
 
@@ -165,8 +132,6 @@ layout("admin/layout", {
                     type="button"
                     id="clearWishlistSearch"
                     class="clear-search"
-                    title="Clear search"
-                    aria-label="Clear search"
                 >
                     ×
                 </button>
@@ -192,10 +157,7 @@ layout("admin/layout", {
     </div>
 
 
-    <!-- =====================================================
-         MAIN CARD
-         ===================================================== -->
-
+    <!-- WISHLIST TABLE -->
     <div class="contacts-card">
 
         <div class="contacts-card-header">
@@ -227,10 +189,6 @@ layout("admin/layout", {
 
         <% if (wishlists && wishlists.length > 0) { %>
 
-            <!-- =================================================
-                 TABLE
-                 ================================================= -->
-
             <div class="table-wrapper">
 
                 <table
@@ -241,6 +199,7 @@ layout("admin/layout", {
                     <thead>
 
                         <tr>
+
                             <th>#</th>
                             <th>Customer</th>
                             <th>Email</th>
@@ -248,6 +207,7 @@ layout("admin/layout", {
                             <th>Category</th>
                             <th>Price</th>
                             <th>Saved On</th>
+
                         </tr>
 
                     </thead>
@@ -258,11 +218,8 @@ layout("admin/layout", {
                         <% wishlists.forEach((wishlist, index) => { %>
 
                             <%
-                                const user =
-                                    wishlist.user || null;
-
-                                const product =
-                                    wishlist.product || null;
+                                const user = wishlist.user || null;
+                                const product = wishlist.product || null;
 
                                 const customerName =
                                     user && user.name
@@ -285,8 +242,7 @@ layout("admin/layout", {
                                         : "-";
 
                                 const price =
-                                    product &&
-                                    product.price !== undefined
+                                    product && product.price !== undefined
                                         ? product.price
                                         : null;
                             %>
@@ -294,13 +250,17 @@ layout("admin/layout", {
 
                             <tr
                                 class="wishlist-row"
-                                data-search="<%= (
-                                    customerName + " " +
-                                    customerEmail + " " +
-                                    productName + " " +
-                                    category
-                                ).toLowerCase() %>"
+                                data-search="
+                                    <%= (
+                                        customerName + " " +
+                                        customerEmail + " " +
+                                        productName + " " +
+                                        category
+                                    ).toLowerCase() %>
+                                "
                             >
+
+                                <!-- NUMBER -->
 
                                 <td class="number-cell">
                                     <%= index + 1 %>
@@ -314,10 +274,13 @@ layout("admin/layout", {
                                     <div class="customer-info">
 
                                         <div class="customer-avatar">
+
                                             <%= customerName
                                                 .charAt(0)
                                                 .toUpperCase() %>
+
                                         </div>
+
 
                                         <div class="customer-details">
 
@@ -470,9 +433,7 @@ layout("admin/layout", {
             </div>
 
 
-            <!-- =================================================
-                 SEARCH EMPTY RESULT
-                 ================================================= -->
+            <!-- NO SEARCH RESULTS -->
 
             <div
                 id="noWishlistResults"
@@ -498,9 +459,7 @@ layout("admin/layout", {
         <% } else { %>
 
 
-            <!-- =================================================
-                 EMPTY STATE
-                 ================================================= -->
+            <!-- EMPTY -->
 
             <div class="empty-state">
 
@@ -531,17 +490,12 @@ layout("admin/layout", {
 
             </div>
 
-
         <% } %>
 
     </div>
 
 </div>
 
-
-<!-- =========================================================
-     WISHLIST SEARCH
-     ========================================================= -->
 
 <script>
 
@@ -576,17 +530,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function filterWishlist() {
 
         const query =
-            String(
-                search?.value || ""
-            )
-            .trim()
-            .toLowerCase();
-
+            String(search?.value || "")
+                .trim()
+                .toLowerCase();
 
         let visible = 0;
 
 
-        rows.forEach(function (row) {
+        rows.forEach(row => {
 
             const text =
                 String(
@@ -600,9 +551,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             row.style.display =
-                show
-                    ? ""
-                    : "none";
+                show ? "" : "none";
 
 
             if (show) {
@@ -613,18 +562,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (count) {
-
-            count.textContent =
-                visible;
-
+            count.textContent = visible;
         }
 
 
         if (noResults) {
 
             noResults.style.display =
-                rows.length &&
-                visible === 0
+                rows.length && visible === 0
                     ? "block"
                     : "none";
 
@@ -633,41 +578,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    if (search) {
-
-        search.addEventListener(
-            "input",
-            filterWishlist
-        );
-
-    }
+    search?.addEventListener(
+        "input",
+        filterWishlist
+    );
 
 
-    if (clear) {
+    clear?.addEventListener(
+        "click",
+        function () {
 
-        clear.addEventListener(
-            "click",
-            function () {
-
-                if (search) {
-                    search.value = "";
-                }
-
-                filterWishlist();
-
-                if (search) {
-                    search.focus();
-                }
-
+            if (search) {
+                search.value = "";
             }
-        );
 
-    }
+            filterWishlist();
 
+            search?.focus();
 
-    filterWishlist();
+        }
+    );
 
 });
 
 </script>
-

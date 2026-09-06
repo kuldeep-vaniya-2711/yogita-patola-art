@@ -1,279 +1,121 @@
-<aside class="admin-sidebar" id="adminSidebar">
-
-    <!-- =====================================================
-         SIDEBAR HEADER
-    ====================================================== -->
+<aside class="admin-sidebar">
 
     <div class="admin-sidebar-header">
 
         <a href="/admin" class="admin-sidebar-brand">
-
             <span class="admin-sidebar-brand-main">
                 Yogita Patola Art
             </span>
-
             <span class="admin-sidebar-brand-subtitle">
-                ADMIN PANEL
+                Admin Panel
             </span>
-
         </a>
 
         <button
             type="button"
             class="admin-sidebar-close"
-            aria-label="Close admin navigation"
-            aria-controls="adminSidebar"
-            aria-expanded="true"
+            aria-label="Close navigation"
         >
-            <i class="bi bi-x-lg"></i>
+            &times;
         </button>
 
     </div>
 
 
-    <!-- =====================================================
-         SIDEBAR NAVIGATION
-    ====================================================== -->
+    <nav class="admin-sidebar-nav" aria-label="Admin navigation">
 
-    <nav
-        class="admin-sidebar-nav"
-        aria-label="Admin navigation"
-    >
-
-
-        <!-- =================================================
-             MAIN
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Main
-            </div>
-
-
-            <a
-                href="/admin"
-                class="admin-sidebar-link <%= currentPath === '/admin' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-grid-1x2-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Dashboard
-                </span>
-
-            </a>
-
+        <div class="admin-sidebar-section-title">
+            Main
         </div>
 
-
-        <!-- =================================================
-             CATALOG
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Catalog
-            </div>
+        <a
+            href="/admin"
+            class="admin-sidebar-link <%= currentPath === '/admin' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">🏠</span>
+            <span class="admin-sidebar-text">Dashboard</span>
+        </a>
 
 
-            <a
-                href="/admin/products"
-                class="admin-sidebar-link <%= currentPath === '/admin/products' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-bag-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    All Products
-                </span>
-
-            </a>
-
-
-            <a
-                href="/admin/products/add"
-                class="admin-sidebar-link <%= currentPath === '/admin/products/add' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-plus-square-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Add Product
-                </span>
-
-            </a>
-
+        <div class="admin-sidebar-section-title">
+            Products
         </div>
 
+        <a
+            href="/admin/products"
+            class="admin-sidebar-link <%= currentPath === '/admin/products' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">🛍️</span>
+            <span class="admin-sidebar-text">Products</span>
+        </a>
 
-        <!-- =================================================
-             CUSTOMER ACTIVITY
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Customer Activity
-            </div>
-
-
-            <a
-                href="/admin/reviews"
-                class="admin-sidebar-link <%= currentPath === '/admin/reviews' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-star-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Reviews
-                </span>
-
-            </a>
+        <a
+            href="/admin/products/add"
+            class="admin-sidebar-link <%= currentPath === '/admin/products/add' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">➕</span>
+            <span class="admin-sidebar-text">Add Product</span>
+        </a>
 
 
-            <a
-                href="/admin/feedback"
-                class="admin-sidebar-link <%= currentPath === '/admin/feedback' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-chat-square-text-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Feedback
-                </span>
-
-            </a>
-
-
-            <a
-                href="/admin/contacts"
-                class="admin-sidebar-link <%= currentPath === '/admin/contacts' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-envelope-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Contact Messages
-                </span>
-
-            </a>
-
+        <div class="admin-sidebar-section-title">
+            Customer Activity
         </div>
 
+        <a
+            href="/admin/reviews"
+            class="admin-sidebar-link <%= currentPath === '/admin/reviews' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">⭐</span>
+            <span class="admin-sidebar-text">Reviews</span>
+        </a>
 
-        <!-- =================================================
-             WISHLISTS
-        ================================================== -->
+        <a
+            href="/admin/feedback"
+            class="admin-sidebar-link <%= currentPath === '/admin/feedback' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">💬</span>
+            <span class="admin-sidebar-text">Feedback</span>
+        </a>
 
-        <div class="admin-sidebar-section">
+        <a
+            href="/admin/contacts"
+            class="admin-sidebar-link <%= currentPath === '/admin/contacts' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">✉️</span>
+            <span class="admin-sidebar-text">Contact Messages</span>
+        </a>
 
-            <div class="admin-sidebar-section-title">
-                Customer Data
-            </div>
 
-
-            <a
-                href="/admin/wishlists"
-                class="admin-sidebar-link <%= currentPath === '/admin/wishlists' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-heart-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Wishlists
-                </span>
-
-            </a>
-
+        <div class="admin-sidebar-section-title">
+            Analytics
         </div>
 
-
-        <!-- =================================================
-             ANALYTICS
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Analytics
-            </div>
+        <a
+            href="/admin/visitors"
+            class="admin-sidebar-link <%= currentPath === '/admin/visitors' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">📊</span>
+            <span class="admin-sidebar-text">Visitors</span>
+        </a>
 
 
-            <a
-                href="/admin/visitors"
-                class="admin-sidebar-link <%= currentPath === '/admin/visitors' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-bar-chart-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Visitors &amp; Analytics
-                </span>
-
-            </a>
-
+        <div class="admin-sidebar-section-title">
+            System
         </div>
 
-
-        <!-- =================================================
-             WEBSITE MANAGEMENT
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Website Management
-            </div>
-
-
-            <a
-                href="/admin/settings"
-                class="admin-sidebar-link admin-settings-link <%= currentPath === '/admin/settings' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-sliders2"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Website Settings
-                </span>
-
-            </a>
-
-        </div>
-
+        <a
+            href="/admin/settings"
+            class="admin-sidebar-link <%= currentPath === '/admin/settings' ? 'active' : '' %>"
+        >
+            <span class="admin-sidebar-icon">⚙️</span>
+            <span class="admin-sidebar-text">Settings</span>
+        </a>
 
     </nav>
 
 
-    <!-- =====================================================
-         SIDEBAR FOOTER
-    ====================================================== -->
-
     <div class="admin-sidebar-footer">
-
-
-        <!-- VIEW WEBSITE -->
 
         <a
             href="/"
@@ -281,35 +123,17 @@
             rel="noopener noreferrer"
             class="admin-sidebar-link admin-view-site"
         >
-
-            <span class="admin-sidebar-icon">
-                <i class="bi bi-box-arrow-up-right"></i>
-            </span>
-
-            <span class="admin-sidebar-text">
-                View Website
-            </span>
-
+            <span class="admin-sidebar-icon">🌐</span>
+            <span class="admin-sidebar-text">View Website</span>
         </a>
-
-
-        <!-- LOGOUT -->
 
         <a
             href="/admin/logout"
             class="admin-sidebar-link admin-logout"
         >
-
-            <span class="admin-sidebar-icon">
-                <i class="bi bi-box-arrow-right"></i>
-            </span>
-
-            <span class="admin-sidebar-text">
-                Logout
-            </span>
-
+            <span class="admin-sidebar-icon">🚪</span>
+            <span class="admin-sidebar-text">Logout</span>
         </a>
-
 
     </div>
 

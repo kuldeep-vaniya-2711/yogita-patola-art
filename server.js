@@ -1,29 +1,19 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const session = require("express-session");
 const engine = require("ejs-mate");
 const dotenv = require("dotenv");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-const mongoSanitize = require("express-mongo-sanitize");
-const hpp = require("hpp");
-
-const visitorTracker = require("./middleware/visitorTracker");
 
 dotenv.config();
 
 const app = express();
 
-const isProduction =
-    process.env.NODE_ENV === "production";
 
-
-/*
- * =========================================================
- * PATHS
- * =========================================================
- */
+// ==================================================
+// PATHS
+// ==================================================
 
 const VIEWS_PATH =
     path.join(__dirname, "views");
@@ -35,108 +25,41 @@ const UPLOADS_PATH =
     path.join(__dirname, "uploads");
 
 
-/*
- * =========================================================
- * EXPRESS CONFIG
- * =========================================================
- */
+// ==================================================
+// EJS
+// ==================================================
 
 app.engine("ejs", engine);
 
-app.set("view engine", "ejs");
+app.set(
+    "view engine",
+    "ejs"
+);
 
 app.set(
     "views",
     VIEWS_PATH
 );
 
-app.disable("x-powered-by");
 
-
-/*
- * =========================================================
- * RAILWAY / REVERSE PROXY
- * =========================================================
- *
- * Railway sits behind a reverse proxy.
- *
- * This is IMPORTANT for secure HTTPS session cookies.
- */
-
-if (isProduction) {
-    app.set("trust proxy", 1);
-}
-
-
-/*
- * =========================================================
- * SECURITY
- * =========================================================
- */
-
-app.use(
-    helmet()
-);
-
-
-/*
- * =========================================================
- * BODY PARSING
- * =========================================================
- */
+// ==================================================
+// MIDDLEWARE
+// ==================================================
 
 app.use(
     express.urlencoded({
-        extended: true,
-        limit: "100kb"
+        extended: true
     })
 );
 
 app.use(
-    express.json({
-        limit: "100kb"
-    })
+    express.json()
 );
 
 
-/*
- * =========================================================
- * REQUEST SECURITY
- * =========================================================
- */
-
-app.use(
-    mongoSanitize()
-);
-
-app.use(
-    hpp()
-);
-
-
-/*
- * =========================================================
- * RATE LIMIT
- * =========================================================
- */
-
-app.use(
-    rateLimit({
-        windowMs: 15 * 60 * 1000,
-        limit: 300,
-        standardHeaders: "draft-8",
-        legacyHeaders: false,
-        message:
-            "Too many requests. Please try again later."
-    })
-);
-
-
-/*
- * =========================================================
- * STATIC FILES
- * =========================================================
- */
+// ==================================================
+// STATIC FILES
+// ==================================================
 
 app.use(
     express.static(PUBLIC_PATH)
@@ -148,15 +71,12 @@ app.use(
 );
 
 
-/*
- * =========================================================
- * SESSION
- * =========================================================
- */
+// ==================================================
+// SESSION
+// ==================================================
 
 app.use(
     session({
-        name: "ypa.sid",
 
         secret:
             process.env.SESSION_SECRET ||
@@ -164,31 +84,15 @@ app.use(
 
         resave: false,
 
-        saveUninitialized: false,
+        saveUninitialized: false
 
-        cookie: {
-            httpOnly: true,
-
-            sameSite: "lax",
-
-            secure: isProduction,
-
-            maxAge:
-                7 *
-                24 *
-                60 *
-                60 *
-                1000
-        }
     })
 );
 
 
-/*
- * =========================================================
- * GLOBAL LOCALS
- * =========================================================
- */
+// ==================================================
+// GLOBAL LOCALS
+// ==================================================
 
 app.use(
     (req, res, next) => {
@@ -196,12 +100,14 @@ app.use(
         res.locals.currentUser =
             req.session?.userId
                 ? {
+
                     _id:
                         req.session.userId,
 
                     name:
                         req.session.userName ||
                         "Account"
+
                 }
                 : null;
 
@@ -211,30 +117,14 @@ app.use(
 
 
         next();
+
     }
 );
 
 
-/*
- * =========================================================
- * VISITOR TRACKING
- * =========================================================
- *
- * Tracks public GET page visits.
- * Admin, uploads, CSS, JS, images and other
- * static files are ignored by visitorTracker.
- */
-
-app.use(
-    visitorTracker
-);
-
-
-/*
- * =========================================================
- * ADMIN
- * =========================================================
- */
+// ==================================================
+// ADMIN ROUTES
+// ==================================================
 
 app.use(
     "/admin",
@@ -242,28 +132,19 @@ app.use(
 );
 
 
-/*
- * =========================================================
- * USER
- * =========================================================
- */
+// ==================================================
+// USER ROUTES
+// ==================================================
 
 app.use(
     "/user",
     require("./routes/userRoutes")
 );
 
-app.use(
-    "/user",
-    require("./routes/passwordRoutes")
-);
 
-
-/*
- * =========================================================
- * WISHLIST
- * =========================================================
- */
+// ==================================================
+// WISHLIST ROUTES
+// ==================================================
 
 app.use(
     "/wishlist",
@@ -271,16 +152,33 @@ app.use(
 );
 
 
-/*
- * =========================================================
- * PRODUCTS / REVIEWS
- * =========================================================
- */
+// ==================================================
+// REVIEW ROUTES
+// IMPORTANT
+//
+// reviewRoutes.js contains:
+//
+// router.post(
+//     "/:productId/review",
+//     ...
+// )
+//
+// Therefore it MUST be mounted at /products.
+//
+// Final URL:
+//
+// POST /products/:productId/review
+// ==================================================
 
 app.use(
     "/products",
     require("./routes/reviewRoutes")
 );
+
+
+// ==================================================
+// PRODUCT ROUTES
+// ==================================================
 
 app.use(
     "/products",
@@ -288,11 +186,14 @@ app.use(
 );
 
 
-/*
- * =========================================================
- * PUBLIC WEBSITE
- * =========================================================
- */
+// ==================================================
+// PUBLIC ROUTES
+//
+// MUST ALWAYS BE LAST
+//
+// publicRoutes contains the public 404
+// catch-all route.
+// ==================================================
 
 app.use(
     "/",
@@ -300,51 +201,52 @@ app.use(
 );
 
 
-/*
- * =========================================================
- * GLOBAL ERROR HANDLER
- * =========================================================
- */
+// ==================================================
+// GLOBAL ERROR HANDLER
+// ==================================================
 
 app.use(
     (err, req, res, next) => {
+
+        console.error(
+            "================================"
+        );
 
         console.error(
             "SERVER ERROR:",
             err
         );
 
+        console.error(
+            "================================"
+        );
+
 
         if (res.headersSent) {
+
             return next(err);
+
         }
 
 
-        res.status(500).send(
-            isProduction
-                ? "Server Error"
-                : `Server Error: ${err.message}`
-        );
+        res
+            .status(500)
+            .send(
+                "Server Error: " +
+                err.message
+            );
+
     }
 );
 
 
-/*
- * =========================================================
- * PORT
- * =========================================================
- */
+// ==================================================
+// DATABASE + SERVER
+// ==================================================
 
 const PORT =
-    process.env.PORT ||
-    5000;
+    process.env.PORT || 5000;
 
-
-/*
- * =========================================================
- * START SERVER
- * =========================================================
- */
 
 async function startServer() {
 
@@ -370,11 +272,20 @@ async function startServer() {
             () => {
 
                 console.log(
+                    "================================"
+                );
+
+                console.log(
                     `Server running at http://localhost:${PORT}`
+                );
+
+                console.log(
+                    "================================"
                 );
 
             }
         );
+
 
     } catch (error) {
 
@@ -385,8 +296,11 @@ async function startServer() {
 
 
         process.exit(1);
+
     }
+
 }
 
 
 startServer();
+

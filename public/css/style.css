@@ -1,68 +1,782 @@
-    /* =========================================================
-    YOGITA PATOLA ART
-    GLOBAL WEBSITE CSS
-    File: public/css/style.css
-    ========================================================= */
+/* =========================================================
+   YOGITA PATOLA ART
+   GLOBAL WEBSITE CSS
+   File: public/css/style.css
+   ========================================================= */
 
 
-    /* =========================================================
-    1. ROOT VARIABLES
-    ========================================================= */
+/* =========================================================
+   1. ROOT VARIABLES
+   ========================================================= */
 
-    :root {
+:root {
 
-        --color-ivory: #faf8f3;
-        --color-cream: #f5f0e7;
-        --color-beige: #e9dfd0;
+    --color-ivory: #faf8f3;
+    --color-cream: #f5f0e7;
+    --color-beige: #e9dfd0;
 
-        --color-maroon: #651f2a;
-        --color-maroon-dark: #4d1720;
+    --color-maroon: #651f2a;
+    --color-maroon-dark: #4d1720;
 
-        --color-gold: #b08a4a;
-        --color-gold-light: #c8a96b;
+    --color-gold: #b08a4a;
+    --color-gold-light: #c8a96b;
 
-        --color-brown: #332a27;
-        --color-text: #3d3734;
-        --color-muted: #766d68;
+    --color-brown: #332a27;
+    --color-text: #3d3734;
+    --color-muted: #766d68;
 
-        --color-white: #ffffff;
-        --color-black: #111111;
+    --color-white: #ffffff;
+    --color-black: #111111;
 
-        --border-light: #e5ded5;
+    --border-light: #e5ded5;
 
-        --shadow-sm:
-            0 4px 16px rgba(45, 35, 30, 0.06);
+    --shadow-sm:
+        0 4px 16px rgba(45, 35, 30, 0.06);
 
-        --shadow-md:
-            0 10px 30px rgba(45, 35, 30, 0.10);
+    --shadow-md:
+        0 10px 30px rgba(45, 35, 30, 0.10);
 
-        --shadow-lg:
-            0 18px 45px rgba(45, 35, 30, 0.14);
+    --shadow-lg:
+        0 18px 45px rgba(45, 35, 30, 0.14);
 
-        --font-heading:
-            "Cormorant Garamond",
-            Georgia,
-            "Times New Roman",
-            serif;
+    --font-heading:
+        "Cormorant Garamond",
+        Georgia,
+        "Times New Roman",
+        serif;
 
-        --font-body:
-            "Montserrat",
-            Arial,
-            sans-serif;
+    --font-body:
+        "Montserrat",
+        Arial,
+        sans-serif;
 
-        --transition:
-            0.25s ease;
+    --transition:
+        0.25s ease;
+
+}
+
+
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    background-color: var(--color-white);
+
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.7;
+
+    -webkit-font-smoothing: antialiased;
+
+    text-rendering: optimizeLegibility;
+
+}
+
+
+img {
+
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+
+}
+
+
+button,
+input,
+textarea,
+select {
+
+    font: inherit;
+
+}
+
+
+button {
+
+    cursor: pointer;
+
+}
+
+
+a {
+
+    color: inherit;
+
+    text-decoration: none;
+
+}
+
+
+a:hover {
+
+    color: inherit;
+
+}
+
+
+p {
+
+    margin-top: 0;
+
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+    margin-top: 0;
+
+    font-family: var(--font-heading);
+
+    color: var(--color-brown);
+
+    line-height: 1.15;
+
+    font-weight: 600;
+
+}
+
+
+ul,
+ol {
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+/* =========================================================
+   3. SELECTION
+   ========================================================= */
+
+::selection {
+
+    background-color: var(--color-maroon);
+
+    color: var(--color-white);
+
+}
+
+
+/* =========================================================
+   4. SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+
+::-webkit-scrollbar-track {
+
+    background: var(--color-cream);
+
+}
+
+
+::-webkit-scrollbar-thumb {
+
+    background: var(--color-maroon);
+
+    border-radius: 10px;
+
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: var(--color-maroon-dark);
+
+}
+
+
+/* =========================================================
+   5. GLOBAL TYPOGRAPHY
+   ========================================================= */
+
+.section-title {
+
+    font-family: var(--font-heading);
+
+    color: var(--color-brown);
+
+    font-size: clamp(
+        2rem,
+        4vw,
+        3.2rem
+    );
+
+    font-weight: 600;
+
+    line-height: 1.1;
+
+}
+
+
+.section-subtitle {
+
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: var(--color-gold);
+
+    font-family: var(--font-body);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.20em;
+
+    line-height: 1.4;
+
+    text-transform: uppercase;
+
+}
+
+
+.section-description {
+
+    max-width: 720px;
+
+    color: var(--color-muted);
+
+    font-size: 15px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================================================
+   6. GLOBAL EYEBROW
+   ========================================================= */
+
+.eyebrow {
+
+    margin-bottom: 12px;
+
+    color: var(--color-gold);
+
+    font-family: var(--font-body);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.20em;
+
+    line-height: 1.5;
+
+    text-transform: uppercase;
+
+}
+
+
+/* =========================================================
+   7. GLOBAL BUTTONS
+   ========================================================= */
+
+.btn {
+
+    border-radius: 0;
+
+    font-family: var(--font-body);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.06em;
+
+    line-height: 1.4;
+
+    padding: 12px 24px;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+
+}
+
+
+.btn:focus {
+
+    box-shadow:
+        0 0 0 0.2rem rgba(101, 31, 42, 0.15);
+
+}
+
+
+.btn-dark {
+
+    background-color: var(--color-maroon);
+
+    border-color: var(--color-maroon);
+
+    color: var(--color-white);
+
+}
+
+
+.btn-dark:hover {
+
+    background-color: var(--color-maroon-dark);
+
+    border-color: var(--color-maroon-dark);
+
+    color: var(--color-white);
+
+}
+
+
+.btn-outline-dark {
+
+    background-color: transparent;
+
+    border-color: var(--color-brown);
+
+    color: var(--color-brown);
+
+}
+
+
+.btn-outline-dark:hover {
+
+    background-color: var(--color-brown);
+
+    border-color: var(--color-brown);
+
+    color: var(--color-white);
+
+}
+
+
+/* =========================================================
+   8. GLOBAL FORMS
+   ========================================================= */
+
+.form-control,
+.form-select {
+
+    min-height: 46px;
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 0;
+
+    background-color: var(--color-white);
+
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+
+    font-size: 13px;
+
+    box-shadow: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+
+}
+
+
+.form-control {
+
+    padding: 11px 14px;
+
+}
+
+
+.form-select {
+
+    padding: 11px 38px 11px 14px;
+
+}
+
+
+.form-control::placeholder {
+
+    color: #9a928c;
+
+    opacity: 1;
+
+}
+
+
+.form-control:focus,
+.form-select:focus {
+
+    border-color: var(--color-gold);
+
+    box-shadow:
+        0 0 0 0.18rem rgba(176, 138, 74, 0.10);
+
+}
+
+
+.form-label {
+
+    margin-bottom: 8px;
+
+    color: var(--color-brown);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.03em;
+
+}
+
+
+/* =========================================================
+   9. GLOBAL CARD
+   ========================================================= */
+
+.card {
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 0;
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+
+/* =========================================================
+   10. GLOBAL LINKS
+   ========================================================= */
+
+.text-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--color-maroon);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+
+    transition:
+        color var(--transition),
+        gap var(--transition);
+
+}
+
+
+.text-link:hover {
+
+    color: var(--color-maroon-dark);
+
+    gap: 12px;
+
+}
+
+
+/* =========================================================
+   11. GLOBAL HEADING LINE
+   ========================================================= */
+
+.heading-line {
+
+    width: 55px;
+
+    height: 1px;
+
+    margin: 18px auto;
+
+    background-color: var(--color-gold);
+
+}
+
+
+/* =========================================================
+   12. NAVBAR — GLOBAL FOUNDATION
+   ========================================================= */
+
+.site-header {
+
+    position: relative;
+
+    z-index: 1000;
+
+}
+
+
+.navbar {
+
+    min-height: 76px;
+
+}
+
+
+.navbar-brand {
+
+    margin-right: 0;
+
+}
+
+
+.navbar-toggler {
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 0;
+
+    padding: 7px 10px;
+
+}
+
+
+.navbar-toggler:focus {
+
+    box-shadow:
+        0 0 0 0.15rem rgba(101, 31, 42, 0.12);
+
+}
+
+
+/* =========================================================
+   13. GLOBAL FOOTER FOUNDATION
+   ========================================================= */
+
+.site-footer,
+.footer-section {
+
+    position: relative;
+
+    background-color: var(--color-brown);
+
+    color: rgba(255, 255, 255, 0.78);
+
+}
+
+
+.site-footer a,
+.footer-section a {
+
+    transition:
+        color var(--transition);
+
+}
+
+
+.site-footer a:hover,
+.footer-section a:hover {
+
+    color: var(--color-gold-light);
+
+}
+
+
+/* =========================================================
+   14. CONTAINER WIDTH
+   ========================================================= */
+
+.container {
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   15. RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    body {
+
+        font-size: 14px;
 
     }
 
 
-    /* =========================================================
-    2. GLOBAL RESET
-    ========================================================= */
+    .navbar {
+
+        min-height: 68px;
+
+    }
+
+
+    .section-description {
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+    }
+
+}
+
+
+/* =========================================================
+   16. RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .section-title {
+
+        font-size: 2rem;
+
+    }
+
+
+    .section-subtitle {
+
+        font-size: 10px;
+
+        letter-spacing: 0.16em;
+
+    }
+
+
+    .eyebrow {
+
+        font-size: 10px;
+
+        letter-spacing: 0.16em;
+
+    }
+
+
+    .btn {
+
+        padding: 11px 19px;
+
+        font-size: 11px;
+
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 44px;
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+/* =========================================================
+   17. RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    body {
+
+        font-size: 13px;
+
+    }
+
+
+    .section-title {
+
+        font-size: 1.8rem;
+
+    }
+
+
+    .section-description {
+
+        font-size: 13px;
+
+        line-height: 1.75;
+
+    }
+
+
+    .container {
+
+        padding-left: 18px;
+
+        padding-right: 18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   18. ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+
+    outline: 2px solid var(--color-gold);
+
+    outline-offset: 3px;
+
+}
+
+
+/* =========================================================
+   19. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
 
     html {
 
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
 
     }
 
@@ -71,731 +785,17 @@
     *::before,
     *::after {
 
-        box-sizing: border-box;
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
 
     }
 
+}
 
-    body {
 
-        margin: 0;
-
-        padding: 0;
-
-        background-color: var(--color-white);
-
-        color: var(--color-text);
-
-        font-family: var(--font-body);
-
-        font-size: 15px;
-
-        font-weight: 400;
-
-        line-height: 1.7;
-
-        -webkit-font-smoothing: antialiased;
-
-        text-rendering: optimizeLegibility;
-
-    }
-
-
-    img {
-
-        max-width: 100%;
-
-        height: auto;
-
-        display: block;
-
-    }
-
-
-    button,
-    input,
-    textarea,
-    select {
-
-        font: inherit;
-
-    }
-
-
-    button {
-
-        cursor: pointer;
-
-    }
-
-
-    a {
-
-        color: inherit;
-
-        text-decoration: none;
-
-    }
-
-
-    a:hover {
-
-        color: inherit;
-
-    }
-
-
-    p {
-
-        margin-top: 0;
-
-    }
-
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-
-        margin-top: 0;
-
-        font-family: var(--font-heading);
-
-        color: var(--color-brown);
-
-        line-height: 1.15;
-
-        font-weight: 600;
-
-    }
-
-
-    ul,
-    ol {
-
-        margin: 0;
-
-        padding: 0;
-
-    }
-
-
-    /* =========================================================
-    3. SELECTION
-    ========================================================= */
-
-    ::selection {
-
-        background-color: var(--color-maroon);
-
-        color: var(--color-white);
-
-    }
-
-
-    /* =========================================================
-    4. SCROLLBAR
-    ========================================================= */
-
-    ::-webkit-scrollbar {
-
-        width: 8px;
-
-    }
-
-
-    ::-webkit-scrollbar-track {
-
-        background: var(--color-cream);
-
-    }
-
-
-    ::-webkit-scrollbar-thumb {
-
-        background: var(--color-maroon);
-
-        border-radius: 10px;
-
-    }
-
-
-    ::-webkit-scrollbar-thumb:hover {
-
-        background: var(--color-maroon-dark);
-
-    }
-
-
-    /* =========================================================
-    5. GLOBAL TYPOGRAPHY
-    ========================================================= */
-
-    .section-title {
-
-        font-family: var(--font-heading);
-
-        color: var(--color-brown);
-
-        font-size: clamp(
-            2rem,
-            4vw,
-            3.2rem
-        );
-
-        font-weight: 600;
-
-        line-height: 1.1;
-
-    }
-
-
-    .section-subtitle {
-
-        display: inline-block;
-
-        margin-bottom: 10px;
-
-        color: var(--color-gold);
-
-        font-family: var(--font-body);
-
-        font-size: 11px;
-
-        font-weight: 600;
-
-        letter-spacing: 0.20em;
-
-        line-height: 1.4;
-
-        text-transform: uppercase;
-
-    }
-
-
-    .section-description {
-
-        max-width: 720px;
-
-        color: var(--color-muted);
-
-        font-size: 15px;
-
-        line-height: 1.9;
-
-    }
-
-
-    /* =========================================================
-    6. GLOBAL EYEBROW
-    ========================================================= */
-
-    .eyebrow {
-
-        margin-bottom: 12px;
-
-        color: var(--color-gold);
-
-        font-family: var(--font-body);
-
-        font-size: 11px;
-
-        font-weight: 600;
-
-        letter-spacing: 0.20em;
-
-        line-height: 1.5;
-
-        text-transform: uppercase;
-
-    }
-
-
-    /* =========================================================
-    7. GLOBAL BUTTONS
-    ========================================================= */
-
-    .btn {
-
-        border-radius: 0;
-
-        font-family: var(--font-body);
-
-        font-size: 12px;
-
-        font-weight: 600;
-
-        letter-spacing: 0.06em;
-
-        line-height: 1.4;
-
-        padding: 12px 24px;
-
-        transition:
-            background-color var(--transition),
-            border-color var(--transition),
-            color var(--transition),
-            box-shadow var(--transition),
-            transform var(--transition);
-
-    }
-
-
-    .btn:focus {
-
-        box-shadow:
-            0 0 0 0.2rem rgba(101, 31, 42, 0.15);
-
-    }
-
-
-    .btn-dark {
-
-        background-color: var(--color-maroon);
-
-        border-color: var(--color-maroon);
-
-        color: var(--color-white);
-
-    }
-
-
-    .btn-dark:hover {
-
-        background-color: var(--color-maroon-dark);
-
-        border-color: var(--color-maroon-dark);
-
-        color: var(--color-white);
-
-    }
-
-
-    .btn-outline-dark {
-
-        background-color: transparent;
-
-        border-color: var(--color-brown);
-
-        color: var(--color-brown);
-
-    }
-
-
-    .btn-outline-dark:hover {
-
-        background-color: var(--color-brown);
-
-        border-color: var(--color-brown);
-
-        color: var(--color-white);
-
-    }
-
-
-    /* =========================================================
-    8. GLOBAL FORMS
-    ========================================================= */
-
-    .form-control,
-    .form-select {
-
-        min-height: 46px;
-
-        border: 1px solid var(--border-light);
-
-        border-radius: 0;
-
-        background-color: var(--color-white);
-
-        color: var(--color-text);
-
-        font-family: var(--font-body);
-
-        font-size: 13px;
-
-        box-shadow: none;
-
-        transition:
-            border-color var(--transition),
-            box-shadow var(--transition);
-
-    }
-
-
-    .form-control {
-
-        padding: 11px 14px;
-
-    }
-
-
-    .form-select {
-
-        padding: 11px 38px 11px 14px;
-
-    }
-
-
-    .form-control::placeholder {
-
-        color: #9a928c;
-
-        opacity: 1;
-
-    }
-
-
-    .form-control:focus,
-    .form-select:focus {
-
-        border-color: var(--color-gold);
-
-        box-shadow:
-            0 0 0 0.18rem rgba(176, 138, 74, 0.10);
-
-    }
-
-
-    .form-label {
-
-        margin-bottom: 8px;
-
-        color: var(--color-brown);
-
-        font-size: 12px;
-
-        font-weight: 600;
-
-        letter-spacing: 0.03em;
-
-    }
-
-
-    /* =========================================================
-    9. GLOBAL CARD
-    ========================================================= */
-
-    .card {
-
-        border: 1px solid var(--border-light);
-
-        border-radius: 0;
-
-        box-shadow: var(--shadow-sm);
-
-    }
-
-
-    /* =========================================================
-    10. GLOBAL LINKS
-    ========================================================= */
-
-    .text-link {
-
-        display: inline-flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        color: var(--color-maroon);
-
-        font-size: 12px;
-
-        font-weight: 600;
-
-        letter-spacing: 0.05em;
-
-        transition:
-            color var(--transition),
-            gap var(--transition);
-
-    }
-
-
-    .text-link:hover {
-
-        color: var(--color-maroon-dark);
-
-        gap: 12px;
-
-    }
-
-
-    /* =========================================================
-    11. GLOBAL HEADING LINE
-    ========================================================= */
-
-    .heading-line {
-
-        width: 55px;
-
-        height: 1px;
-
-        margin: 18px auto;
-
-        background-color: var(--color-gold);
-
-    }
-
-
-    /* =========================================================
-    12. NAVBAR — GLOBAL FOUNDATION
-    ========================================================= */
-
-    .site-header {
-
-        position: relative;
-
-        z-index: 1000;
-
-    }
-
-
-    .navbar {
-
-        min-height: 76px;
-
-    }
-
-
-    .navbar-brand {
-
-        margin-right: 0;
-
-    }
-
-
-    .navbar-toggler {
-
-        border: 1px solid var(--border-light);
-
-        border-radius: 0;
-
-        padding: 7px 10px;
-
-    }
-
-
-    .navbar-toggler:focus {
-
-        box-shadow:
-            0 0 0 0.15rem rgba(101, 31, 42, 0.12);
-
-    }
-
-
-    /* =========================================================
-    13. GLOBAL FOOTER FOUNDATION
-    ========================================================= */
-
-    .site-footer,
-    .footer-section {
-
-        position: relative;
-
-        background-color: var(--color-brown);
-
-        color: rgba(255, 255, 255, 0.78);
-
-    }
-
-
-    .site-footer a,
-    .footer-section a {
-
-        transition:
-            color var(--transition);
-
-    }
-
-
-    .site-footer a:hover,
-    .footer-section a:hover {
-
-        color: var(--color-gold-light);
-
-    }
-
-
-    /* =========================================================
-    14. CONTAINER WIDTH
-    ========================================================= */
-
-    .container {
-
-        width: 100%;
-
-    }
-
-
-    /* =========================================================
-    15. RESPONSIVE — TABLET
-    ========================================================= */
-
-    @media (max-width: 991.98px) {
-
-        body {
-
-            font-size: 14px;
-
-        }
-
-
-        .navbar {
-
-            min-height: 68px;
-
-        }
-
-
-        .section-description {
-
-            font-size: 14px;
-
-            line-height: 1.8;
-
-        }
-
-    }
-
-
-    /* =========================================================
-    16. RESPONSIVE — MOBILE
-    ========================================================= */
-
-    @media (max-width: 767.98px) {
-
-        .section-title {
-
-            font-size: 2rem;
-
-        }
-
-
-        .section-subtitle {
-
-            font-size: 10px;
-
-            letter-spacing: 0.16em;
-
-        }
-
-
-        .eyebrow {
-
-            font-size: 10px;
-
-            letter-spacing: 0.16em;
-
-        }
-
-
-        .btn {
-
-            padding: 11px 19px;
-
-            font-size: 11px;
-
-        }
-
-
-        .form-control,
-        .form-select {
-
-            min-height: 44px;
-
-            font-size: 12px;
-
-        }
-
-    }
-
-
-    /* =========================================================
-    17. RESPONSIVE — SMALL MOBILE
-    ========================================================= */
-
-    @media (max-width: 575.98px) {
-
-        body {
-
-            font-size: 13px;
-
-        }
-
-
-        .section-title {
-
-            font-size: 1.8rem;
-
-        }
-
-
-        .section-description {
-
-            font-size: 13px;
-
-            line-height: 1.75;
-
-        }
-
-
-        .container {
-
-            padding-left: 18px;
-
-            padding-right: 18px;
-
-        }
-
-    }
-
-
-    /* =========================================================
-    18. ACCESSIBILITY
-    ========================================================= */
-
-    :focus-visible {
-
-        outline: 2px solid var(--color-gold);
-
-        outline-offset: 3px;
-
-    }
-
-
-    /* =========================================================
-    19. REDUCED MOTION
-    ========================================================= */
-
-    @media (prefers-reduced-motion: reduce) {
-
-        html {
-
-            scroll-behavior: auto;
-
-        }
-
-
-        *,
-        *::before,
-        *::after {
-
-            transition-duration: 0.01ms !important;
-
-            animation-duration: 0.01ms !important;
-
-            animation-iteration-count: 1 !important;
-
-        }
-
-    }
-
-
-    /* =========================================================
-    END OF GLOBAL CSS
-    ========================================================= */
+/* =========================================================
+   END OF GLOBAL CSS
+   ========================================================= */

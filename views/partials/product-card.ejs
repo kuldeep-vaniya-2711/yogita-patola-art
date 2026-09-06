@@ -1,195 +1,194 @@
 <%
-/*
-* =====================================================
-* PREMIUM PRODUCT CARD
-* Yogita Patola Art
-* =====================================================
-*
-* Used by:
-* home.ejs
-* collections.ejs
-* products.ejs
-* search.ejs
-*
-*/
+    /*
+     * =====================================================
+     * PRODUCT CARD COMPONENT
+     * =====================================================
+     *
+     * Required:
+     * product
+     *
+     * Used by:
+     * home.ejs
+     * collections.ejs
+     * products.ejs
+     * search.ejs
+     *
+     */
 %>
 
-<article class="product-card h-100">
+
+<div class="product-card h-100">
 
 
-<!-- ================================================= -->
-<!-- PRODUCT IMAGE -->
-<!-- ================================================= -->
+    <!-- ================================================= -->
+    <!-- PRODUCT IMAGE -->
+    <!-- ================================================= -->
 
-<div class="product-image">
+    <div class="product-image position-relative overflow-hidden">
 
-    <a
-        href="/products/<%= product._id %>"
-        class="product-image-link"
-        aria-label="View <%= product.name || 'Patola Product' %>"
-    >
 
         <% if (
             product &&
-            Array.isArray(product.images) &&
+            product.images &&
             product.images.length > 0
         ) { %>
+
 
             <img
                 src="<%= product.images[0] %>"
                 alt="<%= product.name || 'Patola Product' %>"
-                class="product-image-main"
+                class="img-fluid w-100"
                 loading="lazy"
             >
 
+
         <% } else { %>
 
-            <div class="no-product-image">
-                <span>Yogita Patola Art</span>
+
+            <div
+                class="no-product-image
+                d-flex
+                align-items-center
+                justify-content-center"
+            >
+
+                <span>
+                    Yogita Patola Art
+                </span>
+
             </div>
+
 
         <% } %>
 
-        <!-- IMAGE OVERLAY -->
-
-        <div class="product-image-overlay">
-            <span class="product-view-link">
-                View Piece
-                <span class="product-view-arrow">→</span>
-            </span>
-        </div>
-
-    </a>
 
 
-    <!-- ================================================= -->
-    <!-- PRODUCT BADGE -->
-    <!-- ================================================= -->
+        <!-- ================================================= -->
+        <!-- PRODUCT BADGE -->
+        <!-- ================================================= -->
 
-    <span class="product-badge">
-        Handcrafted
-    </span>
+        <span class="product-badge">
 
-
-    <!-- ================================================= -->
-    <!-- NUMBER -->
-    <!-- ================================================= -->
-
-    <span class="product-image-mark">
-        ✦
-    </span>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- PRODUCT INFORMATION -->
-<!-- ================================================= -->
-
-<div class="product-info">
-
-
-    <!-- CATEGORY -->
-
-    <span class="product-category">
-        <%= product.category || "Patola Collection" %>
-    </span>
-
-
-    <!-- NAME -->
-
-    <h3 class="product-name">
-
-        <a href="/products/<%= product._id %>">
-
-            <%= product.name || "Handcrafted Patola" %>
-
-        </a>
-
-    </h3>
-
-
-    <!-- DESCRIPTION -->
-
-    <p class="product-description">
-
-        <%= product.description
-            ? (
-                product.description.length > 100
-                    ? product.description.substring(0, 100) + "..."
-                    : product.description
-            )
-            : "A beautifully handcrafted Patola created with traditional artistry."
-        %>
-
-    </p>
-
-
-    <!-- ================================================= -->
-    <!-- BOTTOM META -->
-    <!-- ================================================= -->
-
-    <div class="product-bottom">
-
-
-        <!-- PRICE -->
-
-        <div class="product-price-wrap">
-
-            <span class="product-price-label">
-                Price
-            </span>
-
-            <span class="product-price">
-                ₹<%= Number(
-                    product.price || 0
-                ).toLocaleString("en-IN") %>
-            </span>
-
-        </div>
-
-
-        <!-- AVAILABILITY -->
-
-        <span
-            class="product-availability
-            <%= product.availability === 'In Stock'
-                ? 'is-stock'
-                : product.availability === 'Limited'
-                    ? 'is-limited'
-                    : 'is-unavailable'
-            %>"
-        >
-
-            <span class="availability-dot"></span>
-
-            <%= product.availability || "In Stock" %>
+            Handcrafted
 
         </span>
+
 
     </div>
 
 
+
     <!-- ================================================= -->
-    <!-- VIEW DETAILS -->
+    <!-- PRODUCT INFORMATION -->
     <!-- ================================================= -->
 
-    <a
-        href="/products/<%= product._id %>"
-        class="product-details-btn"
-    >
+    <div class="product-info">
 
-        <span>
+
+        <!-- ================================================= -->
+        <!-- CATEGORY -->
+        <!-- ================================================= -->
+
+        <span class="product-category">
+
+            <%= product.category || "Patola" %>
+
+        </span>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCT NAME -->
+        <!-- ================================================= -->
+
+        <h3 class="product-name">
+
+            <%= product.name || "Handcrafted Patola" %>
+
+        </h3>
+
+
+
+        <!-- ================================================= -->
+        <!-- DESCRIPTION -->
+        <!-- ================================================= -->
+
+        <p class="product-description">
+
+            <%= product.description
+                ? (
+                    product.description.length > 120
+                        ? product.description.substring(0, 120) + "..."
+                        : product.description
+                )
+                : "A beautifully handcrafted Patola created with traditional artistry."
+            %>
+
+        </p>
+
+
+
+        <!-- ================================================= -->
+        <!-- PRICE + AVAILABILITY -->
+        <!-- ================================================= -->
+
+        <div
+            class="product-meta
+            d-flex
+            justify-content-between
+            align-items-center
+            mb-3"
+        >
+
+
+            <!-- PRICE -->
+
+            <span class="product-price">
+
+                ₹<%= Number(
+                    product.price || 0
+                ).toLocaleString("en-IN") %>
+
+            </span>
+
+
+
+            <!-- AVAILABILITY -->
+
+            <span
+                class="badge
+                <%= product.availability === 'In Stock'
+                    ? 'bg-success'
+                    : product.availability === 'Limited'
+                        ? 'bg-warning text-dark'
+                        : 'bg-secondary'
+                %>"
+            >
+
+                <%= product.availability || "In Stock" %>
+
+            </span>
+
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- VIEW DETAILS -->
+        <!-- ================================================= -->
+
+        <a
+            href="/products/<%= product._id %>"
+            class="btn btn-dark w-100"
+        >
+
             View Details
-        </span>
 
-        <span class="product-details-arrow">
-            →
-        </span>
+        </a>
 
-    </a>
+
+    </div>
+
 
 </div>
-
-
-</article>

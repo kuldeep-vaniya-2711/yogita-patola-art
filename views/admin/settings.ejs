@@ -1,104 +1,102 @@
-<%
-layout("admin/layout", {
+<% layout("admin/layout", {
 title: "Website Settings",
-pageTitle: "Website Settings",
-pageCss: "/css/admin/settings.css"
-});
-%>
+pageTitle: "Website Settings"
+}) %>
 
 <%
-const s =
-typeof settingsData !== "undefined" &&
-settingsData
+const settings =
+typeof settingsData !== "undefined" && settingsData
 ? settingsData
 : {};
-
-
-const successMessage =
-    typeof success !== "undefined"
-        ? success
-        : "";
-
-const errorMessage =
-    typeof error !== "undefined"
-        ? error
-        : "";
-
-
 %>
 
 <div class="admin-settings-page">
 
 
-<!-- ==================================================
+<!-- =====================================================
      PAGE HEADER
-================================================== -->
+====================================================== -->
 
-<div class="settings-page-header">
+<header class="settings-header">
 
-    <div>
+    <div class="settings-header-content">
 
-        <div class="settings-eyebrow">
-            WEBSITE CONTROL
+        <div class="settings-header-text">
+
+            <span class="settings-eyebrow">
+                SYSTEM CONFIGURATION
+            </span>
+
+            <h1>
+                <i class="bi bi-gear-fill"></i>
+                Website Settings
+            </h1>
+
+            <p>
+                Manage your website information, contact details,
+                social links, SEO and website features from one place.
+            </p>
+
         </div>
 
-        <h1>
-            Website Settings
-        </h1>
-
-        <p>
-            Manage your website content, images,
-            contact information and visibility options.
-        </p>
-
     </div>
 
-</div>
+</header>
 
 
-<!-- ==================================================
+<!-- =====================================================
      ALERTS
-================================================== -->
+====================================================== -->
 
-<% if (successMessage) { %>
+<% if (success) { %>
 
     <div class="settings-alert settings-alert-success">
-        <span class="settings-alert-icon">✓</span>
 
-        <span>
-            <%= successMessage %>
-        </span>
+        <div class="settings-alert-icon">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+
+        <div class="settings-alert-content">
+            <strong>Settings Saved</strong>
+            <span><%= success %></span>
+        </div>
+
     </div>
 
 <% } %>
 
 
-<% if (errorMessage) { %>
+<% if (error) { %>
 
     <div class="settings-alert settings-alert-error">
-        <span class="settings-alert-icon">!</span>
 
-        <span>
-            <%= errorMessage %>
-        </span>
+        <div class="settings-alert-icon">
+            <i class="bi bi-exclamation-circle-fill"></i>
+        </div>
+
+        <div class="settings-alert-content">
+            <strong>Unable to Save</strong>
+            <span><%= error %></span>
+        </div>
+
     </div>
 
 <% } %>
 
 
-<!-- ==================================================
+<!-- =====================================================
      SETTINGS FORM
-================================================== -->
+====================================================== -->
 
 <form
+    id="settingsForm"
     action="/admin/settings"
     method="POST"
     enctype="multipart/form-data"
-    class="settings-form"
 >
 
 
-    <!-- ==================================================
+    <!-- =================================================
          WEBSITE INFORMATION
     ================================================== -->
 
@@ -106,19 +104,22 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ◈
+            <div class="settings-icon">
+                <i class="bi bi-globe2"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    GENERAL
+                </span>
 
                 <h2>
                     Website Information
                 </h2>
 
                 <p>
-                    Basic information displayed throughout
-                    the public website.
+                    Basic information displayed across the website.
                 </p>
 
             </div>
@@ -128,51 +129,36 @@ const errorMessage =
 
         <div class="settings-grid">
 
-            <div class="settings-field settings-field-full">
 
-                <label>
+            <div class="settings-field">
+
+                <label for="siteName">
                     Website Name
                 </label>
 
                 <input
                     type="text"
+                    id="siteName"
                     name="siteName"
-                    value="<%= s.siteName || '' %>"
-                    maxlength="150"
+                    value="<%= settings.siteName || '' %>"
                     placeholder="Yogita Patola Art"
-                    required
                 >
-
-            </div>
-
-
-            <div class="settings-field settings-field-full">
-
-                <label>
-                    Website Description
-                </label>
-
-                <textarea
-                    name="siteDescription"
-                    rows="4"
-                    maxlength="500"
-                    placeholder="Website description"
-                ><%= s.siteDescription || '' %></textarea>
 
             </div>
 
 
             <div class="settings-field">
 
-                <label>
+                <label for="siteEmail">
                     Website Email
                 </label>
 
                 <input
                     type="email"
+                    id="siteEmail"
                     name="siteEmail"
-                    value="<%= s.siteEmail || '' %>"
-                    placeholder="info@example.com"
+                    value="<%= settings.siteEmail || '' %>"
+                    placeholder="example@gmail.com"
                 >
 
             </div>
@@ -180,17 +166,33 @@ const errorMessage =
 
             <div class="settings-field">
 
-                <label>
-                    Phone Number
+                <label for="sitePhone">
+                    Website Phone
                 </label>
 
                 <input
                     type="text"
+                    id="sitePhone"
                     name="sitePhone"
-                    value="<%= s.sitePhone || '' %>"
-                    maxlength="30"
-                    placeholder="+91 XXXXX XXXXX"
+                    value="<%= settings.sitePhone || '' %>"
+                    placeholder="+91 9876543210"
                 >
+
+            </div>
+
+
+            <div class="settings-field settings-full">
+
+                <label for="siteDescription">
+                    Website Description
+                </label>
+
+                <textarea
+                    id="siteDescription"
+                    name="siteDescription"
+                    rows="4"
+                    placeholder="Enter website description"
+                ><%= settings.siteDescription || '' %></textarea>
 
             </div>
 
@@ -199,7 +201,7 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          HOME PAGE
     ================================================== -->
 
@@ -207,19 +209,22 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ✦
+            <div class="settings-icon">
+                <i class="bi bi-house-fill"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    HOMEPAGE
+                </span>
 
                 <h2>
                     Home Page
                 </h2>
 
                 <p>
-                    Manage the main content and imagery
-                    shown on your homepage.
+                    Manage hero and about section content.
                 </p>
 
             </div>
@@ -232,84 +237,64 @@ const errorMessage =
 
             <!-- HERO HEADING -->
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field">
 
-                <label>
+                <label for="heroHeading">
                     Hero Heading
                 </label>
 
                 <input
                     type="text"
+                    id="heroHeading"
                     name="heroHeading"
-                    value="<%= s.heroHeading || '' %>"
-                    placeholder="Woven Heritage, Timeless Beauty."
+                    value="<%= settings.heroHeading || '' %>"
+                    placeholder="The Art of Patola"
                 >
-
-            </div>
-
-
-            <!-- HERO DESCRIPTION -->
-
-            <div class="settings-field settings-field-full">
-
-                <label>
-                    Hero Description
-                </label>
-
-                <textarea
-                    name="heroDescription"
-                    rows="4"
-                    placeholder="Hero description"
-                ><%= s.heroDescription || '' %></textarea>
 
             </div>
 
 
             <!-- HERO IMAGE -->
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field">
 
-                <label>
+                <label for="heroImageFile">
                     Hero Image
                 </label>
 
                 <div class="settings-upload-box">
 
-                    <input
-                        type="hidden"
-                        name="heroImage"
-                        value="<%= s.heroImage || '' %>"
-                    >
-
                     <div class="settings-upload-preview">
 
-                        <% if (s.heroImage) { %>
+                        <% if (settings.heroImage) { %>
 
                             <img
                                 id="heroImagePreview"
-                                src="<%= s.heroImage %>"
-                                alt="Hero Image"
+                                src="<%= settings.heroImage %>"
+                                alt="Current hero image"
                             >
 
                         <% } else { %>
 
                             <div
-                                id="heroImagePreviewPlaceholder"
                                 class="settings-upload-placeholder"
+                                id="heroImagePlaceholder"
                             >
-                                No image uploaded
+                                <i class="bi bi-image"></i>
+                                <span>No image selected</span>
                             </div>
 
                             <img
                                 id="heroImagePreview"
+                                class="d-none"
                                 src=""
-                                alt="Hero Image"
-                                style="display:none;"
+                                alt="Hero image preview"
                             >
 
                         <% } %>
 
                     </div>
+
 
                     <div class="settings-upload-content">
 
@@ -317,105 +302,117 @@ const errorMessage =
                             Upload Hero Image
                         </strong>
 
-                        <span>
-                            JPG, PNG or WEBP · Max 5MB
-                        </span>
+                        <small>
+                            JPG, JPEG, PNG or WEBP
+                        </small>
+
+                        <label
+                            for="heroImageFile"
+                            class="settings-upload-button"
+                        >
+                            <i class="bi bi-upload"></i>
+                            Choose Image
+                        </label>
 
                         <input
                             type="file"
+                            id="heroImageFile"
                             name="heroImageFile"
-                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                            data-preview-target="heroImagePreview"
-                            data-placeholder="heroImagePreviewPlaceholder"
+                            accept="image/jpeg,image/jpg,image/png,image/webp"
                         >
 
                     </div>
 
                 </div>
 
-            </div>
-
-
-            <!-- ABOUT HEADING -->
-
-            <div class="settings-field settings-field-full">
-
-                <label>
-                    About Heading
-                </label>
 
                 <input
-                    type="text"
-                    name="aboutHeading"
-                    value="<%= s.aboutHeading || '' %>"
-                    placeholder="Preserving Tradition. Creating Legacy."
+                    type="hidden"
+                    name="heroImage"
+                    value="<%= settings.heroImage || '' %>"
                 >
 
             </div>
 
 
-            <!-- ABOUT DESCRIPTION -->
+            <!-- HERO DESCRIPTION -->
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field settings-full">
 
-                <label>
-                    About Description
+                <label for="heroDescription">
+                    Hero Description
                 </label>
 
                 <textarea
-                    name="aboutDescription"
-                    rows="4"
-                    placeholder="About section description"
-                ><%= s.aboutDescription || '' %></textarea>
+                    id="heroDescription"
+                    name="heroDescription"
+                    rows="3"
+                    placeholder="Enter hero section description"
+                ><%= settings.heroDescription || '' %></textarea>
+
+            </div>
+
+
+            <!-- ABOUT HEADING -->
+
+            <div class="settings-field">
+
+                <label for="aboutHeading">
+                    About Heading
+                </label>
+
+                <input
+                    type="text"
+                    id="aboutHeading"
+                    name="aboutHeading"
+                    value="<%= settings.aboutHeading || '' %>"
+                    placeholder="Our Heritage"
+                >
 
             </div>
 
 
             <!-- ABOUT IMAGE -->
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field">
 
-                <label>
+                <label for="aboutImageFile">
                     About Image
                 </label>
 
                 <div class="settings-upload-box">
 
-                    <input
-                        type="hidden"
-                        name="aboutImage"
-                        value="<%= s.aboutImage || '' %>"
-                    >
-
                     <div class="settings-upload-preview">
 
-                        <% if (s.aboutImage) { %>
+                        <% if (settings.aboutImage) { %>
 
                             <img
                                 id="aboutImagePreview"
-                                src="<%= s.aboutImage %>"
-                                alt="About Image"
+                                src="<%= settings.aboutImage %>"
+                                alt="Current about image"
                             >
 
                         <% } else { %>
 
                             <div
-                                id="aboutImagePreviewPlaceholder"
                                 class="settings-upload-placeholder"
+                                id="aboutImagePlaceholder"
                             >
-                                No image uploaded
+                                <i class="bi bi-image"></i>
+                                <span>No image selected</span>
                             </div>
 
                             <img
                                 id="aboutImagePreview"
+                                class="d-none"
                                 src=""
-                                alt="About Image"
-                                style="display:none;"
+                                alt="About image preview"
                             >
 
                         <% } %>
 
                     </div>
+
 
                     <div class="settings-upload-content">
 
@@ -423,273 +420,53 @@ const errorMessage =
                             Upload About Image
                         </strong>
 
-                        <span>
-                            JPG, PNG or WEBP · Max 5MB
-                        </span>
+                        <small>
+                            JPG, JPEG, PNG or WEBP
+                        </small>
+
+                        <label
+                            for="aboutImageFile"
+                            class="settings-upload-button"
+                        >
+                            <i class="bi bi-upload"></i>
+                            Choose Image
+                        </label>
 
                         <input
                             type="file"
+                            id="aboutImageFile"
                             name="aboutImageFile"
-                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                            data-preview-target="aboutImagePreview"
-                            data-placeholder="aboutImagePreviewPlaceholder"
+                            accept="image/jpeg,image/jpg,image/png,image/webp"
                         >
 
                     </div>
 
                 </div>
 
-            </div>
 
-        </div>
-
-
-        <!-- ==================================================
-             HERITAGE IMAGES
-        ================================================== -->
-
-        <div class="settings-subsection">
-
-            <div class="settings-subsection-header">
-
-                <div>
-
-                    <span class="settings-subsection-eyebrow">
-                        OUR HERITAGE
-                    </span>
-
-                    <h3>
-                        Heritage Card Images
-                    </h3>
-
-                    <p>
-                        Upload the three images used behind
-                        the Handcrafted, Intricate Art and
-                        Timeless cards on the public homepage.
-                    </p>
-
-                </div>
+                <input
+                    type="hidden"
+                    name="aboutImage"
+                    value="<%= settings.aboutImage || '' %>"
+                >
 
             </div>
 
 
-            <div class="settings-grid">
+            <!-- ABOUT DESCRIPTION -->
 
+            <div class="settings-field settings-full">
 
-                <!-- HANDCRAFTED -->
+                <label for="aboutDescription">
+                    About Description
+                </label>
 
-                <div class="settings-field">
-
-                    <label>
-                        Handcrafted Image
-                    </label>
-
-                    <div class="settings-upload-box settings-heritage-upload">
-
-                        <input
-                            type="hidden"
-                            name="heritageHandcraftedImage"
-                            value="<%= s.heritageHandcraftedImage || '' %>"
-                        >
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageHandcraftedImage) { %>
-
-                                <img
-                                    id="heritageHandcraftedImagePreview"
-                                    src="<%= s.heritageHandcraftedImage %>"
-                                    alt="Handcrafted Heritage"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageHandcraftedImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageHandcraftedImagePreview"
-                                    src=""
-                                    alt="Handcrafted Heritage"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Handcrafted
-                            </strong>
-
-                            <span>
-                                Artisan hands, loom,
-                                weaving or craftsmanship
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageHandcraftedImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageHandcraftedImagePreview"
-                                data-placeholder="heritageHandcraftedImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- INTRICATE -->
-
-                <div class="settings-field">
-
-                    <label>
-                        Intricate Art Image
-                    </label>
-
-                    <div class="settings-upload-box settings-heritage-upload">
-
-                        <input
-                            type="hidden"
-                            name="heritageIntricateImage"
-                            value="<%= s.heritageIntricateImage || '' %>"
-                        >
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageIntricateImage) { %>
-
-                                <img
-                                    id="heritageIntricateImagePreview"
-                                    src="<%= s.heritageIntricateImage %>"
-                                    alt="Intricate Patola Art"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageIntricateImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageIntricateImagePreview"
-                                    src=""
-                                    alt="Intricate Patola Art"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Intricate Art
-                            </strong>
-
-                            <span>
-                                Close-up Patola weave,
-                                motifs or geometric patterns
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageIntricateImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageIntricateImagePreview"
-                                data-placeholder="heritageIntricateImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- TIMELESS -->
-
-                <div class="settings-field">
-
-                    <label>
-                        Timeless Image
-                    </label>
-
-                    <div class="settings-upload-box settings-heritage-upload">
-
-                        <input
-                            type="hidden"
-                            name="heritageTimelessImage"
-                            value="<%= s.heritageTimelessImage || '' %>"
-                        >
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageTimelessImage) { %>
-
-                                <img
-                                    id="heritageTimelessImagePreview"
-                                    src="<%= s.heritageTimelessImage %>"
-                                    alt="Timeless Patola Heritage"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageTimelessImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageTimelessImagePreview"
-                                    src=""
-                                    alt="Timeless Patola Heritage"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Timeless
-                            </strong>
-
-                            <span>
-                                Traditional Patola textile,
-                                heritage pattern or saree
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageTimelessImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageTimelessImagePreview"
-                                data-placeholder="heritageTimelessImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <textarea
+                    id="aboutDescription"
+                    name="aboutDescription"
+                    rows="4"
+                    placeholder="Enter about section description"
+                ><%= settings.aboutDescription || '' %></textarea>
 
             </div>
 
@@ -698,7 +475,7 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          CONTACT INFORMATION
     ================================================== -->
 
@@ -706,18 +483,22 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ◎
+            <div class="settings-icon">
+                <i class="bi bi-telephone-fill"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    CONTACT
+                </span>
 
                 <h2>
                     Contact Information
                 </h2>
 
                 <p>
-                    Contact details shown across the website.
+                    Customer-facing contact information.
                 </p>
 
             </div>
@@ -727,33 +508,35 @@ const errorMessage =
 
         <div class="settings-grid">
 
-            <div class="settings-field settings-field-full">
 
-                <label>
+            <div class="settings-field settings-full">
+
+                <label for="address">
                     Address
                 </label>
 
                 <textarea
+                    id="address"
                     name="address"
-                    rows="4"
-                    maxlength="500"
-                    placeholder="Business address"
-                ><%= s.address || '' %></textarea>
+                    rows="3"
+                    placeholder="Enter business address"
+                ><%= settings.address || '' %></textarea>
 
             </div>
 
 
             <div class="settings-field">
 
-                <label>
-                    WhatsApp
+                <label for="whatsapp">
+                    WhatsApp Number
                 </label>
 
                 <input
                     type="text"
+                    id="whatsapp"
                     name="whatsapp"
-                    value="<%= s.whatsapp || '' %>"
-                    placeholder="WhatsApp number or link"
+                    value="<%= settings.whatsapp || '' %>"
+                    placeholder="+91 9876543210"
                 >
 
             </div>
@@ -763,7 +546,7 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          SOCIAL MEDIA
     ================================================== -->
 
@@ -771,18 +554,22 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ◎
+            <div class="settings-icon">
+                <i class="bi bi-share-fill"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    SOCIAL
+                </span>
 
                 <h2>
                     Social Media
                 </h2>
 
                 <p>
-                    Add your official social media profiles.
+                    Official social media profile links.
                 </p>
 
             </div>
@@ -792,50 +579,72 @@ const errorMessage =
 
         <div class="settings-grid">
 
+
             <div class="settings-field">
 
-                <label>
+                <label for="instagram">
                     Instagram
                 </label>
 
-                <input
-                    type="text"
-                    name="instagram"
-                    value="<%= s.instagram || '' %>"
-                    placeholder="Instagram profile URL"
-                >
+                <div class="settings-input-icon">
+
+                    <i class="bi bi-instagram"></i>
+
+                    <input
+                        type="url"
+                        id="instagram"
+                        name="instagram"
+                        value="<%= settings.instagram || '' %>"
+                        placeholder="https://instagram.com/..."
+                    >
+
+                </div>
 
             </div>
 
 
             <div class="settings-field">
 
-                <label>
+                <label for="facebook">
                     Facebook
                 </label>
 
-                <input
-                    type="text"
-                    name="facebook"
-                    value="<%= s.facebook || '' %>"
-                    placeholder="Facebook profile URL"
-                >
+                <div class="settings-input-icon">
+
+                    <i class="bi bi-facebook"></i>
+
+                    <input
+                        type="url"
+                        id="facebook"
+                        name="facebook"
+                        value="<%= settings.facebook || '' %>"
+                        placeholder="https://facebook.com/..."
+                    >
+
+                </div>
 
             </div>
 
 
             <div class="settings-field">
 
-                <label>
+                <label for="youtube">
                     YouTube
                 </label>
 
-                <input
-                    type="text"
-                    name="youtube"
-                    value="<%= s.youtube || '' %>"
-                    placeholder="YouTube channel URL"
-                >
+                <div class="settings-input-icon">
+
+                    <i class="bi bi-youtube"></i>
+
+                    <input
+                        type="url"
+                        id="youtube"
+                        name="youtube"
+                        value="<%= settings.youtube || '' %>"
+                        placeholder="https://youtube.com/..."
+                    >
+
+                </div>
 
             </div>
 
@@ -844,7 +653,7 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          SEO
     ================================================== -->
 
@@ -852,11 +661,15 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ◇
+            <div class="settings-icon">
+                <i class="bi bi-search"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    SEARCH ENGINE
+                </span>
 
                 <h2>
                     SEO Settings
@@ -873,97 +686,98 @@ const errorMessage =
 
         <div class="settings-grid">
 
-            <div class="settings-field settings-field-full">
 
-                <label>
+            <div class="settings-field settings-full">
+
+                <label for="metaTitle">
                     Meta Title
                 </label>
 
                 <input
                     type="text"
+                    id="metaTitle"
                     name="metaTitle"
-                    value="<%= s.metaTitle || '' %>"
-                    placeholder="Yogita Patola Art | Handcrafted Patola Sarees"
+                    value="<%= settings.metaTitle || '' %>"
+                    placeholder="Yogita Patola Art | Traditional Patola"
                 >
 
             </div>
 
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field settings-full">
 
-                <label>
+                <label for="metaDescription">
                     Meta Description
                 </label>
 
                 <textarea
+                    id="metaDescription"
                     name="metaDescription"
                     rows="4"
-                    placeholder="Meta description"
-                ><%= s.metaDescription || '' %></textarea>
+                    placeholder="Enter search engine description"
+                ><%= settings.metaDescription || '' %></textarea>
 
             </div>
 
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field settings-full">
 
-                <label>
+                <label for="metaKeywords">
                     Meta Keywords
                 </label>
 
-                <textarea
+                <input
+                    type="text"
+                    id="metaKeywords"
                     name="metaKeywords"
-                    rows="3"
-                    placeholder="Patola sarees, Patola art, traditional textiles"
-                ><%= s.metaKeywords || '' %></textarea>
+                    value="<%= settings.metaKeywords || '' %>"
+                    placeholder="Patola, Saree, Ikat, Gujarat"
+                >
 
             </div>
 
 
             <!-- FAVICON -->
 
-            <div class="settings-field settings-field-full">
+            <div class="settings-field settings-full">
 
-                <label>
+                <label for="faviconFile">
                     Favicon
                 </label>
 
-                <div class="settings-upload-box">
+                <div class="settings-upload-box favicon-upload-box">
 
-                    <input
-                        type="hidden"
-                        name="faviconUrl"
-                        value="<%= s.faviconUrl || '' %>"
-                    >
+                    <div class="settings-upload-preview favicon-preview">
 
-                    <div class="settings-upload-preview settings-favicon-preview">
-
-                        <% if (s.faviconUrl) { %>
+                        <% if (settings.faviconUrl) { %>
 
                             <img
                                 id="faviconPreview"
-                                src="<%= s.faviconUrl %>"
-                                alt="Favicon"
+                                src="<%= settings.faviconUrl %>"
+                                alt="Current favicon"
                             >
 
                         <% } else { %>
 
                             <div
-                                id="faviconPreviewPlaceholder"
                                 class="settings-upload-placeholder"
+                                id="faviconPlaceholder"
                             >
-                                No favicon
+                                <i class="bi bi-star"></i>
+                                <span>No favicon</span>
                             </div>
 
                             <img
                                 id="faviconPreview"
+                                class="d-none"
                                 src=""
-                                alt="Favicon"
-                                style="display:none;"
+                                alt="Favicon preview"
                             >
 
                         <% } %>
 
                     </div>
+
 
                     <div class="settings-upload-content">
 
@@ -971,21 +785,35 @@ const errorMessage =
                             Upload Favicon
                         </strong>
 
-                        <span>
-                            PNG, JPG or WEBP · Max 5MB
-                        </span>
+                        <small>
+                            PNG, JPG, JPEG or WEBP
+                        </small>
+
+                        <label
+                            for="faviconFile"
+                            class="settings-upload-button"
+                        >
+                            <i class="bi bi-upload"></i>
+                            Choose Favicon
+                        </label>
 
                         <input
                             type="file"
+                            id="faviconFile"
                             name="faviconFile"
-                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                            data-preview-target="faviconPreview"
-                            data-placeholder="faviconPreviewPlaceholder"
+                            accept="image/png,image/jpeg,image/jpg,image/webp"
                         >
 
                     </div>
 
                 </div>
+
+
+                <input
+                    type="hidden"
+                    name="faviconUrl"
+                    value="<%= settings.faviconUrl || '' %>"
+                >
 
             </div>
 
@@ -994,7 +822,7 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
+    <!-- =================================================
          WEBSITE OPTIONS
     ================================================== -->
 
@@ -1002,18 +830,22 @@ const errorMessage =
 
         <div class="settings-card-header">
 
-            <div class="settings-card-icon">
-                ⚙
+            <div class="settings-icon">
+                <i class="bi bi-sliders"></i>
             </div>
 
             <div>
+
+                <span class="settings-card-eyebrow">
+                    FEATURES
+                </span>
 
                 <h2>
                     Website Options
                 </h2>
 
                 <p>
-                    Control which public features are visible.
+                    Control public website features.
                 </p>
 
             </div>
@@ -1021,128 +853,107 @@ const errorMessage =
         </div>
 
 
-        <div class="settings-options">
+        <div class="settings-switches">
 
 
-            <!-- MAINTENANCE -->
+            <label class="settings-switch">
 
-            <label class="settings-switch-row">
+                <input
+                    type="checkbox"
+                    name="maintenanceMode"
+                    value="on"
+                    <%= settings.maintenanceMode ? "checked" : "" %>
+                >
 
-                <div>
+                <span class="switch-slider"></span>
+
+                <span class="switch-content">
 
                     <strong>
                         Maintenance Mode
                     </strong>
 
-                    <span>
-                        Temporarily place the public website
-                        into maintenance mode.
-                    </span>
-
-                </div>
-
-                <span class="settings-switch">
-
-                    <input
-                        type="checkbox"
-                        name="maintenanceMode"
-                        <%= s.maintenanceMode ? "checked" : "" %>
-                    >
-
-                    <span class="switch-slider"></span>
+                    <small>
+                        Temporarily disable the public website.
+                    </small>
 
                 </span>
 
             </label>
 
 
-            <!-- CONTACT -->
+            <label class="settings-switch">
 
-            <label class="settings-switch-row">
+                <input
+                    type="checkbox"
+                    name="showContact"
+                    value="on"
+                    <%= settings.showContact ? "checked" : "" %>
+                >
 
-                <div>
+                <span class="switch-slider"></span>
+
+                <span class="switch-content">
 
                     <strong>
                         Show Contact
                     </strong>
 
-                    <span>
-                        Show contact options on the public website.
-                    </span>
-
-                </div>
-
-                <span class="settings-switch">
-
-                    <input
-                        type="checkbox"
-                        name="showContact"
-                        <%= s.showContact !== false ? "checked" : "" %>
-                    >
-
-                    <span class="switch-slider"></span>
+                    <small>
+                        Display contact information on the website.
+                    </small>
 
                 </span>
 
             </label>
 
 
-            <!-- FEEDBACK -->
+            <label class="settings-switch">
 
-            <label class="settings-switch-row">
+                <input
+                    type="checkbox"
+                    name="showFeedback"
+                    value="on"
+                    <%= settings.showFeedback ? "checked" : "" %>
+                >
 
-                <div>
+                <span class="switch-slider"></span>
+
+                <span class="switch-content">
 
                     <strong>
                         Show Feedback
                     </strong>
 
-                    <span>
-                        Allow visitors to access feedback features.
-                    </span>
-
-                </div>
-
-                <span class="settings-switch">
-
-                    <input
-                        type="checkbox"
-                        name="showFeedback"
-                        <%= s.showFeedback !== false ? "checked" : "" %>
-                    >
-
-                    <span class="switch-slider"></span>
+                    <small>
+                        Enable the website feedback feature.
+                    </small>
 
                 </span>
 
             </label>
 
 
-            <!-- REVIEWS -->
+            <label class="settings-switch">
 
-            <label class="settings-switch-row">
+                <input
+                    type="checkbox"
+                    name="showReviews"
+                    value="on"
+                    <%= settings.showReviews ? "checked" : "" %>
+                >
 
-                <div>
+                <span class="switch-slider"></span>
+
+                <span class="switch-content">
 
                     <strong>
                         Show Reviews
                     </strong>
 
-                    <span>
-                        Display customer reviews on the website.
-                    </span>
-
-                </div>
-
-                <span class="settings-switch">
-
-                    <input
-                        type="checkbox"
-                        name="showReviews"
-                        <%= s.showReviews !== false ? "checked" : "" %>
-                    >
-
-                    <span class="switch-slider"></span>
+                    <small>
+                        Display customer product reviews.
+                    </small>
 
                 </span>
 
@@ -1153,30 +964,24 @@ const errorMessage =
     </section>
 
 
-    <!-- ==================================================
-         SAVE BUTTON
+    <!-- =================================================
+         SAVE ACTIONS
     ================================================== -->
 
-    <div class="settings-save-bar">
-
-        <div>
-
-            <strong>
-                Save your changes
-            </strong>
-
-            <span>
-                All website settings will be updated together.
-            </span>
-
-        </div>
+    <div class="settings-actions">
 
         <button
             type="submit"
-            class="settings-save-button"
+            class="btn-save-settings"
+            id="saveSettingsBtn"
         >
-            <span>Save Settings</span>
-            <span class="settings-save-arrow">→</span>
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+                Save Settings
+            </span>
+
         </button>
 
     </div>
@@ -1187,22 +992,37 @@ const errorMessage =
 
 </div>
 
-<!-- ==================================================
+<!-- =========================================================
      IMAGE PREVIEW SCRIPT
-================================================== -->
+========================================================= -->
 
 <script>
 
-(function () {
-
-    const fileInputs =
-        document.querySelectorAll(
-            "input[type='file'][data-preview-target]"
-        );
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
 
-    fileInputs.forEach(
-        input => {
+        function setupImagePreview(
+            inputId,
+            previewId,
+            placeholderId
+        ) {
+
+            const input =
+                document.getElementById(inputId);
+
+            const preview =
+                document.getElementById(previewId);
+
+            const placeholder =
+                document.getElementById(placeholderId);
+
+
+            if (!input || !preview) {
+                return;
+            }
+
 
             input.addEventListener(
                 "change",
@@ -1212,24 +1032,6 @@ const errorMessage =
                         this.files &&
                         this.files[0];
 
-                    const previewId =
-                        this.dataset.previewTarget;
-
-                    const placeholderId =
-                        this.dataset.placeholder;
-
-                    const preview =
-                        document.getElementById(
-                            previewId
-                        );
-
-                    const placeholder =
-                        placeholderId
-                            ? document.getElementById(
-                                placeholderId
-                            )
-                            : null;
-
 
                     if (!file) {
                         return;
@@ -1237,12 +1039,14 @@ const errorMessage =
 
 
                     if (
-                        !file.type.startsWith(
-                            "image/"
-                        )
+                        !file.type.startsWith("image/")
                     ) {
 
                         this.value = "";
+
+                        alert(
+                            "Please select a valid image file."
+                        );
 
                         return;
 
@@ -1250,26 +1054,23 @@ const errorMessage =
 
 
                     const objectUrl =
-                        URL.createObjectURL(
-                            file
-                        );
+                        URL.createObjectURL(file);
 
 
-                    if (preview) {
+                    preview.src =
+                        objectUrl;
 
-                        preview.src =
-                            objectUrl;
 
-                        preview.style.display =
-                            "block";
-
-                    }
+                    preview.classList.remove(
+                        "d-none"
+                    );
 
 
                     if (placeholder) {
 
-                        placeholder.style.display =
-                            "none";
+                        placeholder.classList.add(
+                            "d-none"
+                        );
 
                     }
 
@@ -1277,8 +1078,68 @@ const errorMessage =
             );
 
         }
-    );
 
-})();
+
+        setupImagePreview(
+            "heroImageFile",
+            "heroImagePreview",
+            "heroImagePlaceholder"
+        );
+
+
+        setupImagePreview(
+            "aboutImageFile",
+            "aboutImagePreview",
+            "aboutImagePlaceholder"
+        );
+
+
+        setupImagePreview(
+            "faviconFile",
+            "faviconPreview",
+            "faviconPlaceholder"
+        );
+
+
+        /* =================================================
+           SAVE BUTTON STATE
+        ================================================== */
+
+        const form =
+            document.getElementById(
+                "settingsForm"
+            );
+
+        const saveButton =
+            document.getElementById(
+                "saveSettingsBtn"
+            );
+
+
+        if (form && saveButton) {
+
+            form.addEventListener(
+                "submit",
+                function () {
+
+                    saveButton.disabled =
+                        true;
+
+                    saveButton.classList.add(
+                        "is-saving"
+                    );
+
+                    saveButton.querySelector(
+                        "span"
+                    ).textContent =
+                        "Saving Settings...";
+
+                }
+            );
+
+        }
+
+    }
+);
 
 </script>

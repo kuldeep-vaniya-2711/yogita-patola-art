@@ -1,4 +1,3 @@
-
 /* =========================================================
    ADMIN DASHBOARD
    Yogita Patola Art
@@ -44,14 +43,14 @@
 
 
 /* =========================================================
-   MAIN PAGE
+   PAGE
    ========================================================= */
 
 .admin-dashboard-page {
 
     width: 100%;
 
-    min-height: 100%;
+    min-height: 100vh;
 
     padding: 34px 36px 60px;
 
@@ -66,17 +65,17 @@
    WELCOME
    ========================================================= */
 
-.admin-dashboard-welcome {
+.dashboard-welcome {
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-end;
 
     justify-content: space-between;
 
     gap: 30px;
 
-    margin-bottom: 30px;
+    margin-bottom: 34px;
 
     padding: 28px 30px;
 
@@ -96,14 +95,7 @@
 }
 
 
-.admin-dashboard-welcome-content {
-
-    min-width: 0;
-
-}
-
-
-.admin-dashboard-eyebrow {
+.dashboard-eyebrow {
 
     display: block;
 
@@ -120,7 +112,7 @@
 }
 
 
-.admin-dashboard-welcome h2 {
+.dashboard-heading {
 
     margin: 0 0 9px;
 
@@ -140,9 +132,9 @@
 }
 
 
-.admin-dashboard-welcome p {
+.dashboard-description {
 
-    max-width: 680px;
+    max-width: 650px;
 
     margin: 0;
 
@@ -155,29 +147,49 @@
 }
 
 
-.admin-dashboard-welcome-decoration {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 64px;
-
-    height: 64px;
+.dashboard-date {
 
     flex-shrink: 0;
 
-    color: var(--dashboard-gold);
+    min-width: 150px;
 
-    background: #f1e8dc;
+    padding: 13px 18px;
 
-    border: 1px solid #e3d4c3;
+    text-align: right;
 
-    border-radius: 15px;
+    background: rgba(255,255,255,0.65);
 
-    font-size: 25px;
+    border: 1px solid var(--dashboard-border);
+
+    border-radius: 12px;
+
+}
+
+
+.dashboard-date span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--dashboard-muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+
+.dashboard-date strong {
+
+    color: var(--dashboard-brown-dark);
+
+    font-size: 14px;
+
+    font-weight: 600;
 
 }
 
@@ -186,33 +198,24 @@
    STATISTICS
    ========================================================= */
 
-.admin-dashboard-stats {
+.dashboard-stats {
 
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 18px;
-
-    margin-bottom: 30px;
+    margin-bottom: 34px;
 
 }
 
 
-.admin-stat-card {
+.dashboard-stat-card {
 
     display: flex;
 
     align-items: center;
 
-    gap: 16px;
-
-    min-width: 0;
+    gap: 17px;
 
     min-height: 118px;
 
-    padding: 21px;
+    padding: 22px;
 
     background: var(--dashboard-surface);
 
@@ -229,7 +232,7 @@
 }
 
 
-.admin-stat-card:hover {
+.dashboard-stat-card:hover {
 
     transform: translateY(-2px);
 
@@ -239,7 +242,7 @@
 }
 
 
-.admin-stat-icon {
+.dashboard-stat-icon {
 
     display: flex;
 
@@ -253,33 +256,29 @@
 
     flex-shrink: 0;
 
-    color: var(--dashboard-wine);
-
     background: #f1e8dc;
 
     border: 1px solid #e3d4c3;
 
     border-radius: 13px;
 
-    font-size: 22px;
+    font-size: 23px;
 
 }
 
 
-.admin-stat-content {
+.dashboard-stat-content {
 
     display: flex;
 
     flex-direction: column;
 
-    min-width: 0;
-
-    gap: 3px;
+    gap: 4px;
 
 }
 
 
-.admin-stat-label {
+.dashboard-stat-content span {
 
     color: var(--dashboard-muted);
 
@@ -290,11 +289,11 @@
 }
 
 
-.admin-stat-value {
+.dashboard-stat-content strong {
 
     color: var(--dashboard-brown-dark);
 
-    font-size: 27px;
+    font-size: 28px;
 
     font-weight: 650;
 
@@ -303,60 +302,32 @@
 }
 
 
-.admin-stat-description {
+/* =========================================================
+   MAIN SECTIONS
+   ========================================================= */
 
-    color: #8b817a;
+.dashboard-main-section,
+.dashboard-analytics-section {
 
-    font-size: 10px;
+    margin-bottom: 34px;
 
-    line-height: 1.4;
+}
+
+
+.dashboard-recent-section {
+
+    margin-top: 34px;
 
 }
 
 
 /* =========================================================
-   DASHBOARD GRIDS
+   PANELS
    ========================================================= */
 
-.admin-dashboard-grid {
+.dashboard-panel {
 
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.15fr)
-        minmax(0, 0.85fr);
-
-    gap: 24px;
-
-    margin-bottom: 24px;
-
-}
-
-
-.admin-dashboard-grid-secondary {
-
-    grid-template-columns:
-        minmax(0, 1.45fr)
-        minmax(320px, 0.75fr);
-
-}
-
-
-.admin-dashboard-grid-tertiary {
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-}
-
-
-/* =========================================================
-   COMMON DASHBOARD CARD
-   ========================================================= */
-
-.admin-dashboard-card {
-
-    min-width: 0;
+    height: 100%;
 
     padding: 25px;
 
@@ -371,7 +342,7 @@
 }
 
 
-.admin-dashboard-card-header {
+.dashboard-panel-header {
 
     display: flex;
 
@@ -381,7 +352,7 @@
 
     gap: 20px;
 
-    margin-bottom: 22px;
+    margin-bottom: 23px;
 
     padding-bottom: 17px;
 
@@ -390,14 +361,7 @@
 }
 
 
-.admin-dashboard-card-header > div {
-
-    min-width: 0;
-
-}
-
-
-.admin-card-eyebrow {
+.dashboard-panel-eyebrow {
 
     display: block;
 
@@ -414,7 +378,7 @@
 }
 
 
-.admin-dashboard-card-header h3 {
+.dashboard-panel-header h3 {
 
     margin: 0;
 
@@ -425,68 +389,9 @@
         "Times New Roman",
         serif;
 
-    font-size: 21px;
+    font-size: 22px;
 
     font-weight: 600;
-
-    line-height: 1.3;
-
-}
-
-
-.admin-card-header-icon {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 38px;
-
-    height: 38px;
-
-    flex-shrink: 0;
-
-    color: var(--dashboard-wine);
-
-    background: #f5e9e9;
-
-    border: 1px solid #ead4d6;
-
-    border-radius: 10px;
-
-    font-size: 15px;
-
-}
-
-
-.admin-card-header-link {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    flex-shrink: 0;
-
-    color: var(--dashboard-wine);
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    white-space: nowrap;
-
-}
-
-
-.admin-card-header-link:hover {
-
-    color: var(--dashboard-brown-dark);
 
 }
 
@@ -495,19 +400,7 @@
    QUICK ACTIONS
    ========================================================= */
 
-.admin-quick-actions-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 13px;
-
-}
-
-
-.admin-quick-action {
+.dashboard-action-card {
 
     position: relative;
 
@@ -515,11 +408,11 @@
 
     align-items: center;
 
-    gap: 13px;
+    gap: 14px;
 
-    min-height: 88px;
+    min-height: 94px;
 
-    padding: 17px;
+    padding: 18px;
 
     color: inherit;
 
@@ -539,7 +432,7 @@
 }
 
 
-.admin-quick-action:hover {
+.dashboard-action-card:hover {
 
     color: inherit;
 
@@ -552,7 +445,7 @@
 }
 
 
-.admin-quick-action-icon {
+.dashboard-action-icon {
 
     display: flex;
 
@@ -566,27 +459,25 @@
 
     flex-shrink: 0;
 
-    color: var(--dashboard-wine);
-
     background: #eee3d5;
 
     border-radius: 10px;
 
-    font-size: 18px;
+    font-size: 19px;
 
 }
 
 
-.admin-quick-action-content {
+.dashboard-action-card div {
 
     min-width: 0;
 
-    padding-right: 20px;
+    padding-right: 22px;
 
 }
 
 
-.admin-quick-action-content strong {
+.dashboard-action-card strong {
 
     display: block;
 
@@ -594,44 +485,44 @@
 
     color: var(--dashboard-brown-dark);
 
-    font-size: 13px;
+    font-size: 14px;
 
     font-weight: 600;
 
 }
 
 
-.admin-quick-action-content small {
+.dashboard-action-card small {
 
     display: block;
 
     color: var(--dashboard-muted);
 
-    font-size: 10px;
+    font-size: 11px;
 
     line-height: 1.5;
 
 }
 
 
-.admin-quick-action-arrow {
+.dashboard-action-arrow {
 
     position: absolute;
 
-    right: 14px;
+    right: 16px;
 
     color: var(--dashboard-wine);
 
-    font-size: 15px;
+    font-size: 17px;
 
 }
 
 
 /* =========================================================
-   WEBSITE SHORTCUTS
+   SHORTCUTS
    ========================================================= */
 
-.admin-shortcuts-list {
+.dashboard-shortcut-list {
 
     display: flex;
 
@@ -640,20 +531,17 @@
 }
 
 
-.admin-shortcut-item {
+.dashboard-shortcut-list > a {
 
     display: grid;
 
-    grid-template-columns:
-        38px
-        minmax(0, 1fr)
-        auto;
+    grid-template-columns: 38px 1fr auto;
 
     align-items: center;
 
     gap: 12px;
 
-    padding: 13px 2px;
+    padding: 15px 3px;
 
     color: inherit;
 
@@ -664,21 +552,14 @@
 }
 
 
-.admin-shortcut-item:last-child {
+.dashboard-shortcut-list > a:last-child {
 
     border-bottom: none;
 
 }
 
 
-.admin-shortcut-item:hover {
-
-    color: inherit;
-
-}
-
-
-.admin-shortcut-icon {
+.dashboard-shortcut-list > a > span {
 
     display: flex;
 
@@ -690,8 +571,6 @@
 
     height: 36px;
 
-    color: var(--dashboard-wine);
-
     background: #f1e8dc;
 
     border-radius: 9px;
@@ -699,14 +578,7 @@
 }
 
 
-.admin-shortcut-content {
-
-    min-width: 0;
-
-}
-
-
-.admin-shortcut-content strong {
+.dashboard-shortcut-list strong {
 
     display: block;
 
@@ -714,40 +586,32 @@
 
     color: var(--dashboard-brown-dark);
 
-    font-size: 12px;
-
-    font-weight: 600;
+    font-size: 13px;
 
 }
 
 
-.admin-shortcut-content small {
-
-    display: block;
-
-    overflow: hidden;
+.dashboard-shortcut-list small {
 
     color: var(--dashboard-muted);
 
-    font-size: 10px;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
+    font-size: 11px;
 
 }
 
 
-.admin-shortcut-item > i {
+.dashboard-shortcut-list b {
 
     color: var(--dashboard-wine);
 
-    font-size: 14px;
+    font-size: 16px;
+
+    font-weight: 500;
 
 }
 
 
-.admin-shortcut-item:hover .admin-shortcut-content strong {
+.dashboard-shortcut-list > a:hover strong {
 
     color: var(--dashboard-wine);
 
@@ -755,10 +619,36 @@
 
 
 /* =========================================================
-   ANALYTICS CHART
+   VIEW LINK
    ========================================================= */
 
-.admin-chart-wrapper {
+.dashboard-view-link {
+
+    color: var(--dashboard-wine);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+}
+
+
+.dashboard-view-link:hover {
+
+    color: var(--dashboard-brown-dark);
+
+}
+
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+.dashboard-chart-container {
 
     position: relative;
 
@@ -766,12 +656,12 @@
 
     height: 310px;
 
+    padding-top: 4px;
+
 }
 
 
-.admin-chart-wrapper canvas {
-
-    display: block;
+.dashboard-chart-container canvas {
 
     width: 100% !important;
 
@@ -784,16 +674,18 @@
    AVAILABILITY
    ========================================================= */
 
-.admin-availability-list {
+.dashboard-availability-list {
 
     display: flex;
 
     flex-direction: column;
 
+    gap: 3px;
+
 }
 
 
-.admin-availability-item {
+.availability-item {
 
     display: flex;
 
@@ -801,147 +693,116 @@
 
     justify-content: space-between;
 
-    gap: 14px;
-
-    padding: 15px 2px;
+    padding: 14px 4px;
 
     border-bottom: 1px solid #eee5da;
 
 }
 
 
-.admin-availability-item:last-child {
+.availability-item:last-child {
 
     border-bottom: none;
 
 }
 
 
-.admin-availability-item-left {
+.availability-item > div {
 
     display: flex;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 9px;
 
-    min-width: 0;
+    color: var(--dashboard-muted);
+
+    font-size: 13px;
 
 }
 
 
-.admin-availability-status {
+.availability-item strong {
+
+    color: var(--dashboard-brown-dark);
+
+    font-size: 16px;
+
+}
+
+
+.availability-dot {
 
     width: 9px;
 
     height: 9px;
 
-    flex-shrink: 0;
+    border-radius: 50%;
+
+}
+
+
+.availability-dot.in-stock {
 
     background: var(--dashboard-green);
 
-    border-radius: 50%;
+}
 
-    box-shadow:
-        0 0 0 4px rgba(79, 115, 89, 0.10);
+
+.availability-dot.limited {
+
+    background: var(--dashboard-yellow);
 
 }
 
 
-.admin-availability-item-left > div {
+.availability-dot.out-stock {
 
-    min-width: 0;
+    background: var(--dashboard-red);
 
 }
 
 
-.admin-availability-item-left strong {
+.dashboard-product-link {
 
-    display: block;
+    margin-top: 16px;
 
-    margin-bottom: 3px;
+    padding-top: 17px;
 
-    color: var(--dashboard-brown-dark);
+    border-top: 1px solid #eee5da;
+
+}
+
+
+.dashboard-product-link a {
+
+    color: var(--dashboard-wine);
 
     font-size: 12px;
 
     font-weight: 600;
 
-}
-
-
-.admin-availability-item-left small {
-
-    display: block;
-
-    color: var(--dashboard-muted);
-
-    font-size: 10px;
-
-    line-height: 1.4;
-
-}
-
-
-.admin-availability-badge {
-
-    flex-shrink: 0;
-
-    padding: 5px 9px;
-
-    color: #416448;
-
-    background: #e8f1e9;
-
-    border-radius: 20px;
-
-    font-size: 9px;
-
-    font-weight: 600;
+    text-decoration: none;
 
 }
 
 
 /* =========================================================
-   RECENT PRODUCTS
+   PRODUCT TABLE
    ========================================================= */
 
-.admin-recent-products {
-
-    margin-bottom: 24px;
-
-}
-
-
-.admin-table-wrapper {
-
-    width: 100%;
-
-    overflow-x: auto;
-
-    -webkit-overflow-scrolling: touch;
-
-}
-
-
-.admin-dashboard-table {
-
-    width: 100%;
-
-    min-width: 760px;
+.dashboard-products-table {
 
     margin: 0;
 
-    border-collapse: separate;
-
-    border-spacing: 0;
-
     vertical-align: middle;
+
+    color: var(--dashboard-text);
 
 }
 
 
-.admin-dashboard-table thead th {
+.dashboard-products-table thead th {
 
     padding: 12px 14px;
 
@@ -951,13 +812,11 @@
 
     border-bottom: 1px solid var(--dashboard-border);
 
-    font-size: 9px;
+    font-size: 10px;
 
     font-weight: 700;
 
     letter-spacing: 0.8px;
-
-    text-align: left;
 
     text-transform: uppercase;
 
@@ -966,43 +825,27 @@
 }
 
 
-.admin-dashboard-table thead th:first-child {
+.dashboard-products-table tbody td {
 
-    border-top-left-radius: 8px;
-
-}
-
-
-.admin-dashboard-table thead th:last-child {
-
-    border-top-right-radius: 8px;
-
-}
-
-
-.admin-dashboard-table tbody td {
-
-    padding: 13px 14px;
+    padding: 14px;
 
     color: var(--dashboard-muted);
 
     border-bottom: 1px solid #eee7de;
 
-    font-size: 11px;
-
-    vertical-align: middle;
+    font-size: 12px;
 
 }
 
 
-.admin-dashboard-table tbody tr:last-child td {
+.dashboard-products-table tbody tr:last-child td {
 
     border-bottom: none;
 
 }
 
 
-.admin-dashboard-table tbody tr:hover {
+.dashboard-products-table tbody tr:hover {
 
     background: #fcf9f4;
 
@@ -1010,41 +853,41 @@
 
 
 /* =========================================================
-   PRODUCT TABLE ITEM
+   PRODUCT CELL
    ========================================================= */
 
-.admin-product-table-item {
+.dashboard-product-cell {
 
     display: flex;
 
     align-items: center;
 
-    gap: 11px;
+    gap: 12px;
 
-    min-width: 210px;
+    min-width: 220px;
 
 }
 
 
-.admin-product-table-image,
-.admin-product-table-placeholder {
+.dashboard-product-cell img,
+.dashboard-product-placeholder {
 
-    width: 46px;
+    width: 48px;
 
-    height: 46px;
+    height: 48px;
 
     flex-shrink: 0;
 
     object-fit: cover;
 
-    border: 1px solid var(--dashboard-border);
-
     border-radius: 9px;
+
+    border: 1px solid var(--dashboard-border);
 
 }
 
 
-.admin-product-table-placeholder {
+.dashboard-product-placeholder {
 
     display: flex;
 
@@ -1052,81 +895,31 @@
 
     justify-content: center;
 
-    color: var(--dashboard-gold);
-
     background: #f1e8dc;
 
-    font-size: 16px;
+    color: var(--dashboard-gold);
+
+    font-size: 17px;
 
 }
 
 
-.admin-product-table-info {
-
-    min-width: 0;
-
-}
-
-
-.admin-product-table-info strong {
-
-    display: block;
-
-    overflow: hidden;
-
-    margin-bottom: 3px;
+.dashboard-product-cell strong {
 
     color: var(--dashboard-brown-dark);
 
-    font-size: 11px;
+    font-size: 12px;
 
     font-weight: 600;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-}
-
-
-.admin-product-table-info small {
-
-    display: block;
-
-    color: var(--dashboard-muted);
-
-    font-size: 9px;
-
-}
-
-
-.admin-table-category {
-
-    color: var(--dashboard-muted);
-
-    font-size: 10px;
-
-}
-
-
-.admin-table-price {
-
-    color: var(--dashboard-brown-dark);
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    white-space: nowrap;
 
 }
 
 
 /* =========================================================
-   AVAILABILITY PILL
+   STATUS
    ========================================================= */
 
-.admin-availability-pill {
+.dashboard-status {
 
     display: inline-flex;
 
@@ -1136,7 +929,7 @@
 
     border-radius: 20px;
 
-    font-size: 9px;
+    font-size: 10px;
 
     font-weight: 600;
 
@@ -1145,7 +938,7 @@
 }
 
 
-.admin-availability-pill.in-stock {
+.status-in-stock {
 
     color: #416448;
 
@@ -1154,7 +947,7 @@
 }
 
 
-.admin-availability-pill.limited {
+.status-limited {
 
     color: #806126;
 
@@ -1163,7 +956,7 @@
 }
 
 
-.admin-availability-pill.out-of-stock {
+.status-out-stock {
 
     color: #7e4848;
 
@@ -1173,64 +966,14 @@
 
 
 /* =========================================================
-   FEATURED
-   ========================================================= */
-
-.admin-featured-pill,
-.admin-not-featured-pill {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 4px;
-
-    padding: 5px 8px;
-
-    border-radius: 20px;
-
-    font-size: 9px;
-
-    font-weight: 600;
-
-    white-space: nowrap;
-
-}
-
-
-.admin-featured-pill {
-
-    color: #806126;
-
-    background: #f6edd9;
-
-}
-
-
-.admin-not-featured-pill {
-
-    color: #756b64;
-
-    background: #f0ece7;
-
-}
-
-
-/* =========================================================
    TABLE ACTION
    ========================================================= */
 
-.admin-table-action {
+.dashboard-table-action {
 
-    display: inline-flex;
+    display: inline-block;
 
-    align-items: center;
-
-    justify-content: center;
-
-    width: 30px;
-
-    height: 30px;
+    padding: 5px 10px;
 
     color: var(--dashboard-wine);
 
@@ -1238,29 +981,26 @@
 
     border: 1px solid #ead4d6;
 
-    border-radius: 7px;
+    border-radius: 6px;
 
-    font-size: 12px;
+    font-size: 10px;
+
+    font-weight: 600;
 
     text-decoration: none;
 
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: 0.2s ease;
 
 }
 
 
-.admin-table-action:hover {
+.dashboard-table-action:hover {
 
     color: #fff;
 
     background: var(--dashboard-wine);
 
     border-color: var(--dashboard-wine);
-
-    transform: translateY(-1px);
 
 }
 
@@ -1269,62 +1009,29 @@
    EMPTY STATE
    ========================================================= */
 
-.admin-dashboard-empty {
+.dashboard-empty-state {
 
-    padding: 0 !important;
-
-}
-
-
-.admin-empty-state {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    min-height: 220px;
-
-    padding: 30px 20px;
-
-    text-align: center;
+    padding: 35px 20px;
 
 }
 
 
-.admin-empty-icon {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 52px;
-
-    height: 52px;
-
-    margin-bottom: 12px;
-
-    color: var(--dashboard-gold);
-
-    background: #f1e8dc;
-
-    border-radius: 13px;
-
-    font-size: 21px;
-
-}
-
-
-.admin-empty-state strong {
+.dashboard-empty-state > span {
 
     display: block;
 
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+
+    color: var(--dashboard-gold);
+
+    font-size: 28px;
+
+}
+
+
+.dashboard-empty-state h4 {
+
+    margin-bottom: 7px;
 
     color: var(--dashboard-brown-dark);
 
@@ -1333,250 +1040,29 @@
         "Times New Roman",
         serif;
 
-    font-size: 17px;
+    font-size: 19px;
 
 }
 
 
-.admin-empty-state small {
+.dashboard-empty-state p {
 
-    display: block;
-
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 
     color: var(--dashboard-muted);
 
-    font-size: 10px;
-
-}
-
-
-.admin-empty-action {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    padding: 8px 13px;
-
-    color: #fff;
-
-    background: var(--dashboard-brown-dark);
-
-    border-radius: 7px;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-}
-
-
-.admin-empty-action:hover {
-
-    color: #fff;
-
-    background: var(--dashboard-wine);
+    font-size: 12px;
 
 }
 
 
 /* =========================================================
-   CUSTOMER ACTIVITY
-   ========================================================= */
-
-.admin-activity-list {
-
-    display: flex;
-
-    flex-direction: column;
-
-}
-
-
-.admin-activity-item {
-
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 11px;
-
-    padding: 13px 0;
-
-    border-bottom: 1px solid #eee5da;
-
-}
-
-
-.admin-activity-item:first-child {
-
-    padding-top: 0;
-
-}
-
-
-.admin-activity-item:last-child {
-
-    padding-bottom: 0;
-
-    border-bottom: none;
-
-}
-
-
-.admin-activity-icon {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 36px;
-
-    height: 36px;
-
-    flex-shrink: 0;
-
-    border-radius: 9px;
-
-    font-size: 13px;
-
-}
-
-
-.admin-review-icon {
-
-    color: #806126;
-
-    background: #f6edd9;
-
-}
-
-
-.admin-feedback-icon {
-
-    color: var(--dashboard-wine);
-
-    background: #f5e9e9;
-
-}
-
-
-.admin-contact-icon {
-
-    color: var(--dashboard-brown);
-
-    background: #f1e8dc;
-
-}
-
-
-.admin-activity-content {
-
-    display: flex;
-
-    flex-direction: column;
-
-    min-width: 0;
-
-    gap: 3px;
-
-}
-
-
-.admin-activity-content strong {
-
-    color: var(--dashboard-brown-dark);
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-}
-
-
-.admin-activity-content > span {
-
-    color: var(--dashboard-gold);
-
-    font-size: 9px;
-
-    letter-spacing: 1px;
-
-}
-
-
-.admin-activity-content small {
-
-    display: -webkit-box;
-
-    overflow: hidden;
-
-    color: var(--dashboard-muted);
-
-    font-size: 10px;
-
-    line-height: 1.5;
-
-    -webkit-box-orient: vertical;
-
-    -webkit-line-clamp: 2;
-
-}
-
-
-.admin-activity-empty {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    min-height: 120px;
-
-    color: var(--dashboard-muted);
-
-    text-align: center;
-
-}
-
-
-.admin-activity-empty i {
-
-    color: var(--dashboard-gold);
-
-    font-size: 24px;
-
-}
-
-
-.admin-activity-empty span {
-
-    font-size: 10px;
-
-}
-
-
-/* =========================================================
-   BOOTSTRAP OVERRIDES
+   BOOTSTRAP OVERRIDES INSIDE DASHBOARD
    ========================================================= */
 
 .admin-dashboard-page .btn-dark {
 
     padding: 9px 18px;
-
-    color: #fff;
 
     background: var(--dashboard-brown-dark);
 
@@ -1591,8 +1077,6 @@
 
 .admin-dashboard-page .btn-dark:hover {
 
-    color: #fff;
-
     background: var(--dashboard-wine);
 
     border-color: var(--dashboard-wine);
@@ -1601,7 +1085,7 @@
 
 
 /* =========================================================
-   TABLET
+   RESPONSIVE — TABLET
    ========================================================= */
 
 @media (max-width: 1199px) {
@@ -1613,39 +1097,14 @@
     }
 
 
-    .admin-dashboard-stats {
+    .dashboard-welcome {
 
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-    }
-
-
-    .admin-dashboard-grid {
-
-        grid-template-columns:
-            minmax(0, 1fr);
+        padding: 25px;
 
     }
 
 
-    .admin-dashboard-grid-secondary {
-
-        grid-template-columns:
-            minmax(0, 1fr);
-
-    }
-
-
-    .admin-dashboard-grid-tertiary {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-    }
-
-
-    .admin-dashboard-card {
+    .dashboard-panel {
 
         padding: 22px;
 
@@ -1655,7 +1114,7 @@
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE — MOBILE
    ========================================================= */
 
 @media (max-width: 767px) {
@@ -1667,7 +1126,7 @@
     }
 
 
-    .admin-dashboard-welcome {
+    .dashboard-welcome {
 
         flex-direction: column;
 
@@ -1682,67 +1141,52 @@
     }
 
 
-    .admin-dashboard-welcome h2 {
+    .dashboard-heading {
 
         font-size: 25px;
 
     }
 
 
-    .admin-dashboard-welcome p {
+    .dashboard-description {
 
         font-size: 13px;
 
     }
 
 
-    .admin-dashboard-welcome-decoration {
+    .dashboard-date {
 
-        width: 52px;
+        width: 100%;
 
-        height: 52px;
-
-        font-size: 20px;
+        text-align: left;
 
     }
 
 
-    .admin-dashboard-stats {
-
-        grid-template-columns:
-            1fr;
-
-        gap: 12px;
+    .dashboard-stats {
 
         margin-bottom: 25px;
 
     }
 
 
-    .admin-stat-card {
+    .dashboard-main-section,
+    .dashboard-analytics-section {
 
-        min-height: 100px;
-
-        padding: 17px;
-
-    }
-
-
-    .admin-dashboard-grid,
-    .admin-dashboard-grid-secondary,
-    .admin-dashboard-grid-tertiary {
-
-        grid-template-columns:
-            1fr;
-
-        gap: 18px;
-
-        margin-bottom: 18px;
+        margin-bottom: 25px;
 
     }
 
 
-    .admin-dashboard-card {
+    .dashboard-recent-section {
+
+        margin-top: 25px;
+
+    }
+
+
+    .dashboard-panel {
 
         padding: 18px;
 
@@ -1751,54 +1195,39 @@
     }
 
 
-    .admin-dashboard-card-header {
+    .dashboard-panel-header {
 
         margin-bottom: 18px;
 
     }
 
 
-    .admin-dashboard-card-header h3 {
+    .dashboard-panel-header h3 {
 
         font-size: 19px;
 
     }
 
 
-    .admin-quick-actions-grid {
+    .dashboard-action-card {
 
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .admin-quick-action {
-
-        min-height: 82px;
+        min-height: 88px;
 
         padding: 15px;
 
     }
 
 
-    .admin-chart-wrapper {
+    .dashboard-chart-container {
 
         height: 250px;
 
     }
 
 
-    .admin-recent-products {
+    .dashboard-products-table {
 
-        margin-bottom: 18px;
-
-    }
-
-
-    .admin-dashboard-table {
-
-        min-width: 760px;
+        min-width: 720px;
 
     }
 
@@ -1818,53 +1247,46 @@
     }
 
 
-    .admin-dashboard-welcome {
+    .dashboard-welcome {
 
         padding: 19px;
 
     }
 
 
-    .admin-dashboard-welcome h2 {
+    .dashboard-heading {
 
         font-size: 22px;
 
     }
 
 
-    .admin-dashboard-card {
+    .dashboard-panel {
 
         padding: 15px;
 
     }
 
 
-    .admin-stat-card {
+    .dashboard-stat-card {
 
-        min-height: 96px;
+        min-height: 100px;
 
-        padding: 15px;
+        padding: 17px;
 
     }
 
 
-    .admin-stat-value {
+    .dashboard-stat-content strong {
 
         font-size: 24px;
 
     }
 
 
-    .admin-chart-wrapper {
+    .dashboard-chart-container {
 
         height: 220px;
-
-    }
-
-
-    .admin-dashboard-card-header h3 {
-
-        font-size: 18px;
 
     }
 

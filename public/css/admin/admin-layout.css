@@ -1,4 +1,3 @@
-
 /* =========================================================
    YOGITA PATOLA ART
    ADMIN LAYOUT CSS
@@ -12,8 +11,7 @@
    - Content width and spacing
    - Alert container
    - Mobile sidebar overlay
-   - Body scroll lock
-   - Responsive admin layout
+   - Responsive layout
    ========================================================= */
 
 
@@ -24,6 +22,7 @@
 .admin-body *,
 .admin-body *::before,
 .admin-body *::after {
+
     box-sizing: border-box;
 }
 
@@ -33,12 +32,11 @@
    ========================================================= */
 
 .admin-body {
+
     margin: 0;
     padding: 0;
 
-    width: 100%;
     min-height: 100vh;
-    min-height: 100dvh;
 
     background: #f7f3ee;
 
@@ -52,18 +50,6 @@
         sans-serif;
 
     overflow-x: hidden;
-
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-
-/* =========================================================
-   BODY SCROLL LOCK
-   ========================================================= */
-
-.admin-body.admin-sidebar-open {
-    overflow: hidden;
 }
 
 
@@ -72,11 +58,11 @@
    ========================================================= */
 
 .admin-wrapper {
+
     position: relative;
 
     width: 100%;
     min-height: 100vh;
-    min-height: 100dvh;
 
     display: flex;
 
@@ -91,11 +77,11 @@
    ========================================================= */
 
 .admin-main {
+
     width: calc(100% - 260px);
 
     min-width: 0;
     min-height: 100vh;
-    min-height: 100dvh;
 
     margin-left: 260px;
 
@@ -111,6 +97,7 @@
    ========================================================= */
 
 .admin-alert-container {
+
     width: 100%;
 
     padding:
@@ -125,11 +112,13 @@
    ========================================================= */
 
 .admin-content {
+
     width: 100%;
 
     max-width: 1500px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
     padding:
         28px 30px 40px;
@@ -143,46 +132,39 @@
    ========================================================= */
 
 .admin-sidebar-overlay {
+
+    display: none;
+
     position: fixed;
 
     inset: 0;
 
-    width: 100%;
-    height: 100%;
+    background:
+        rgba(32, 22, 18, 0.42);
+
+    z-index: 999;
+}
+
+
+/*
+ * admin-layout.js adds `.show`
+ */
+
+.admin-sidebar-overlay.show {
 
     display: block;
-
-    background:
-        rgba(32, 22, 18, 0.46);
-
-    opacity: 0;
-    visibility: hidden;
-
-    pointer-events: none;
-
-    z-index: 1050;
-
-    transition:
-        opacity 0.28s ease,
-        visibility 0s linear 0.28s;
 }
 
 
 /* =========================================================
-   SIDEBAR OVERLAY OPEN
-   admin-layout.js adds `.show`
+   BODY SCROLL LOCK
+   admin-layout.js adds:
+   `.admin-sidebar-open`
    ========================================================= */
 
-.admin-sidebar-overlay.show {
-    opacity: 1;
+.admin-body.admin-sidebar-open {
 
-    visibility: visible;
-
-    pointer-events: auto;
-
-    transition:
-        opacity 0.28s ease,
-        visibility 0s linear 0s;
+    overflow: hidden;
 }
 
 
@@ -193,49 +175,27 @@
 
 @media (max-width: 991.98px) {
 
-    /* ---------------------------------------------
-       MAIN CONTENT
-       --------------------------------------------- */
-
     .admin-main {
+
         width: 100%;
 
         margin-left: 0;
-
-        min-width: 0;
     }
 
 
-    /* ---------------------------------------------
-       ALERTS
-       --------------------------------------------- */
-
     .admin-alert-container {
+
         padding-left: 22px;
         padding-right: 22px;
     }
 
 
-    /* ---------------------------------------------
-       CONTENT
-       --------------------------------------------- */
-
     .admin-content {
-        width: 100%;
 
         max-width: 1500px;
 
         padding:
             24px 22px 36px;
-    }
-
-
-    /* ---------------------------------------------
-       OVERLAY
-       --------------------------------------------- */
-
-    .admin-sidebar-overlay {
-        display: block;
     }
 
 }
@@ -247,37 +207,19 @@
 
 @media (max-width: 767.98px) {
 
-    /* ---------------------------------------------
-       ALERTS
-       --------------------------------------------- */
-
     .admin-alert-container {
+
         padding-left: 16px;
         padding-right: 16px;
     }
 
 
-    /* ---------------------------------------------
-       PAGE CONTENT
-       --------------------------------------------- */
-
     .admin-content {
-        width: 100%;
 
         max-width: none;
 
         padding:
             20px 16px 32px;
-    }
-
-
-    /* ---------------------------------------------
-       OVERLAY
-       --------------------------------------------- */
-
-    .admin-sidebar-overlay {
-        background:
-            rgba(32, 22, 18, 0.50);
     }
 
 }
@@ -289,43 +231,17 @@
 
 @media (max-width: 479.98px) {
 
-    /* ---------------------------------------------
-       ALERTS
-       --------------------------------------------- */
-
     .admin-alert-container {
+
         padding-left: 12px;
         padding-right: 12px;
     }
 
 
-    /* ---------------------------------------------
-       CONTENT
-       --------------------------------------------- */
-
     .admin-content {
+
         padding:
             18px 12px 28px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 359.98px) {
-
-    .admin-alert-container {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-
-    .admin-content {
-        padding:
-            16px 10px 24px;
     }
 
 }
@@ -338,8 +254,8 @@
 @media (prefers-reduced-motion: reduce) {
 
     .admin-sidebar-overlay {
+
         transition: none;
     }
 
 }
-

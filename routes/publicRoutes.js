@@ -1126,17 +1126,65 @@ router.use(
 
         return res
             .status(404)
-            .render(
-                "public/404",
-                {
-                    title:
-                        `Page Not Found | ${res.locals.siteName}`,
+            .send(`
 
-                    description:
-                        "The page you are looking for could not be found."
-                }
-            );
+                <!DOCTYPE html>
 
+                <html lang="en">
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    >
+
+                    <title>
+                        Page Not Found
+                    </title>
+
+                </head>
+
+
+                <body style="
+                    min-height:100vh;
+                    display:flex;
+                    flex-direction:column;
+                    align-items:center;
+                    justify-content:center;
+                    text-align:center;
+                    font-family:Arial,sans-serif;
+                ">
+
+
+                    <h1>
+                        404
+                    </h1>
+
+
+                    <h2>
+                        Page Not Found
+                    </h2>
+
+
+                    <p>
+                        The requested page
+                        could not be found.
+                    </p>
+
+
+                    <a href="/">
+                        Go Home
+                    </a>
+
+
+                </body>
+
+                </html>
+
+            `);
     }
 );
 
