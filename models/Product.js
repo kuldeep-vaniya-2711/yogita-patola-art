@@ -1,195 +1,29 @@
 const mongoose = require("mongoose");
 
-
-// ==================================================
-// PRODUCT SCHEMA
-// ==================================================
-
 const productSchema = new mongoose.Schema(
     {
-
-        // ==================================================
-        // PRODUCT NAME
-        // ==================================================
-
-        name: {
-            type: String,
-            required: [true, "Product name is required"],
-            trim: true
-        },
-
-
-        // ==================================================
-        // CATEGORY
-        // ==================================================
-
-        category: {
-            type: String,
-            required: [true, "Product category is required"],
-            trim: true
-        },
-
-
-        // ==================================================
-        // DESCRIPTION
-        // ==================================================
-
-        description: {
-            type: String,
-            trim: true,
-            default: ""
-        },
-
-
-        // ==================================================
-        // PRICE
-        // ==================================================
-
-        price: {
-            type: Number,
-            default: 0,
-            min: 0
-        },
-
-
-        // ==================================================
-        // FABRIC
-        // ==================================================
-
-        fabric: {
-            type: String,
-            trim: true,
-            default: ""
-        },
-
-
-        // ==================================================
-        // TECHNIQUE
-        // ==================================================
-
-        technique: {
-            type: String,
-            trim: true,
-            default: ""
-        },
-
-
-        // ==================================================
-        // COLOR
-        // ==================================================
-
-        color: {
-            type: String,
-            trim: true,
-            default: ""
-        },
-
-
-        // ==================================================
-        // DIMENSIONS
-        // ==================================================
-
-        dimensions: {
-            type: String,
-            trim: true,
-            default: ""
-        },
-
-
-        // ==================================================
-        // AVAILABILITY
-        // ==================================================
-
+        name: { type: String, required: [true, "Product name is required"], trim: true },
+        category: { type: String, required: [true, "Product category is required"], trim: true },
+        description: { type: String, trim: true, default: "" },
+        price: { type: Number, default: 0, min: 0 },
+        fabric: { type: String, trim: true, default: "" },
+        technique: { type: String, trim: true, default: "" },
+        color: { type: String, trim: true, default: "" },
+        dimensions: { type: String, trim: true, default: "" },
         availability: {
-
             type: String,
-
             enum: {
-                values: [
-                    "In Stock",
-                    "Limited",
-                    "Out of Stock"
-                ],
-
-                message:
-                    "{VALUE} is not a valid availability option."
+                values: ["In Stock", "Limited", "Out of Stock"],
+                message: "{VALUE} is not a valid availability option."
             },
-
             default: "In Stock"
         },
-
-
-        // ==================================================
-        // PRODUCT IMAGES
-        // ==================================================
-
-        images: {
-            type: [String],
-            default: []
-        },
-
-
-        // ==================================================
-        // FEATURED PRODUCT
-        // ==================================================
-
-        featured: {
-            type: Boolean,
-            default: false
-        },
-
-
-        // ==================================================
-        // AVERAGE RATING
-        // ==================================================
-
-        averageRating: {
-
-            type: Number,
-
-            default: 0,
-
-            min: 0,
-
-            max: 5
-
-        },
-
-
-        // ==================================================
-        // REVIEW COUNT
-        // ==================================================
-
-        reviewCount: {
-
-            type: Number,
-
-            default: 0,
-
-            min: 0
-
-        }
-
+        images: { type: [String], default: [] },
+        featured: { type: Boolean, default: false },
+        averageRating: { type: Number, default: 0, min: 0, max: 5 },
+        reviewCount: { type: Number, default: 0, min: 0 }
     },
-
-
-    // ==================================================
-    // TIMESTAMPS
-    // ==================================================
-
-    {
-        timestamps: true
-    }
-
+    { timestamps: true }
 );
 
-
-// ==================================================
-// EXPORT MODEL
-// ==================================================
-
-module.exports =
-    mongoose.model(
-        "Product",
-        productSchema
-    );
+module.exports = mongoose.model("Product", productSchema);

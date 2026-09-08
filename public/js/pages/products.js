@@ -3,104 +3,22 @@
 /* ================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
-
-    /* ================================================= */
-    /* SEARCH                                             */
-    /* ================================================= */
-
-    const searchInput =
-        document.querySelector(
-            "#productSearch"
-        );
-
-
+    const searchInput = document.querySelector("#productSearch");
     if (searchInput) {
-
-        searchInput.addEventListener(
-            "keydown",
-            (event) => {
-
-                if (event.key === "Enter") {
-
-                    event.preventDefault();
-
-                    const form =
-                        searchInput.closest("form");
-
-                    if (form) {
-                        form.submit();
-                    }
-
-                }
-
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                searchInput.closest("form")?.submit();
             }
-        );
-
+        });
     }
 
-
-
-    /* ================================================= */
-    /* PRODUCT IMAGE ERROR                                */
-    /* ================================================= */
-
-    const productImages =
-        document.querySelectorAll(
-            ".products-grid img"
-        );
-
-
-    productImages.forEach((image) => {
-
-        image.addEventListener(
-            "error",
-            () => {
-
-                image.style.display = "none";
-
-            }
-        );
-
+    document.querySelectorAll(".products-grid img").forEach(img => {
+        img.addEventListener("error", () => { img.style.display = "none"; });
     });
 
-
-
-    /* ================================================= */
-    /* PRODUCT CARD HOVER                                */
-    /* ================================================= */
-
-    const productItems =
-        document.querySelectorAll(
-            ".product-grid-item"
-        );
-
-
-    productItems.forEach((item) => {
-
-        item.addEventListener(
-            "mouseenter",
-            () => {
-
-                item.classList.add(
-                    "product-item-active"
-                );
-
-            }
-        );
-
-
-        item.addEventListener(
-            "mouseleave",
-            () => {
-
-                item.classList.remove(
-                    "product-item-active"
-                );
-
-            }
-        );
-
+    document.querySelectorAll(".product-grid-item").forEach(item => {
+        item.addEventListener("mouseenter", () => item.classList.add("product-item-active"));
+        item.addEventListener("mouseleave", () => item.classList.remove("product-item-active"));
     });
-
 });

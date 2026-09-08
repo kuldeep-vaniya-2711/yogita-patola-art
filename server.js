@@ -11,353 +11,71 @@ dotenv.config();
 
 const app = express();
 
-
-// ==================================================
-// PATHS
-// ==================================================
-
-const VIEWS_PATH =
-    path.join(__dirname, "views");
-
-const PUBLIC_PATH =
-    path.join(__dirname, "public");
-
-const UPLOADS_PATH =
-    path.join(__dirname, "uploads");
-
-
-// ==================================================
-// EJS
-// ==================================================
-
+// View Engine & Static Paths
 app.engine("ejs", engine);
-
-app.set(
-    "view engine",
-    "ejs"
-);
-
-app.set(
-    "views",
-    VIEWS_PATH
-);
-
-
-// ==================================================
-// MIDDLEWARE
-// ==================================================
-
-app.use(
-    express.urlencoded({
-        extended: true
-    })
-);
-
-app.use(
-    express.json()
-);
-
-
-// ==================================================
-// STATIC FILES
-// ==================================================
-
-app.use(
-    express.static(PUBLIC_PATH)
-);
-
-app.use(
-    "/uploads",
-    express.static(UPLOADS_PATH)
-);
-
-
-// ==================================================
-// SESSION
-// ==================================================
-
-app.use(
-    session({
-
-        secret:
-            process.env.SESSION_SECRET ||
-            "yogita-patola-secret",
-
-        resave: false,
-
-        saveUninitialized: false
-
-    })
-);
-
-
-// ==================================================
-// GLOBAL LOCALS
-// ==================================================
-
-app.use(
-    (req, res, next) => {
-
-        res.locals.currentUser =
-            req.session?.userId
-                ? {
-
-                    _id:
-                        req.session.userId,
-
-                    name:
-                        req.session.userName ||
-                        "Account"
-
-                }
-                : null;
-
-
-        res.locals.currentPath =
-            req.path || "/";
-
-
-        next();
-
-    }
-);
-
-
-// ==================================================
-// VISITOR TRACKING
-// ==================================================
-//
-// Tracks public GET page visits.
-//
-// visitorTracker itself ignores:
-// - /admin
-// - /uploads
-// - CSS
-// - JS
-// - images
-// - fonts
-// - favicon
-// - other static assets
-//
-// Tracking errors never crash the website.
-// ==================================================
-
-app.use(
-    visitorTracker
-);
-
-
-// ==================================================
-// ADMIN ROUTES
-// ==================================================
-
-app.use(
-    "/admin",
-    require("./routes/adminRoutes")
-);
-
-
-// ==================================================
-// USER ROUTES
-// ==================================================
-
-app.use(
-    "/user",
-    require("./routes/userRoutes")
-);
-
-
-// ==================================================
-// PASSWORD ROUTES
-//
-// Forgot Password
-// Verify Reset OTP
-// Resend Reset OTP
-// Reset Password
-// Change Password
-//
-// passwordRoutes.js contains:
-//
-// /forgot-password
-// /verify-reset-otp
-// /resend-reset-otp
-// /reset-password
-// /change-password
-//
-// Because it is mounted at /user,
-// final URLs become:
-//
-// /user/forgot-password
-// /user/verify-reset-otp
-// /user/resend-reset-otp
-// /user/reset-password
-// /user/change-password
-// ==================================================
-
-app.use(
-    "/user",
-    require("./routes/passwordRoutes")
-);
-
-
-// ==================================================
-// WISHLIST ROUTES
-// ==================================================
-
-app.use(
-    "/wishlist",
-    require("./routes/wishlistRoutes")
-);
-
-
-// ==================================================
-// REVIEW ROUTES
-// IMPORTANT
-//
-// reviewRoutes.js contains:
-//
-// router.post(
-//     "/:productId/review",
-//     ...
-// )
-//
-// Therefore it MUST be mounted at /products.
-//
-// Final URL:
-//
-// POST /products/:productId/review
-// ==================================================
-
-app.use(
-    "/products",
-    require("./routes/reviewRoutes")
-);
-
-
-// ==================================================
-// PRODUCT ROUTES
-// ==================================================
-
-app.use(
-    "/products",
-    require("./routes/productRoutes")
-);
-
-
-// ==================================================
-// PUBLIC ROUTES
-//
-// MUST ALWAYS BE LAST
-//
-// publicRoutes contains the public 404
-// catch-all route.
-// ==================================================
-
-app.use(
-    "/",
-    require("./routes/publicRoutes")
-);
-
-
-// ==================================================
-// GLOBAL ERROR HANDLER
-// ==================================================
-
-app.use(
-    (err, req, res, next) => {
-
-        console.error(
-            "================================"
-        );
-
-        console.error(
-            "SERVER ERROR:",
-            err
-        );
-
-        console.error(
-            "================================"
-        );
-
-
-        if (res.headersSent) {
-
-            return next(err);
-
-        }
-
-
-        res
-            .status(500)
-            .send(
-                "Server Error: " +
-                err.message
-            );
-
-    }
-);
-
-
-// ==================================================
-// DATABASE + SERVER
-// ==================================================
-
-const PORT =
-    process.env.PORT || 5000;
-
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Session Configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET || "yogita-patola-secret",
+    resave: false,
+    saveUninitialized: false
+}));
+
+// Global Template Locals
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session?.userId
+        ? { _id: req.session.userId, name: req.session.userName || "Account" }
+        : null;
+    res.locals.currentPath = req.path || "/";
+    next();
+});
+
+// Visitor Tracking
+app.use(visitorTracker);
+
+// Routes
+app.use("/admin", require("./routes/adminRoutes"));
+app.use("/user", require("./routes/userRoutes"));
+app.use("/user", require("./routes/passwordRoutes"));
+app.use("/wishlist", require("./routes/wishlistRoutes"));
+app.use("/products", require("./routes/reviewRoutes"));
+app.use("/products", require("./routes/productRoutes"));
+app.use("/", require("./routes/publicRoutes"));
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error("================================");
+    console.error("SERVER ERROR:", err);
+    console.error("================================");
+    if (res.headersSent) return next(err);
+    res.status(500).send("Server Error: " + err.message);
+});
+
+// Database & Server Startup
+const PORT = process.env.PORT || 5000;
 
 async function startServer() {
-
     try {
+        console.log("Connecting to MongoDB...");
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("MongoDB connected successfully");
 
-        console.log(
-            "Connecting to MongoDB..."
-        );
-
-
-        await mongoose.connect(
-            process.env.MONGODB_URI
-        );
-
-
-        console.log(
-            "MongoDB connected successfully"
-        );
-
-
-        app.listen(
-            PORT,
-            () => {
-
-                console.log(
-                    "================================"
-                );
-
-                console.log(
-                    `Server running at http://localhost:${PORT}`
-                );
-
-                console.log(
-                    "================================"
-                );
-
-            }
-        );
-
-
+        app.listen(PORT, () => {
+            console.log("================================");
+            console.log(`Server running at http://localhost:${PORT}`);
+            console.log("================================");
+        });
     } catch (error) {
-
-        console.error(
-            "MongoDB connection error:",
-            error
-        );
-
-
+        console.error("MongoDB connection error:", error);
         process.exit(1);
-
     }
-
 }
-
 
 startServer();

@@ -3,246 +3,51 @@
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+    const loginSubmit = document.getElementById("loginSubmit");
+    const loginButtonText = document.getElementById("loginButtonText");
 
-
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
-
-    const loginForm =
-        document.getElementById("loginForm");
-
-
-    const emailInput =
-        document.getElementById("email");
-
-
-    const passwordInput =
-        document.getElementById("password");
-
-
-    const passwordToggle =
-        document.getElementById("passwordToggle");
-
-
-    const loginSubmit =
-        document.getElementById("loginSubmit");
-
-
-    const loginButtonText =
-        document.getElementById("loginButtonText");
-
-
-
-    /* =====================================================
-       PASSWORD SHOW / HIDE
-       ===================================================== */
-
-    if (
-        passwordToggle &&
-        passwordInput
-    ) {
-
-        passwordToggle.addEventListener(
-            "click",
-            function () {
-
-                const isPassword =
-                    passwordInput.type === "password";
-
-
-                passwordInput.type =
-                    isPassword
-                        ? "text"
-                        : "password";
-
-
-                passwordToggle.textContent =
-                    isPassword
-                        ? "🙈"
-                        : "👁";
-
-
-                passwordToggle.setAttribute(
-                    "aria-label",
-                    isPassword
-                        ? "Hide password"
-                        : "Show password"
-                );
-
-            }
-        );
-
+    if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            passwordToggle.textContent = isPassword ? "🙈" : "👁";
+            passwordToggle.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+        });
     }
 
-
-
-    /* =====================================================
-       EMAIL VALIDATION
-       ===================================================== */
+    function setFieldValidity(input, isValid) {
+        if (!input) return isValid;
+        input.classList.toggle("is-valid", isValid);
+        input.classList.toggle("is-invalid", !isValid);
+        return isValid;
+    }
 
     function validateEmail() {
-
-        if (!emailInput) {
-            return false;
-        }
-
-
-        const email =
-            emailInput.value.trim();
-
-
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-        if (!emailPattern.test(email)) {
-
-            emailInput.classList.add(
-                "is-invalid"
-            );
-
-            emailInput.classList.remove(
-                "is-valid"
-            );
-
-            return false;
-        }
-
-
-        emailInput.classList.remove(
-            "is-invalid"
-        );
-
-        emailInput.classList.add(
-            "is-valid"
-        );
-
-
-        return true;
+        if (!emailInput) return false;
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+        return setFieldValidity(emailInput, valid);
     }
-
-
-
-    /* =====================================================
-       PASSWORD VALIDATION
-       ===================================================== */
 
     function validatePassword() {
-
-        if (!passwordInput) {
-            return false;
-        }
-
-
-        const password =
-            passwordInput.value;
-
-
-        if (!password) {
-
-            passwordInput.classList.add(
-                "is-invalid"
-            );
-
-            passwordInput.classList.remove(
-                "is-valid"
-            );
-
-            return false;
-        }
-
-
-        passwordInput.classList.remove(
-            "is-invalid"
-        );
-
-        passwordInput.classList.add(
-            "is-valid"
-        );
-
-
-        return true;
+        if (!passwordInput) return false;
+        return setFieldValidity(passwordInput, Boolean(passwordInput.value));
     }
 
-
-
-    /* =====================================================
-       LIVE VALIDATION
-       ===================================================== */
-
-    if (emailInput) {
-
-        emailInput.addEventListener(
-            "blur",
-            validateEmail
-        );
-
-    }
-
-
-    if (passwordInput) {
-
-        passwordInput.addEventListener(
-            "blur",
-            validatePassword
-        );
-
-    }
-
-
-
-    /* =====================================================
-       FORM SUBMIT
-       ===================================================== */
+    if (emailInput) emailInput.addEventListener("blur", validateEmail);
+    if (passwordInput) passwordInput.addEventListener("blur", validatePassword);
 
     if (loginForm) {
-
-        loginForm.addEventListener(
-            "submit",
-            function (event) {
-
-                const emailValid =
-                    validateEmail();
-
-
-                const passwordValid =
-                    validatePassword();
-
-
-                if (
-                    !emailValid ||
-                    !passwordValid
-                ) {
-
-                    event.preventDefault();
-
-                    return;
-                }
-
-
-                /* =========================================
-                   DISABLE BUTTON
-                   ========================================= */
-
-                if (loginSubmit) {
-
-                    loginSubmit.disabled =
-                        true;
-
-                }
-
-
-                if (loginButtonText) {
-
-                    loginButtonText.textContent =
-                        "Logging in...";
-
-                }
-
+        loginForm.addEventListener("submit", function (e) {
+            if (!validateEmail() | !validatePassword()) {
+                e.preventDefault();
+                return;
             }
-        );
-
+            if (loginSubmit) loginSubmit.disabled = true;
+            if (loginButtonText) loginButtonText.textContent = "Logging in...";
+        });
     }
-
 });

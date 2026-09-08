@@ -1,20 +1,8 @@
 function adminAuth(req, res, next) {
-
-    if (
-        req.session &&
-        req.session.adminId
-    ) {
-
+    if (req.session && req.session.adminId) {
         return next();
-
     }
-
-
-    return res.redirect(
-        "/admin/login"
-    );
-
+    return res.redirect("/admin/login");
 }
-
 
 module.exports = adminAuth;

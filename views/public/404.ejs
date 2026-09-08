@@ -1,47 +1,221 @@
-
 <% layout("layout") -%>
 
-<section class="py-5">
+<!-- =========================================================
+     404 PAGE CSS
+     Direct CSS loading - do NOT use pageCss
+     ========================================================= -->
 
-    <div class="container">
+<link
+    rel="stylesheet"
+    href="/css/pages/404.css?v=1"
+>
+
+<section class="error-page">
+
+<!-- =====================================================
+     BACKGROUND PATOLA SVG
+     ===================================================== -->
+
+<div class="error-pattern" aria-hidden="true">
+
+    <svg
+        class="patola-pattern-svg"
+        viewBox="0 0 400 400"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <defs>
+
+            <pattern
+                id="patolaDiamond"
+                width="80"
+                height="80"
+                patternUnits="userSpaceOnUse"
+            >
+
+                <path
+                    d="M40 4 L76 40 L40 76 L4 40 Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                />
+
+                <path
+                    d="M40 17 L63 40 L40 63 L17 40 Z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="0.8"
+                />
+
+                <path
+                    d="M40 4 L40 17
+                       M40 63 L40 76
+                       M4 40 L17 40
+                       M63 40 L76 40"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="0.7"
+                />
+
+                <circle
+                    cx="40"
+                    cy="40"
+                    r="4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="0.8"
+                />
+
+            </pattern>
+
+        </defs>
+
+        <rect
+            width="400"
+            height="400"
+            fill="url(#patolaDiamond)"
+        />
+
+    </svg>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<div class="container">
+
+    <div class="error-content">
+
+
+        <!-- TOP ORNAMENT -->
+
+        <div class="error-ornament">
+
+            <span class="ornament-line"></span>
+
+            <svg
+                class="ornament-diamond"
+                viewBox="0 0 40 40"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M20 2 L38 20 L20 38 L2 20 Z"
+                />
+
+                <path
+                    d="M20 9 L31 20 L20 31 L9 20 Z"
+                />
+
+                <circle
+                    cx="20"
+                    cy="20"
+                    r="3"
+                />
+
+            </svg>
+
+            <span class="ornament-line"></span>
+
+        </div>
+
+
+        <!-- 404 -->
 
         <div
-            class="text-center"
-            style="padding: 100px 20px;"
+            class="error-number"
+            aria-label="404"
         >
-
-            <div
-                style="
-                    font-size: 80px;
-                    font-weight: 700;
-                    line-height: 1;
-                "
-            >
-                404
-            </div>
+            404
+        </div>
 
 
-            <h1 class="mt-4">
-                Page Not Found
-            </h1>
+        <!-- LABEL -->
+
+        <div class="error-label">
+            A LITTLE DETOUR
+        </div>
 
 
-            <p class="text-muted mt-3">
-                The page you are looking for
-                does not exist or may have been moved.
-            </p>
+        <!-- TITLE -->
 
+        <h1 class="error-title">
+
+            This Page Has Gone
+
+            <span>
+                Off the Weave
+            </span>
+
+        </h1>
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="error-description">
+
+            It seems the page you're looking for has been moved,
+            removed, or is no longer part of our collection.
+
+        </p>
+
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="error-actions">
 
             <a
                 href="/"
-                class="btn btn-dark mt-3 px-4 py-2"
+                class="error-btn error-btn-primary"
             >
-                Back To Home
+
+                <i class="bi bi-house-door"></i>
+
+                <span>
+                    Back to Home
+                </span>
+
+            </a>
+
+
+            <a
+                href="/collections"
+                class="error-btn error-btn-secondary"
+            >
+
+                <span>
+                    Explore Collections
+                </span>
+
+                <i class="bi bi-arrow-right"></i>
+
             </a>
 
         </div>
 
+
+        <!-- BRAND -->
+
+        <div class="error-brand">
+
+            <span></span>
+
+            <div class="error-brand-name">
+                YOGITA PATOLA ART
+            </div>
+
+            <span></span>
+
+        </div>
+
+
     </div>
 
-</section>
+</div>
 
+
+</section>

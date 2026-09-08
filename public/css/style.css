@@ -1,7 +1,17 @@
+
 /* =========================================================
    YOGITA PATOLA ART
    GLOBAL WEBSITE CSS
    File: public/css/style.css
+
+   PURPOSE
+   ---------------------------------------------------------
+   Global public website styling + responsive foundation.
+
+   IMPORTANT
+   ---------------------------------------------------------
+   This file does NOT contain page-specific styling.
+   Page-specific styling remains inside /css/pages/.
    ========================================================= */
 
 
@@ -64,6 +74,9 @@ html {
 
     scroll-behavior: smooth;
 
+    width: 100%;
+    max-width: 100%;
+
 }
 
 
@@ -79,8 +92,11 @@ html {
 body {
 
     margin: 0;
-
     padding: 0;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 
     background-color: var(--color-white);
 
@@ -98,16 +114,26 @@ body {
 
     text-rendering: optimizeLegibility;
 
+    overflow-x: hidden;
+
 }
 
 
 img {
 
+    display: block;
+
     max-width: 100%;
 
     height: auto;
 
-    display: block;
+}
+
+
+video,
+iframe {
+
+    max-width: 100%;
 
 }
 
@@ -116,6 +142,8 @@ button,
 input,
 textarea,
 select {
+
+    max-width: 100%;
 
     font: inherit;
 
@@ -183,7 +211,33 @@ ol {
 
 
 /* =========================================================
-   3. SELECTION
+   3. PUBLIC PAGE FOUNDATION
+   ========================================================= */
+
+.public-body {
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    overflow-x: hidden;
+
+}
+
+
+.public-main {
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =========================================================
+   4. SELECTION
    ========================================================= */
 
 ::selection {
@@ -196,7 +250,7 @@ ol {
 
 
 /* =========================================================
-   4. SCROLLBAR
+   5. SCROLLBAR
    ========================================================= */
 
 ::-webkit-scrollbar {
@@ -230,7 +284,7 @@ ol {
 
 
 /* =========================================================
-   5. GLOBAL TYPOGRAPHY
+   6. GLOBAL TYPOGRAPHY
    ========================================================= */
 
 .section-title {
@@ -289,7 +343,7 @@ ol {
 
 
 /* =========================================================
-   6. GLOBAL EYEBROW
+   7. GLOBAL EYEBROW
    ========================================================= */
 
 .eyebrow {
@@ -314,7 +368,7 @@ ol {
 
 
 /* =========================================================
-   7. GLOBAL BUTTONS
+   8. GLOBAL BUTTONS
    ========================================================= */
 
 .btn {
@@ -396,13 +450,16 @@ ol {
 
 
 /* =========================================================
-   8. GLOBAL FORMS
+   9. GLOBAL FORMS
    ========================================================= */
 
 .form-control,
 .form-select {
 
     min-height: 46px;
+
+    width: 100%;
+    max-width: 100%;
 
     border: 1px solid var(--border-light);
 
@@ -475,7 +532,7 @@ ol {
 
 
 /* =========================================================
-   9. GLOBAL CARD
+   10. GLOBAL CARD
    ========================================================= */
 
 .card {
@@ -490,7 +547,7 @@ ol {
 
 
 /* =========================================================
-   10. GLOBAL LINKS
+   11. GLOBAL LINKS
    ========================================================= */
 
 .text-link {
@@ -526,7 +583,7 @@ ol {
 
 
 /* =========================================================
-   11. GLOBAL HEADING LINE
+   12. GLOBAL HEADING LINE
    ========================================================= */
 
 .heading-line {
@@ -543,7 +600,7 @@ ol {
 
 
 /* =========================================================
-   12. NAVBAR — GLOBAL FOUNDATION
+   13. NAVBAR — GLOBAL FOUNDATION
    ========================================================= */
 
 .site-header {
@@ -589,7 +646,7 @@ ol {
 
 
 /* =========================================================
-   13. GLOBAL FOOTER FOUNDATION
+   14. FOOTER FOUNDATION
    ========================================================= */
 
 .site-footer,
@@ -622,7 +679,10 @@ ol {
 
 
 /* =========================================================
-   14. CONTAINER WIDTH
+   15. CONTAINER FOUNDATION
+   ---------------------------------------------------------
+   Bootstrap remains responsible for desktop container
+   widths. We only control mobile horizontal spacing.
    ========================================================= */
 
 .container {
@@ -633,10 +693,36 @@ ol {
 
 
 /* =========================================================
-   15. RESPONSIVE — TABLET
+   16. RESPONSIVE — TABLET
+   991.98px AND BELOW
+
+   Aligned with admin responsive foundation.
    ========================================================= */
 
 @media (max-width: 991.98px) {
+
+    html,
+    body {
+
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: hidden;
+
+    }
+
+
+    .public-body,
+    .public-main {
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        overflow-x: hidden;
+
+    }
+
 
     body {
 
@@ -645,14 +731,36 @@ ol {
     }
 
 
-    .navbar {
+    /*
+     * Match admin content side spacing.
+     */
 
-        min-height: 68px;
+    .container {
+
+        width: 100%;
+        max-width: 100%;
+
+        padding-left: 22px;
+        padding-right: 22px;
+
+    }
+
+
+    /*
+     * Keep Bootstrap rows from becoming wider
+     * than the viewport.
+     */
+
+    .row {
+
+        --bs-gutter-x: 1.25rem;
 
     }
 
 
     .section-description {
+
+        max-width: 100%;
 
         font-size: 14px;
 
@@ -660,18 +768,74 @@ ol {
 
     }
 
+
+    /*
+     * Touch-friendly controls.
+     */
+
+    .btn {
+
+        min-height: 44px;
+
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 44px;
+
+    }
+
 }
 
 
 /* =========================================================
-   16. RESPONSIVE — MOBILE
+   17. RESPONSIVE — MOBILE
+   767.98px AND BELOW
    ========================================================= */
 
 @media (max-width: 767.98px) {
 
+    html,
+    body {
+
+        overflow-x: hidden;
+
+    }
+
+
+    /*
+     * Match admin mobile content spacing.
+     */
+
+    .container {
+
+        width: 100%;
+        max-width: 100%;
+
+        padding-left: 16px;
+        padding-right: 16px;
+
+    }
+
+
+    .row {
+
+        --bs-gutter-x: 1rem;
+
+    }
+
+
+    /*
+     * Global headings.
+     */
+
     .section-title {
 
         font-size: 2rem;
+
+        line-height: 1.1;
 
     }
 
@@ -694,11 +858,142 @@ ol {
     }
 
 
+    .section-description {
+
+        max-width: 100%;
+
+        font-size: 13px;
+
+        line-height: 1.75;
+
+    }
+
+
+    /*
+     * Buttons.
+     */
+
     .btn {
 
-        padding: 11px 19px;
+        min-height: 44px;
+
+        padding: 11px 18px;
 
         font-size: 11px;
+
+    }
+
+
+    /*
+     * Forms.
+     */
+
+    .form-control,
+    .form-select {
+
+        min-height: 44px;
+
+        font-size: 13px;
+
+    }
+
+
+    /*
+     * Prevent common Bootstrap/content
+     * elements from overflowing.
+     */
+
+    img,
+    video,
+    iframe {
+
+        max-width: 100%;
+
+    }
+
+
+    input,
+    textarea,
+    select,
+    button {
+
+        max-width: 100%;
+
+    }
+
+
+    .table-responsive {
+
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
+}
+
+
+/* =========================================================
+   18. RESPONSIVE — SMALL MOBILE
+   479.98px AND BELOW
+   ========================================================= */
+
+@media (max-width: 479.98px) {
+
+    body {
+
+        font-size: 13px;
+
+    }
+
+
+    /*
+     * Match admin's tighter mobile spacing.
+     */
+
+    .container {
+
+        padding-left: 12px;
+        padding-right: 12px;
+
+    }
+
+
+    .row {
+
+        --bs-gutter-x: 0.75rem;
+
+    }
+
+
+    .section-title {
+
+        font-size: 1.8rem;
+
+        line-height: 1.1;
+
+    }
+
+
+    .section-description {
+
+        font-size: 12px;
+
+        line-height: 1.7;
+
+    }
+
+
+    .btn {
+
+        min-height: 42px;
+
+        padding: 10px 15px;
+
+        font-size: 10px;
 
     }
 
@@ -706,7 +1001,7 @@ ol {
     .form-control,
     .form-select {
 
-        min-height: 44px;
+        min-height: 42px;
 
         font-size: 12px;
 
@@ -716,39 +1011,56 @@ ol {
 
 
 /* =========================================================
-   17. RESPONSIVE — SMALL MOBILE
+   19. RESPONSIVE — VERY SMALL MOBILE
+   359.98px AND BELOW
    ========================================================= */
 
-@media (max-width: 575.98px) {
+@media (max-width: 359.98px) {
 
-    body {
+    .container {
 
-        font-size: 13px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+
+
+    .row {
+
+        --bs-gutter-x: 0.5rem;
 
     }
 
 
     .section-title {
 
-        font-size: 1.8rem;
+        font-size: 1.65rem;
 
     }
 
 
     .section-description {
 
-        font-size: 13px;
+        font-size: 12px;
 
-        line-height: 1.75;
+        line-height: 1.7;
 
     }
 
 
-    .container {
+    .btn {
 
-        padding-left: 18px;
+        min-height: 40px;
 
-        padding-right: 18px;
+        padding: 9px 13px;
+
+    }
+
+
+    .form-control,
+    .form-select {
+
+        min-height: 40px;
 
     }
 
@@ -756,7 +1068,48 @@ ol {
 
 
 /* =========================================================
-   18. ACCESSIBILITY
+   20. MOBILE WIDTH SAFETY
+   ---------------------------------------------------------
+   These rules prevent long text / fixed-width content
+   from creating horizontal page scrolling.
+
+   They intentionally do NOT force tables themselves to
+   shrink. Tables can remain horizontally scrollable
+   through .table-responsive.
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .public-main > * {
+
+        max-width: 100%;
+
+    }
+
+
+    pre,
+    code {
+
+        max-width: 100%;
+
+        overflow-x: auto;
+
+    }
+
+
+    .table-responsive {
+
+        max-width: 100%;
+
+        overflow-x: auto;
+
+    }
+
+}
+
+
+/* =========================================================
+   21. ACCESSIBILITY
    ========================================================= */
 
 :focus-visible {
@@ -769,7 +1122,7 @@ ol {
 
 
 /* =========================================================
-   19. REDUCED MOTION
+   22. REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {

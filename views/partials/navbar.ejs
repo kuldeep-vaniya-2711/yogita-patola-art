@@ -1,13 +1,7 @@
-<%
-    /*
-     * =========================================================
-     * WEBSITE SETTINGS
-     * =========================================================
-     */
 
+<%
     const s =
-        typeof websiteSettings !== "undefined" &&
-        websiteSettings
+        typeof websiteSettings !== "undefined" && websiteSettings
             ? websiteSettings
             : (
                 typeof settings !== "undefined"
@@ -15,45 +9,30 @@
                     : null
             );
 
-
-    /*
-     * =========================================================
-     * LOGGED-IN USER
-     * =========================================================
-     */
-
     const user =
         typeof currentUser !== "undefined"
             ? currentUser
             : null;
 
-
-    /*
-     * =========================================================
-     * CURRENT PATH
-     * =========================================================
-     */
-
     const path =
-        typeof currentPath !== "undefined" &&
-        currentPath
+        typeof currentPath !== "undefined" && currentPath
             ? currentPath
             : (
-                typeof req !== "undefined" &&
-                req.path
+                typeof req !== "undefined" && req.path
                     ? req.path
                     : ""
             );
+
+    const siteName =
+        s && s.siteName
+            ? s.siteName
+            : "Yogita Patola Art";
 %>
 
 
-<!-- =========================================================
-     PUBLIC NAVBAR
-========================================================= -->
+<nav class="navbar sticky-top patola-navbar">
 
-<nav class="navbar navbar-expand-lg sticky-top patola-navbar">
-
-    <div class="container">
+    <div class="container patola-navbar-container">
 
 
         <!-- =================================================
@@ -63,138 +42,276 @@
         <a
             href="/"
             class="navbar-brand patola-navbar-brand"
-            aria-label="<%= s?.siteName || 'Yogita Patola Art' %>"
+            aria-label="<%= siteName %>"
         >
-            <%= s?.siteName || "Yogita Patola Art" %>
+
+            <span class="patola-brand-decoration patola-brand-decoration-left">
+                ◆
+            </span>
+
+            <span class="patola-brand-main">
+                <%= siteName %>
+            </span>
+
+            <span class="patola-brand-subtitle">
+                Patola Heritage
+            </span>
+
+            <span class="patola-brand-decoration patola-brand-decoration-right">
+                ◆
+            </span>
+
         </a>
 
 
         <!-- =================================================
-             MOBILE TOGGLE
+             MOBILE HAMBURGER
         ================================================== -->
 
         <button
-            class="navbar-toggler"
+            class="navbar-toggler patola-navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
+            data-bs-toggle="offcanvas"
             data-bs-target="#mainNavbar"
             aria-controls="mainNavbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label="Open navigation menu"
         >
-            <span class="navbar-toggler-icon"></span>
+
+            <span class="patola-hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
         </button>
 
 
         <!-- =================================================
-             NAVBAR COLLAPSE
+             NAVIGATION / DRAWER
         ================================================== -->
 
         <div
-            class="collapse navbar-collapse"
+            class="patola-navbar-menu offcanvas offcanvas-start"
+            tabindex="-1"
             id="mainNavbar"
+            aria-labelledby="mainNavbarLabel"
         >
 
 
-            <!-- =============================================
-                 NAVIGATION
-            ============================================== -->
+            <!-- =================================================
+                 MOBILE DRAWER HEADER
+            ================================================== -->
 
-            <ul class="navbar-nav ms-auto align-items-lg-center">
+            <div class="offcanvas-header patola-drawer-header">
+
+                <div class="patola-drawer-pattern"></div>
 
 
-                <!-- HOME -->
+                <div class="patola-drawer-brand">
 
-                <li class="nav-item">
+                    <span class="patola-drawer-small-title">
+                        YOGITA
+                    </span>
 
-                    <a
-                        href="/"
-                        class="nav-link <%= path === "/" ? "active" : "" %>"
+                    <span
+                        class="patola-drawer-title"
+                        id="mainNavbarLabel"
                     >
-                        Home
-                    </a>
+                        <%= siteName %>
+                    </span>
 
-                </li>
+                    <span class="patola-drawer-subtitle">
+                        Traditional Patola Heritage
+                    </span>
 
-
-                <!-- COLLECTIONS -->
-
-                <li class="nav-item">
-
-                    <a
-                        href="/collections"
-                        class="nav-link <%= path === "/collections" ? "active" : "" %>"
-                    >
-                        Collections
-                    </a>
-
-                </li>
+                </div>
 
 
-                <!-- OUR STORY -->
+                <button
+                    type="button"
+                    class="patola-navbar-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close navigation menu"
+                >
 
-                <li class="nav-item">
+                    <span></span>
+                    <span></span>
 
-                    <a
-                        href="/about"
-                        class="nav-link <%= path === "/about" ? "active" : "" %>"
-                    >
-                        Our Story
-                    </a>
+                </button>
 
-                </li>
+            </div>
 
 
-                <!-- CONTACT -->
+            <!-- =================================================
+                 DRAWER BODY
+            ================================================== -->
 
-                <% if (s?.showContact !== false) { %>
+            <div class="offcanvas-body patola-drawer-body">
+
+
+                <!-- DECORATIVE TOP ELEMENT -->
+
+                <div class="patola-drawer-ornament">
+
+                    <span></span>
+                    <strong>✦</strong>
+                    <span></span>
+
+                </div>
+
+
+                <ul class="navbar-nav patola-main-nav">
+
+
+                    <!-- HOME -->
 
                     <li class="nav-item">
 
                         <a
-                            href="/contact"
-                            class="nav-link <%= path === "/contact" ? "active" : "" %>"
+                            href="/"
+                            class="nav-link <%= path === "/" ? "active" : "" %>"
                         >
-                            Contact
+
+                            <span class="patola-nav-symbol">
+                                ◈
+                            </span>
+
+                            <span class="patola-nav-text">
+                                Home
+                            </span>
+
+                            <span class="patola-nav-arrow">
+                                ›
+                            </span>
+
                         </a>
 
                     </li>
 
-                <% } %>
 
-
-                <!-- FEEDBACK -->
-
-                <% if (s?.showFeedback !== false) { %>
+                    <!-- COLLECTIONS -->
 
                     <li class="nav-item">
 
                         <a
-                            href="/feedback"
-                            class="nav-link <%= path === "/feedback" ? "active" : "" %>"
+                            href="/collections"
+                            class="nav-link <%= path === "/collections" ? "active" : "" %>"
                         >
-                            Feedback
+
+                            <span class="patola-nav-symbol">
+                                ◈
+                            </span>
+
+                            <span class="patola-nav-text">
+                                Collections
+                            </span>
+
+                            <span class="patola-nav-arrow">
+                                ›
+                            </span>
+
                         </a>
 
                     </li>
 
-                <% } %>
+
+                    <!-- OUR STORY -->
+
+                    <li class="nav-item">
+
+                        <a
+                            href="/about"
+                            class="nav-link <%= path === "/about" ? "active" : "" %>"
+                        >
+
+                            <span class="patola-nav-symbol">
+                                ◈
+                            </span>
+
+                            <span class="patola-nav-text">
+                                Our Story
+                            </span>
+
+                            <span class="patola-nav-arrow">
+                                ›
+                            </span>
+
+                        </a>
+
+                    </li>
 
 
-                <!-- =========================================
-                     DESKTOP SEARCH
-                ========================================== -->
+                    <!-- CONTACT -->
 
-                <li class="nav-item patola-desktop-search">
+                    <% if (!s || s.showContact !== false) { %>
 
-                    <form
-                        action="/search"
-                        method="GET"
-                        class="navbar-search-form"
-                        role="search"
-                    >
+                        <li class="nav-item">
 
-                        <div class="input-group">
+                            <a
+                                href="/contact"
+                                class="nav-link <%= path === "/contact" ? "active" : "" %>"
+                            >
+
+                                <span class="patola-nav-symbol">
+                                    ◈
+                                </span>
+
+                                <span class="patola-nav-text">
+                                    Contact
+                                </span>
+
+                                <span class="patola-nav-arrow">
+                                    ›
+                                </span>
+
+                            </a>
+
+                        </li>
+
+                    <% } %>
+
+
+                    <!-- FEEDBACK -->
+
+                    <% if (!s || s.showFeedback !== false) { %>
+
+                        <li class="nav-item">
+
+                            <a
+                                href="/feedback"
+                                class="nav-link <%= path === "/feedback" ? "active" : "" %>"
+                            >
+
+                                <span class="patola-nav-symbol">
+                                    ◈
+                                </span>
+
+                                <span class="patola-nav-text">
+                                    Feedback
+                                </span>
+
+                                <span class="patola-nav-arrow">
+                                    ›
+                                </span>
+
+                            </a>
+
+                        </li>
+
+                    <% } %>
+
+
+                    <!-- =================================================
+                         DESKTOP SEARCH
+                    ================================================== -->
+
+                    <li class="nav-item patola-desktop-search">
+
+                        <form
+                            action="/search"
+                            method="GET"
+                            class="navbar-search-form"
+                        >
 
                             <input
                                 type="search"
@@ -202,7 +319,6 @@
                                 class="form-control"
                                 placeholder="Search products..."
                                 aria-label="Search products"
-                                autocomplete="off"
                                 required
                             >
 
@@ -211,134 +327,251 @@
                                 class="btn"
                                 aria-label="Search"
                             >
-                                🔍
+                                <span>⌕</span>
                             </button>
 
-                        </div>
+                        </form>
+
+                    </li>
+
+
+                    <% if (user) { %>
+
+
+                        <!-- =================================================
+                             LOGGED-IN PROFILE
+                        ================================================== -->
+
+                        <li class="nav-item patola-desktop-user">
+
+                            <a
+                                href="/user/profile"
+                                class="nav-link patola-account-link"
+                            >
+
+                                <span class="patola-account-icon">
+                                    ♙
+                                </span>
+
+                                <span>
+                                    <%= user.name || "Account" %>
+                                </span>
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- WISHLIST -->
+
+                        <li class="nav-item patola-desktop-user">
+
+                            <a
+                                href="/wishlist"
+                                class="nav-link <%= path.indexOf("/wishlist") === 0 ? "active" : "" %>"
+                            >
+
+                                <span class="patola-wishlist-icon">
+                                    ♡
+                                </span>
+
+                                <span>
+                                    Wishlist
+                                </span>
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- LOGOUT -->
+
+                        <li class="nav-item patola-desktop-user">
+
+                            <a
+                                href="/user/logout"
+                                class="nav-link patola-logout-link"
+                            >
+                                Logout
+                            </a>
+
+                        </li>
+
+
+                    <% } else { %>
+
+
+                        <!-- LOGIN -->
+
+                        <li class="nav-item patola-desktop-user patola-login-item">
+
+                            <a
+                                href="/user/login"
+                                class="nav-link"
+                            >
+                                Login
+                            </a>
+
+                        </li>
+
+
+                        <!-- REGISTER -->
+
+                        <li class="nav-item patola-desktop-user patola-register-item">
+
+                            <a
+                                href="/user/register"
+                                class="nav-link patola-register-btn"
+                            >
+                                Register
+                            </a>
+
+                        </li>
+
+
+                    <% } %>
+
+
+                </ul>
+
+
+                <!-- =================================================
+                     MOBILE SEARCH
+                ================================================== -->
+
+                <div class="mobile-search">
+
+                    <div class="patola-mobile-section-title">
+                        Explore Collection
+                    </div>
+
+                    <form
+                        action="/search"
+                        method="GET"
+                        class="navbar-search-form"
+                    >
+
+                        <input
+                            type="search"
+                            name="q"
+                            class="form-control"
+                            placeholder="Search products..."
+                            aria-label="Search products"
+                            required
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn"
+                            aria-label="Search"
+                        >
+                            <span>⌕</span>
+                        </button>
 
                     </form>
 
-                </li>
+                </div>
 
-
-                <!-- =========================================
-                     USER
-                ========================================== -->
 
                 <% if (user) { %>
 
 
-                    <!-- ACCOUNT -->
+                    <!-- =================================================
+                         MOBILE LOGGED-IN USER
+                    ================================================== -->
 
-                    <li class="nav-item">
+                    <div class="patola-mobile-user">
+
+                        <div class="patola-mobile-section-title">
+                            My Account
+                        </div>
+
 
                         <a
                             href="/user/profile"
-                            class="nav-link"
+                            class="patola-mobile-user-link"
                         >
-                            👤 <%= user.name || "Account" %>
+
+                            <span class="patola-mobile-user-icon">
+                                ♙
+                            </span>
+
+                            <span class="patola-mobile-user-text">
+
+                                <small>
+                                    Welcome back
+                                </small>
+
+                                <strong>
+                                    <%= user.name || "Account" %>
+                                </strong>
+
+                            </span>
+
+                            <span class="patola-mobile-user-arrow">
+                                →
+                            </span>
+
                         </a>
 
-                    </li>
-
-
-                    <!-- WISHLIST -->
-
-                    <li class="nav-item">
-
-                        <a
-                            href="/wishlist"
-                            class="nav-link <%= path.startsWith("/wishlist") ? "active" : "" %>"
-                        >
-                            ❤️ Wishlist
-                        </a>
-
-                    </li>
-
-
-                    <!-- LOGOUT -->
-
-                    <li class="nav-item">
 
                         <a
                             href="/user/logout"
-                            class="nav-link"
+                            class="patola-mobile-logout"
                         >
                             Logout
                         </a>
 
-                    </li>
+                    </div>
 
 
                 <% } else { %>
 
 
-                    <!-- LOGIN -->
+                    <!-- =================================================
+                         MOBILE LOGGED-OUT USER
+                    ================================================== -->
 
-                    <li class="nav-item">
+                    <div class="patola-mobile-auth">
+
+                        <div class="patola-mobile-section-title">
+                            Your Account
+                        </div>
+
 
                         <a
                             href="/user/login"
-                            class="nav-link <%= path.startsWith("/user/login") ? "active" : "" %>"
+                            class="patola-mobile-login"
                         >
                             Login
                         </a>
 
-                    </li>
-
-
-                    <!-- REGISTER -->
-
-                    <li class="nav-item">
 
                         <a
                             href="/user/register"
-                            class="btn patola-register-btn"
+                            class="patola-mobile-register"
                         >
-                            Register
+                            Create Account
                         </a>
 
-                    </li>
+                    </div>
 
 
                 <% } %>
 
 
-            </ul>
+                <!-- DRAWER BOTTOM ORNAMENT -->
 
+                <div class="patola-drawer-bottom-ornament">
 
-            <!-- =============================================
-                 MOBILE SEARCH
-            ============================================== -->
+                    <span></span>
+                    <i></i>
+                    <span></span>
 
-            <div class="mobile-search">
+                </div>
 
-                <form
-                    action="/search"
-                    method="GET"
-                    role="search"
-                >
-
-                    <input
-                        type="search"
-                        name="q"
-                        placeholder="Search products..."
-                        aria-label="Search products"
-                        autocomplete="off"
-                        required
-                    >
-
-                    <button
-                        type="submit"
-                        aria-label="Search"
-                    >
-                        🔍
-                    </button>
-
-                </form>
 
             </div>
-
 
         </div>
 
