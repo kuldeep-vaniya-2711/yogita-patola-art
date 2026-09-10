@@ -5,7 +5,6 @@ layout("layout", {
 });
 %>
 
-
 <%
 /*
  * =========================================================
@@ -26,17 +25,11 @@ block("head").append(`
 `);
 %>
 
-
-<!-- ================================================= -->
-<!-- ABOUT / OUR STORY PAGE -->
-<!-- ================================================= -->
-
 <section class="about-page">
 
-
-    <!-- =================================================
-         HERO
-         ================================================= -->
+    <!-- ==================================================
+         ABOUT HERO
+    ================================================== -->
 
     <section class="about-hero py-5">
 
@@ -61,17 +54,15 @@ block("head").append(`
     </section>
 
 
-
-    <!-- =================================================
-         STORY
-         ================================================= -->
+    <!-- ==================================================
+         ABOUT STORY
+    ================================================== -->
 
     <section class="about-story py-5">
 
         <div class="container">
 
             <div class="row align-items-center g-5">
-
 
                 <!-- STORY CONTENT -->
 
@@ -82,35 +73,60 @@ block("head").append(`
                     </span>
 
                     <h2 class="section-title">
+
                         Woven With Tradition.
+
                         <br>
+
                         Created With Passion.
+
                     </h2>
 
                     <p class="section-description">
+
                         Patola is more than a textile.
+
                         It represents generations of
                         craftsmanship, patience and
                         artistic heritage.
+
                     </p>
 
                     <p class="section-description">
+
                         At Yogita Patola Art, we celebrate
                         this heritage by bringing carefully
                         crafted traditional textiles to
                         people who appreciate timeless
                         Indian artistry.
+
                     </p>
 
                 </div>
 
 
-
-                <!-- STORY VISUAL -->
+                <!-- STORY IMAGE -->
 
                 <div class="col-lg-6">
 
                     <div class="about-story-card">
+
+                        <% if (
+                            typeof websiteSettings !== "undefined" &&
+                            websiteSettings &&
+                            websiteSettings.aboutStoryImage
+                        ) { %>
+
+                            <img
+                                src="<%= websiteSettings.aboutStoryImage %>"
+                                alt="Patola Art Heritage"
+                                class="about-story-image"
+                            >
+
+                            <div class="about-story-overlay"></div>
+
+                        <% } %>
+
 
                         <div class="about-story-content">
 
@@ -132,7 +148,6 @@ block("head").append(`
 
                 </div>
 
-
             </div>
 
         </div>
@@ -140,10 +155,9 @@ block("head").append(`
     </section>
 
 
-
-    <!-- =================================================
+    <!-- ==================================================
          VALUES
-         ================================================= -->
+    ================================================== -->
 
     <section class="about-values py-5">
 
@@ -164,9 +178,6 @@ block("head").append(`
 
             <div class="row g-4">
 
-
-                <!-- VALUE 01 -->
-
                 <div class="col-md-4">
 
                     <div class="about-value-card text-center">
@@ -185,9 +196,6 @@ block("head").append(`
 
                 </div>
 
-
-
-                <!-- VALUE 02 -->
 
                 <div class="col-md-4">
 
@@ -208,9 +216,6 @@ block("head").append(`
                 </div>
 
 
-
-                <!-- VALUE 03 -->
-
                 <div class="col-md-4">
 
                     <div class="about-value-card text-center">
@@ -229,7 +234,6 @@ block("head").append(`
 
                 </div>
 
-
             </div>
 
         </div>
@@ -237,10 +241,9 @@ block("head").append(`
     </section>
 
 
-
-    <!-- =================================================
+    <!-- ==================================================
          CTA
-         ================================================= -->
+    ================================================== -->
 
     <section class="about-cta py-5">
 
@@ -270,6 +273,4 @@ block("head").append(`
 
     </section>
 
-
 </section>
-

@@ -929,3 +929,39 @@
     }
 
 }
+/* =========================================================
+   MOBILE PRODUCT GRID - ALWAYS 2 COLUMNS
+   ========================================================= */
+
+@media (max-width: 575px) {
+
+    .products-grid {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 1rem;
+    }
+
+    .products-grid .product-grid-item {
+        width: 50%;
+        flex: 0 0 auto;
+    }
+
+}
+/* =========================================================
+   MOBILE PRODUCTS - ALWAYS 2 COLUMNS
+   Applies to all screens 575px and below
+   ========================================================= */
+
+@media (max-width: 575px) {
+
+    .products-grid {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 1rem;
+    }
+
+    .products-grid .product-grid-item {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+}

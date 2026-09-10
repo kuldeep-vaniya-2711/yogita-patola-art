@@ -719,3 +719,46 @@
     }
 
 }
+/* =========================================================
+   TWO COLUMN MOBILE PRODUCTS
+   Keep 2 products side-by-side on all small screens
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .collections-product-grid {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 1rem;
+    }
+
+
+    .collections-product-grid .collection-product-item {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+    }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+   Keep 2 columns below 355px as well
+   ========================================================= */
+
+@media (max-width: 355px) {
+
+    .collections-product-grid {
+        --bs-gutter-x: 0.5rem;
+        --bs-gutter-y: 0.75rem;
+    }
+
+
+    .collections-product-grid .collection-product-item {
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+}

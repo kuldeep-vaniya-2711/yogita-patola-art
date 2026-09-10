@@ -98,10 +98,10 @@
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     cursor: zoom-in;
-    transition: transform 0.45s ease;
+    transition: transform 0.3s ease;
 }
 
 .product-main-image:hover img {
@@ -174,7 +174,7 @@
     height: 100%;
     max-width: none;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 }
 
@@ -1093,4 +1093,151 @@
         transition: none;
     }
 
+}
+/* =========================================================
+   PRODUCT IMAGE GALLERY NAVIGATION
+========================================================= */
+
+.product-gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(111, 72, 44, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 250, 244, 0.94);
+    color: #6f482c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 5;
+    box-shadow: 0 4px 14px rgba(40, 25, 15, 0.12);
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.product-gallery-arrow:hover {
+    background: #6f482c;
+    color: #fff;
+}
+
+.product-gallery-prev {
+    left: 14px;
+}
+
+.product-gallery-next {
+    right: 14px;
+}
+
+/* =========================================================
+   LIGHTBOX NAVIGATION
+========================================================= */
+
+.lightbox-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: rgba(255, 250, 244, 0.94);
+    color: #6f482c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10002;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.25);
+}
+
+.lightbox-prev {
+    left: 24px;
+}
+
+.lightbox-next {
+    right: 24px;
+}
+
+.lightbox-nav:hover {
+    background: #6f482c;
+    color: #fff;
+}
+
+/* =========================================================
+   LIGHTBOX FULLSCREEN BUTTON
+========================================================= */
+
+.lightbox-fullscreen {
+    position: fixed;
+    top: 22px;
+    right: 76px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    background: rgba(255, 250, 244, 0.94);
+    color: #6f482c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    cursor: pointer;
+    z-index: 10002;
+}
+
+.lightbox-fullscreen:hover {
+    background: #6f482c;
+    color: #fff;
+}
+
+/* =========================================================
+   MOBILE GALLERY
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .product-gallery-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+    }
+
+    .product-gallery-prev {
+        left: 8px;
+    }
+
+    .product-gallery-next {
+        right: 8px;
+    }
+
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .lightbox-fullscreen {
+        top: 15px;
+        right: 58px;
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
 }

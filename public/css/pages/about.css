@@ -1,129 +1,94 @@
 /* =========================================================
-   ABOUT PAGE
-   Yogita Patola Art
-   ========================================================= */
+   YOGITA PATOLA ART
+   ABOUT / OUR STORY PAGE
+========================================================= */
 
 
 /* =========================================================
-   PAGE WRAPPER
-   ========================================================= */
+   PAGE
+========================================================= */
 
 .about-page {
-    width: 100%;
-
     background: #fcfaf7;
-
     color: #2d2520;
 }
 
 
-
 /* =========================================================
-   SHARED ABOUT TYPOGRAPHY
-   ========================================================= */
+   COMMON TYPOGRAPHY
+========================================================= */
 
 .about-page .section-subtitle {
-    display: block;
+    display: inline-block;
 
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 
     color: #96765d;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
     font-size: 0.72rem;
+    font-weight: 700;
 
-    font-weight: 600;
-
-    line-height: 1.4;
-
-    letter-spacing: 0.13em;
-
+    letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
 
 .about-page .section-title {
-    margin-top: 0;
-
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 
     color: #4b151f;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+    font-family: Georgia, "Times New Roman", serif;
 
-    font-size: clamp(1.9rem, 3.2vw, 2.7rem);
-
+    font-size: clamp(1.9rem, 3vw, 2.7rem);
     font-weight: 600;
 
     line-height: 1.25;
-
-    letter-spacing: -0.01em;
 }
 
 
 .about-page .section-description {
     max-width: 680px;
 
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 
     color: #70675f;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.94rem;
-
-    font-weight: 400;
-
+    font-size: 1rem;
     line-height: 1.8;
 }
 
 
-
 /* =========================================================
    HERO
-   ========================================================= */
+========================================================= */
 
 .about-hero {
     position: relative;
 
-    padding-top: 82px !important;
+    overflow: hidden;
 
-    padding-bottom: 78px !important;
+    padding-top: 90px !important;
+    padding-bottom: 90px !important;
 
     background: #f5eee6;
 
-    border-bottom: 1px solid #ebe1d6;
-
-    overflow: hidden;
+    border-bottom: 1px solid #e5d9cc;
 }
 
 
-.about-hero::before {
+.about-hero::after {
     content: "";
 
     position: absolute;
 
-    top: -120px;
-    left: 50%;
+    width: 180px;
+    height: 180px;
 
-    width: 480px;
-    height: 480px;
+    right: -70px;
+    bottom: -90px;
 
-    transform: translateX(-50%);
-
-    border: 1px solid rgba(150, 118, 93, 0.10);
+    border: 1px solid rgba(150, 118, 93, 0.16);
 
     border-radius: 50%;
 
@@ -131,56 +96,23 @@
 }
 
 
-.about-hero .container {
-    position: relative;
-
-    z-index: 1;
-}
-
-
-.about-hero .section-subtitle {
-    margin-bottom: 12px;
-}
-
-
-.about-hero .section-title {
-    margin-bottom: 16px;
-
-    font-size: clamp(2.3rem, 5vw, 3.6rem);
-}
-
-
 .about-hero .section-description {
     margin-right: auto;
     margin-left: auto;
 
-    font-size: 1rem;
-
-    line-height: 1.75;
+    margin-bottom: 0;
 }
-
 
 
 /* =========================================================
-   STORY SECTION
-   ========================================================= */
+   STORY
+========================================================= */
 
 .about-story {
     padding-top: 80px !important;
-
     padding-bottom: 80px !important;
 
     background: #ffffff;
-}
-
-
-.about-story .row {
-    align-items: center;
-}
-
-
-.about-story .section-title {
-    margin-bottom: 22px;
 }
 
 
@@ -189,10 +121,9 @@
 }
 
 
-
 /* =========================================================
    STORY CARD
-   ========================================================= */
+========================================================= */
 
 .about-story-card {
     position: relative;
@@ -203,39 +134,90 @@
     justify-content: center;
 
     width: 100%;
-
     min-height: 430px;
 
     padding: 40px;
 
+    overflow: hidden;
+
     background:
         linear-gradient(
             135deg,
-            #f5eee6 0%,
-            #eadfd2 100%
+            #f5eee6,
+            #eadfd2
         );
 
     border: 1px solid #e5d9cc;
 
-    overflow: hidden;
+    isolation: isolate;
 }
 
+
+/* =========================================================
+   STORY IMAGE
+========================================================= */
+
+.about-story-image {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.about-story-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(45, 25, 20, 0.18),
+            rgba(45, 25, 20, 0.58)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   INNER FRAME
+========================================================= */
 
 .about-story-card::before {
     content: "";
 
     position: absolute;
 
-    top: 28px;
-    right: 28px;
-    bottom: 28px;
-    left: 28px;
+    inset: 28px;
+
+    z-index: 2;
 
     border: 1px solid rgba(90, 24, 37, 0.16);
 
     pointer-events: none;
 }
 
+
+/* =========================================================
+   DECORATIVE CIRCLE
+========================================================= */
 
 .about-story-card::after {
     content: "";
@@ -245,6 +227,13 @@
     width: 190px;
     height: 190px;
 
+    top: 50%;
+    left: 50%;
+
+    z-index: 2;
+
+    transform: translate(-50%, -50%);
+
     border: 1px solid rgba(150, 118, 93, 0.16);
 
     border-radius: 50%;
@@ -253,116 +242,114 @@
 }
 
 
+/* =========================================================
+   STORY CONTENT
+========================================================= */
+
 .about-story-content {
     position: relative;
 
-    z-index: 1;
+    z-index: 3;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
 }
 
 
+/* =========================================================
+   STORY LABEL
+========================================================= */
+
 .about-story-content span {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 
     color: #96765d;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
     font-size: 0.72rem;
+    font-weight: 700;
 
-    font-weight: 600;
-
-    letter-spacing: 0.16em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
 }
 
 
-.about-story-content strong {
-    display: block;
+/* =========================================================
+   STORY TITLE
+========================================================= */
 
-    margin-bottom: 12px;
+.about-story-content strong {
+    margin-bottom: 10px;
 
     color: #4b151f;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+    font-family: Georgia, "Times New Roman", serif;
 
     font-size: clamp(2rem, 4vw, 3rem);
-
     font-weight: 600;
 
-    line-height: 1.15;
-
-    letter-spacing: 0.02em;
+    line-height: 1.1;
 }
 
+
+/* =========================================================
+   STORY SUBTITLE
+========================================================= */
 
 .about-story-content small {
     color: #70675f;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.75rem;
+    font-size: 0.85rem;
 
     letter-spacing: 0.08em;
 }
 
 
+/* =========================================================
+   WHEN IMAGE EXISTS
+========================================================= */
+
+.about-story-card:has(.about-story-image) .about-story-content span,
+.about-story-card:has(.about-story-image) .about-story-content small {
+    color: #f5eee6;
+}
+
+
+.about-story-card:has(.about-story-image) .about-story-content strong {
+    color: #ffffff;
+}
+
+
+.about-story-card:has(.about-story-image)::before {
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+
+.about-story-card:has(.about-story-image)::after {
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
 
 /* =========================================================
-   VALUES SECTION
-   ========================================================= */
+   VALUES
+========================================================= */
 
 .about-values {
-    padding-top: 80px !important;
-
-    padding-bottom: 80px !important;
-
-    background: #f9f5f0;
+    background: #fcfaf7;
 
     border-top: 1px solid #eee5dc;
-
-    border-bottom: 1px solid #eee5dc;
 }
 
-
-.about-values .text-center.mb-5 {
-    margin-bottom: 42px !important;
-}
-
-
-.about-values .section-title {
-    margin-bottom: 0;
-}
-
-
-
-/* =========================================================
-   VALUE CARDS
-   ========================================================= */
 
 .about-value-card {
     height: 100%;
 
-    padding: 34px 28px;
+    padding: 35px 28px;
 
     background: #ffffff;
 
@@ -370,165 +357,84 @@
 
     transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        box-shadow 0.25s ease;
 }
 
 
 .about-value-card:hover {
     transform: translateY(-4px);
 
-    border-color: #d8c8b8;
-
-    box-shadow:
-        0 12px 28px rgba(60, 42, 30, 0.08);
+    box-shadow: 0 12px 30px rgba(75, 21, 31, 0.08);
 }
 
 
 .about-value-card h3 {
-    margin: 0 0 13px;
+    margin-bottom: 14px;
 
     color: #4b151f;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+    font-family: Georgia, "Times New Roman", serif;
 
     font-size: 1.35rem;
-
-    font-weight: 600;
-
-    line-height: 1.35;
 }
 
 
 .about-value-card p {
-    max-width: 330px;
+    margin-bottom: 0;
 
-    margin: 0 auto;
+    color: #70675f;
 
-    color: #756c64;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.86rem;
+    font-size: 0.95rem;
 
     line-height: 1.75;
 }
 
 
-
 /* =========================================================
-   CTA SECTION
-   ========================================================= */
+   CTA
+========================================================= */
 
 .about-cta {
-    padding-top: 82px !important;
+    background: #f5eee6;
 
-    padding-bottom: 82px !important;
-
-    background: #ffffff;
-
-    text-align: center;
-}
-
-
-.about-cta .section-title {
-    max-width: 760px;
-
-    margin-right: auto;
-    margin-left: auto;
-
-    margin-bottom: 15px;
+    border-top: 1px solid #e5d9cc;
 }
 
 
 .about-cta .section-description {
-    max-width: 650px;
-
     margin-right: auto;
-    margin-bottom: 28px;
     margin-left: auto;
+
+    margin-bottom: 28px;
 }
 
 
 .about-cta .btn {
-    display: inline-flex;
+    padding: 12px 28px;
 
-    align-items: center;
-    justify-content: center;
+    border-radius: 0;
 
-    min-height: 48px;
-
-    padding: 11px 28px;
-
-    background: #332b27;
-
-    border: 1px solid #332b27;
-    border-radius: 2px;
-
-    color: #ffffff;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.82rem;
-
+    font-size: 0.9rem;
     font-weight: 600;
 
-    line-height: 1.3;
-
     letter-spacing: 0.04em;
-
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
 }
-
-
-.about-cta .btn:hover {
-    background: #5a1825;
-
-    border-color: #5a1825;
-
-    color: #ffffff;
-}
-
-
-.about-cta .btn:active {
-    transform: translateY(1px);
-}
-
 
 
 /* =========================================================
    TABLET
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 991.98px) {
 
     .about-hero {
-        padding-top: 65px !important;
-
-        padding-bottom: 62px !important;
+        padding-top: 70px !important;
+        padding-bottom: 70px !important;
     }
 
 
     .about-story {
         padding-top: 65px !important;
-
         padding-bottom: 65px !important;
     }
 
@@ -537,236 +443,92 @@
         min-height: 380px;
     }
 
-
-    .about-values {
-        padding-top: 65px !important;
-
-        padding-bottom: 65px !important;
-    }
-
-
-    .about-cta {
-        padding-top: 65px !important;
-
-        padding-bottom: 65px !important;
-    }
-
 }
-
 
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 767.98px) {
 
-    .about-page .section-subtitle {
-        font-size: 0.66rem;
-
-        letter-spacing: 0.11em;
-    }
-
-
-    .about-page .section-title {
-        font-size: 1.8rem;
-
-        line-height: 1.3;
-    }
-
-
-    .about-page .section-description {
-        font-size: 0.86rem;
-
-        line-height: 1.7;
-    }
-
-
     .about-hero {
-        padding-top: 52px !important;
-
-        padding-bottom: 48px !important;
-    }
-
-
-    .about-hero .section-title {
-        font-size: 2.15rem;
-    }
-
-
-    .about-hero .section-description {
-        font-size: 0.88rem;
+        padding-top: 55px !important;
+        padding-bottom: 55px !important;
     }
 
 
     .about-story {
-        padding-top: 50px !important;
-
-        padding-bottom: 50px !important;
-    }
-
-
-    .about-story .row {
-        --bs-gutter-y: 2.5rem;
-    }
-
-
-    .about-story .section-title {
-        margin-bottom: 17px;
+        padding-top: 55px !important;
+        padding-bottom: 55px !important;
     }
 
 
     .about-story-card {
         min-height: 320px;
 
-        padding: 30px 20px;
+        padding: 30px;
     }
 
 
     .about-story-card::before {
-        top: 20px;
-        right: 20px;
-        bottom: 20px;
-        left: 20px;
+        inset: 20px;
     }
 
 
     .about-story-content strong {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
 
-    .about-values {
-        padding-top: 52px !important;
-
-        padding-bottom: 52px !important;
-    }
-
-
-    .about-values .text-center.mb-5 {
-        margin-bottom: 30px !important;
-    }
-
-
-    .about-values .row {
-        --bs-gutter-y: 1rem;
+    .about-story-card::after {
+        width: 150px;
+        height: 150px;
     }
 
 
     .about-value-card {
-        padding: 28px 22px;
-    }
-
-
-    .about-value-card h3 {
-        font-size: 1.25rem;
-    }
-
-
-    .about-value-card p {
-        font-size: 0.82rem;
-    }
-
-
-    .about-cta {
-        padding-top: 52px !important;
-
-        padding-bottom: 55px !important;
-    }
-
-
-    .about-cta .section-title {
-        font-size: 1.75rem;
-    }
-
-
-    .about-cta .section-description {
-        margin-bottom: 24px;
-    }
-
-
-    .about-cta .btn {
-        width: auto;
-
-        min-height: 44px;
-
-        padding: 10px 22px;
-
-        font-size: 0.76rem;
+        padding: 30px 22px;
     }
 
 }
 
 
-
 /* =========================================================
    SMALL MOBILE
-   ========================================================= */
+========================================================= */
 
-@media (max-width: 575.98px) {
-
-    .about-hero {
-        padding-right: 16px !important;
-
-        padding-left: 16px !important;
-    }
-
-
-    .about-hero .section-title {
-        font-size: 1.95rem;
-    }
-
+@media (max-width: 480px) {
 
     .about-story-card {
         min-height: 280px;
     }
 
 
+    .about-story-card::before {
+        inset: 16px;
+    }
+
+
     .about-story-content strong {
-        font-size: 1.9rem;
+        font-size: 1.75rem;
     }
 
 
     .about-story-content small {
-        font-size: 0.68rem;
-    }
-
-
-    .about-value-card {
-        padding: 25px 18px;
-    }
-
-
-    .about-cta {
-        padding-right: 16px !important;
-
-        padding-left: 16px !important;
+        font-size: 0.75rem;
     }
 
 }
-
 
 
 /* =========================================================
    ACCESSIBILITY
-   ========================================================= */
-
-.about-cta .btn:focus-visible {
-    outline: 2px solid #96765d;
-
-    outline-offset: 3px;
-}
-
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    .about-value-card,
-    .about-cta .btn {
+    .about-value-card {
         transition: none;
     }
 
@@ -775,4 +537,4 @@
         transform: none;
     }
 
-}   
+}

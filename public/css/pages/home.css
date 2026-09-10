@@ -113,7 +113,6 @@
 
 
 .home-page .home-eyebrow-centered {
-
     justify-content: center;
 }
 
@@ -541,7 +540,6 @@
 
 
 .home-page .home-heritage .home-section-heading h2 {
-
     color: var(--home-brown);
 }
 
@@ -795,7 +793,6 @@
 
 
 .home-page .home-featured .home-eyebrow {
-
     justify-content: center;
 }
 
@@ -817,7 +814,6 @@
  */
 
 .home-page .home-products-grid > * {
-
     min-width: 0;
 }
 
@@ -893,7 +889,6 @@
    ========================================================= */
 
 .home-page .home-section-action {
-
     margin-top: 42px;
 }
 
@@ -1064,7 +1059,6 @@
    ========================================================= */
 
 .home-page .home-about-content {
-
     padding: 15px 0;
 }
 
@@ -1120,7 +1114,6 @@
 
 
 .home-page .home-about-text {
-
     margin-bottom: 27px;
 }
 
@@ -1158,9 +1151,7 @@
 
 
 .home-page .home-text-link span {
-
     font-size: 16px;
-
     line-height: 1;
 }
 
@@ -1377,7 +1368,6 @@
 
 
 .home-page .home-final-cta .home-eyebrow {
-
     color: var(--home-gold-light);
 }
 
@@ -1434,6 +1424,7 @@
 
 
     .home-page .home-products-grid {
+
         grid-template-columns:
             repeat(4, minmax(0, 1fr));
 
@@ -1467,6 +1458,7 @@
 
 
     .home-page .home-hero-content {
+
         max-width: 650px;
 
         padding: 90px 0;
@@ -1481,6 +1473,7 @@
     /* HERITAGE */
 
     .home-page .home-heritage-grid {
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
@@ -1494,6 +1487,7 @@
     /* FEATURED */
 
     .home-page .home-products-grid {
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
@@ -1510,6 +1504,7 @@
 
 
     .home-page .home-about-image {
+
         max-width: 650px;
 
         margin: 0 auto;
@@ -1517,6 +1512,7 @@
 
 
     .home-page .home-about-content {
+
         max-width: 650px;
 
         margin: 0 auto;
@@ -1526,6 +1522,7 @@
     /* VALUES */
 
     .home-page .home-values-grid {
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
@@ -1547,6 +1544,7 @@
     /* COMMON */
 
     .home-page .home-eyebrow {
+
         font-size: 9px;
 
         letter-spacing: 0.18em;
@@ -1566,6 +1564,7 @@
     /* HERO */
 
     .home-page .home-hero {
+
         min-height: 570px;
 
         background-position: center;
@@ -1589,6 +1588,7 @@
 
 
     .home-page .home-hero h1 {
+
         font-size: 3.5rem;
 
         line-height: 0.92;
@@ -1596,6 +1596,7 @@
 
 
     .home-page .home-hero-content > p {
+
         font-size: 12px;
 
         line-height: 1.8;
@@ -1603,6 +1604,7 @@
 
 
     .home-page .home-hero-actions {
+
         flex-direction: column;
 
         align-items: stretch;
@@ -1622,6 +1624,7 @@
     .home-page .home-featured,
     .home-page .home-about,
     .home-page .home-values {
+
         padding-top: 75px;
 
         padding-bottom: 80px;
@@ -1641,6 +1644,7 @@
     /* FEATURED */
 
     .home-page .home-products-grid {
+
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
@@ -1667,7 +1671,9 @@
 
 
     .home-page .home-about-frame {
+
         top: 14px;
+
         left: 14px;
     }
 
@@ -1685,6 +1691,7 @@
 
 
     .home-page .home-value-item {
+
         min-height: auto;
 
         padding: 30px 25px;
@@ -1746,7 +1753,9 @@
 
 
     .home-page .home-heading-ornament {
+
         margin-top: 18px;
+
         margin-bottom: 18px;
     }
 
@@ -1771,9 +1780,16 @@
     /* FEATURED */
 
     .home-page .home-products-grid {
-        grid-template-columns: 1fr;
 
-        gap: 20px;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    .home-page .home-products-grid > * {
+        min-width: 0;
     }
 
 
@@ -1814,6 +1830,24 @@
 
     .home-page .home-final-cta-content > p {
         font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ALWAYS KEEP FEATURED PRODUCTS IN 2 COLUMNS
+   ========================================================= */
+
+@media (max-width: 355px) {
+
+    .home-page .home-products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
     }
 
 }

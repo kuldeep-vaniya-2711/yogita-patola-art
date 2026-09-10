@@ -18,9 +18,13 @@ const settingsSchema = new mongoose.Schema(
         heroHeading: { type: String, default: "Woven Heritage, Timeless Beauty." },
         heroDescription: { type: String, default: "Discover the elegance of handcrafted Patola textiles, where centuries-old Indian artistry meets contemporary sophistication." },
         heroImage: { type: String, default: "" },
+
         aboutHeading: { type: String, default: "Preserving Tradition. Creating Legacy." },
         aboutDescription: { type: String, default: "At Yogita Patola Art, we believe that traditional Indian textiles deserve to be experienced, celebrated and preserved." },
         aboutImage: { type: String, default: "" },
+
+        // About / Our Story Page
+        aboutStoryImage: { type: String, default: "" },
 
         // Heritage Section Images
         heritageHandcraftedImage: { type: String, default: "" },

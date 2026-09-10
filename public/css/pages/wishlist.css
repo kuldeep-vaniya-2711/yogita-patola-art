@@ -551,3 +551,27 @@
     }
 
 }
+/* =========================================================
+   VERY SMALL MOBILE
+   ALWAYS KEEP WISHLIST PRODUCTS IN 2 COLUMNS
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .wishlist-grid {
+
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 1rem;
+    }
+
+
+    .wishlist-grid .wishlist-item {
+
+        width: 50%;
+
+        flex: 0 0 50%;
+
+        max-width: 50%;
+    }
+
+}
