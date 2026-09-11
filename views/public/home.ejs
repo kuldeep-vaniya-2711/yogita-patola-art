@@ -1,893 +1,1008 @@
 <%
 layout("layout", {
-    title: "Yogita Patola Art",
-    description:
-        "Handcrafted Patola Sarees and Traditional Indian Textiles",
-    pageCss: "/css/pages/home.css"
+title: "Yogita Patola Art",
+description:
+"Handcrafted Patola Sarees and Traditional Indian Textiles",
+pageCss: "/css/pages/home.css"
 });
 %>
 
-
 <%
-/*
- * =========================================================
- * WEBSITE SETTINGS
- * =========================================================
- */
+/* =========================================================
+WEBSITE SETTINGS
+========================================================= */
 
 const siteSettings =
-    typeof websiteSettings !== "undefined" &&
-    websiteSettings
-        ? websiteSettings
-        : {};
+typeof websiteSettings !== "undefined" && websiteSettings
+? websiteSettings
+: (
+typeof settings !== "undefined" && settings
+? settings
+: {}
+);
 
-
-/*
- * =========================================================
- * HERO SETTINGS
- * =========================================================
- */
+/* =========================================================
+HERO SETTINGS
+========================================================= */
 
 const homeHeroHeading =
-    siteSettings.heroHeading ||
-    "Woven Heritage, Timeless Beauty.";
-
+siteSettings.heroHeading ||
+"The Art of Patola, Woven Into Legacy";
 
 const homeHeroDescription =
-    siteSettings.heroDescription ||
-    "Discover the elegance of handcrafted Patola textiles, where centuries-old Indian artistry meets contemporary sophistication.";
-
+siteSettings.heroDescription ||
+"Discover the timeless beauty of handcrafted Patola textiles, created with patience, precision and generations of tradition.";
 
 const homeHeroImage =
-    siteSettings.heroImage ||
-    "";
+siteSettings.heroImage ||
+"";
 
-
-/*
- * =========================================================
- * ABOUT SETTINGS
- * =========================================================
- */
+/* =========================================================
+ABOUT SETTINGS
+========================================================= */
 
 const homeAboutHeading =
-    siteSettings.aboutHeading ||
-    "Preserving Tradition. Creating Legacy.";
-
+siteSettings.aboutHeading ||
+"A Legacy Woven Into Every Thread.";
 
 const homeAboutDescription =
-    siteSettings.aboutDescription ||
-    "At Yogita Patola Art, we believe that traditional Indian textiles deserve to be experienced, celebrated and preserved.";
-
+siteSettings.aboutDescription ||
+"Yogita Patola Art celebrates the timeless artistry of Indian handloom traditions through carefully crafted textiles.";
 
 const homeAboutImage =
-    siteSettings.aboutImage ||
-    "";
+siteSettings.aboutImage ||
+"";
 
-
-/*
- * =========================================================
- * HERITAGE CARD IMAGES
- * =========================================================
- *
- * These are controlled from Admin > Settings.
- */
+/* =========================================================
+HERITAGE IMAGES
+========================================================= */
 
 const heritageHandcraftedImage =
-    siteSettings.heritageHandcraftedImage ||
-    "";
-
+siteSettings.heritageHandcraftedImage ||
+"";
 
 const heritageIntricateImage =
-    siteSettings.heritageIntricateImage ||
-    "";
-
+siteSettings.heritageIntricateImage ||
+"";
 
 const heritageTimelessImage =
-    siteSettings.heritageTimelessImage ||
-    "";
+siteSettings.heritageTimelessImage ||
+"";
 
-
-/*
- * =========================================================
- * HEADING PARTS
- * =========================================================
- */
+/* =========================================================
+HERO / ABOUT HEADING PARTS
+========================================================= */
 
 const heroParts =
-    String(homeHeroHeading)
-        .split(",");
-
+String(homeHeroHeading).split(",");
 
 const aboutParts =
-    String(homeAboutHeading)
-        .split(".");
-%>
+String(homeAboutHeading).split(".");
 
+/* =========================================================
+REVIEWS
+========================================================= */
+
+const reviews =
+Array.isArray(homeReviews)
+? homeReviews
+: [];
+%>
 
 <div class="home-page">
 
 
-    <!-- ==================================================
-         HERO
-    ================================================== -->
+<!-- =====================================================
+     HERO
+====================================================== -->
 
-    <section
-        class="home-hero"
-        <% if (homeHeroImage) { %>
-            style="background-image: url('<%= homeHeroImage %>');"
-        <% } %>
-    >
+<section
+    class="home-hero"
+    <% if (homeHeroImage) { %>
+        style="background-image: url('<%= homeHeroImage %>');"
+    <% } %>
+>
 
-        <div class="home-hero-overlay"></div>
-
-
-        <div class="home-container">
-
-            <div class="home-hero-content">
+    <div class="home-hero-overlay"></div>
 
 
-                <div class="home-eyebrow">
+    <div class="home-container">
 
-                    <span class="home-eyebrow-line"></span>
+        <div class="home-hero-content">
 
-                    <span>
-                        YOGITA PATOLA ART
-                    </span>
-
-                </div>
+            <span class="home-eyebrow">
+                YOGITA PATOLA ART
+            </span>
 
 
-                <h1>
+            <h1 class="home-hero-heading">
 
-                    <%= heroParts[0] || "Woven Heritage" %>
-
-                    <% if (heroParts.length > 1) { %>
-
-                        <em>
-                            <%= heroParts.slice(1).join(",") %>
-                        </em>
-
-                    <% } %>
-
-                </h1>
-
-
-                <p>
-                    <%= homeHeroDescription %>
-                </p>
-
-
-                <div class="home-hero-actions">
-
-                    <a
-                        href="/collections"
-                        class="home-btn home-btn-primary"
-                    >
-                        Explore Collection
-                        <span>→</span>
-                    </a>
-
-
-                    <a
-                        href="/about"
-                        class="home-btn home-btn-outline"
-                    >
-                        Our Story
-                    </a>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ==================================================
-         HERITAGE
-    ================================================== -->
-
-    <section class="home-heritage">
-
-        <div class="home-container">
-
-
-            <div class="home-section-heading home-centered">
-
-
-                <div class="home-eyebrow home-eyebrow-centered">
-
-                    <span class="home-eyebrow-line"></span>
+                <% heroParts.forEach((part, index) => { %>
 
                     <span>
-                        OUR HERITAGE
+                        <%= part.trim() %>
                     </span>
 
-                    <span class="home-eyebrow-line"></span>
+                <% }) %>
 
-                </div>
-
-
-                <h2>
-
-                    A Tradition Woven
-
-                    <em>
-                        Into Every Thread
-                    </em>
-
-                </h2>
+            </h1>
 
 
-                <div class="home-heading-ornament">
-
-                    <span></span>
-
-                    <i>✦</i>
-
-                    <span></span>
-
-                </div>
-
-
-                <p>
-
-                    Patola is more than a textile.
-                    It is a celebration
-                    of patience, precision,
-                    craftsmanship and India's
-                    rich cultural heritage.
-
-                </p>
-
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
             </div>
 
 
+            <p class="home-hero-description">
+                <%= homeHeroDescription %>
+            </p>
 
-            <div class="home-heritage-grid">
 
-
-                <!-- ==================================================
-                     CARD 01 — HANDCRAFTED
-                ================================================== -->
-
-                <article class="home-heritage-card">
-
-                    <% if (heritageHandcraftedImage) { %>
-
-                        <div
-                            class="home-heritage-card-bg"
-                            style="background-image: url('<%= heritageHandcraftedImage %>');"
-                        ></div>
-
-                    <% } else { %>
-
-                        <div class="home-heritage-card-bg"></div>
-
-                    <% } %>
-
-
-                    <div class="home-heritage-card-overlay"></div>
-
-
-                    <div class="home-card-number">
-                        01
-                    </div>
-
-
-                    <div class="home-heritage-icon">
-                        ✧
-                    </div>
-
-
-                    <div class="home-heritage-card-content">
-
-                        <h3>
-                            Handcrafted
-                        </h3>
-
-
-                        <p>
-                            Every piece reflects the dedication,
-                            patience and skill of traditional artisans.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- ==================================================
-                     CARD 02 — INTRICATE ART
-                ================================================== -->
-
-                <article class="home-heritage-card">
-
-                    <% if (heritageIntricateImage) { %>
-
-                        <div
-                            class="home-heritage-card-bg"
-                            style="background-image: url('<%= heritageIntricateImage %>');"
-                        ></div>
-
-                    <% } else { %>
-
-                        <div class="home-heritage-card-bg"></div>
-
-                    <% } %>
-
-
-                    <div class="home-heritage-card-overlay"></div>
-
-
-                    <div class="home-card-number">
-                        02
-                    </div>
-
-
-                    <div class="home-heritage-icon">
-                        ◈
-                    </div>
-
-
-                    <div class="home-heritage-card-content">
-
-                        <h3>
-                            Intricate Art
-                        </h3>
-
-
-                        <p>
-                            Detailed patterns and precise weaving
-                            create the unmistakable Patola character.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- ==================================================
-                     CARD 03 — TIMELESS
-                ================================================== -->
-
-                <article class="home-heritage-card">
-
-                    <% if (heritageTimelessImage) { %>
-
-                        <div
-                            class="home-heritage-card-bg"
-                            style="background-image: url('<%= heritageTimelessImage %>');"
-                        ></div>
-
-                    <% } else { %>
-
-                        <div class="home-heritage-card-bg"></div>
-
-                    <% } %>
-
-
-                    <div class="home-heritage-card-overlay"></div>
-
-
-                    <div class="home-card-number">
-                        03
-                    </div>
-
-
-                    <div class="home-heritage-icon">
-                        ◷
-                    </div>
-
-
-                    <div class="home-heritage-card-content">
-
-                        <h3>
-                            Timeless
-                        </h3>
-
-
-                        <p>
-                            Traditional techniques transformed into
-                            pieces designed to be treasured for generations.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ==================================================
-         FEATURED PRODUCTS
-    ================================================== -->
-
-    <section class="home-featured">
-
-        <div class="home-container">
-
-
-            <div class="home-section-heading">
-
-
-                <div class="home-eyebrow">
-
-                    <span class="home-eyebrow-line"></span>
-
-                    <span>
-                        CURATED COLLECTION
-                    </span>
-
-                </div>
-
-
-                <h2>
-
-                    Featured
-
-                    <em>
-                        Patola
-                    </em>
-
-                </h2>
-
-
-                <p>
-
-                    Discover selected pieces that represent
-                    the beauty and craftsmanship of Patola.
-
-                </p>
-
-            </div>
-
-
-
-            <div class="home-products-grid">
-
-                <% if (
-                    typeof featuredProducts !== "undefined" &&
-                    Array.isArray(featuredProducts) &&
-                    featuredProducts.length
-                ) { %>
-
-
-                    <% featuredProducts.forEach(product => { %>
-
-                        <%- include(
-                            "../partials/product-card",
-                            {
-                                product
-                            }
-                        ) %>
-
-                    <% }) %>
-
-
-                <% } else { %>
-
-
-                    <div class="home-empty-state">
-
-                        <div class="home-empty-icon">
-                            ✦
-                        </div>
-
-                        <h3>
-                            Collection Coming Soon
-                        </h3>
-
-                        <p>
-                            Our handcrafted Patola collection
-                            is being prepared.
-                        </p>
-
-                        <a href="/collections">
-                            Explore Collections →
-                        </a>
-
-                    </div>
-
-
-                <% } %>
-
-            </div>
-
-
-
-            <div class="home-centered home-section-action">
-
-                <a
-                    href="/collections"
-                    class="home-btn home-btn-dark"
-                >
-                    View All Collections
-                    <span>→</span>
-                </a>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ==================================================
-         ABOUT
-    ================================================== -->
-
-    <section class="home-about">
-
-        <div class="home-container">
-
-            <div class="home-about-grid">
-
-
-                <div class="home-about-image">
-
-
-                    <% if (homeAboutImage) { %>
-
-                        <img
-                            src="<%= homeAboutImage %>"
-                            alt="Yogita Patola Art"
-                            loading="lazy"
-                        >
-
-
-                    <% } else { %>
-
-
-                        <div class="home-about-placeholder">
-
-                            <span>
-                                YOGITA
-                            </span>
-
-                            <strong>
-                                PATOLA ART
-                            </strong>
-
-                            <small>
-                                TRADITION • ART • LEGACY
-                            </small>
-
-                        </div>
-
-
-                    <% } %>
-
-
-                    <div class="home-about-image-overlay"></div>
-
-                    <div class="home-about-frame"></div>
-
-
-                </div>
-
-
-
-                <div class="home-about-content">
-
-
-                    <div class="home-eyebrow">
-
-                        <span class="home-eyebrow-line"></span>
-
-                        <span>
-                            OUR STORY
-                        </span>
-
-                    </div>
-
-
-                    <h2>
-
-
-                        <%= aboutParts[0] || "Preserving Tradition" %>
-
-
-                        <% if (aboutParts.length > 1) { %>
-
-                            <em>
-                                <%= aboutParts.slice(1).join(".") %>
-                            </em>
-
-                        <% } %>
-
-
-                    </h2>
-
-
-                    <div class="home-heading-ornament home-heading-ornament-left">
-
-                        <span></span>
-
-                        <i>✦</i>
-
-                        <span></span>
-
-                    </div>
-
-
-                    <p class="home-about-lead">
-                        <%= homeAboutDescription %>
-                    </p>
-
-
-                    <p class="home-about-text">
-
-                        Through generations of knowledge,
-                        careful craftsmanship and respect for
-                        traditional techniques, we create
-                        textiles that connect heritage with
-                        contemporary elegance.
-
-                    </p>
-
-
-                    <a
-                        href="/about"
-                        class="home-text-link"
-                    >
-
-                        Discover Our Story
-
-                        <span>
-                            →
-                        </span>
-
-                    </a>
-
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ==================================================
-         VALUES
-    ================================================== -->
-
-    <section class="home-values">
-
-        <div class="home-container">
-
-
-            <div class="home-section-heading home-centered">
-
-
-                <div class="home-eyebrow home-eyebrow-centered">
-
-                    <span class="home-eyebrow-line"></span>
-
-                    <span>
-                        WHY PATOLA
-                    </span>
-
-                    <span class="home-eyebrow-line"></span>
-
-                </div>
-
-
-                <h2>
-
-                    Crafted With
-
-                    <em>
-                        Purpose
-                    </em>
-
-                </h2>
-
-
-                <div class="home-heading-ornament">
-
-                    <span></span>
-
-                    <i>✦</i>
-
-                    <span></span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div class="home-values-grid">
-
-
-                <div class="home-value-item">
-
-                    <span class="home-value-number">
-                        01
-                    </span>
-
-                    <div class="home-value-icon">
-                        ✧
-                    </div>
-
-                    <h3>
-                        Authenticity
-                    </h3>
-
-                    <p>
-
-                        Honouring traditional techniques
-                        and authentic Patola craftsmanship.
-
-                    </p>
-
-                </div>
-
-
-
-                <div class="home-value-item">
-
-                    <span class="home-value-number">
-                        02
-                    </span>
-
-                    <div class="home-value-icon">
-                        ◈
-                    </div>
-
-                    <h3>
-                        Precision
-                    </h3>
-
-                    <p>
-
-                        Every motif and thread is created
-                        with patience and extraordinary care.
-
-                    </p>
-
-                </div>
-
-
-
-                <div class="home-value-item">
-
-                    <span class="home-value-number">
-                        03
-                    </span>
-
-                    <div class="home-value-icon">
-                        ♡
-                    </div>
-
-                    <h3>
-                        Legacy
-                    </h3>
-
-                    <p>
-
-                        Creating textiles that can be
-                        treasured across generations.
-
-                    </p>
-
-                </div>
-
-
-
-                <div class="home-value-item">
-
-                    <span class="home-value-number">
-                        04
-                    </span>
-
-                    <div class="home-value-icon">
-                        ◉
-                    </div>
-
-                    <h3>
-                        Elegance
-                    </h3>
-
-                    <p>
-
-                        Timeless Indian artistry interpreted
-                        with refined contemporary sensibility.
-
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ==================================================
-         FINAL CTA
-    ================================================== -->
-
-    <section class="home-final-cta">
-
-        <div class="home-final-cta-pattern"></div>
-
-        <div class="home-final-cta-overlay"></div>
-
-
-        <div class="home-container">
-
-
-            <div class="home-final-cta-content">
-
-
-                <div class="home-eyebrow home-eyebrow-centered">
-
-                    <span class="home-eyebrow-line"></span>
-
-                    <span>
-                        BEGIN YOUR JOURNEY
-                    </span>
-
-                    <span class="home-eyebrow-line"></span>
-
-                </div>
-
-
-                <h2>
-
-                    Wear a Piece of
-
-                    <em>
-                        Heritage
-                    </em>
-
-                </h2>
-
-
-                <p>
-
-                    Explore handcrafted Patola textiles
-                    created with tradition, artistry and love.
-
-                </p>
-
+            <div class="home-hero-actions">
 
                 <a
                     href="/collections"
                     class="home-btn home-btn-primary"
                 >
-
                     Explore Collection
-
-                    <span>
-                        →
-                    </span>
-
+                    <i class="bi bi-arrow-right"></i>
                 </a>
 
+
+                <a
+                    href="/about"
+                    class="home-btn home-btn-outline"
+                >
+                    Our Story
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HERITAGE
+====================================================== -->
+
+<section class="home-heritage">
+
+    <div class="home-container">
+
+        <div class="home-section-intro">
+
+            <span class="home-eyebrow">
+                OUR HERITAGE
+            </span>
+
+
+            <h2 class="home-section-heading">
+                A Tradition Woven Into Every Thread
+            </h2>
+
+
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
+            </div>
+
+
+            <p>
+                Rooted in India's rich handloom heritage,
+                Patola is an art of extraordinary patience,
+                precision and craftsmanship. Every motif,
+                colour and thread carries the story of a
+                tradition passed through generations.
+            </p>
+
+        </div>
+
+
+        <div class="home-heritage-grid">
+
+
+            <!-- HANDCRAFTED -->
+
+            <article
+                class="home-heritage-card"
+                <% if (heritageHandcraftedImage) { %>
+                    style="background-image: url('<%= heritageHandcraftedImage %>');"
+                <% } %>
+            >
+
+                <div class="home-heritage-card-overlay"></div>
+
+
+                <div class="home-heritage-card-number">
+                    01
+                </div>
+
+
+                <div class="home-heritage-card-icon">
+                    <i class="bi bi-hand-index-thumb"></i>
+                </div>
+
+
+                <div class="home-heritage-card-content">
+
+                    <h3>
+                        Handcrafted
+                    </h3>
+
+                    <p>
+                        Each piece is created with
+                        patience, skill and the human touch.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- INTRICATE -->
+
+            <article
+                class="home-heritage-card"
+                <% if (heritageIntricateImage) { %>
+                    style="background-image: url('<%= heritageIntricateImage %>');"
+                <% } %>
+            >
+
+                <div class="home-heritage-card-overlay"></div>
+
+
+                <div class="home-heritage-card-number">
+                    02
+                </div>
+
+
+                <div class="home-heritage-card-icon">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
+
+
+                <div class="home-heritage-card-content">
+
+                    <h3>
+                        Intricate Art
+                    </h3>
+
+                    <p>
+                        Every motif demands precision,
+                        balance and extraordinary attention to detail.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- TIMELESS -->
+
+            <article
+                class="home-heritage-card"
+                <% if (heritageTimelessImage) { %>
+                    style="background-image: url('<%= heritageTimelessImage %>');"
+                <% } %>
+            >
+
+                <div class="home-heritage-card-overlay"></div>
+
+
+                <div class="home-heritage-card-number">
+                    03
+                </div>
+
+
+                <div class="home-heritage-card-icon">
+                    <i class="bi bi-hourglass-split"></i>
+                </div>
+
+
+                <div class="home-heritage-card-content">
+
+                    <h3>
+                        Timeless
+                    </h3>
+
+                    <p>
+                        A heritage textile designed to
+                        remain beautiful across generations.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURED PATOLAS
+====================================================== -->
+
+<section class="home-featured">
+
+    <div class="home-container">
+
+        <div class="home-section-intro">
+
+            <span class="home-eyebrow">
+                CURATED COLLECTION
+            </span>
+
+
+            <h2 class="home-section-heading">
+                Featured Patola
+            </h2>
+
+
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
+            </div>
+
+
+            <p>
+                Explore a carefully selected collection of
+                handcrafted Patola sarees and traditional
+                Indian textiles.
+            </p>
+
+        </div>
+
+
+        <% if (
+            Array.isArray(featuredProducts) &&
+            featuredProducts.length
+        ) { %>
+
+            <div class="home-products-grid">
+
+                <% featuredProducts.forEach(product => { %>
+
+                    <%- include(
+                        "../partials/product-card",
+                        {
+                            product
+                        }
+                    ) %>
+
+                <% }) %>
+
+            </div>
+
+
+        <% } else { %>
+
+            <div class="home-featured-empty">
+
+                <i class="bi bi-flower1"></i>
+
+                <h3>
+                    Our Collection Is Being Curated
+                </h3>
+
+                <p>
+                    Beautiful handcrafted Patola pieces
+                    will be available here soon.
+                </p>
+
+            </div>
+
+        <% } %>
+
+
+        <div class="home-section-action">
+
+            <a
+                href="/collections"
+                class="home-btn home-btn-primary"
+            >
+                View All Collections
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CRAFTED BY TRADITION
+====================================================== -->
+
+<section class="home-crafted">
+
+    <div class="home-container">
+
+        <div class="home-section-intro">
+
+            <span class="home-eyebrow">
+                CRAFTED BY TRADITION
+            </span>
+
+
+            <h2 class="home-section-heading">
+                One saree, up to nine months on the loom
+            </h2>
+
+
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
+            </div>
+
+
+            <p>
+                A Patola saree begins long before it reaches
+                the loom. Raw mulberry silk is prepared with
+                care, while warp and weft threads are
+                meticulously planned so that the design meets
+                perfectly during weaving.
+            </p>
+
+
+            <p>
+                On the pit loom, every thread is aligned by
+                hand. The process is slow, deliberate and
+                deeply connected to the traditions that have
+                shaped Indian handloom artistry for generations.
+            </p>
+
+        </div>
+
+
+        <div class="home-crafted-process">
+
+
+            <article class="home-process-item">
+
+                <span class="home-process-number">
+                    01
+                </span>
+
+                <div class="home-process-icon">
+                    <i class="bi bi-pencil-square"></i>
+                </div>
+
+                <div class="home-process-content">
+
+                    <span class="home-process-label">
+                        Design
+                    </span>
+
+                    <h3>
+                        Charting the motif
+                    </h3>
+
+                    <p>
+                        Every motif begins with careful planning,
+                        proportion and precision.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="home-process-item">
+
+                <span class="home-process-number">
+                    02
+                </span>
+
+                <div class="home-process-icon">
+                    <i class="bi bi-link-45deg"></i>
+                </div>
+
+                <div class="home-process-content">
+
+                    <span class="home-process-label">
+                        Tying
+                    </span>
+
+                    <h3>
+                        Binding the resist
+                    </h3>
+
+                    <p>
+                        Sections of silk are tied carefully
+                        to protect the planned pattern.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="home-process-item">
+
+                <span class="home-process-number">
+                    03
+                </span>
+
+                <div class="home-process-icon">
+                    <i class="bi bi-droplet-half"></i>
+                </div>
+
+                <div class="home-process-content">
+
+                    <span class="home-process-label">
+                        Dyeing
+                    </span>
+
+                    <h3>
+                        Layering colour
+                    </h3>
+
+                    <p>
+                        Colours are built layer by layer,
+                        following the exact design.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="home-process-item">
+
+                <span class="home-process-number">
+                    04
+                </span>
+
+                <div class="home-process-icon">
+                    <i class="bi bi-grid-1x2"></i>
+                </div>
+
+                <div class="home-process-content">
+
+                    <span class="home-process-label">
+                        Weaving
+                    </span>
+
+                    <h3>
+                        Aligning by hand
+                    </h3>
+
+                    <p>
+                        Warp and weft come together thread by
+                        thread to reveal the final design.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OUR APPROACH
+====================================================== -->
+
+<section class="home-approach">
+
+    <div class="home-container">
+
+        <div class="home-approach-grid">
+
+
+            <div class="home-approach-content">
+
+                <span class="home-eyebrow">
+                    OUR APPROACH
+                </span>
+
+
+                <h2 class="home-section-heading">
+                    Where tradition meets contemporary elegance
+                </h2>
+
+
+                <div class="home-heading-ornament">
+                    <span></span>
+                    <i class="bi bi-diamond-fill"></i>
+                    <span></span>
+                </div>
+
+
+                <p>
+                    We believe heritage should not be preserved
+                    behind glass. It should be experienced,
+                    worn and carried forward with confidence.
+                </p>
+
+
+                <p>
+                    Yogita Patola Art brings the discipline of
+                    traditional weaving together with an
+                    appreciation for refined, contemporary
+                    elegance.
+                </p>
+
+            </div>
+
+
+            <div class="home-approach-list">
+
+
+                <div class="home-approach-item">
+
+                    <span class="home-approach-check">
+                        <i class="bi bi-check2"></i>
+                    </span>
+
+                    <span>
+                        Authentic craftsmanship, verified at the loom
+                    </span>
+
+                </div>
+
+
+                <div class="home-approach-item">
+
+                    <span class="home-approach-check">
+                        <i class="bi bi-check2"></i>
+                    </span>
+
+                    <span>
+                        Hand-tied, hand-dyed detailing on every piece
+                    </span>
+
+                </div>
+
+
+                <div class="home-approach-item">
+
+                    <span class="home-approach-check">
+                        <i class="bi bi-check2"></i>
+                    </span>
+
+                    <span>
+                        Traditional resist-dye and ikat techniques
+                    </span>
+
+                </div>
+
+
+                <div class="home-approach-item">
+
+                    <span class="home-approach-check">
+                        <i class="bi bi-check2"></i>
+                    </span>
+
+                    <span>
+                        Premium mulberry and tussar silk fabrics
+                    </span>
+
+                </div>
+
+
+                <div class="home-approach-item">
+
+                    <span class="home-approach-check">
+                        <i class="bi bi-check2"></i>
+                    </span>
+
+                    <span>
+                        Unique, non-repeating motifs — no two sarees identical
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHY YOGITA PATOLA ART
+====================================================== -->
+
+<section class="home-why">
+
+    <div class="home-container">
+
+        <div class="home-section-intro">
+
+            <span class="home-eyebrow">
+                WHY YOGITA PATOLA ART
+            </span>
+
+
+            <h2 class="home-section-heading">
+                What you're actually paying for
+            </h2>
+
+
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
+            </div>
+
+
+            <p>
+                A handcrafted textile is more than a finished
+                product. It represents time, skill, materials,
+                heritage and the hands that bring every design
+                to life.
+            </p>
+
+        </div>
+
+
+        <div class="home-why-grid">
+
+
+            <article class="home-why-card">
+
+                <span class="home-why-number">
+                    01
+                </span>
+
+                <div class="home-why-icon">
+                    <i class="bi bi-award"></i>
+                </div>
+
+                <h3>
+                    Authentic Craftsmanship
+                </h3>
+
+                <p>
+                    Every piece celebrates the knowledge and
+                    precision of traditional Indian weaving,
+                    with craftsmanship at the heart of the work.
+                </p>
+
+            </article>
+
+
+            <article class="home-why-card">
+
+                <span class="home-why-number">
+                    02
+                </span>
+
+                <div class="home-why-icon">
+                    <i class="bi bi-hand-index-thumb"></i>
+                </div>
+
+                <h3>
+                    Handcrafted Products
+                </h3>
+
+                <p>
+                    Each textile carries the subtle character
+                    of the human hand, from preparation and
+                    dyeing to the final weave.
+                </p>
+
+            </article>
+
+
+            <article class="home-why-card">
+
+                <span class="home-why-number">
+                    03
+                </span>
+
+                <div class="home-why-icon">
+                    <i class="bi bi-gem"></i>
+                </div>
+
+                <h3>
+                    Premium Quality
+                </h3>
+
+                <p>
+                    Carefully selected silk fabrics and
+                    attention to detail create pieces made
+                    to be treasured for years.
+                </p>
+
+            </article>
+
+
+            <article class="home-why-card">
+
+                <span class="home-why-number">
+                    04
+                </span>
+
+                <div class="home-why-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <h3>
+                    Traditional Heritage
+                </h3>
+
+                <p>
+                    Every design connects contemporary wear
+                    with centuries of Indian textile knowledge
+                    and cultural heritage.
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     IN THEIR WORDS
+====================================================== -->
+
+<% if (reviews.length) { %>
+
+    <section class="home-reviews">
+
+        <div class="home-container">
+
+            <div class="home-section-intro">
+
+                <span class="home-eyebrow">
+                    IN THEIR WORDS
+                </span>
+
+
+                <h2 class="home-section-heading">
+                    Loved by Those Who Wear It
+                </h2>
+
+
+                <div class="home-heading-ornament">
+                    <span></span>
+                    <i class="bi bi-diamond-fill"></i>
+                    <span></span>
+                </div>
+
+
+                <p>
+                    Real experiences from customers who have
+                    discovered the beauty of handcrafted textiles.
+                </p>
+
+            </div>
+
+
+            <div class="home-reviews-grid">
+
+                <% reviews.forEach(review => { %>
+
+                    <article class="home-review-card">
+
+
+                        <div class="home-review-top">
+
+                            <div class="home-review-stars">
+
+                                <% const reviewRating =
+                                    Math.min(
+                                        5,
+                                        Math.max(
+                                            0,
+                                            Number(review.rating || 0)
+                                        )
+                                    );
+                                %>
+
+                                <% for (
+                                    let star = 1;
+                                    star <= 5;
+                                    star++
+                                ) { %>
+
+                                    <% if (star <= reviewRating) { %>
+
+                                        <i class="bi bi-star-fill"></i>
+
+                                    <% } else { %>
+
+                                        <i class="bi bi-star"></i>
+
+                                    <% } %>
+
+                                <% } %>
+
+                            </div>
+
+
+                            <i class="bi bi-quote home-review-quote"></i>
+
+                        </div>
+
+
+                        <p class="home-review-text">
+
+                            <%= (
+                                review.message ||
+                                review.comment ||
+                                review.review ||
+                                review.text ||
+                                ""
+                            ) %>
+
+                        </p>
+
+
+                        <div class="home-review-author">
+
+                            <div class="home-review-avatar">
+
+                                <i class="bi bi-person-fill"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    <%= (
+                                        review.name ||
+                                        review.customerName ||
+                                        review.userName ||
+                                        review.author ||
+                                        "Customer"
+                                    ) %>
+                                </strong>
+
+
+                                <% if (
+                                    review.location ||
+                                    review.city
+                                ) { %>
+
+                                    <span>
+                                        <%= (
+                                            review.location ||
+                                            review.city
+                                        ) %>
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+                        </div>
+
+
+                    </article>
+
+                <% }) %>
 
             </div>
 
@@ -895,5 +1010,287 @@ const aboutParts =
 
     </section>
 
+<% } %>
+
+
+<!-- =====================================================
+     ABOUT / OUR STORY
+====================================================== -->
+
+<section class="home-about">
+
+    <div class="home-container">
+
+        <div class="home-about-grid">
+
+
+            <div class="home-about-image">
+
+                <% if (homeAboutImage) { %>
+
+                    <img
+                        src="<%= homeAboutImage %>"
+                        alt="Yogita Patola Art handcrafted textile"
+                        loading="lazy"
+                    >
+
+                <% } else { %>
+
+                    <div class="home-about-placeholder">
+
+                        <i class="bi bi-flower1"></i>
+
+                        <span>
+                            Yogita Patola Art
+                        </span>
+
+                    </div>
+
+                <% } %>
+
+
+                <div class="home-about-image-overlay"></div>
+
+                <div class="home-about-frame"></div>
+
+            </div>
+
+
+            <div class="home-about-content">
+
+                <span class="home-eyebrow">
+                    OUR STORY
+                </span>
+
+
+                <h2 class="home-section-heading">
+
+                    <% aboutParts.forEach((part, index) => { %>
+
+                        <% if (part.trim()) { %>
+
+                            <span>
+                                <%= part.trim() %>
+                            </span>
+
+                        <% } %>
+
+                    <% }) %>
+
+                </h2>
+
+
+                <div class="home-heading-ornament">
+                    <span></span>
+                    <i class="bi bi-diamond-fill"></i>
+                    <span></span>
+                </div>
+
+
+                <p>
+                    <%= homeAboutDescription %>
+                </p>
+
+
+                <p>
+                    At Yogita Patola Art, we honour the artistry
+                    behind every textile and the generations of
+                    knowledge that make this craft extraordinary.
+                    Our aim is to bring that heritage closer to
+                    the modern wearer without losing its soul.
+                </p>
+
+
+                <a
+                    href="/about"
+                    class="home-text-link"
+                >
+                    Discover Our Story
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VALUES
+====================================================== -->
+
+<section class="home-values">
+
+    <div class="home-container">
+
+        <div class="home-section-intro">
+
+            <span class="home-eyebrow">
+                WHY PATOLA
+            </span>
+
+
+            <h2 class="home-section-heading">
+                Crafted With Purpose
+            </h2>
+
+
+            <div class="home-heading-ornament">
+                <span></span>
+                <i class="bi bi-diamond-fill"></i>
+                <span></span>
+            </div>
+
+        </div>
+
+
+        <div class="home-values-grid">
+
+
+            <article class="home-value-item">
+
+                <span class="home-value-number">
+                    01
+                </span>
+
+                <div class="home-value-icon">
+                    <i class="bi bi-patch-check"></i>
+                </div>
+
+                <h3>
+                    Authenticity
+                </h3>
+
+                <p>
+                    Honouring the true character of traditional
+                    Patola craftsmanship.
+                </p>
+
+            </article>
+
+
+            <article class="home-value-item">
+
+                <span class="home-value-number">
+                    02
+                </span>
+
+                <div class="home-value-icon">
+                    <i class="bi bi-bullseye"></i>
+                </div>
+
+                <h3>
+                    Precision
+                </h3>
+
+                <p>
+                    Every thread and motif is guided by patience
+                    and meticulous attention to detail.
+                </p>
+
+            </article>
+
+
+            <article class="home-value-item">
+
+                <span class="home-value-number">
+                    03
+                </span>
+
+                <div class="home-value-icon">
+                    <i class="bi bi-hourglass"></i>
+                </div>
+
+                <h3>
+                    Legacy
+                </h3>
+
+                <p>
+                    Preserving textile traditions so they can
+                    continue into future generations.
+                </p>
+
+            </article>
+
+
+            <article class="home-value-item">
+
+                <span class="home-value-number">
+                    04
+                </span>
+
+                <div class="home-value-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <h3>
+                    Elegance
+                </h3>
+
+                <p>
+                    Creating timeless pieces that bring heritage
+                    naturally into contemporary wardrobes.
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CTA
+====================================================== -->
+
+<section class="home-final-cta">
+
+    <div class="home-final-cta-pattern"></div>
+
+    <div class="home-final-cta-overlay"></div>
+
+
+    <div class="home-container">
+
+        <div class="home-final-cta-content">
+
+            <span class="home-eyebrow">
+                BEGIN YOUR JOURNEY
+            </span>
+
+
+            <h2>
+                Wear a Piece of Heritage
+            </h2>
+
+
+            <p>
+                Discover handcrafted Patola textiles where
+                every thread carries tradition, patience
+                and artistry.
+            </p>
+
+
+            <a
+                href="/collections"
+                class="home-btn home-btn-primary"
+            >
+                Explore Collection
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+```
 
 </div>

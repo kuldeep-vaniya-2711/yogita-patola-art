@@ -3,7 +3,12 @@ layout("layout", {
     title:
         typeof title !== "undefined" && title
             ? title
-            : "Collections | Yogita Patola Art"
+            : "Collections | Yogita Patola Art",
+
+    description:
+        typeof description !== "undefined" && description
+            ? description
+            : "Explore handcrafted Patola sarees and traditional Indian textiles."
 });
 %>
 
@@ -12,11 +17,6 @@ layout("layout", {
 /*
  * =========================================================
  * COLLECTIONS PAGE CSS
- * =========================================================
- *
- * IMPORTANT:
- * Do NOT use pageCss / activePageCss.
- * Layout uses native ejs-mate block("head").
  * =========================================================
  */
 
@@ -30,58 +30,279 @@ block("head").append(`
 
 
 <%
-    const collectionProducts =
-        typeof products !== "undefined" && Array.isArray(products)
-            ? products
-            : [];
+/*
+ * =========================================================
+ * COLLECTION DATA
+ * =========================================================
+ */
 
-    const currentCategory =
-        typeof category !== "undefined"
-            ? category
-            : "";
+const collectionProducts =
+    typeof products !== "undefined" &&
+    Array.isArray(products)
+        ? products
+        : [];
 
-    const currentSearch =
-        typeof search !== "undefined"
-            ? search
-            : "";
 
-    const pageTitle =
-        typeof title !== "undefined"
-            ? title
-            : "Collections | Yogita Patola Art";
+const currentSearch =
+    typeof search !== "undefined"
+        ? search
+        : "";
+
+
+const currentCategory =
+    typeof category !== "undefined"
+        ? category
+        : "";
+
+
+const currentSort =
+    typeof sort !== "undefined" && sort
+        ? sort
+        : "recommended";
+
+
+/*
+ * IMPORTANT:
+ * Use a different local variable name.
+ * Do not redeclare currentPage.
+ */
+
+const activePage =
+    typeof currentPage !== "undefined"
+        ? currentPage
+        : 1;
+
+
+const totalProductsValue =
+    typeof totalProducts !== "undefined"
+        ? totalProducts
+        : collectionProducts.length;
+
+
+const totalPagesValue =
+    typeof totalPages !== "undefined"
+        ? totalPages
+        : 1;
+
+
+const showingFromValue =
+    typeof showingFrom !== "undefined"
+        ? showingFrom
+        : (
+            totalProductsValue > 0
+                ? 1
+                : 0
+        );
+
+
+const showingToValue =
+    typeof showingTo !== "undefined"
+        ? showingTo
+        : collectionProducts.length;
+
+
+/*
+ * =========================================================
+ * QUERY URL HELPER
+ * =========================================================
+ */
+
+function collectionUrl(pageNumber) {
+
+    const params =
+        new URLSearchParams();
+
+
+    if (currentSearch) {
+
+        params.set(
+            "search",
+            currentSearch
+        );
+
+    }
+
+
+    if (currentCategory) {
+
+        params.set(
+            "category",
+            currentCategory
+        );
+
+    }
+
+
+    if (
+        currentSort &&
+        currentSort !== "recommended"
+    ) {
+
+        params.set(
+            "sort",
+            currentSort
+        );
+
+    }
+
+
+    if (pageNumber > 1) {
+
+        params.set(
+            "page",
+            pageNumber
+        );
+
+    }
+
+
+    const queryString =
+        params.toString();
+
+
+    return queryString
+        ? `/collections?${queryString}`
+        : "/collections";
+}
+
+
+/*
+ * =========================================================
+ * CATEGORY URL HELPER
+ * =========================================================
+ */
+
+function categoryUrl(categoryName) {
+
+    const params =
+        new URLSearchParams();
+
+
+    if (categoryName) {
+
+        params.set(
+            "category",
+            categoryName
+        );
+
+    }
+
+
+    if (currentSearch) {
+
+        params.set(
+            "search",
+            currentSearch
+        );
+
+    }
+
+
+    if (
+        currentSort &&
+        currentSort !== "recommended"
+    ) {
+
+        params.set(
+            "sort",
+            currentSort
+        );
+
+    }
+
+
+    const queryString =
+        params.toString();
+
+
+    return queryString
+        ? `/collections?${queryString}`
+        : "/collections";
+}
+
+
+/*
+ * =========================================================
+ * PAGINATION RANGE
+ * =========================================================
+ */
+
+let paginationPages = [];
+
+
+if (totalPagesValue <= 5) {
+
+    for (
+        let i = 1;
+        i <= totalPagesValue;
+        i++
+    ) {
+
+        paginationPages.push(i);
+
+    }
+
+} else {
+
+    paginationPages = [
+        1,
+        2,
+        3,
+        4,
+        5
+    ];
+
+}
 %>
 
 
-<!-- ================================================= -->
+<!-- ========================================================= -->
 <!-- COLLECTIONS PAGE -->
-<!-- ================================================= -->
+<!-- ========================================================= -->
 
 <section class="collections-page">
 
 
-    <!-- ================================================= -->
-    <!-- PAGE HERO -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- HERO -->
+    <!-- ===================================================== -->
 
     <section class="collections-hero">
 
         <div class="container">
 
-            <div class="collections-hero-content text-center">
+            <div class="collections-hero-content">
 
                 <span class="collections-eyebrow">
                     YOGITA PATOLA ART
                 </span>
 
                 <h1 class="collections-title">
-                    Our Collections
+                    The Full Collection
                 </h1>
 
+                <div class="collections-hero-rule">
+
+                    <span></span>
+
+                    <i>✦</i>
+
+                    <span></span>
+
+                </div>
+
+                <h2 class="collections-hero-subtitle">
+                    Handwoven Sarees &amp; Textiles
+                </h2>
+
                 <p class="collections-description">
-                    Explore our collection of handcrafted
-                    Patola sarees and traditional Indian
-                    textiles, created with timeless artistry
-                    and heritage.
+
+                    <%= totalProductsValue %>
+                    pieces, each created with traditional
+                    technique, patient craftsmanship and the
+                    timeless character of Indian textile heritage.
+                    Filter by craft to find the one that's yours.
+
                 </p>
 
             </div>
@@ -92,182 +313,294 @@ block("head").append(`
 
 
 
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
     <!-- COLLECTION CONTENT -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
 
-    <section class="collections-content py-5">
+    <section class="collections-content">
 
         <div class="container">
 
 
             <!-- ================================================= -->
-            <!-- FILTER / SEARCH BAR -->
+            <!-- CATEGORY NAVIGATION -->
             <!-- ================================================= -->
 
-            <div class="collections-toolbar mb-5">
+            <div class="collections-category-area">
 
-                <div class="row g-3 align-items-center">
-
-
-                    <!-- SEARCH -->
-
-                    <div class="col-lg-6">
-
-                        <form
-                            action="/collections"
-                            method="GET"
-                            class="collections-search-form"
-                        >
-
-                            <div class="input-group">
-
-                                <input
-                                    type="search"
-                                    name="search"
-                                    value="<%= currentSearch %>"
-                                    class="form-control"
-                                    placeholder="Search collections..."
-                                    aria-label="Search collections"
-                                >
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-dark"
-                                >
-                                    Search
-                                </button>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-
-
-                    <!-- CATEGORY -->
-
-                    <div class="col-lg-4">
-
-                        <form
-                            action="/collections"
-                            method="GET"
-                            class="collections-category-form"
-                        >
-
-                            <select
-                                name="category"
-                                class="form-select"
-                                onchange="this.form.submit()"
-                            >
-
-                                <option value="">
-                                    All Collections
-                                </option>
-
-                                <option
-                                    value="Patola Sarees"
-                                    <%= currentCategory === "Patola Sarees"
-                                        ? "selected"
-                                        : "" %>
-                                >
-                                    Patola Sarees
-                                </option>
-
-                                <option
-                                    value="Double Ikat Sarees"
-                                    <%= currentCategory === "Double Ikat Sarees"
-                                        ? "selected"
-                                        : "" %>
-                                >
-                                    Double Ikat Sarees
-                                </option>
-
-                                <option
-                                    value="Single Ikat Sarees"
-                                    <%= currentCategory === "Single Ikat Sarees"
-                                        ? "selected"
-                                        : "" %>
-                                >
-                                    Single Ikat Sarees
-                                </option>
-
-                                <option
-                                    value="Dupattas"
-                                    <%= currentCategory === "Dupattas"
-                                        ? "selected"
-                                        : "" %>
-                                >
-                                    Dupattas
-                                </option>
-
-                                <option
-                                    value="Accessories"
-                                    <%= currentCategory === "Accessories"
-                                        ? "selected"
-                                        : "" %>
-                                >
-                                    Accessories
-                                </option>
-
-                            </select>
-
-                        </form>
-
-                    </div>
-
-
-
-                    <!-- RESET -->
-
-                    <div class="col-lg-2">
-
-                        <a
-                            href="/collections"
-                            class="btn btn-outline-dark w-100"
-                        >
-                            Reset
-                        </a>
-
-                    </div>
-
-
+                <div class="collections-category-label">
+                    Explore by craft
                 </div>
+
+
+                <nav
+                    class="collections-filters"
+                    aria-label="Collection categories"
+                >
+
+                    <a
+                        href="<%= categoryUrl('') %>"
+                        class="<%= !currentCategory ? 'active' : '' %>"
+                    >
+                        All
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Patola') %>"
+                        class="<%= currentCategory === 'Patola' ? 'active' : '' %>"
+                    >
+                        Patola
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Double Ikat') %>"
+                        class="<%= currentCategory === 'Double Ikat' ? 'active' : '' %>"
+                    >
+                        Double Ikat
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Single Ikat') %>"
+                        class="<%= currentCategory === 'Single Ikat' ? 'active' : '' %>"
+                    >
+                        Single Ikat
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Sarees') %>"
+                        class="<%= currentCategory === 'Sarees' ? 'active' : '' %>"
+                    >
+                        Sarees
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Dupattas') %>"
+                        class="<%= currentCategory === 'Dupattas' ? 'active' : '' %>"
+                    >
+                        Dupattas
+                    </a>
+
+
+                    <a
+                        href="<%= categoryUrl('Accessories') %>"
+                        class="<%= currentCategory === 'Accessories' ? 'active' : '' %>"
+                    >
+                        Accessories
+                    </a>
+
+                </nav>
 
             </div>
 
 
 
             <!-- ================================================= -->
-            <!-- COLLECTION HEADER -->
+            <!-- TOOLBAR -->
             <!-- ================================================= -->
 
-            <div class="collections-section-header mb-4">
+            <div class="collections-toolbar">
 
-                <div>
+
+                <!-- SEARCH -->
+
+                <form
+                    action="/collections"
+                    method="GET"
+                    class="collections-search-form"
+                >
+
+                    <% if (currentCategory) { %>
+
+                        <input
+                            type="hidden"
+                            name="category"
+                            value="<%= currentCategory %>"
+                        >
+
+                    <% } %>
+
+
+                    <% if (
+                        currentSort &&
+                        currentSort !== "recommended"
+                    ) { %>
+
+                        <input
+                            type="hidden"
+                            name="sort"
+                            value="<%= currentSort %>"
+                        >
+
+                    <% } %>
+
+
+                    <div class="collections-search-box">
+
+                        <i class="bi bi-search"></i>
+
+                        <input
+                            type="search"
+                            name="search"
+                            value="<%= currentSearch %>"
+                            placeholder="Search the collection..."
+                            aria-label="Search collection"
+                        >
+
+                        <% if (currentSearch) { %>
+
+                            <a
+                                href="<%= categoryUrl(currentCategory) %>"
+                                class="collections-search-clear"
+                                aria-label="Clear search"
+                            >
+                                <i class="bi bi-x"></i>
+                            </a>
+
+                        <% } %>
+
+                    </div>
+
+                </form>
+
+
+
+                <!-- SORT -->
+
+                <form
+                    action="/collections"
+                    method="GET"
+                    class="collections-sort-form"
+                >
+
+                    <% if (currentCategory) { %>
+
+                        <input
+                            type="hidden"
+                            name="category"
+                            value="<%= currentCategory %>"
+                        >
+
+                    <% } %>
+
+
+                    <% if (currentSearch) { %>
+
+                        <input
+                            type="hidden"
+                            name="search"
+                            value="<%= currentSearch %>"
+                        >
+
+                    <% } %>
+
+
+                    <label
+                        for="collectionSort"
+                        class="collections-sort-label"
+                    >
+                        Sort
+                    </label>
+
+
+                    <select
+                        id="collectionSort"
+                        name="sort"
+                        class="collections-sort-select"
+                    >
+
+                        <option
+                            value="recommended"
+                            <%= currentSort === "recommended"
+                                ? "selected"
+                                : "" %>
+                        >
+                            Recommended
+                        </option>
+
+
+                        <option
+                            value="price_asc"
+                            <%= currentSort === "price_asc"
+                                ? "selected"
+                                : "" %>
+                        >
+                            Price: Low to High
+                        </option>
+
+
+                        <option
+                            value="price_desc"
+                            <%= currentSort === "price_desc"
+                                ? "selected"
+                                : "" %>
+                        >
+                            Price: High to Low
+                        </option>
+
+
+                        <option
+                            value="newest"
+                            <%= currentSort === "newest"
+                                ? "selected"
+                                : "" %>
+                        >
+                            Newest First
+                        </option>
+
+                    </select>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- COLLECTION HEADING -->
+            <!-- ================================================= -->
+
+            <div class="collections-section-header">
+
+
+                <div class="collections-section-heading">
 
                     <span class="section-subtitle">
-                        HANDCRAFTED COLLECTION
+                        CURATED TEXTILES
                     </span>
 
-                    <h2 class="section-title mb-0">
-                        Discover Our Patolas
+                    <h2 class="section-title">
+                        Discover the Collection
                     </h2>
 
                 </div>
 
 
-                <div class="collections-count">
+                <div class="collections-results-count">
 
-                    <%= collectionProducts.length %>
+                    Showing
 
-                    <span>
-                        <%= collectionProducts.length === 1
-                            ? "Product"
-                            : "Products"
-                        %>
-                    </span>
+                    <strong>
+                        <%= showingFromValue %>
+                    </strong>
+
+                    –
+
+                    <strong>
+                        <%= showingToValue %>
+                    </strong>
+
+                    of
+
+                    <strong>
+                        <%= totalProductsValue %>
+                    </strong>
+
+                    pieces
 
                 </div>
 
@@ -281,32 +614,30 @@ block("head").append(`
 
             <% if (collectionProducts.length > 0) { %>
 
-
                 <div
                     class="row g-4 collections-product-grid"
                     id="collectionsProductGrid"
                 >
 
-
                     <% collectionProducts.forEach(product => { %>
-
 
                         <div
                             class="col-6 col-md-6 col-lg-4 col-xl-4 collection-product-item"
                             data-category="<%= product.category || '' %>"
                         >
 
+                            <!-- =================================================
+                                 EXISTING PRODUCT CARD
+                                 DO NOT CHANGE
+                            ================================================= -->
 
                             <%- include("../partials/product-card", {
                                 product: product
                             }) %>
 
-
                         </div>
 
-
                     <% }); %>
-
 
                 </div>
 
@@ -318,30 +649,163 @@ block("head").append(`
                 <!-- EMPTY STATE -->
                 <!-- ================================================= -->
 
-                <div class="collections-empty text-center">
+                <div class="collections-empty">
 
-                    <div class="collections-empty-icon">
+                    <div class="collections-empty-symbol">
                         ✦
                     </div>
 
+                    <span class="collections-empty-eyebrow">
+                        COLLECTION NOT FOUND
+                    </span>
+
                     <h3>
-                        No Products Found
+                        No Pieces Found
                     </h3>
 
                     <p>
-                        We could not find any products matching
+                        We could not find any pieces matching
                         your current search or collection.
+                        Try another category or explore the
+                        full collection.
                     </p>
 
                     <a
                         href="/collections"
-                        class="btn btn-dark"
+                        class="collections-empty-button"
                     >
-                        View All Collections
+                        View All Pieces
                     </a>
 
                 </div>
 
+            <% } %>
+
+
+
+            <!-- ================================================= -->
+            <!-- PAGINATION -->
+            <!-- ================================================= -->
+
+            <% if (totalPagesValue > 1) { %>
+
+                <nav
+                    class="collections-pagination"
+                    aria-label="Collections pagination"
+                >
+
+
+                    <!-- PREVIOUS -->
+
+                    <% if (activePage > 1) { %>
+
+                        <a
+                            href="<%= collectionUrl(activePage - 1) %>"
+                            class="collections-pagination-arrow"
+                            aria-label="Previous page"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+
+                    <% } else { %>
+
+                        <span
+                            class="collections-pagination-arrow disabled"
+                            aria-hidden="true"
+                        >
+                            <i class="bi bi-arrow-left"></i>
+                        </span>
+
+                    <% } %>
+
+
+
+                    <!-- PAGE NUMBERS -->
+
+                    <div class="collections-pagination-numbers">
+
+                        <% paginationPages.forEach(pageNumber => { %>
+
+                            <% if (
+                                pageNumber <= totalPagesValue
+                            ) { %>
+
+                                <a
+                                    href="<%= collectionUrl(pageNumber) %>"
+                                    class="<%= activePage === pageNumber ? 'active' : '' %>"
+                                    aria-current="<%= activePage === pageNumber ? 'page' : 'false' %>"
+                                >
+                                    <%= pageNumber %>
+                                </a>
+
+                            <% } %>
+
+                        <% }); %>
+
+
+
+                        <!-- LAST PAGE -->
+
+                        <% if (totalPagesValue > 5) { %>
+
+                            <% if (activePage > 5) { %>
+
+                                <span class="collections-pagination-dots">
+                                    …
+                                </span>
+
+                                <a
+                                    href="<%= collectionUrl(totalPagesValue) %>"
+                                    class="<%= activePage === totalPagesValue ? 'active' : '' %>"
+                                >
+                                    <%= totalPagesValue %>
+                                </a>
+
+                            <% } else { %>
+
+                                <span class="collections-pagination-dots">
+                                    …
+                                </span>
+
+                                <a
+                                    href="<%= collectionUrl(totalPagesValue) %>"
+                                    class="<%= activePage === totalPagesValue ? 'active' : '' %>"
+                                >
+                                    <%= totalPagesValue %>
+                                </a>
+
+                            <% } %>
+
+                        <% } %>
+
+                    </div>
+
+
+
+                    <!-- NEXT -->
+
+                    <% if (activePage < totalPagesValue) { %>
+
+                        <a
+                            href="<%= collectionUrl(activePage + 1) %>"
+                            class="collections-pagination-arrow"
+                            aria-label="Next page"
+                        >
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+
+                    <% } else { %>
+
+                        <span
+                            class="collections-pagination-arrow disabled"
+                            aria-hidden="true"
+                        >
+                            <i class="bi bi-arrow-right"></i>
+                        </span>
+
+                    <% } %>
+
+                </nav>
 
             <% } %>
 
@@ -352,9 +816,9 @@ block("head").append(`
 
 
 
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
     <!-- COLLECTION STORY -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
 
     <section class="collections-story py-5">
 
@@ -441,9 +905,9 @@ block("head").append(`
 
 
 
-    <!-- ================================================= -->
-    <!-- CALL TO ACTION -->
-    <!-- ================================================= -->
+    <!-- ===================================================== -->
+    <!-- CTA -->
+    <!-- ===================================================== -->
 
     <section class="collections-cta py-5">
 

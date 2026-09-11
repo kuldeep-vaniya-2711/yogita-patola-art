@@ -1,6 +1,7 @@
 /* =========================================================
    COLLECTIONS PAGE
    Yogita Patola Art
+   Premium Collection Catalog
    ========================================================= */
 
 
@@ -17,9 +18,8 @@
 }
 
 
-
 /* =========================================================
-   COLLECTIONS HERO
+   HERO
    ========================================================= */
 
 .collections-hero {
@@ -27,15 +27,21 @@
 
     width: 100%;
 
-    padding: 78px 20px 72px;
+    padding: 88px 20px 78px;
 
-    background: #f5eee6;
+    background:
+        linear-gradient(
+            135deg,
+            #f8f1e9 0%,
+            #f4ebe2 52%,
+            #efe3d8 100%
+        );
 
-    border-bottom: 1px solid #ebe1d6;
-
-    text-align: center;
+    border-bottom: 1px solid #e5d9ce;
 
     overflow: hidden;
+
+    text-align: center;
 }
 
 
@@ -44,28 +50,80 @@
 
     position: absolute;
 
-    inset: 0;
+    width: 420px;
+    height: 420px;
+
+    top: -260px;
+    left: -180px;
+
+    border: 1px solid rgba(126, 97, 64, 0.12);
+
+    border-radius: 50%;
 
     pointer-events: none;
+}
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.35),
-            transparent 45%
-        );
+
+.collections-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -260px;
+    bottom: -350px;
+
+    border: 1px solid rgba(126, 97, 64, 0.1);
+
+    border-radius: 50%;
+
+    pointer-events: none;
 }
 
 
 .collections-hero .container {
     position: relative;
 
-    z-index: 1;
+    z-index: 2;
 }
 
 
-.collections-hero h1 {
-    margin: 0 0 14px;
+.collections-hero-content {
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+.collections-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 17px;
+
+    color: #7e6140;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.22em;
+
+    line-height: 1.4;
+
+    text-transform: uppercase;
+}
+
+
+.collections-title {
+    margin: 0;
 
     color: #4b151f;
 
@@ -74,22 +132,83 @@
         "Times New Roman",
         serif;
 
-    font-size: clamp(2.1rem, 4vw, 3.4rem);
+    font-size: clamp(
+        2.5rem,
+        5vw,
+        4.25rem
+    );
 
-    font-weight: 600;
+    font-weight: 500;
 
-    line-height: 1.2;
+    line-height: 1.08;
 
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
 }
 
 
-.collections-hero p {
-    max-width: 720px;
+.collections-hero-rule {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    width: 170px;
+
+    margin: 23px auto 20px;
+}
+
+
+.collections-hero-rule span {
+    display: block;
+
+    width: 62px;
+
+    height: 1px;
+
+    background: #b49a7c;
+}
+
+
+.collections-hero-rule i {
+    color: #96765d;
+
+    font-size: 0.8rem;
+
+    font-style: normal;
+}
+
+
+.collections-hero-subtitle {
+    margin: 0 0 17px;
+
+    color: #3e322a;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(
+        1.2rem,
+        2vw,
+        1.55rem
+    );
+
+    font-weight: 500;
+
+    line-height: 1.4;
+}
+
+
+.collections-description {
+    max-width: 680px;
 
     margin: 0 auto;
 
-    color: #70675f;
+    color: #756a61;
 
     font-family:
         -apple-system,
@@ -97,189 +216,90 @@
         "Segoe UI",
         sans-serif;
 
-    font-size: 1rem;
+    font-size: 0.94rem;
 
-    line-height: 1.75;
+    line-height: 1.8;
 }
 
 
-
 /* =========================================================
-   COLLECTIONS CONTENT
+   CONTENT
    ========================================================= */
 
 .collections-content {
     width: 100%;
 
-    padding: 64px 0 80px;
+    padding: 62px 0 82px;
 }
 
 
+.collections-page .container {
+    width: 100%;
+}
+
 
 /* =========================================================
-   CATEGORY FILTER / NAVIGATION
+   CATEGORY AREA
    ========================================================= */
+
+.collections-category-area {
+    margin-bottom: 38px;
+
+    text-align: center;
+}
+
+
+.collections-category-label {
+    margin-bottom: 14px;
+
+    color: #91765c;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.66rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
 
 .collections-filters {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     flex-wrap: wrap;
 
-    gap: 10px;
-
-    margin-bottom: 46px;
+    gap: 8px;
 }
 
 
-.collections-filters a,
-.collections-filters button {
+.collections-filters a {
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    min-height: 40px;
+    min-height: 38px;
 
-    padding: 8px 18px;
+    padding: 8px 17px;
 
-    background: #ffffff;
+    background: transparent;
 
-    border: 1px solid #ddd2c7;
-    border-radius: 2px;
+    border: 1px solid #d9cec2;
 
-    color: #574b43;
+    border-radius: 1px;
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.78rem;
-
-    font-weight: 600;
-
-    line-height: 1.3;
-
-    letter-spacing: 0.04em;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
-}
-
-
-.collections-filters a:hover,
-.collections-filters button:hover {
-    background: #f5eee6;
-
-    border-color: #cdbbaa;
-
-    color: #4b151f;
-}
-
-
-.collections-filters .active,
-.collections-filters a.active,
-.collections-filters button.active {
-    background: #4b151f;
-
-    border-color: #4b151f;
-
-    color: #ffffff;
-}
-
-
-
-/* =========================================================
-   COLLECTION SECTION
-   ========================================================= */
-
-.collection-section {
-    width: 100%;
-
-    margin-bottom: 72px;
-}
-
-
-.collection-section:last-child {
-    margin-bottom: 0;
-}
-
-
-
-/* =========================================================
-   COLLECTION HEADER
-   ========================================================= */
-
-.collection-header {
-    display: flex;
-
-    align-items: flex-end;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 28px;
-
-    padding-bottom: 14px;
-
-    border-bottom: 1px solid #e7ddd3;
-}
-
-
-.collection-header-content {
-    min-width: 0;
-}
-
-
-.collection-header h2 {
-    margin: 0 0 7px;
-
-    color: #3c3028;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(1.55rem, 2.5vw, 2rem);
-
-    font-weight: 600;
-
-    line-height: 1.3;
-}
-
-
-.collection-header p {
-    margin: 0;
-
-    color: #81766d;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.88rem;
-
-    line-height: 1.6;
-}
-
-
-.collection-header .collection-count {
-    flex-shrink: 0;
-
-    color: #96765d;
+    color: #665950;
 
     font-family:
         -apple-system,
@@ -291,20 +311,345 @@
 
     font-weight: 600;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
+
+    line-height: 1.3;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.collections-filters a:hover {
+    background: #f4ece4;
+
+    border-color: #bda990;
+
+    color: #4b151f;
+
+    transform: translateY(-1px);
+}
+
+
+.collections-filters a.active {
+    background: #4b151f;
+
+    border-color: #4b151f;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.collections-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 43px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #e5dcd3;
+}
+
+
+.collections-search-form {
+    flex: 1;
+
+    min-width: 0;
+
+    max-width: 480px;
+}
+
+
+.collections-search-box {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+}
+
+
+.collections-search-box > i {
+    position: absolute;
+
+    left: 15px;
+
+    z-index: 2;
+
+    color: #927a64;
+
+    font-size: 0.82rem;
+
+    pointer-events: none;
+}
+
+
+.collections-search-box input {
+    width: 100%;
+
+    height: 43px;
+
+    padding: 9px 42px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcd1c6;
+    border-radius: 1px;
+
+    color: #40362f;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.82rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.collections-search-box input::placeholder {
+    color: #a2978d;
+}
+
+
+.collections-search-box input:focus {
+    border-color: #a88c70;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(126, 97, 64, 0.08);
+}
+
+
+.collections-search-clear {
+    position: absolute;
+
+    right: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    color: #8a7b70;
+
+    text-decoration: none;
+}
+
+
+.collections-search-clear:hover {
+    color: #4b151f;
+}
+
+
+.collections-sort-form {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+
+.collections-sort-label {
+    margin: 0;
+
+    color: #81746a;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
 
     text-transform: uppercase;
 }
 
 
+.collections-sort-select {
+    min-width: 190px;
+
+    height: 43px;
+
+    padding:
+        8px
+        35px
+        8px
+        13px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #dcd1c6;
+    border-radius: 1px;
+
+    color: #4d4038;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.79rem;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+.collections-sort-select:focus {
+    border-color: #a88c70;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(126, 97, 64, 0.08);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.collections-section-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 29px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #e4dad1;
+}
+
+
+.collections-section-heading {
+    min-width: 0;
+}
+
+
+.collections-section-heading .section-subtitle {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #92745a;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+
+.collections-section-heading .section-title {
+    margin: 0;
+
+    color: #3f332b;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(
+        1.65rem,
+        3vw,
+        2.15rem
+    );
+
+    font-weight: 500;
+
+    line-height: 1.25;
+}
+
+
+.collections-results-count {
+    flex-shrink: 0;
+
+    color: #8a7b70;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.72rem;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+}
+
+
+.collections-results-count strong {
+    color: #55483f;
+
+    font-weight: 700;
+}
+
 
 /* =========================================================
    PRODUCT GRID
+   IMPORTANT:
+   Existing product-card remains untouched.
    ========================================================= */
 
 .collections-product-grid {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 2rem;
+
+    margin-bottom: 0;
 }
 
 
@@ -318,21 +663,52 @@
 }
 
 
-
 /* =========================================================
-   EMPTY COLLECTION
+   EMPTY STATE
    ========================================================= */
 
 .collections-empty {
     width: 100%;
 
-    padding: 60px 25px;
+    padding: 72px 25px;
 
     background: #ffffff;
 
-    border: 1px solid #ebe1d6;
+    border:
+        1px solid
+        #e5dcd3;
 
     text-align: center;
+}
+
+
+.collections-empty-symbol {
+    margin-bottom: 15px;
+
+    color: #a18465;
+
+    font-size: 1.45rem;
+}
+
+
+.collections-empty-eyebrow {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #94785f;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.64rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
 }
 
 
@@ -346,71 +722,18 @@
         "Times New Roman",
         serif;
 
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 
-    font-weight: 600;
+    font-weight: 500;
 }
 
 
 .collections-empty p {
-    max-width: 520px;
-
-    margin: 0 auto;
-
-    color: #766d65;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    font-size: 0.9rem;
-
-    line-height: 1.7;
-}
-
-
-
-/* =========================================================
-   COLLECTION CTA
-   ========================================================= */
-
-.collections-cta {
-    margin-top: 76px;
-
-    padding: 56px 30px;
-
-    background: #4b151f;
-
-    text-align: center;
-}
-
-
-.collections-cta h2 {
-    margin: 0 0 12px;
-
-    color: #ffffff;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-
-    font-weight: 600;
-
-    line-height: 1.3;
-}
-
-
-.collections-cta p {
-    max-width: 650px;
+    max-width: 540px;
 
     margin: 0 auto 25px;
 
-    color: rgba(255, 255, 255, 0.82);
+    color: #766c63;
 
     font-family:
         -apple-system,
@@ -418,28 +741,27 @@
         "Segoe UI",
         sans-serif;
 
-    font-size: 0.92rem;
+    font-size: 0.87rem;
 
-    line-height: 1.7;
+    line-height: 1.75;
 }
 
 
-.collections-cta .btn {
+.collections-empty-button {
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    min-height: 44px;
+    min-height: 42px;
 
-    padding: 10px 24px;
+    padding: 9px 21px;
 
-    background: #ffffff;
+    background: #4b151f;
 
-    border: 1px solid #ffffff;
-    border-radius: 2px;
+    border: 1px solid #4b151f;
 
-    color: #4b151f;
+    color: #ffffff;
 
     font-family:
         -apple-system,
@@ -447,7 +769,7 @@
         "Segoe UI",
         sans-serif;
 
-    font-size: 0.8rem;
+    font-size: 0.76rem;
 
     font-weight: 600;
 
@@ -457,34 +779,429 @@
 
     transition:
         background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
+        color 0.2s ease;
+}
+
+
+.collections-empty-button:hover {
+    background: transparent;
+
+    color: #4b151f;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.collections-pagination {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 55px;
+}
+
+
+.collections-pagination-arrow,
+.collections-pagination-numbers a,
+.collections-pagination-dots {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    border:
+        1px solid
+        #d9cec2;
+
+    background: #ffffff;
+
+    color: #665950;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.collections-pagination-arrow {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.collections-pagination-arrow:hover {
+    background: #f4ece4;
+
+    border-color: #bda990;
+
+    color: #4b151f;
+}
+
+
+.collections-pagination-arrow.disabled {
+    opacity: 0.4;
+
+    cursor: default;
+
+    pointer-events: none;
+}
+
+
+.collections-pagination-numbers {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.collections-pagination-numbers a {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.collections-pagination-numbers a:hover {
+    background: #f4ece4;
+
+    border-color: #bda990;
+
+    color: #4b151f;
+}
+
+
+.collections-pagination-numbers a.active {
+    background: #4b151f;
+
+    border-color: #4b151f;
+
+    color: #ffffff;
+}
+
+
+.collections-pagination-dots {
+    width: 28px;
+
+    background: transparent;
+
+    border-color: transparent;
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   COLLECTION STORY
+   ========================================================= */
+
+.collections-story {
+    background: #f6efe7;
+
+    border-top: 1px solid #e6dbd0;
+}
+
+
+.collections-story .section-subtitle {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #92745a;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.67rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+
+.collections-story .section-title {
+    margin-bottom: 19px;
+
+    color: #3e3028;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(
+        1.8rem,
+        3vw,
+        2.5rem
+    );
+
+    font-weight: 500;
+
+    line-height: 1.25;
+}
+
+
+.collections-story .section-description {
+    max-width: 590px;
+
+    margin-bottom: 14px;
+
+    color: #746960;
+
+    font-size: 0.9rem;
+
+    line-height: 1.8;
+}
+
+
+.collections-story .btn {
+    min-height: 43px;
+
+    margin-top: 10px;
+
+    padding:
+        9px
+        22px;
+
+    border-radius: 1px;
+
+    font-size: 0.77rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+}
+
+
+.collections-story-card {
+    position: relative;
+
+    min-height: 390px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5c2c32,
+            #8a5d43
+        );
+
+    border: 1px solid #d4c4b4;
+
+    overflow: hidden;
+}
+
+
+.collections-story-card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 18px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+}
+
+
+.collections-story-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+
+.collections-story-overlay span {
+    margin-bottom: 8px;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 0.64rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+}
+
+
+.collections-story-overlay strong {
+    color: #ffffff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 2.2rem;
+
+    font-weight: 500;
+
+    letter-spacing: 0.03em;
+}
+
+
+.collections-story-overlay small {
+    margin-top: 12px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.collections-cta {
+    margin-top: 0;
+
+    padding:
+        70px
+        30px;
+
+    background: #4b151f;
+
+    text-align: center;
+}
+
+
+.collections-cta .collections-eyebrow {
+    color: #d2b78f;
+}
+
+
+.collections-cta h2 {
+    margin: 0 0 13px;
+
+    color: #ffffff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(
+        1.8rem,
+        3vw,
+        2.45rem
+    );
+
+    font-weight: 500;
+
+    line-height: 1.3;
+}
+
+
+.collections-cta p {
+    max-width: 650px;
+
+    margin: 0 auto 26px;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 0.9rem;
+
+    line-height: 1.75;
+}
+
+
+.collections-cta .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 45px;
+
+    padding:
+        10px
+        25px;
+
+    background: #ffffff;
+
+    border:
+        1px solid
+        #ffffff;
+
+    border-radius: 1px;
+
+    color: #4b151f;
+
+    font-size: 0.78rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
 
 .collections-cta .btn:hover {
     background: transparent;
 
-    border-color: #ffffff;
-
     color: #ffffff;
 }
 
 
-
 /* =========================================================
-   BOOTSTRAP ROW COMPATIBILITY
+   BOOTSTRAP COMPATIBILITY
    ========================================================= */
 
 .collections-page .row {
     --bs-gutter-y: 1.5rem;
 }
-
-
-.collections-page .container {
-    width: 100%;
-}
-
 
 
 /* =========================================================
@@ -494,39 +1211,48 @@
 @media (max-width: 991.98px) {
 
     .collections-hero {
-        padding: 64px 20px 60px;
+        padding:
+            70px
+            20px
+            62px;
     }
 
 
     .collections-content {
-        padding: 52px 0 68px;
+        padding:
+            52px
+            0
+            68px;
     }
 
 
-    .collection-section {
-        margin-bottom: 60px;
+    .collections-toolbar {
+        gap: 18px;
     }
 
 
-    .collection-header {
-        margin-bottom: 24px;
+    .collections-search-form {
+        max-width: 390px;
     }
 
 
-    .collections-product-grid {
-        --bs-gutter-x: 1.25rem;
-        --bs-gutter-y: 1.5rem;
+    .collections-sort-select {
+        min-width: 175px;
+    }
+
+
+    .collections-story-card {
+        min-height: 340px;
     }
 
 
     .collections-cta {
-        margin-top: 60px;
-
-        padding: 48px 25px;
+        padding:
+            58px
+            25px;
     }
 
 }
-
 
 
 /* =========================================================
@@ -536,37 +1262,54 @@
 @media (max-width: 767.98px) {
 
     .collections-hero {
-        padding: 52px 18px 48px;
+        padding:
+            55px
+            18px
+            50px;
     }
 
 
-    .collections-hero h1 {
-        font-size: 2rem;
+    .collections-title {
+        font-size: 2.35rem;
     }
 
 
-    .collections-hero p {
-        font-size: 0.9rem;
+    .collections-hero-subtitle {
+        font-size: 1.15rem;
+    }
 
-        line-height: 1.65;
+
+    .collections-description {
+        font-size: 0.86rem;
+
+        line-height: 1.7;
     }
 
 
     .collections-content {
-        padding: 42px 0 55px;
+        padding:
+            42px
+            0
+            56px;
+    }
+
+
+    .collections-category-area {
+        margin-bottom: 31px;
     }
 
 
     .collections-filters {
         justify-content: flex-start;
 
-        margin-bottom: 35px;
+        flex-wrap: nowrap;
 
         overflow-x: auto;
 
-        flex-wrap: nowrap;
-
-        padding-bottom: 4px;
+        padding:
+            2px
+            2px
+            8px;
 
         scrollbar-width: none;
     }
@@ -577,46 +1320,77 @@
     }
 
 
-    .collections-filters a,
-    .collections-filters button {
+    .collections-filters a {
         flex-shrink: 0;
 
-        min-height: 38px;
+        min-height: 37px;
 
-        padding: 7px 14px;
+        padding:
+            8px
+            14px;
 
-        font-size: 0.72rem;
+        font-size: 0.68rem;
     }
 
 
-    .collection-section {
-        margin-bottom: 48px;
+    .collections-toolbar {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 13px;
+
+        margin-bottom: 36px;
+
+        padding-top: 18px;
     }
 
 
-    .collection-header {
+    .collections-search-form {
+        max-width: none;
+
+        width: 100%;
+    }
+
+
+    .collections-sort-form {
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+
+    .collections-sort-select {
+        flex: 1;
+
+        min-width: 0;
+
+        max-width: 220px;
+    }
+
+
+    .collections-section-header {
         display: block;
 
-        margin-bottom: 22px;
+        margin-bottom: 23px;
+
+        padding-bottom: 14px;
     }
 
 
-    .collection-header h2 {
-        font-size: 1.55rem;
+    .collections-section-heading .section-title {
+        font-size: 1.65rem;
     }
 
 
-    .collection-header p {
-        margin-top: 5px;
+    .collections-results-count {
+        margin-top: 10px;
 
-        font-size: 0.82rem;
-    }
+        font-size: 0.7rem;
 
-
-    .collection-header .collection-count {
-        display: block;
-
-        margin-top: 9px;
+        white-space: normal;
     }
 
 
@@ -626,29 +1400,28 @@
     }
 
 
-    .collections-empty {
-        padding: 45px 18px;
+    .collections-story-card {
+        min-height: 300px;
+    }
+
+
+    .collections-story-overlay strong {
+        font-size: 1.85rem;
     }
 
 
     .collections-cta {
-        margin-top: 48px;
-
-        padding: 42px 20px;
+        padding:
+            47px
+            20px;
     }
 
 
-    .collections-cta h2 {
-        font-size: 1.65rem;
-    }
-
-
-    .collections-cta p {
-        font-size: 0.84rem;
+    .collections-pagination {
+        margin-top: 43px;
     }
 
 }
-
 
 
 /* =========================================================
@@ -659,7 +1432,25 @@
 
     .collections-page .container {
         padding-left: 15px;
+
         padding-right: 15px;
+    }
+
+
+    .collections-title {
+        font-size: 2rem;
+    }
+
+
+    .collections-hero-rule {
+        margin-top: 20px;
+
+        margin-bottom: 17px;
+    }
+
+
+    .collections-hero-rule span {
+        width: 48px;
     }
 
 
@@ -669,27 +1460,158 @@
     }
 
 
-    .collection-header h2 {
-        font-size: 1.4rem;
+    /*
+     * Keep product cards 2-column on mobile.
+     * Product-card itself remains unchanged.
+     */
+
+    .collections-product-grid
+    .collection-product-item {
+        width: 50%;
+
+        flex:
+            0 0 50%;
+
+        max-width: 50%;
+
+        min-width: 0;
     }
 
 
-    .collection-header p {
-        font-size: 0.78rem;
+    .collections-sort-label {
+        font-size: 0.62rem;
+    }
+
+
+    .collections-sort-select {
+        max-width: 205px;
+
+        font-size: 0.73rem;
+    }
+
+
+    .collections-section-heading
+    .section-title {
+        font-size: 1.45rem;
+    }
+
+
+    .collections-results-count {
+        font-size: 0.67rem;
+    }
+
+
+    .collections-pagination {
+        gap: 5px;
+    }
+
+
+    .collections-pagination-arrow,
+    .collections-pagination-numbers a,
+    .collections-pagination-dots {
+        width: 34px;
+
+        height: 34px;
+
+        font-size: 0.7rem;
+    }
+
+
+    .collections-pagination-numbers {
+        gap: 4px;
+    }
+
+
+    .collections-empty {
+        padding:
+            50px
+            18px;
     }
 
 
     .collections-empty h3 {
-        font-size: 1.3rem;
+        font-size: 1.45rem;
     }
 
 
     .collections-empty p {
+        font-size: 0.81rem;
+    }
+
+
+    .collections-story-card {
+        min-height: 270px;
+    }
+
+
+    .collections-story-overlay strong {
+        font-size: 1.55rem;
+    }
+
+
+    .collections-cta h2 {
+        font-size: 1.7rem;
+    }
+
+
+    .collections-cta p {
         font-size: 0.82rem;
     }
 
 }
 
+
+/* =========================================================
+   EXTRA SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 355px) {
+
+    .collections-page .container {
+        padding-left: 12px;
+
+        padding-right: 12px;
+    }
+
+
+    .collections-product-grid {
+        --bs-gutter-x: 0.5rem;
+        --bs-gutter-y: 0.75rem;
+    }
+
+
+    .collections-product-grid
+    .collection-product-item {
+        width: 50%;
+
+        flex:
+            0 0 50%;
+
+        max-width: 50%;
+    }
+
+
+    .collections-title {
+        font-size: 1.8rem;
+    }
+
+
+    .collections-sort-select {
+        max-width: 180px;
+
+        font-size: 0.68rem;
+    }
+
+
+    .collections-pagination-arrow,
+    .collections-pagination-numbers a,
+    .collections-pagination-dots {
+        width: 31px;
+
+        height: 31px;
+    }
+
+}
 
 
 /* =========================================================
@@ -697,13 +1619,18 @@
    ========================================================= */
 
 .collections-filters a:focus-visible,
-.collections-filters button:focus-visible,
+.collections-search-box input:focus-visible,
+.collections-sort-select:focus-visible,
+.collections-search-clear:focus-visible,
+.collections-pagination a:focus-visible,
+.collections-empty-button:focus-visible,
 .collections-cta .btn:focus-visible {
-    outline: 2px solid #96765d;
+    outline:
+        2px solid
+        #96765d;
 
     outline-offset: 3px;
 }
-
 
 
 /* =========================================================
@@ -713,52 +1640,13 @@
 @media (prefers-reduced-motion: reduce) {
 
     .collections-filters a,
-    .collections-filters button,
+    .collections-search-box input,
+    .collections-search-clear,
+    .collections-pagination-arrow,
+    .collections-pagination-numbers a,
+    .collections-empty-button,
     .collections-cta .btn {
         transition: none;
-    }
-
-}
-/* =========================================================
-   TWO COLUMN MOBILE PRODUCTS
-   Keep 2 products side-by-side on all small screens
-   ========================================================= */
-
-@media (max-width: 575.98px) {
-
-    .collections-product-grid {
-        --bs-gutter-x: 0.75rem;
-        --bs-gutter-y: 1rem;
-    }
-
-
-    .collections-product-grid .collection-product-item {
-        width: 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-        min-width: 0;
-    }
-
-}
-
-
-/* =========================================================
-   EXTRA SMALL MOBILE
-   Keep 2 columns below 355px as well
-   ========================================================= */
-
-@media (max-width: 355px) {
-
-    .collections-product-grid {
-        --bs-gutter-x: 0.5rem;
-        --bs-gutter-y: 0.75rem;
-    }
-
-
-    .collections-product-grid .collection-product-item {
-        width: 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
     }
 
 }

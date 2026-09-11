@@ -1,53 +1,75 @@
 <%
     const s =
-        typeof settingsData !== "undefined" && settingsData
+        typeof settingsData !== "undefined" &&
+        settingsData
             ? settingsData
             : {};
 %>
 
 <%
-    layout("admin/layout", {
-        title: "Website Settings",
-        pageTitle: "Website Settings",
-        activePage: "settings",
-        pageCss: "/css/admin/settings.css"
-    });
+    layout(
+        "admin/layout",
+        {
+            title:
+                "Website Settings"
+        }
+    );
 %>
 
 
 <div class="admin-settings-page">
 
     <!-- =====================================================
-         PAGE HEADER
+         HEADER
     ====================================================== -->
 
     <div class="settings-page-header">
+
         <div>
-            <h1>Website Settings</h1>
+            <span class="settings-eyebrow">
+                WEBSITE CONTROL
+            </span>
+
+            <h1>
+                Website Settings
+            </h1>
+
             <p>
-                Manage your website information, images, SEO,
-                social links and website visibility.
+                Manage your website content, images,
+                social links and visibility settings.
             </p>
         </div>
+
     </div>
 
 
     <!-- =====================================================
-         SUCCESS / ERROR MESSAGES
+         MESSAGES
     ====================================================== -->
 
-    <% if (typeof success !== "undefined" && success) { %>
+    <% if (success) { %>
+
         <div class="settings-alert settings-alert-success">
-            <i class="bi bi-check-circle-fill"></i>
-            <span><%= success %></span>
+            <i class="bi bi-check-circle"></i>
+
+            <span>
+                <%= success %>
+            </span>
         </div>
+
     <% } %>
 
-    <% if (typeof error !== "undefined" && error) { %>
+
+    <% if (error) { %>
+
         <div class="settings-alert settings-alert-error">
-            <i class="bi bi-exclamation-circle-fill"></i>
-            <span><%= error %></span>
+            <i class="bi bi-exclamation-circle"></i>
+
+            <span>
+                <%= error %>
+            </span>
         </div>
+
     <% } %>
 
 
@@ -67,70 +89,93 @@
              WEBSITE INFORMATION
         ================================================== -->
 
-        <section class="settings-section">
+        <section class="settings-card">
 
-            <div class="settings-section-header">
+            <div class="settings-card-header">
+
                 <div>
-                    <h2>Website Information</h2>
-                    <p>Basic information displayed throughout the website.</p>
+                    <span class="settings-section-label">
+                        01
+                    </span>
+
+                    <h2>
+                        Website Information
+                    </h2>
+
+                    <p>
+                        Basic information displayed
+                        across the website.
+                    </p>
                 </div>
 
-                <i class="bi bi-globe2"></i>
             </div>
 
 
             <div class="settings-grid">
 
                 <div class="settings-field">
-                    <label for="siteName">Site Name</label>
+
+                    <label for="siteName">
+                        Website Name
+                    </label>
 
                     <input
                         type="text"
                         id="siteName"
                         name="siteName"
                         value="<%= s.siteName || '' %>"
-                        placeholder="Yogita Patola Art"
+                        maxlength="150"
+                        required
                     >
+
                 </div>
 
 
                 <div class="settings-field">
-                    <label for="siteEmail">Site Email</label>
+
+                    <label for="siteEmail">
+                        Website Email
+                    </label>
 
                     <input
                         type="email"
                         id="siteEmail"
                         name="siteEmail"
                         value="<%= s.siteEmail || '' %>"
-                        placeholder="info@example.com"
                     >
+
                 </div>
 
 
                 <div class="settings-field">
-                    <label for="sitePhone">Site Phone</label>
+
+                    <label for="sitePhone">
+                        Phone Number
+                    </label>
 
                     <input
                         type="text"
                         id="sitePhone"
                         name="sitePhone"
                         value="<%= s.sitePhone || '' %>"
-                        placeholder="+91 XXXXX XXXXX"
                     >
+
                 </div>
 
 
                 <div class="settings-field settings-field-full">
+
                     <label for="siteDescription">
-                        Site Description
+                        Website Description
                     </label>
 
                     <textarea
                         id="siteDescription"
                         name="siteDescription"
                         rows="4"
-                        placeholder="Website description"
+                        maxlength="500"
                     ><%= s.siteDescription || '' %></textarea>
+
                 </div>
 
             </div>
@@ -138,39 +183,53 @@
         </section>
 
 
-
         <!-- =================================================
-             SEO SETTINGS
+             SEO
         ================================================== -->
 
-        <section class="settings-section">
+        <section class="settings-card">
 
-            <div class="settings-section-header">
+            <div class="settings-card-header">
+
                 <div>
-                    <h2>SEO Settings</h2>
-                    <p>Manage search engine metadata for your website.</p>
+
+                    <span class="settings-section-label">
+                        02
+                    </span>
+
+                    <h2>
+                        SEO Settings
+                    </h2>
+
+                    <p>
+                        Search engine and metadata settings.
+                    </p>
+
                 </div>
 
-                <i class="bi bi-search"></i>
             </div>
 
 
             <div class="settings-grid">
 
                 <div class="settings-field settings-field-full">
-                    <label for="metaTitle">Meta Title</label>
+
+                    <label for="metaTitle">
+                        Meta Title
+                    </label>
 
                     <input
                         type="text"
                         id="metaTitle"
                         name="metaTitle"
                         value="<%= s.metaTitle || '' %>"
-                        placeholder="Yogita Patola Art | Handcrafted Patola Sarees"
                     >
+
                 </div>
 
 
                 <div class="settings-field settings-field-full">
+
                     <label for="metaDescription">
                         Meta Description
                     </label>
@@ -179,12 +238,13 @@
                         id="metaDescription"
                         name="metaDescription"
                         rows="4"
-                        placeholder="Meta description"
                     ><%= s.metaDescription || '' %></textarea>
+
                 </div>
 
 
                 <div class="settings-field settings-field-full">
+
                     <label for="metaKeywords">
                         Meta Keywords
                     </label>
@@ -194,75 +254,38 @@
                         id="metaKeywords"
                         name="metaKeywords"
                         value="<%= s.metaKeywords || '' %>"
-                        placeholder="Patola sarees, handcrafted Patola, traditional textiles"
                     >
+
                 </div>
 
 
-                <!-- FAVICON -->
+                <div class="settings-field">
 
-                <div class="settings-field settings-field-full">
+                    <label for="faviconUrl">
+                        Favicon URL
+                    </label>
 
-                    <label>Favicon</label>
+                    <input
+                        type="text"
+                        id="faviconUrl"
+                        name="faviconUrl"
+                        value="<%= s.faviconUrl || '' %>"
+                    >
 
-                    <div class="settings-upload-box">
-
-                        <input
-                            type="hidden"
-                            name="faviconUrl"
-                            value="<%= s.faviconUrl || '' %>"
-                        >
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.faviconUrl) { %>
-
-                                <img
-                                    id="faviconPreview"
-                                    src="<%= s.faviconUrl %>"
-                                    alt="Favicon"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="faviconPreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="faviconPreview"
-                                    src=""
-                                    alt="Favicon"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
+                </div>
 
 
-                        <div class="settings-upload-content">
+                <div class="settings-field">
 
-                            <strong>Upload Favicon</strong>
+                    <label>
+                        Upload Favicon
+                    </label>
 
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="faviconFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="faviconPreview"
-                                data-placeholder="faviconPreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
+                    <input
+                        type="file"
+                        name="faviconFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
 
                 </div>
 
@@ -271,29 +294,34 @@
         </section>
 
 
-
         <!-- =================================================
-             HOME PAGE CONTENT
+             HOME PAGE
         ================================================== -->
 
-        <section class="settings-section">
+        <section class="settings-card">
 
-            <div class="settings-section-header">
+            <div class="settings-card-header">
+
                 <div>
-                    <h2>Home Page Content</h2>
+
+                    <span class="settings-section-label">
+                        03
+                    </span>
+
+                    <h2>
+                        Home Page Content
+                    </h2>
+
                     <p>
-                        Manage hero, about and heritage section content.
+                        Manage hero and introduction content.
                     </p>
+
                 </div>
 
-                <i class="bi bi-house-door"></i>
             </div>
 
 
             <div class="settings-grid">
-
-
-                <!-- HERO HEADING -->
 
                 <div class="settings-field settings-field-full">
 
@@ -306,14 +334,10 @@
                         id="heroHeading"
                         name="heroHeading"
                         value="<%= s.heroHeading || '' %>"
-                        placeholder="Woven Heritage, Timeless Beauty."
                     >
 
                 </div>
 
-
-
-                <!-- HERO DESCRIPTION -->
 
                 <div class="settings-field settings-field-full">
 
@@ -325,86 +349,40 @@
                         id="heroDescription"
                         name="heroDescription"
                         rows="4"
-                        placeholder="Hero description"
                     ><%= s.heroDescription || '' %></textarea>
 
                 </div>
 
 
+                <div class="settings-field">
 
-                <!-- HERO IMAGE -->
+                    <label>
+                        Hero Image
+                    </label>
 
-                <div class="settings-field settings-field-full">
+                    <input
+                        type="file"
+                        name="heroImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
 
-                    <label>Hero Image</label>
+                    <% if (s.heroImage) { %>
 
-                    <div class="settings-upload-box">
+                        <div class="settings-image-preview">
 
-                        <input
-                            type="hidden"
-                            name="heroImage"
-                            value="<%= s.heroImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heroImage) { %>
-
-                                <img
-                                    id="heroImagePreview"
-                                    src="<%= s.heroImage %>"
-                                    alt="Hero Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heroImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heroImagePreview"
-                                    src=""
-                                    alt="Hero Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>Upload Hero Image</strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heroImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heroImagePreview"
-                                data-placeholder="heroImagePreviewPlaceholder"
+                            <img
+                                src="<%= s.heroImage %>"
+                                alt="Hero Image"
                             >
 
                         </div>
 
-                    </div>
+                    <% } %>
 
                 </div>
 
 
-
-                <!-- ABOUT HEADING -->
-
-                <div class="settings-field settings-field-full">
+                <div class="settings-field">
 
                     <label for="aboutHeading">
                         About Heading
@@ -415,14 +393,10 @@
                         id="aboutHeading"
                         name="aboutHeading"
                         value="<%= s.aboutHeading || '' %>"
-                        placeholder="Preserving Tradition. Creating Legacy."
                     >
 
                 </div>
 
-
-
-                <!-- ABOUT DESCRIPTION -->
 
                 <div class="settings-field settings-field-full">
 
@@ -434,372 +408,35 @@
                         id="aboutDescription"
                         name="aboutDescription"
                         rows="4"
-                        placeholder="About section description"
                     ><%= s.aboutDescription || '' %></textarea>
 
                 </div>
 
 
+                <div class="settings-field">
 
-                <!-- ABOUT IMAGE -->
+                    <label>
+                        About Image
+                    </label>
 
-                <div class="settings-field settings-field-full">
+                    <input
+                        type="file"
+                        name="aboutImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
 
-                    <label>About Image</label>
+                    <% if (s.aboutImage) { %>
 
-                    <div class="settings-upload-box">
+                        <div class="settings-image-preview">
 
-                        <input
-                            type="hidden"
-                            name="aboutImage"
-                            value="<%= s.aboutImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.aboutImage) { %>
-
-                                <img
-                                    id="aboutImagePreview"
-                                    src="<%= s.aboutImage %>"
-                                    alt="About Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="aboutImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="aboutImagePreview"
-                                    src=""
-                                    alt="About Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>Upload About Image</strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="aboutImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="aboutImagePreview"
-                                data-placeholder="aboutImagePreviewPlaceholder"
+                            <img
+                                src="<%= s.aboutImage %>"
+                                alt="About Image"
                             >
 
                         </div>
 
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     NEW: OUR STORY IMAGE
-                ================================================== -->
-
-                <div class="settings-field settings-field-full">
-
-                    <label>Our Story Image</label>
-
-                    <div class="settings-upload-box">
-
-                        <input
-                            type="hidden"
-                            name="aboutStoryImage"
-                            value="<%= s.aboutStoryImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.aboutStoryImage) { %>
-
-                                <img
-                                    id="aboutStoryImagePreview"
-                                    src="<%= s.aboutStoryImage %>"
-                                    alt="Our Story Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="aboutStoryImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="aboutStoryImagePreview"
-                                    src=""
-                                    alt="Our Story Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>Upload Our Story Image</strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="aboutStoryImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="aboutStoryImagePreview"
-                                data-placeholder="aboutStoryImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     HERITAGE HANDCRAFTED IMAGE
-                ================================================== -->
-
-                <div class="settings-field settings-field-full">
-
-                    <label>Heritage — Handcrafted Image</label>
-
-                    <div class="settings-upload-box">
-
-                        <input
-                            type="hidden"
-                            name="heritageHandcraftedImage"
-                            value="<%= s.heritageHandcraftedImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageHandcraftedImage) { %>
-
-                                <img
-                                    id="heritageHandcraftedImagePreview"
-                                    src="<%= s.heritageHandcraftedImage %>"
-                                    alt="Heritage Handcrafted Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageHandcraftedImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageHandcraftedImagePreview"
-                                    src=""
-                                    alt="Heritage Handcrafted Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Upload Handcrafted Image
-                            </strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageHandcraftedImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageHandcraftedImagePreview"
-                                data-placeholder="heritageHandcraftedImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     HERITAGE INTRICATE IMAGE
-                ================================================== -->
-
-                <div class="settings-field settings-field-full">
-
-                    <label>Heritage — Intricate Image</label>
-
-                    <div class="settings-upload-box">
-
-                        <input
-                            type="hidden"
-                            name="heritageIntricateImage"
-                            value="<%= s.heritageIntricateImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageIntricateImage) { %>
-
-                                <img
-                                    id="heritageIntricateImagePreview"
-                                    src="<%= s.heritageIntricateImage %>"
-                                    alt="Heritage Intricate Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageIntricateImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageIntricateImagePreview"
-                                    src=""
-                                    alt="Heritage Intricate Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Upload Intricate Image
-                            </strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageIntricateImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageIntricateImagePreview"
-                                data-placeholder="heritageIntricateImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     HERITAGE TIMELESS IMAGE
-                ================================================== -->
-
-                <div class="settings-field settings-field-full">
-
-                    <label>Heritage — Timeless Image</label>
-
-                    <div class="settings-upload-box">
-
-                        <input
-                            type="hidden"
-                            name="heritageTimelessImage"
-                            value="<%= s.heritageTimelessImage || '' %>"
-                        >
-
-
-                        <div class="settings-upload-preview">
-
-                            <% if (s.heritageTimelessImage) { %>
-
-                                <img
-                                    id="heritageTimelessImagePreview"
-                                    src="<%= s.heritageTimelessImage %>"
-                                    alt="Heritage Timeless Image"
-                                >
-
-                            <% } else { %>
-
-                                <div
-                                    id="heritageTimelessImagePreviewPlaceholder"
-                                    class="settings-upload-placeholder"
-                                >
-                                    No image uploaded
-                                </div>
-
-                                <img
-                                    id="heritageTimelessImagePreview"
-                                    src=""
-                                    alt="Heritage Timeless Image"
-                                    style="display:none;"
-                                >
-
-                            <% } %>
-
-                        </div>
-
-
-                        <div class="settings-upload-content">
-
-                            <strong>
-                                Upload Timeless Image
-                            </strong>
-
-                            <span>
-                                JPG, PNG or WEBP · Max 5MB
-                            </span>
-
-                            <input
-                                type="file"
-                                name="heritageTimelessImageFile"
-                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                                data-preview-target="heritageTimelessImagePreview"
-                                data-placeholder="heritageTimelessImagePreviewPlaceholder"
-                            >
-
-                        </div>
-
-                    </div>
+                    <% } %>
 
                 </div>
 
@@ -808,23 +445,248 @@
         </section>
 
 
+        <!-- =================================================
+             OUR STORY
+        ================================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div>
+
+                    <span class="settings-section-label">
+                        04
+                    </span>
+
+                    <h2>
+                        Our Story Images
+                    </h2>
+
+                    <p>
+                        Images used on the Our Story page.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+                <div class="settings-field">
+
+                    <label>
+                        Our Story Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="aboutStoryImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <% if (s.aboutStoryImage) { %>
+
+                        <div class="settings-image-preview">
+
+                            <img
+                                src="<%= s.aboutStoryImage %>"
+                                alt="Our Story Image"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="settings-field">
+
+                    <label>
+                        The Art of Patola Image
+                    </label>
+
+                    <small class="settings-help-text">
+                        Upload the image displayed in
+                        the "The Art of Patola" section
+                        of the Our Story page.
+                    </small>
+
+                    <input
+                        type="file"
+                        name="aboutArtImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <% if (s.aboutArtImage) { %>
+
+                        <div class="settings-image-preview">
+
+                            <img
+                                src="<%= s.aboutArtImage %>"
+                                alt="The Art of Patola"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HERITAGE
+        ================================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div>
+
+                    <span class="settings-section-label">
+                        05
+                    </span>
+
+                    <h2>
+                        Heritage Images
+                    </h2>
+
+                    <p>
+                        Images used in the heritage section.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+
+                <div class="settings-field">
+
+                    <label>
+                        Handcrafted Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="heritageHandcraftedImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <% if (
+                        s.heritageHandcraftedImage
+                    ) { %>
+
+                        <div class="settings-image-preview">
+
+                            <img
+                                src="<%= s.heritageHandcraftedImage %>"
+                                alt="Handcrafted Heritage"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="settings-field">
+
+                    <label>
+                        Intricate Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="heritageIntricateImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <% if (
+                        s.heritageIntricateImage
+                    ) { %>
+
+                        <div class="settings-image-preview">
+
+                            <img
+                                src="<%= s.heritageIntricateImage %>"
+                                alt="Intricate Heritage"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="settings-field">
+
+                    <label>
+                        Timeless Image
+                    </label>
+
+                    <input
+                        type="file"
+                        name="heritageTimelessImageFile"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <% if (
+                        s.heritageTimelessImage
+                    ) { %>
+
+                        <div class="settings-image-preview">
+
+                            <img
+                                src="<%= s.heritageTimelessImage %>"
+                                alt="Timeless Heritage"
+                            >
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </section>
+
 
         <!-- =================================================
              CONTACT & SOCIAL
         ================================================== -->
 
-        <section class="settings-section">
+        <section class="settings-card">
 
-            <div class="settings-section-header">
+            <div class="settings-card-header">
 
                 <div>
-                    <h2>Contact & Social</h2>
-                    <p>
-                        Manage contact information and social media links.
-                    </p>
-                </div>
 
-                <i class="bi bi-share"></i>
+                    <span class="settings-section-label">
+                        06
+                    </span>
+
+                    <h2>
+                        Contact & Social
+                    </h2>
+
+                    <p>
+                        Contact information and social profiles.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -833,13 +695,15 @@
 
                 <div class="settings-field settings-field-full">
 
-                    <label for="address">Address</label>
+                    <label for="address">
+                        Address
+                    </label>
 
                     <textarea
                         id="address"
                         name="address"
-                        rows="3"
-                        placeholder="Business address"
+                        rows="4"
+                        maxlength="500"
                     ><%= s.address || '' %></textarea>
 
                 </div>
@@ -847,14 +711,15 @@
 
                 <div class="settings-field">
 
-                    <label for="whatsapp">WhatsApp</label>
+                    <label for="whatsapp">
+                        WhatsApp
+                    </label>
 
                     <input
                         type="text"
                         id="whatsapp"
                         name="whatsapp"
                         value="<%= s.whatsapp || '' %>"
-                        placeholder="WhatsApp number"
                     >
 
                 </div>
@@ -862,14 +727,15 @@
 
                 <div class="settings-field">
 
-                    <label for="instagram">Instagram</label>
+                    <label for="instagram">
+                        Instagram
+                    </label>
 
                     <input
                         type="text"
                         id="instagram"
                         name="instagram"
                         value="<%= s.instagram || '' %>"
-                        placeholder="Instagram URL"
                     >
 
                 </div>
@@ -877,14 +743,15 @@
 
                 <div class="settings-field">
 
-                    <label for="facebook">Facebook</label>
+                    <label for="facebook">
+                        Facebook
+                    </label>
 
                     <input
                         type="text"
                         id="facebook"
                         name="facebook"
                         value="<%= s.facebook || '' %>"
-                        placeholder="Facebook URL"
                     >
 
                 </div>
@@ -892,14 +759,15 @@
 
                 <div class="settings-field">
 
-                    <label for="youtube">YouTube</label>
+                    <label for="youtube">
+                        YouTube
+                    </label>
 
                     <input
                         type="text"
                         id="youtube"
                         name="youtube"
                         value="<%= s.youtube || '' %>"
-                        placeholder="YouTube URL"
                     >
 
                 </div>
@@ -909,40 +777,49 @@
         </section>
 
 
-
         <!-- =================================================
-             WEBSITE STATUS & TOGGLES
+             WEBSITE STATUS
         ================================================== -->
 
-        <section class="settings-section">
+        <section class="settings-card">
 
-            <div class="settings-section-header">
+            <div class="settings-card-header">
 
                 <div>
-                    <h2>Website Status</h2>
-                    <p>
-                        Control website visibility and optional features.
-                    </p>
-                </div>
 
-                <i class="bi bi-toggles"></i>
+                    <span class="settings-section-label">
+                        07
+                    </span>
+
+                    <h2>
+                        Website Status
+                    </h2>
+
+                    <p>
+                        Control website visibility and features.
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <div class="settings-toggle-list">
+            <div class="settings-status-list">
 
 
-                <!-- MAINTENANCE MODE -->
+                <!-- Maintenance -->
 
-                <div class="settings-toggle-row">
+                <div class="settings-status-row">
 
-                    <div class="settings-toggle-info">
+                    <div>
 
-                        <strong>Maintenance Mode</strong>
+                        <strong>
+                            Maintenance Mode
+                        </strong>
 
                         <span>
-                            Temporarily show maintenance mode to visitors.
+                            Temporarily place the website
+                            into maintenance mode.
                         </span>
 
                     </div>
@@ -964,17 +841,19 @@
                 </div>
 
 
+                <!-- Contact -->
 
-                <!-- SHOW CONTACT -->
+                <div class="settings-status-row">
 
-                <div class="settings-toggle-row">
+                    <div>
 
-                    <div class="settings-toggle-info">
-
-                        <strong>Show Contact</strong>
+                        <strong>
+                            Show Contact
+                        </strong>
 
                         <span>
-                            Display contact functionality on the website.
+                            Display contact functionality
+                            on the public website.
                         </span>
 
                     </div>
@@ -996,17 +875,19 @@
                 </div>
 
 
+                <!-- Feedback -->
 
-                <!-- SHOW FEEDBACK -->
+                <div class="settings-status-row">
 
-                <div class="settings-toggle-row">
+                    <div>
 
-                    <div class="settings-toggle-info">
-
-                        <strong>Show Feedback</strong>
+                        <strong>
+                            Show Feedback
+                        </strong>
 
                         <span>
-                            Allow visitors to submit feedback.
+                            Display feedback functionality
+                            on the public website.
                         </span>
 
                     </div>
@@ -1028,17 +909,19 @@
                 </div>
 
 
+                <!-- Reviews -->
 
-                <!-- SHOW REVIEWS -->
+                <div class="settings-status-row">
 
-                <div class="settings-toggle-row">
+                    <div>
 
-                    <div class="settings-toggle-info">
-
-                        <strong>Show Reviews</strong>
+                        <strong>
+                            Show Reviews
+                        </strong>
 
                         <span>
-                            Display product reviews and ratings.
+                            Display customer reviews
+                            on the public website.
                         </span>
 
                     </div>
@@ -1064,105 +947,25 @@
         </section>
 
 
-
         <!-- =================================================
-             SAVE BUTTON
+             SAVE
         ================================================== -->
 
-        <div class="settings-form-actions">
+        <div class="settings-save-area">
 
             <button
                 type="submit"
-                class="settings-save-btn"
+                class="settings-save-button"
             >
+
                 <i class="bi bi-check2-circle"></i>
-                Save Settings
+
+                Save Website Settings
+
             </button>
 
         </div>
 
-
     </form>
 
 </div>
-
-
-
-<!-- =========================================================
-     IMAGE PREVIEW JAVASCRIPT
-========================================================= -->
-
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const fileInputs =
-        document.querySelectorAll(
-            "input[type='file'][data-preview-target]"
-        );
-
-
-    fileInputs.forEach(function (input) {
-
-        input.addEventListener("change", function () {
-
-            const file = this.files && this.files[0];
-
-            const previewId =
-                this.getAttribute("data-preview-target");
-
-            const placeholderId =
-                this.getAttribute("data-placeholder");
-
-
-            const preview =
-                document.getElementById(previewId);
-
-            const placeholder =
-                placeholderId
-                    ? document.getElementById(placeholderId)
-                    : null;
-
-
-            if (!preview) {
-                return;
-            }
-
-
-            if (!file) {
-                return;
-            }
-
-
-            if (!file.type.startsWith("image/")) {
-
-                alert(
-                    "Please select a valid image file."
-                );
-
-                this.value = "";
-
-                return;
-            }
-
-
-            const objectUrl =
-                URL.createObjectURL(file);
-
-
-            preview.src = objectUrl;
-
-            preview.style.display = "block";
-
-
-            if (placeholder) {
-                placeholder.style.display = "none";
-            }
-
-        });
-
-    });
-
-});
-
-</script>

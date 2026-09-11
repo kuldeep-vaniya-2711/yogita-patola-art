@@ -1,17 +1,12 @@
 <%
 /*
-* =========================================================
-* PRODUCT DETAIL PAGE
-* =========================================================
-*
-* EJS-MATE LAYOUT
-* ---------------------------------------------------------
-* CSS and JS are injected through ejs-mate block().
-* DO NOT use endblock.
-* DO NOT use layout("layout", {...}).
-* =========================================================
-*/
-
+ * =========================================================
+ * PRODUCT DETAIL PAGE
+ * =========================================================
+ *
+ * EJS-MATE LAYOUT
+ * =========================================================
+ */
 
 layout("layout");
 
@@ -35,9 +30,7 @@ var currentProduct =
         ? product
         : null;
 
-
 var ratingValue = 0;
-
 
 if (
     typeof averageRating !== "undefined" &&
@@ -51,29 +44,79 @@ if (
     }
 }
 
-
 var reviewList =
     typeof reviews !== "undefined" &&
     Array.isArray(reviews)
         ? reviews
         : [];
 
+var relatedProductList =
+    typeof relatedProducts !== "undefined" &&
+    Array.isArray(relatedProducts)
+        ? relatedProducts
+        : [];
 
 var wishlistStatus =
     typeof isInWishlist !== "undefined"
         ? Boolean(isInWishlist)
         : false;
 
-
-var fullStars =
-    Math.floor(ratingValue);
-
+var fullStars = Math.floor(ratingValue);
 
 var hasHalfStar =
     ratingValue % 1 >= 0.5;
 
 
+/*
+ * =========================================================
+ * SAFE PRODUCT INFORMATION
+ * =========================================================
+ */
+
+var productDescription =
+    currentProduct &&
+    currentProduct.description
+        ? currentProduct.description
+        : "A beautifully handcrafted textile created with traditional Indian artistry and timeless craftsmanship.";
+
+var productFabric =
+    currentProduct &&
+    currentProduct.fabric
+        ? currentProduct.fabric
+        : "Traditional textile craftsmanship";
+
+var productTechnique =
+    currentProduct &&
+    currentProduct.technique
+        ? currentProduct.technique
+        : "Traditional handwoven technique";
+
+var productColor =
+    currentProduct &&
+    currentProduct.color
+        ? currentProduct.color
+        : "Traditional Indian colour palette";
+
+var productDimensions =
+    currentProduct &&
+    currentProduct.dimensions
+        ? currentProduct.dimensions
+        : "";
+
+var productCategory =
+    currentProduct &&
+    currentProduct.category
+        ? currentProduct.category
+        : "Patola";
+
+var productAvailability =
+    currentProduct &&
+    currentProduct.availability
+        ? currentProduct.availability
+        : "In Stock";
+
 %>
+
 
 <% if (currentProduct) { %>
 
@@ -116,7 +159,6 @@ var hasHalfStar =
 </section>
 
 
-
 <!-- =========================================================
      PRODUCT MAIN
      ========================================================= -->
@@ -135,7 +177,6 @@ var hasHalfStar =
             <div class="col-lg-6">
 
                 <div class="product-gallery">
-
 
                     <!-- MAIN IMAGE -->
 
@@ -171,7 +212,6 @@ var hasHalfStar =
                         <% } %>
 
                     </div>
-
 
 
                     <!-- THUMBNAILS -->
@@ -211,11 +251,9 @@ var hasHalfStar =
 
                     <% } %>
 
-
                 </div>
 
             </div>
-
 
 
             <!-- =================================================
@@ -226,13 +264,11 @@ var hasHalfStar =
 
                 <div class="product-detail-info">
 
-
                     <!-- CATEGORY -->
 
                     <span class="product-detail-category">
-                        <%= currentProduct.category || "Patola" %>
+                        <%= productCategory %>
                     </span>
-
 
 
                     <!-- NAME -->
@@ -242,10 +278,7 @@ var hasHalfStar =
                     </h1>
 
 
-
-                    <!-- =================================================
-                         RATING
-                         ================================================= -->
+                    <!-- RATING -->
 
                     <div class="product-rating-summary">
 
@@ -284,27 +317,22 @@ var hasHalfStar =
 
                         </div>
 
-
                         <span class="rating-number">
                             <%= ratingValue.toFixed(1) %>
                         </span>
-
 
                         <a
                             href="#reviews"
                             class="review-count"
                         >
-                            (
-                            <%= reviewList.length %>
+                            (<%= reviewList.length %>
                             <%= reviewList.length === 1
                                 ? "Review"
                                 : "Reviews"
-                            %>
-                            )
+                            %>)
                         </a>
 
                     </div>
-
 
 
                     <!-- PRICE -->
@@ -318,7 +346,6 @@ var hasHalfStar =
                     </div>
 
 
-
                     <!-- AVAILABILITY -->
 
                     <div class="product-availability">
@@ -328,18 +355,17 @@ var hasHalfStar =
                         </span>
 
                         <span
-                            class="availability-badge <%= currentProduct.availability === 'In Stock'
+                            class="availability-badge <%= productAvailability === 'In Stock'
                                 ? 'in-stock'
-                                : currentProduct.availability === 'Limited'
+                                : productAvailability === 'Limited'
                                     ? 'limited'
                                     : 'out-of-stock'
                             %>"
                         >
-                            <%= currentProduct.availability || "In Stock" %>
+                            <%= productAvailability %>
                         </span>
 
                     </div>
-
 
 
                     <!-- DESCRIPTION -->
@@ -347,21 +373,15 @@ var hasHalfStar =
                     <div class="product-detail-description">
 
                         <p>
-                            <%= currentProduct.description ||
-                                "A beautifully handcrafted Patola created with traditional Indian artistry and timeless craftsmanship."
-                            %>
+                            <%= productDescription %>
                         </p>
 
                     </div>
 
 
-
-                    <!-- =================================================
-                         SPECIFICATIONS
-                         ================================================= -->
+                    <!-- SPECIFICATIONS -->
 
                     <div class="product-specifications">
-
 
                         <% if (currentProduct.fabric) { %>
 
@@ -430,25 +450,17 @@ var hasHalfStar =
 
                         <% } %>
 
-
                     </div>
 
 
-
-                    <!-- =================================================
-                         ACTION BUTTONS
-                         ================================================= -->
+                    <!-- ACTION BUTTONS -->
 
                     <div class="product-detail-actions">
-
-
-                        <!-- WISHLIST -->
 
                         <%
                             var wishlistProductId =
                                 currentProduct._id;
                         %>
-
 
                         <% if (wishlistStatus) { %>
 
@@ -505,7 +517,6 @@ var hasHalfStar =
                         <% } %>
 
 
-
                         <!-- WHATSAPP -->
 
                         <%
@@ -526,9 +537,7 @@ var hasHalfStar =
                             Enquire About This Product
                         </a>
 
-
                     </div>
-
 
 
                     <!-- WISHLIST STATUS -->
@@ -542,7 +551,6 @@ var hasHalfStar =
                     <% } %>
 
 
-
                     <!-- BACK -->
 
                     <div class="back-to-products">
@@ -553,11 +561,9 @@ var hasHalfStar =
 
                     </div>
 
-
                 </div>
 
             </div>
-
 
         </div>
 
@@ -566,9 +572,652 @@ var hasHalfStar =
 </section>
 
 
+<!-- =========================================================
+     PRODUCT INFORMATION
+     ========================================================= -->
+
+<section class="product-information-section">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             TRUST FEATURES
+             ===================================================== -->
+
+        <div class="product-trust-grid">
+
+
+            <div class="product-trust-item">
+
+                <div class="product-trust-icon">
+                    <i class="bi bi-patch-check"></i>
+                </div>
+
+                <div class="product-trust-content">
+
+                    <strong>
+                        Certified handloom
+                    </strong>
+
+                    <span>
+                        Authentic traditional craftsmanship
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="product-trust-item">
+
+                <div class="product-trust-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div class="product-trust-content">
+
+                    <strong>
+                        Insured shipping
+                    </strong>
+
+                    <span>
+                        Carefully packed for safe delivery
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="product-trust-item">
+
+                <div class="product-trust-icon">
+                    <i class="bi bi-arrow-repeat"></i>
+                </div>
+
+                <div class="product-trust-content">
+
+                    <strong>
+                        7-day exchange
+                    </strong>
+
+                    <span>
+                        Easy exchange support within 7 days
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================================
+             INFORMATION PANEL
+             ===================================================== -->
+
+        <div class="product-information-panel">
+
+
+            <!-- TABS -->
+
+            <div
+                class="product-info-tabs"
+                role="tablist"
+                aria-label="Product information"
+            >
+
+                <button
+                    type="button"
+                    class="product-info-tab active"
+                    id="productTabDescription"
+                    data-tab="description"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="productPanelDescription"
+                >
+                    Description
+                </button>
+
+
+                <button
+                    type="button"
+                    class="product-info-tab"
+                    id="productTabCraftsmanship"
+                    data-tab="craftsmanship"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="productPanelCraftsmanship"
+                >
+                    Craftsmanship
+                </button>
+
+
+                <button
+                    type="button"
+                    class="product-info-tab"
+                    id="productTabFabric"
+                    data-tab="fabric"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="productPanelFabric"
+                >
+                    Fabric &amp; Care
+                </button>
+
+
+                <button
+                    type="button"
+                    class="product-info-tab"
+                    id="productTabShipping"
+                    data-tab="shipping"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="productPanelShipping"
+                >
+                    Shipping
+                </button>
+
+
+                <button
+                    type="button"
+                    class="product-info-tab"
+                    id="productTabReturns"
+                    data-tab="returns"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="productPanelReturns"
+                >
+                    Returns &amp; Exchange
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB PANELS
+                 ================================================= -->
+
+            <div class="product-info-panels">
+
+
+                <!-- DESCRIPTION -->
+
+                <div
+                    class="product-info-panel active"
+                    id="productPanelDescription"
+                    data-panel="description"
+                    role="tabpanel"
+                    aria-labelledby="productTabDescription"
+                >
+
+                    <div class="product-info-content">
+
+                        <span class="product-info-eyebrow">
+                            ABOUT THIS PIECE
+                        </span>
+
+                        <h2>
+                            About this piece
+                        </h2>
+
+                        <p>
+                            <%= productDescription %>
+                        </p>
+
+                        <p>
+                            This piece reflects the character of
+                            <%= productCategory %> weaving through
+                            its considered colour, traditional
+                            technique and carefully finished details.
+                            Each textile carries subtle variations
+                            that are part of the beauty of
+                            handcrafted work.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CRAFTSMANSHIP -->
+
+                <div
+                    class="product-info-panel"
+                    id="productPanelCraftsmanship"
+                    data-panel="craftsmanship"
+                    role="tabpanel"
+                    aria-labelledby="productTabCraftsmanship"
+                    hidden
+                >
+
+                    <div class="product-info-content">
+
+                        <span class="product-info-eyebrow">
+                            THE ART BEHIND THE WEAVE
+                        </span>
+
+                        <h2>
+                            Crafted With Patience &amp; Tradition
+                        </h2>
+
+                        <p>
+                            The defining character of this piece comes
+                            from its
+                            <strong><%= productTechnique %></strong>.
+                            Traditional textile making requires
+                            precision, patience and consistency at
+                            every stage of the process.
+                        </p>
+
+                        <p>
+                            Small variations in weave, colour and
+                            surface are natural characteristics of
+                            handcrafted textiles and make every piece
+                            distinct.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FABRIC & CARE -->
+
+                <div
+                    class="product-info-panel"
+                    id="productPanelFabric"
+                    data-panel="fabric"
+                    role="tabpanel"
+                    aria-labelledby="productTabFabric"
+                    hidden
+                >
+
+                    <div class="product-info-content">
+
+                        <span class="product-info-eyebrow">
+                            FABRIC &amp; CARE
+                        </span>
+
+                        <h2>
+                            Fabric &amp; Care
+                        </h2>
+
+                        <div class="product-info-detail-grid">
+
+
+                            <div class="product-info-detail">
+
+                                <span>
+                                    Fabric
+                                </span>
+
+                                <strong>
+                                    <%= productFabric %>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info-detail">
+
+                                <span>
+                                    Colour
+                                </span>
+
+                                <strong>
+                                    <%= productColor %>
+                                </strong>
+
+                            </div>
+
+
+                            <% if (productDimensions) { %>
+
+                                <div class="product-info-detail">
+
+                                    <span>
+                                        Dimensions
+                                    </span>
+
+                                    <strong>
+                                        <%= productDimensions %>
+                                    </strong>
+
+                                </div>
+
+                            <% } %>
+
+
+                        </div>
+
+
+                        <div class="product-care-note">
+
+                            <i class="bi bi-heart"></i>
+
+                            <p>
+                                Store the textile in a clean, dry
+                                environment away from direct sunlight.
+                                Fold gently and use a breathable
+                                muslin or cotton covering for long-term
+                                storage. Follow fabric-specific
+                                professional cleaning guidance where
+                                required.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SHIPPING -->
+
+                <div
+                    class="product-info-panel"
+                    id="productPanelShipping"
+                    data-panel="shipping"
+                    role="tabpanel"
+                    aria-labelledby="productTabShipping"
+                    hidden
+                >
+
+                    <div class="product-info-content">
+
+                        <span class="product-info-eyebrow">
+                            DELIVERY
+                        </span>
+
+                        <h2>
+                            Insured Shipping
+                        </h2>
+
+                        <p>
+                            Your piece is carefully prepared and
+                            securely packed before dispatch to help
+                            protect the textile during transit.
+                        </p>
+
+
+                        <div class="product-info-detail-grid">
+
+
+                            <div class="product-info-detail">
+
+                                <span>
+                                    Packaging
+                                </span>
+
+                                <strong>
+                                    Protective textile packaging
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info-detail">
+
+                                <span>
+                                    Shipping
+                                </span>
+
+                                <strong>
+                                    Insured delivery
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info-detail">
+
+                                <span>
+                                    Dispatch
+                                </span>
+
+                                <strong>
+                                    Carefully prepared before shipping
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RETURNS -->
+
+                <div
+                    class="product-info-panel"
+                    id="productPanelReturns"
+                    data-panel="returns"
+                    role="tabpanel"
+                    aria-labelledby="productTabReturns"
+                    hidden
+                >
+
+                    <div class="product-info-content">
+
+                        <span class="product-info-eyebrow">
+                            PURCHASE SUPPORT
+                        </span>
+
+                        <h2>
+                            Returns &amp; Exchange
+                        </h2>
+
+                        <p>
+                            We want you to feel confident about your
+                            purchase. Eligible products can be
+                            exchanged within 7 days of delivery,
+                            subject to the applicable product and
+                            condition requirements.
+                        </p>
+
+
+                        <div class="product-policy-note">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            <p>
+                                Please contact Yogita Patola Art as
+                                soon as possible if you receive a
+                                damaged, incorrect or unsuitable
+                                eligible product. Keep the original
+                                packaging until the exchange process
+                                is completed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             WHAT'S INCLUDED
+             ===================================================== -->
+
+        <div class="product-included-section">
+
+            <div class="product-included-content">
+
+                <span class="product-info-eyebrow">
+                    YOUR PIECE
+                </span>
+
+                <h2>
+                    What's included
+                </h2>
+
+
+                <div class="product-included-list">
+
+
+                    <div class="product-included-item">
+
+                        <span class="included-number">
+                            01
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                <%= currentProduct.name %>
+                            </strong>
+
+                            <p>
+                                The handcrafted
+                                <%= productCategory %>
+                                piece shown on this page.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-included-item">
+
+                        <span class="included-number">
+                            02
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Craft details
+                            </strong>
+
+                            <p>
+                                <%= productTechnique %>
+                                craftsmanship and product
+                                specifications as listed above.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-included-item">
+
+                        <span class="included-number">
+                            03
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Secure packaging
+                            </strong>
+
+                            <p>
+                                Carefully prepared packaging for
+                                safe handling during delivery.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
 
 <!-- =========================================================
-     PRODUCT STORY
+     YOU MAY ALSO LIKE
+     ========================================================= -->
+
+<section class="product-related-section">
+
+    <div class="container">
+
+
+        <div class="product-related-header text-center">
+
+            <span class="section-subtitle">
+                YOU MAY ALSO LIKE
+            </span>
+
+            <h2 class="section-title">
+                Related Pieces
+            </h2>
+
+            <p class="section-description mx-auto">
+                Explore more handcrafted pieces from the collection.
+            </p>
+
+        </div>
+
+
+        <% if (relatedProductList.length > 0) { %>
+
+            <div class="row g-4 collections-product-grid">
+
+                <% relatedProductList.forEach(function(relatedProduct) { %>
+
+                    <div class="col-6 col-lg-3">
+
+                        <%- include("../partials/product-card", {
+                            product: relatedProduct
+                        }) %>
+
+                    </div>
+
+                <% }); %>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="product-related-empty text-center">
+
+                <p>
+                    More handcrafted pieces will be available soon.
+                </p>
+
+                <a
+                    href="/products"
+                    class="btn btn-outline-dark"
+                >
+                    Explore Collection
+                </a>
+
+            </div>
+
+        <% } %>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXISTING PRODUCT STORY
      ========================================================= -->
 
 <section class="product-story-section py-5">
@@ -603,7 +1252,6 @@ var hasHalfStar =
     </div>
 
 </section>
-
 
 
 <!-- =========================================================
@@ -680,10 +1328,7 @@ var hasHalfStar =
         </div>
 
 
-
-        <!-- =================================================
-             REVIEW LIST
-             ================================================= -->
+        <!-- REVIEW LIST -->
 
         <% if (reviewList.length > 0) { %>
 
@@ -778,9 +1423,6 @@ var hasHalfStar =
 
         <% } else { %>
 
-
-            <!-- EMPTY REVIEWS -->
-
             <div class="reviews-empty text-center">
 
                 <div class="reviews-empty-icon">
@@ -801,10 +1443,7 @@ var hasHalfStar =
         <% } %>
 
 
-
-        <!-- =================================================
-             REVIEW FORM
-             ================================================= -->
+        <!-- REVIEW FORM -->
 
         <div class="review-form-wrapper mt-5">
 
@@ -852,7 +1491,6 @@ var hasHalfStar =
                     >
 
                 </div>
-
 
 
                 <!-- RATING -->
@@ -903,7 +1541,6 @@ var hasHalfStar =
                 </div>
 
 
-
                 <!-- MESSAGE -->
 
                 <div class="mb-4">
@@ -930,7 +1567,6 @@ var hasHalfStar =
                 </div>
 
 
-
                 <!-- SUBMIT -->
 
                 <div class="text-center">
@@ -953,7 +1589,6 @@ var hasHalfStar =
     </div>
 
 </section>
-
 
 
 <!-- =========================================================
@@ -993,7 +1628,6 @@ var hasHalfStar =
 </section>
 
 
-
 <!-- =========================================================
      LIGHTBOX
      ========================================================= -->
@@ -1029,7 +1663,9 @@ var hasHalfStar =
 
 </section>
 
+
 <% } else { %>
+
 
 <!-- =========================================================
      PRODUCT NOT FOUND
@@ -1037,35 +1673,33 @@ var hasHalfStar =
 
 <section class="product-not-found py-5">
 
+    <div class="container">
 
-<div class="container">
+        <div class="text-center py-5">
 
-    <div class="text-center py-5">
+            <div class="product-not-found-icon">
+                ✦
+            </div>
 
-        <div class="product-not-found-icon">
-            ✦
+            <h1 class="section-title">
+                Product Not Found
+            </h1>
+
+            <p class="section-description mx-auto">
+                Sorry, the product you are looking for
+                could not be found.
+            </p>
+
+            <a
+                href="/products"
+                class="btn btn-dark"
+            >
+                View All Products
+            </a>
+
         </div>
 
-        <h1 class="section-title">
-            Product Not Found
-        </h1>
-
-        <p class="section-description mx-auto">
-            Sorry, the product you are looking for
-            could not be found.
-        </p>
-
-        <a
-            href="/products"
-            class="btn btn-dark"
-        >
-            View All Products
-        </a>
-
     </div>
-
-</div>
-
 
 </section>
 

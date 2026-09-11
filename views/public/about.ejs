@@ -1,276 +1,811 @@
-
 <%
-layout("layout", {
-    title: "Our Story | Yogita Patola Art"
-});
+    const s =
+        typeof websiteSettings !== "undefined" &&
+        websiteSettings
+            ? websiteSettings
+            : null;
+
+    const siteName =
+        s && s.siteName
+            ? s.siteName
+            : "Yogita Patola Art";
+
+
+    const storyImage =
+        s && s.aboutStoryImage
+            ? s.aboutStoryImage
+            : (
+                s && s.aboutImage
+                    ? s.aboutImage
+                    : ""
+            );
+
+
+    const handcraftedImage =
+        s && s.heritageHandcraftedImage
+            ? s.heritageHandcraftedImage
+            : "";
+
+
+    const intricateImage =
+        s && s.heritageIntricateImage
+            ? s.heritageIntricateImage
+            : "";
+
+
+    const timelessImage =
+        s && s.heritageTimelessImage
+            ? s.heritageTimelessImage
+            : "";
+
+
+    const artImage =
+        s && s.aboutArtImage
+            ? s.aboutArtImage
+            : "";
 %>
 
-<%
-/*
- * =========================================================
- * ABOUT / OUR STORY PAGE CSS
- * =========================================================
- *
- * IMPORTANT:
- * Do NOT use pageCss / activePageCss.
- * Layout uses native ejs-mate block("head").
- * =========================================================
- */
 
-block("head").append(`
-    <link
-        rel="stylesheet"
-        href="/css/pages/about.css"
-    >
-`);
+<%
+    layout(
+        "layout",
+        {
+            title:
+                `Our Story | ${siteName}`,
+
+            description:
+                "Discover the story, heritage and craftsmanship behind Yogita Patola Art and the timeless tradition of Patola textiles."
+        }
+    );
+
+
+    block("head").append(
+        '<link rel="stylesheet" href="/css/pages/about.css">'
+    );
 %>
 
-<section class="about-page">
 
-    <!-- ==================================================
-         ABOUT HERO
-    ================================================== -->
+<!-- =====================================================
+     HERO
+====================================================== -->
 
-    <section class="about-hero py-5">
+<section class="about-story-hero">
 
-        <div class="container text-center">
+    <div class="about-story-hero-pattern"></div>
 
-            <span class="section-subtitle">
-                YOGITA PATOLA ART
+    <div class="about-container">
+
+        <div class="about-story-hero-content">
+
+            <span class="about-eyebrow">
+                SINCE 1979
             </span>
 
-            <h1 class="section-title">
+            <h1 class="about-hero-title">
                 Our Story
             </h1>
 
-            <p class="section-description mx-auto">
-                Preserving the timeless beauty of Patola
-                through traditional craftsmanship and
-                contemporary elegance.
+            <p class="about-hero-description">
+                A journey rooted in Indian textile heritage,
+                guided by an appreciation for Patola artistry
+                and a vision to preserve its timeless beauty.
             </p>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- ==================================================
-         ABOUT STORY
-    ================================================== -->
+<!-- =====================================================
+     INTRODUCTION
+====================================================== -->
 
-    <section class="about-story py-5">
+<section class="about-intro-section">
 
-        <div class="container">
+    <div class="about-container">
 
-            <div class="row align-items-center g-5">
+        <div class="about-intro-grid">
 
-                <!-- STORY CONTENT -->
+            <div class="about-intro-content">
 
-                <div class="col-lg-6">
+                <span class="about-eyebrow">
+                    YOGITA PATOLA ART
+                </span>
 
-                    <span class="section-subtitle">
+                <h2>
+                    Woven heritage,
+                    <span>timeless beauty.</span>
+                </h2>
+
+                <p>
+                    Yogita Patola Art is inspired by the rich
+                    tradition of Indian textiles and the
+                    distinctive beauty of Patola weaving.
+                </p>
+
+                <p>
+                    Our approach brings together respect for
+                    traditional craftsmanship, appreciation
+                    for intricate patterns and a contemporary
+                    eye for timeless elegance.
+                </p>
+
+            </div>
+
+
+            <div class="about-intro-image-wrap">
+
+                <div class="about-image-frame">
+
+                    <% if (storyImage) { %>
+
+                        <img
+                            src="<%= storyImage %>"
+                            alt="Yogita Patola Art - Our Story"
+                            class="about-intro-image"
+                            loading="lazy"
+                        >
+
+                    <% } else { %>
+
+                        <div class="about-image-placeholder">
+                            Yogita Patola Art
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="about-image-caption">
+
+                    <span>
+                        OUR STORY
+                    </span>
+
+                    <span>
+                        SINCE 1979
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HERITAGE
+====================================================== -->
+
+<section class="about-heritage-section">
+
+    <div class="about-container">
+
+        <div class="about-section-heading">
+
+            <span class="about-eyebrow">
+                HERITAGE
+            </span>
+
+            <h2>
+                Tradition is not
+                <span>just remembered.</span>
+            </h2>
+
+            <p>
+                It lives through the hands, patterns,
+                techniques and details that continue to
+                give Indian textiles their identity.
+            </p>
+
+        </div>
+
+
+        <div class="about-heritage-grid">
+
+
+            <!-- CARD 01 -->
+
+            <article class="about-heritage-card">
+
+                <div class="about-heritage-image-wrap">
+
+                    <% if (handcraftedImage) { %>
+
+                        <img
+                            src="<%= handcraftedImage %>"
+                            alt="Handcrafted Patola textile"
+                            class="about-heritage-image"
+                            loading="lazy"
+                        >
+
+                    <% } else { %>
+
+                        <div class="about-image-placeholder">
+                            Handcrafted
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="about-heritage-content">
+
+                    <span class="about-card-number">
+                        01
+                    </span>
+
+                    <h3>
+                        Handcrafted
+                    </h3>
+
+                    <p>
+                        Every textile carries the character
+                        of careful craftsmanship and the
+                        human touch behind the weave.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- CARD 02 -->
+
+            <article class="about-heritage-card">
+
+                <div class="about-heritage-image-wrap">
+
+                    <% if (intricateImage) { %>
+
+                        <img
+                            src="<%= intricateImage %>"
+                            alt="Intricate Patola textile details"
+                            class="about-heritage-image"
+                            loading="lazy"
+                        >
+
+                    <% } else { %>
+
+                        <div class="about-image-placeholder">
+                            Intricate
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="about-heritage-content">
+
+                    <span class="about-card-number">
+                        02
+                    </span>
+
+                    <h3>
+                        Intricate
+                    </h3>
+
+                    <p>
+                        Patola is celebrated for its detailed
+                        geometry, colours and patterns created
+                        through a highly considered weaving
+                        process.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- CARD 03 -->
+
+            <article class="about-heritage-card">
+
+                <div class="about-heritage-image-wrap">
+
+                    <% if (timelessImage) { %>
+
+                        <img
+                            src="<%= timelessImage %>"
+                            alt="Timeless Patola textile"
+                            class="about-heritage-image"
+                            loading="lazy"
+                        >
+
+                    <% } else { %>
+
+                        <div class="about-image-placeholder">
+                            Timeless
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="about-heritage-content">
+
+                    <span class="about-card-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Timeless
+                    </h3>
+
+                    <p>
+                        Traditional textile artistry continues
+                        to inspire modern wardrobes while
+                        retaining its cultural character.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     THE ART OF PATOLA
+====================================================== -->
+
+<section class="about-art-section">
+
+    <div class="about-container">
+
+        <div class="about-art-grid">
+
+
+            <!-- IMAGE -->
+
+            <div class="about-art-visual">
+
+                <% if (artImage) { %>
+
+                    <img
+                        src="<%= artImage %>"
+                        alt="The Art of Patola - Yogita Patola Art"
+                        class="about-art-image"
+                        loading="lazy"
+                    >
+
+                    <div class="about-art-image-label">
+                        THE ART OF PATOLA
+                    </div>
+
+                <% } else { %>
+
+                    <div class="about-art-symbol">
+                        ◈
+                    </div>
+
+                    <span>
                         THE ART OF PATOLA
                     </span>
 
-                    <h2 class="section-title">
-
-                        Woven With Tradition.
-
-                        <br>
-
-                        Created With Passion.
-
-                    </h2>
-
-                    <p class="section-description">
-
-                        Patola is more than a textile.
-
-                        It represents generations of
-                        craftsmanship, patience and
-                        artistic heritage.
-
-                    </p>
-
-                    <p class="section-description">
-
-                        At Yogita Patola Art, we celebrate
-                        this heritage by bringing carefully
-                        crafted traditional textiles to
-                        people who appreciate timeless
-                        Indian artistry.
-
-                    </p>
-
-                </div>
-
-
-                <!-- STORY IMAGE -->
-
-                <div class="col-lg-6">
-
-                    <div class="about-story-card">
-
-                        <% if (
-                            typeof websiteSettings !== "undefined" &&
-                            websiteSettings &&
-                            websiteSettings.aboutStoryImage
-                        ) { %>
-
-                            <img
-                                src="<%= websiteSettings.aboutStoryImage %>"
-                                alt="Patola Art Heritage"
-                                class="about-story-image"
-                            >
-
-                            <div class="about-story-overlay"></div>
-
-                        <% } %>
-
-
-                        <div class="about-story-content">
-
-                            <span>
-                                HERITAGE
-                            </span>
-
-                            <strong>
-                                PATOLA ART
-                            </strong>
-
-                            <small>
-                                Tradition • Craft • Elegance
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <% } %>
 
             </div>
 
-        </div>
 
-    </section>
+            <!-- CONTENT -->
 
+            <div class="about-art-content">
 
-    <!-- ==================================================
-         VALUES
-    ================================================== -->
-
-    <section class="about-values py-5">
-
-        <div class="container">
-
-            <div class="text-center mb-5">
-
-                <span class="section-subtitle">
-                    WHAT WE BELIEVE
+                <span class="about-eyebrow">
+                    THE ART OF PATOLA
                 </span>
 
-                <h2 class="section-title">
-                    Our Values
+                <h2>
+                    A pattern created
+                    <span>before the weaving begins.</span>
                 </h2>
 
-            </div>
+                <p>
+                    Patola is renowned for its intricate
+                    patterns and the precision required to
+                    bring those patterns to life.
+                </p>
+
+                <p>
+                    In traditional double ikat weaving,
+                    the design is carefully considered in
+                    the yarn itself before the threads are
+                    woven together. The result is a textile
+                    where pattern and structure become one.
+                </p>
 
 
-            <div class="row g-4">
+                <ul class="about-process-list">
 
-                <div class="col-md-4">
+                    <li>
+                        <span>01</span>
+                        Pattern and colour are carefully planned.
+                    </li>
 
-                    <div class="about-value-card text-center">
+                    <li>
+                        <span>02</span>
+                        Yarn preparation plays a vital role in
+                        the final design.
+                    </li>
 
-                        <h3>
-                            Tradition
-                        </h3>
+                    <li>
+                        <span>03</span>
+                        Precision weaving brings the pattern together.
+                    </li>
 
-                        <p>
-                            Respecting the traditional
-                            techniques and heritage behind
-                            every Patola creation.
-                        </p>
+                    <li>
+                        <span>04</span>
+                        The finished textile reflects patience,
+                        skill and detail.
+                    </li>
 
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-4">
-
-                    <div class="about-value-card text-center">
-
-                        <h3>
-                            Craftsmanship
-                        </h3>
-
-                        <p>
-                            Appreciating the patience,
-                            precision and dedication of
-                            skilled artisans.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-4">
-
-                    <div class="about-value-card text-center">
-
-                        <h3>
-                            Timeless Beauty
-                        </h3>
-
-                        <p>
-                            Creating and presenting textiles
-                            that can be cherished for years
-                            and generations.
-                        </p>
-
-                    </div>
-
-                </div>
+                </ul>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- ==================================================
-         CTA
-    ================================================== -->
+<!-- =====================================================
+     CRAFTSMANSHIP
+====================================================== -->
 
-    <section class="about-cta py-5">
+<section class="about-craft-section">
 
-        <div class="container text-center">
+    <div class="about-container">
 
-            <span class="section-subtitle">
-                EXPLORE OUR COLLECTION
+        <div class="about-section-heading centered">
+
+            <span class="about-eyebrow">
+                CRAFTSMANSHIP
             </span>
 
-            <h2 class="section-title">
-                Discover The Beauty Of Patola
+            <h2>
+                Beauty lives
+                <span>in the details.</span>
             </h2>
 
-            <p class="section-description mx-auto">
-                Explore our handcrafted collection and
-                discover the heritage behind every piece.
+            <p>
+                Patola artistry is a balance of precision,
+                patience and visual harmony.
             </p>
-
-            <a
-                href="/collections"
-                class="btn btn-dark btn-lg"
-            >
-                Explore Collections
-            </a>
 
         </div>
 
-    </section>
+
+        <div class="about-craft-grid">
+
+
+            <article class="about-craft-item">
+
+                <div class="about-craft-icon">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
+
+                <span class="about-craft-label">
+                    PATTERN
+                </span>
+
+                <h3>
+                    Geometry
+                </h3>
+
+                <p>
+                    Repeating forms and carefully balanced
+                    motifs give Patola its distinctive visual
+                    identity.
+                </p>
+
+            </article>
+
+
+            <article class="about-craft-item">
+
+                <div class="about-craft-icon">
+                    <i class="bi bi-palette"></i>
+                </div>
+
+                <span class="about-craft-label">
+                    COLOUR
+                </span>
+
+                <h3>
+                    Harmony
+                </h3>
+
+                <p>
+                    Colour becomes part of the character of
+                    the textile, creating depth and movement
+                    across the weave.
+                </p>
+
+            </article>
+
+
+            <article class="about-craft-item">
+
+                <div class="about-craft-icon">
+                    <i class="bi bi-hand-index"></i>
+                </div>
+
+                <span class="about-craft-label">
+                    PROCESS
+                </span>
+
+                <h3>
+                    Patience
+                </h3>
+
+                <p>
+                    Traditional textile work demands
+                    attention to detail and consistency
+                    throughout the process.
+                </p>
+
+            </article>
+
+
+            <article class="about-craft-item">
+
+                <div class="about-craft-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <span class="about-craft-label">
+                    RESULT
+                </span>
+
+                <h3>
+                    Character
+                </h3>
+
+                <p>
+                    The finished textile carries the visual
+                    character of the craft from which it was
+                    created.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PHILOSOPHY
+====================================================== -->
+
+<section class="about-philosophy-section">
+
+    <div class="about-container">
+
+        <div class="about-philosophy-inner">
+
+
+            <div class="about-section-heading">
+
+                <span class="about-eyebrow">
+                    OUR PHILOSOPHY
+                </span>
+
+                <h2>
+                    Preserve the past.
+                    <span>Respect the craft.</span>
+                </h2>
+
+                <p>
+                    Yogita Patola Art is guided by a simple
+                    belief: traditional Indian textiles deserve
+                    to be appreciated not only for their beauty,
+                    but also for the craftsmanship behind them.
+                </p>
+
+            </div>
+
+
+            <div class="about-philosophy-list">
+
+
+                <div class="about-philosophy-item">
+
+                    <span class="about-philosophy-number">
+                        01
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Respect Tradition
+                        </h3>
+
+                        <p>
+                            Understand and appreciate the
+                            techniques and visual language
+                            that make Patola distinctive.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-philosophy-item">
+
+                    <span class="about-philosophy-number">
+                        02
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Celebrate Craft
+                        </h3>
+
+                        <p>
+                            Give attention to the people,
+                            patience and skill behind every
+                            handcrafted textile.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-philosophy-item">
+
+                    <span class="about-philosophy-number">
+                        03
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Create Timelessness
+                        </h3>
+
+                        <p>
+                            Present traditional artistry in
+                            a way that remains elegant and
+                            meaningful across generations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     1979 LEGACY
+====================================================== -->
+
+<section class="about-year-section">
+
+    <div class="about-container">
+
+        <div class="about-year-card">
+
+            <div class="about-year-decoration">
+                ◈
+            </div>
+
+            <span class="about-eyebrow">
+                OUR JOURNEY
+            </span>
+
+            <div class="about-year">
+                1979
+            </div>
+
+            <h2>
+                A legacy rooted in
+                <span>textile artistry.</span>
+            </h2>
+
+            <p>
+                Since 1979, the story of Yogita Patola Art
+                is shaped by an appreciation for Indian
+                textile heritage and the enduring beauty
+                of Patola craftsmanship.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VISIT / CTA
+====================================================== -->
+
+<section class="about-visit-section">
+
+    <div class="about-container">
+
+        <div class="about-visit-card">
+
+            <div class="about-visit-content">
+
+                <span class="about-eyebrow">
+                    DISCOVER THE COLLECTION
+                </span>
+
+                <h2>
+                    Explore the world of
+                    <span>Patola.</span>
+                </h2>
+
+                <p>
+                    Discover handcrafted textiles and
+                    traditional artistry through the
+                    Yogita Patola Art collection.
+                </p>
+
+            </div>
+
+
+            <div class="about-visit-actions">
+
+                <a
+                    href="/collections"
+                    class="about-primary-button"
+                >
+                    Explore Collections
+
+                    <span>
+                        →
+                    </span>
+                </a>
+
+
+                <a
+                    href="/contact"
+                    class="about-secondary-button"
+                >
+                    Contact Us
+
+                    <span>
+                        →
+                    </span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>

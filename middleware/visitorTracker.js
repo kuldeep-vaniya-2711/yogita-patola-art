@@ -56,13 +56,13 @@ async function visitorTracker(req, res, next) {
         };
 
         const visitor = await Visitor.create(visitorData);
-        console.log("================================\nVisitor tracked successfully");
-        console.log("Visitor ID:", visitor._id.toString());
-        console.log("IP:", visitorData.ipAddress);
-        console.log("Page:", visitorData.page);
-        console.log("Browser:", visitorData.browser);
-        console.log("Device:", visitorData.device);
-        console.log("================================");
+         console.log("================================\nVisitor tracked successfully");
+        // console.log("Visitor ID:", visitor._id.toString());
+        // console.log("IP:", visitorData.ipAddress);
+        // console.log("Page:", visitorData.page);
+        // console.log("Browser:", visitorData.browser);
+        // console.log("Device:", visitorData.device);
+        // console.log("================================");
     } catch (error) {
         console.error("================================\nVisitor tracking error:\n", error.message, "\n================================");
     }
