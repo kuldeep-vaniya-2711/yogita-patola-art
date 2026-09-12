@@ -1,3 +1,4 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -18,6 +19,20 @@ const Settings = require("../models/Settings");
 
 const reviewController = require("../controllers/reviewController");
 const feedbackController = require("../controllers/feedbackController");
+
+// =========================================================
+// EMAIL + OTP SERVICES
+// =========================================================
+
+const {
+    sendAdminPasswordResetOTP
+} = require("../services/emailService");
+
+const {
+    generateOTP,
+    getOTPExpiry,
+    isOTPExpired
+} = require("../services/otpService");
 
 
 // =========================================================
@@ -42,16 +57,19 @@ function deleteImageFile(imagePath) {
 
     try {
 
-        if (!imagePath) return;
+        if (!imagePath) {
+            return;
+        }
 
         const cleanPath =
             String(imagePath).replace(/^\/+/, "");
 
-        const fullPath = path.join(
-            __dirname,
-            "../public",
-            cleanPath
-        );
+        const fullPath =
+            path.join(
+                __dirname,
+                "../public",
+                cleanPath
+            );
 
         if (fs.existsSync(fullPath)) {
             fs.unlinkSync(fullPath);
@@ -63,6 +81,7 @@ function deleteImageFile(imagePath) {
             "Image delete error:",
             error
         );
+
     }
 }
 
@@ -77,32 +96,40 @@ const imagePaths = files =>
 
 const deleteUploadedFiles = files => {
 
-    (files || []).forEach(file =>
+    (files || []).forEach(file => {
+
         deleteImageFile(
             "/uploads/products/" +
             file.filename
-        )
-    );
+        );
+
+    });
+
 };
 
 
 const deleteSettingsFiles = files => {
 
-    if (!files) return;
+    if (!files) {
+        return;
+    }
 
     Object.values(files)
         .flat()
-        .forEach(file =>
+        .forEach(file => {
+
             deleteImageFile(
                 "/uploads/settings/" +
                 file.filename
-            )
-        );
+            );
+
+        });
+
 };
 
 
 // =========================================================
-// MULTER STORAGE
+// MULTER
 // =========================================================
 
 function createStorage(subfolder) {
@@ -111,25 +138,25 @@ function createStorage(subfolder) {
 
         destination: (req, file, cb) => {
 
-            const dir = path.join(
-                __dirname,
-                "../public/uploads",
-                subfolder
-            );
+            const dir =
+                path.join(
+                    __dirname,
+                    "../public/uploads",
+                    subfolder
+                );
 
             if (!fs.existsSync(dir)) {
 
                 fs.mkdirSync(
                     dir,
-                    {
-                        recursive: true
-                    }
+                    { recursive: true }
                 );
+
             }
 
             cb(null, dir);
-        },
 
+        },
 
         filename: (req, file, cb) => {
 
@@ -140,13 +167,13 @@ function createStorage(subfolder) {
 
             cb(
                 null,
-                `${Date.now()}-${Math.round(
-                    Math.random() * 1e9
-                )}${ext}`
+                `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
             );
+
         }
 
     });
+
 }
 
 
@@ -159,13 +186,10 @@ const fileFilter = (req, file, cb) => {
         "image/webp"
     ];
 
-    if (
-        allowed.includes(
-            file.mimetype
-        )
-    ) {
+    if (allowed.includes(file.mimetype)) {
 
         return cb(null, true);
+
     }
 
     cb(
@@ -173,57 +197,58 @@ const fileFilter = (req, file, cb) => {
             "Only JPG, JPEG, PNG and WEBP images are allowed."
         )
     );
+
 };
 
 
 const productUpload = multer({
 
-    storage:
-        createStorage("products"),
+    storage: createStorage("products"),
 
     limits: {
-
-        fileSize:
-            5 * 1024 * 1024,
-
+        fileSize: 5 * 1024 * 1024,
         files: 5
     },
 
     fileFilter
+
 });
 
 
 const settingsUpload = multer({
 
-    storage:
-        createStorage("settings"),
+    storage: createStorage("settings"),
 
     limits: {
-
-        fileSize:
-            5 * 1024 * 1024,
-
-        // 8 setting images
+        fileSize: 5 * 1024 * 1024,
         files: 8
     },
 
     fileFilter
+
 });
 
 
 // =========================================================
-// ADMIN ROOT & AUTH
+// ADMIN ROOT / AUTH
 // =========================================================
 
 router.get(
     "/",
     adminAuth,
-    (req, res) =>
-        res.redirect(
+    (req, res) => {
+
+        return res.redirect(
             "/admin/dashboard"
-        )
+        );
+
+    }
 );
 
+
+// =========================================================
+// ADMIN LOGIN
+// =========================================================
 
 router.get(
     "/login",
@@ -234,16 +259,18 @@ router.get(
             return res.redirect(
                 "/admin/dashboard"
             );
+
         }
 
         return res.render(
             "admin/login",
             {
                 title: "Admin Login",
-                error:
-                    req.query.error || ""
+                error: req.query.error || "",
+                success: req.query.success || ""
             }
         );
+
     }
 );
 
@@ -264,41 +291,43 @@ router.post(
             const password =
                 req.body.password;
 
-            if (
-                !email ||
-                !password
-            ) {
+
+            if (!email || !password) {
 
                 return res.redirect(
                     "/admin/login?error=Please+enter+email+and+password"
                 );
+
             }
+
 
             const admin =
                 await Admin.findOne({
                     email
                 });
 
+
             if (
                 !admin ||
-                !(
-                    await bcrypt.compare(
-                        password,
-                        admin.password
-                    )
-                )
+                !(await bcrypt.compare(
+                    password,
+                    admin.password
+                ))
             ) {
 
                 return res.redirect(
                     "/admin/login?error=Invalid+email+or+password"
                 );
+
             }
+
 
             req.session.adminId =
                 admin._id;
 
             req.session.adminEmail =
                 admin.email;
+
 
             return res.redirect(
                 "/admin/dashboard"
@@ -314,10 +343,615 @@ router.post(
             return res.redirect(
                 "/admin/login?error=Server+error"
             );
+
         }
+
     }
 );
 
+
+// =========================================================
+// ADMIN FORGOT PASSWORD
+// =========================================================
+
+router.get(
+    "/forgot-password",
+    (req, res) => {
+
+        if (req.session?.adminId) {
+
+            return res.redirect(
+                "/admin/dashboard"
+            );
+
+        }
+
+        return res.render(
+            "admin/forgot-password",
+            {
+                title: "Forgot Password",
+                error: req.query.error || "",
+                success: req.query.success || ""
+            }
+        );
+
+    }
+);
+
+
+router.post(
+    "/forgot-password",
+    async (req, res) => {
+
+        try {
+
+            const email =
+                String(
+                    req.body.email || ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (!email) {
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Please+enter+your+admin+email"
+                );
+
+            }
+
+
+            const admin =
+                await Admin.findOne({
+                    email
+                });
+
+
+            /*
+             * Do not reveal whether an admin
+             * account exists.
+             */
+
+            if (!admin) {
+
+                return res.redirect(
+                    "/admin/forgot-password?success=If+this+email+belongs+to+an+admin+account%2C+an+OTP+has+been+sent"
+                );
+
+            }
+
+
+            const otp =
+                generateOTP();
+
+            const otpExpiry =
+                getOTPExpiry();
+
+
+            admin.resetOtp =
+                otp;
+
+            admin.resetOtpExpires =
+                otpExpiry;
+
+            await admin.save();
+
+
+            const emailResult =
+                await sendAdminPasswordResetOTP(
+                    admin.email,
+                    admin.name || "Admin",
+                    otp
+                );
+
+
+            if (
+                !emailResult ||
+                !emailResult.success
+            ) {
+
+                admin.resetOtp = null;
+                admin.resetOtpExpires = null;
+
+                await admin.save();
+
+
+                console.error(
+                    "Admin reset OTP email failed:",
+                    emailResult?.error
+                );
+
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Unable+to+send+OTP.+Please+try+again"
+                );
+
+            }
+
+console.log(
+    "\n================================="
+);
+console.log(
+    "ADMIN PASSWORD RESET OTP"
+);
+console.log(
+    "Email:",
+    admin.email
+);
+console.log(
+    "OTP:",
+    otp
+);
+console.log(
+    "Expires:",
+    otpExpiry
+);
+console.log(
+    "=================================\n"
+);
+            /*
+             * Store only the email in session.
+             * The password cannot be reset until
+             * OTP verification succeeds.
+             */
+
+            req.session.adminResetEmail =
+                admin.email;
+
+            req.session.adminResetVerified =
+                false;
+
+
+            return res.redirect(
+                "/admin/verify-reset-otp"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Admin forgot password error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/forgot-password?error=Something+went+wrong.+Please+try+again"
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// VERIFY RESET OTP
+// =========================================================
+
+router.get(
+    "/verify-reset-otp",
+    (req, res) => {
+
+        const email =
+            req.session?.adminResetEmail;
+
+
+        if (!email) {
+
+            return res.redirect(
+                "/admin/forgot-password?error=Please+request+a+new+OTP"
+            );
+
+        }
+
+
+        return res.render(
+            "admin/verify-reset-otp",
+            {
+                title: "Verify OTP",
+                email,
+                error: req.query.error || "",
+                success: req.query.success || ""
+            }
+        );
+
+    }
+);
+
+
+router.post(
+    "/verify-reset-otp",
+    async (req, res) => {
+
+        try {
+
+            const email =
+                req.session?.adminResetEmail;
+
+
+            if (!email) {
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Please+request+a+new+OTP"
+                );
+
+            }
+
+
+            const otp =
+                String(
+                    req.body.otp || ""
+                ).trim();
+
+
+            if (!/^\d{6}$/.test(otp)) {
+
+                return res.redirect(
+                    "/admin/verify-reset-otp?error=Please+enter+a+valid+6+digit+OTP"
+                );
+
+            }
+
+
+            const admin =
+                await Admin.findOne({
+                    email
+                });
+
+
+            if (!admin) {
+
+                req.session.adminResetEmail = null;
+                req.session.adminResetVerified = false;
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Invalid+reset+request"
+                );
+
+            }
+
+
+            if (
+                !admin.resetOtp ||
+                !admin.resetOtpExpires
+            ) {
+
+                return res.redirect(
+                    "/admin/verify-reset-otp?error=OTP+is+invalid.+Please+request+a+new+OTP"
+                );
+
+            }
+
+
+            if (
+                isOTPExpired(
+                    admin.resetOtpExpires
+                )
+            ) {
+
+                admin.resetOtp = null;
+                admin.resetOtpExpires = null;
+
+                await admin.save();
+
+                return res.redirect(
+                    "/admin/verify-reset-otp?error=OTP+has+expired.+Please+request+a+new+OTP"
+                );
+
+            }
+
+
+            if (
+                admin.resetOtp !== otp
+            ) {
+
+                return res.redirect(
+                    "/admin/verify-reset-otp?error=Invalid+OTP.+Please+try+again"
+                );
+
+            }
+
+
+            /*
+             * OTP is valid.
+             *
+             * Clear OTP immediately so it cannot
+             * be reused.
+             */
+
+            admin.resetOtp = null;
+            admin.resetOtpExpires = null;
+
+            await admin.save();
+
+
+            req.session.adminResetVerified =
+                true;
+
+
+            return res.redirect(
+                "/admin/reset-password"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Admin OTP verification error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/verify-reset-otp?error=Something+went+wrong.+Please+try+again"
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// RESEND RESET OTP
+// =========================================================
+
+router.post(
+    "/resend-reset-otp",
+    async (req, res) => {
+
+        try {
+
+            const email =
+                req.session?.adminResetEmail;
+
+
+            if (!email) {
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Please+request+a+new+OTP"
+                );
+
+            }
+
+
+            const admin =
+                await Admin.findOne({
+                    email
+                });
+
+
+            if (!admin) {
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Invalid+reset+request"
+                );
+
+            }
+
+
+            const otp =
+                generateOTP();
+
+            const otpExpiry =
+                getOTPExpiry();
+
+
+            admin.resetOtp =
+                otp;
+
+            admin.resetOtpExpires =
+                otpExpiry;
+
+            await admin.save();
+
+
+            const emailResult =
+                await sendAdminPasswordResetOTP(
+                    admin.email,
+                    admin.name || "Admin",
+                    otp
+                );
+
+
+            if (
+                !emailResult ||
+                !emailResult.success
+            ) {
+
+                admin.resetOtp = null;
+                admin.resetOtpExpires = null;
+
+                await admin.save();
+
+
+                return res.redirect(
+                    "/admin/verify-reset-otp?error=Unable+to+send+OTP.+Please+try+again"
+                );
+
+            }
+
+
+            return res.redirect(
+                "/admin/verify-reset-otp?success=A+new+OTP+has+been+sent+to+your+email"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Admin resend OTP error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/verify-reset-otp?error=Unable+to+send+OTP"
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// RESET PASSWORD
+// =========================================================
+
+router.get(
+    "/reset-password",
+    (req, res) => {
+
+        if (
+            !req.session?.adminResetEmail ||
+            !req.session?.adminResetVerified
+        ) {
+
+            return res.redirect(
+                "/admin/forgot-password?error=Please+verify+your+OTP+first"
+            );
+
+        }
+
+
+        return res.render(
+            "admin/reset-password",
+            {
+                title: "Reset Password",
+                error: req.query.error || "",
+                success: req.query.success || ""
+            }
+        );
+
+    }
+);
+
+
+router.post(
+    "/reset-password",
+    async (req, res) => {
+
+        try {
+
+            const email =
+                req.session?.adminResetEmail;
+
+
+            const verified =
+                req.session?.adminResetVerified;
+
+
+            if (!email || !verified) {
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Please+verify+your+OTP+first"
+                );
+
+            }
+
+
+            const password =
+                String(
+                    req.body.password || ""
+                );
+
+            const confirmPassword =
+                String(
+                    req.body.confirmPassword || ""
+                );
+
+
+            if (!password || !confirmPassword) {
+
+                return res.redirect(
+                    "/admin/reset-password?error=Please+enter+both+password+fields"
+                );
+
+            }
+
+
+            if (password.length < 8) {
+
+                return res.redirect(
+                    "/admin/reset-password?error=Password+must+be+at+least+8+characters"
+                );
+
+            }
+
+
+            if (password !== confirmPassword) {
+
+                return res.redirect(
+                    "/admin/reset-password?error=Passwords+do+not+match"
+                );
+
+            }
+
+
+            const admin =
+                await Admin.findOne({
+                    email
+                });
+
+
+            if (!admin) {
+
+                req.session.adminResetEmail = null;
+                req.session.adminResetVerified = false;
+
+                return res.redirect(
+                    "/admin/forgot-password?error=Admin+account+not+found"
+                );
+
+            }
+
+
+            const hashedPassword =
+                await bcrypt.hash(
+                    password,
+                    10
+                );
+
+
+            admin.password =
+                hashedPassword;
+
+            admin.resetOtp = null;
+            admin.resetOtpExpires = null;
+
+            await admin.save();
+
+
+            /*
+             * Destroy reset session data.
+             * User must log in with the new password.
+             */
+
+            req.session.adminResetEmail = null;
+            req.session.adminResetVerified = false;
+
+
+            return res.redirect(
+                "/admin/login?success=Password+reset+successfully.+Please+login+with+your+new+password"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Admin password reset error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/reset-password?error=Unable+to+reset+password.+Please+try+again"
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// ADMIN LOGOUT
+// =========================================================
 
 router.get(
     "/logout",
@@ -328,7 +962,9 @@ router.get(
             return res.redirect(
                 "/admin/login"
             );
+
         }
+
 
         req.session.destroy(
             error => {
@@ -339,13 +975,16 @@ router.get(
                         "Admin logout error:",
                         error
                     );
+
                 }
 
                 return res.redirect(
                     "/admin/login"
                 );
+
             }
         );
+
     }
 );
 
@@ -387,35 +1026,29 @@ router.get(
                 Contact.countDocuments(),
 
                 Product.find({})
-                    .sort({
-                        createdAt: -1
-                    })
+                    .sort({ createdAt: -1 })
                     .limit(5),
 
                 Review.find({})
-                    .sort({
-                        createdAt: -1
-                    })
+                    .sort({ createdAt: -1 })
                     .limit(5),
 
                 Feedback.find({})
-                    .sort({
-                        createdAt: -1
-                    })
+                    .sort({ createdAt: -1 })
                     .limit(5),
 
                 Contact.find({})
-                    .sort({
-                        createdAt: -1
-                    })
+                    .sort({ createdAt: -1 })
                     .limit(5)
+
             ]);
+
 
             return res.render(
                 "admin/dashboard",
                 {
-                    title:
-                        "Admin Dashboard",
+
+                    title: "Admin Dashboard",
 
                     pageTitle:
                         "Dashboard",
@@ -437,22 +1070,23 @@ router.get(
                     recentReviews,
                     recentFeedback,
                     recentContacts
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Dashboard error:",
+                "Admin dashboard error:",
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Server Error"
-                );
+            return res.status(500).send(
+                "Unable to load admin dashboard."
+            );
+
         }
+
     }
 );
 
@@ -474,11 +1108,16 @@ router.get(
                         visitedAt: -1
                     });
 
+
             return res.render(
                 "admin/visitors",
                 {
+
                     title:
-                        "Visitor Analytics",
+                        "Visitors",
+
+                    pageTitle:
+                        "Visitors",
 
                     pageCss:
                         "/css/admin/visitors.css",
@@ -487,22 +1126,23 @@ router.get(
                         "/js/admin/visitors.js",
 
                     visitors
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Visitors fetch error:",
+                "Admin visitors error:",
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Server Error"
-                );
+            return res.status(500).send(
+                "Unable to load visitors."
+            );
+
         }
+
     }
 );
 
@@ -514,16 +1154,23 @@ router.post(
 
         try {
 
-            if (
-                validId(
-                    req.params.id
-                )
-            ) {
+            if (!validId(req.params.id)) {
 
-                await Visitor.findByIdAndDelete(
-                    req.params.id
+                return res.redirect(
+                    "/admin/visitors?error=Invalid+visitor+ID"
                 );
+
             }
+
+
+            await Visitor.findByIdAndDelete(
+                req.params.id
+            );
+
+
+            return res.redirect(
+                "/admin/visitors?success=Visitor+deleted"
+            );
 
         } catch (error) {
 
@@ -531,11 +1178,13 @@ router.post(
                 "Visitor delete error:",
                 error
             );
+
+            return res.redirect(
+                "/admin/visitors?error=Unable+to+delete+visitor"
+            );
+
         }
 
-        return res.redirect(
-            "/admin/visitors"
-        );
     }
 );
 
@@ -557,11 +1206,16 @@ router.get(
                         createdAt: -1
                     });
 
+
             return res.render(
                 "admin/products",
                 {
+
                     title:
-                        "Product Management",
+                        "Products",
+
+                    pageTitle:
+                        "Products",
 
                     pageCss:
                         "/css/admin/products.css",
@@ -576,22 +1230,23 @@ router.get(
 
                     error:
                         req.query.error || ""
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Products fetch error:",
+                "Admin products error:",
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Server Error"
-                );
+            return res.status(500).send(
+                "Unable to load products."
+            );
+
         }
+
     }
 );
 
@@ -604,7 +1259,11 @@ router.get(
         return res.render(
             "admin/add-product",
             {
+
                 title:
+                    "Add Product",
+
+                pageTitle:
                     "Add Product",
 
                 pageCss:
@@ -615,8 +1274,10 @@ router.get(
 
                 error:
                     req.query.error || ""
+
             }
         );
+
     }
 );
 
@@ -644,80 +1305,66 @@ router.post(
                 availability
             } = req.body;
 
+
+            if (!name || !category) {
+
+                deleteUploadedFiles(
+                    req.files
+                );
+
+                return res.redirect(
+                    "/admin/products/add?error=Product+name+and+category+are+required"
+                );
+
+            }
+
+
             const featured =
-                req.body.featured ===
-                    "true" ||
-                req.body.featured ===
-                    "on" ||
-                req.body.featured === true;
+                req.body.featured === true ||
+                req.body.featured === "true" ||
+                req.body.featured === "on";
+
 
             const product =
                 new Product({
 
                     name:
-                        String(
-                            name || ""
-                        ).trim(),
+                        String(name).trim(),
 
                     category:
-                        String(
-                            category || ""
-                        ).trim(),
+                        String(category).trim(),
 
                     description:
-                        String(
-                            description || ""
-                        ).trim(),
+                        description || "",
 
-                    price,
+                    price:
+                        price || 0,
 
                     fabric:
-                        String(
-                            fabric || ""
-                        ).trim(),
+                        fabric || "",
 
                     technique:
-                        String(
-                            technique || ""
-                        ).trim(),
+                        technique || "",
 
                     color:
-                        String(
-                            color || ""
-                        ).trim(),
+                        color || "",
 
                     dimensions:
-                        String(
-                            dimensions || ""
-                        ).trim(),
+                        dimensions || "",
 
                     availability:
-                        availability ||
-                        "In Stock",
+                        availability || "",
 
                     featured,
 
                     images:
-                        imagePaths(
-                            req.files
-                        )
+                        imagePaths(req.files)
+
                 });
+
 
             await product.save();
 
-            console.log(
-                "PRODUCT ADDED:",
-                {
-                    id:
-                        product._id,
-
-                    name:
-                        product.name,
-
-                    featured:
-                        product.featured
-                }
-            );
 
             return res.redirect(
                 "/admin/products?success=Product+added+successfully"
@@ -726,7 +1373,7 @@ router.post(
         } catch (error) {
 
             console.error(
-                "Add product error:",
+                "Product add error:",
                 error
             );
 
@@ -735,9 +1382,11 @@ router.post(
             );
 
             return res.redirect(
-                "/admin/products?error=Unable+to+add+product"
+                "/admin/products/add?error=Unable+to+add+product"
             );
+
         }
+
     }
 );
 
@@ -749,37 +1398,45 @@ router.get(
 
         try {
 
-            const { id } =
-                req.params;
-
-            if (!validId(id)) {
+            if (!validId(req.params.id)) {
 
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
+
             }
 
+
             const product =
-                await Product.findById(id);
+                await Product.findById(
+                    req.params.id
+                );
+
 
             if (!product) {
 
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
+
             }
+
 
             return res.render(
                 "admin/edit-product",
                 {
+
                     title:
                         "Edit Product",
 
+                    pageTitle:
+                        "Edit Product",
+
                     pageCss:
-                        "/css/admin/edit-product.css",
+                        "/css/admin/add-product.css",
 
                     pageJs:
-                        "/js/admin/edit-product.js",
+                        "/js/admin/add-product.js",
 
                     product,
 
@@ -788,20 +1445,23 @@ router.get(
 
                     success:
                         req.query.success || ""
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Edit product page error:",
+                "Product edit page error:",
                 error
             );
 
             return res.redirect(
-                "/admin/products?error=Server+error"
+                "/admin/products?error=Unable+to+load+product"
             );
+
         }
+
     }
 );
 
@@ -817,10 +1477,7 @@ router.post(
 
         try {
 
-            const { id } =
-                req.params;
-
-            if (!validId(id)) {
+            if (!validId(req.params.id)) {
 
                 deleteUploadedFiles(
                     req.files
@@ -829,10 +1486,15 @@ router.post(
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
+
             }
 
+
             const product =
-                await Product.findById(id);
+                await Product.findById(
+                    req.params.id
+                );
+
 
             if (!product) {
 
@@ -843,125 +1505,92 @@ router.post(
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
+
             }
 
-            const {
-                name,
-                category,
-                description,
-                price,
-                fabric,
-                technique,
-                color,
-                dimensions,
-                availability
-            } = req.body;
 
-            const finalCategory =
-                String(
-                    category || ""
-                ).trim() ||
-                String(
-                    product.category || ""
-                ).trim();
+            const category =
+                req.body.category ||
+                product.category;
 
-            if (!finalCategory) {
+
+            if (!category) {
 
                 deleteUploadedFiles(
                     req.files
                 );
 
                 return res.redirect(
-                    "/admin/products?error=Product+category+is+required"
+                    `/admin/products/edit/${product._id}?error=Product+category+is+required`
                 );
+
             }
 
-            const featured =
-                req.body.featured ===
-                    "true" ||
-                req.body.featured ===
-                    "on" ||
-                req.body.featured === true;
 
-            Object.assign(
-                product,
-                {
+            product.name =
+                String(
+                    req.body.name ||
+                    product.name
+                ).trim();
 
-                    name:
-                        String(
-                            name || ""
-                        ).trim(),
+            product.category =
+                String(category).trim();
 
-                    category:
-                        finalCategory,
+            product.description =
+                req.body.description || "";
 
-                    description:
-                        String(
-                            description || ""
-                        ).trim(),
+            product.price =
+                req.body.price || 0;
 
-                    price,
+            product.fabric =
+                req.body.fabric || "";
 
-                    fabric:
-                        String(
-                            fabric || ""
-                        ).trim(),
+            product.technique =
+                req.body.technique || "";
 
-                    technique:
-                        String(
-                            technique || ""
-                        ).trim(),
+            product.color =
+                req.body.color || "";
 
-                    color:
-                        String(
-                            color || ""
-                        ).trim(),
+            product.dimensions =
+                req.body.dimensions || "";
 
-                    dimensions:
-                        String(
-                            dimensions || ""
-                        ).trim(),
+            product.availability =
+                req.body.availability || "";
 
-                    availability:
-                        availability ||
-                        "In Stock",
+            product.featured =
+                req.body.featured === true ||
+                req.body.featured === "true" ||
+                req.body.featured === "on";
 
-                    featured
+
+            if (
+                req.files &&
+                req.files.length > 0
+            ) {
+
+                if (
+                    Array.isArray(
+                        product.images
+                    )
+                ) {
+
+                    product.images.forEach(
+                        deleteImageFile
+                    );
+
                 }
-            );
 
-            const newImages =
-                imagePaths(
-                    req.files
-                );
-
-            if (newImages.length) {
-
-                (
-                    product.images || []
-                ).forEach(
-                    deleteImageFile
-                );
 
                 product.images =
-                    newImages;
+                    imagePaths(
+                        req.files
+                    );
+
             }
+
 
             await product.save();
 
-            console.log(
-                "PRODUCT UPDATED:",
-                {
-                    id:
-                        product._id,
-
-                    name:
-                        product.name,
-
-                    featured:
-                        product.featured
-                }
-            );
 
             return res.redirect(
                 "/admin/products?success=Product+updated+successfully"
@@ -970,7 +1599,7 @@ router.post(
         } catch (error) {
 
             console.error(
-                "Update product error:",
+                "Product edit error:",
                 error
             );
 
@@ -979,9 +1608,11 @@ router.post(
             );
 
             return res.redirect(
-                "/admin/products?error=Unable+to+update+product"
+                `/admin/products/edit/${req.params.id}?error=Unable+to+update+product`
             );
+
         }
+
     }
 );
 
@@ -993,43 +1624,57 @@ router.post(
 
         try {
 
-            const { id } =
-                req.params;
-
-            if (!validId(id)) {
+            if (!validId(req.params.id)) {
 
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
+
             }
 
+
             const product =
-                await Product.findById(id);
+                await Product.findById(
+                    req.params.id
+                );
+
 
             if (!product) {
 
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
+
             }
 
-            (
-                product.images || []
-            ).forEach(
-                deleteImageFile
-            );
+
+            if (
+                Array.isArray(
+                    product.images
+                )
+            ) {
+
+                product.images.forEach(
+                    deleteImageFile
+                );
+
+            }
+
 
             await Product.findByIdAndDelete(
-                id
+                req.params.id
             );
 
+
             await Review.deleteMany({
-                product: id
+                product: req.params.id
             });
 
+
             await Wishlist.deleteMany({
-                product: id
+                product: req.params.id
             });
+
 
             return res.redirect(
                 "/admin/products?success=Product+deleted+successfully"
@@ -1038,14 +1683,16 @@ router.post(
         } catch (error) {
 
             console.error(
-                "Delete product error:",
+                "Product delete error:",
                 error
             );
 
             return res.redirect(
                 "/admin/products?error=Unable+to+delete+product"
             );
+
         }
+
     }
 );
 
@@ -1060,17 +1707,20 @@ router.get(
     reviewController.getAdminReviews
 );
 
+
 router.post(
     "/reviews/:id/approve",
     adminAuth,
     reviewController.approveReview
 );
 
+
 router.post(
     "/reviews/:id/reject",
     adminAuth,
     reviewController.rejectReview
 );
+
 
 router.post(
     "/reviews/:id/delete",
@@ -1098,29 +1748,35 @@ router.get(
                         createdAt: -1
                     });
 
+
             return res.render(
                 "admin/wishlists",
                 {
+
                     title:
                         "Wishlist Management",
 
+                    pageTitle:
+                        "Wishlist Management",
+
                     wishlists
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Wishlists fetch error:",
+                "Admin wishlists error:",
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Server Error"
-                );
+            return res.status(500).send(
+                "Unable to load wishlists."
+            );
+
         }
+
     }
 );
 
@@ -1135,11 +1791,13 @@ router.get(
     feedbackController.getAdminFeedback
 );
 
+
 router.post(
     "/feedback/status/:id",
     adminAuth,
     feedbackController.updateFeedbackStatus
 );
+
 
 router.post(
     "/feedback/delete/:id",
@@ -1147,11 +1805,13 @@ router.post(
     feedbackController.deleteFeedback
 );
 
+
 router.patch(
     "/feedback/:id/status",
     adminAuth,
     feedbackController.updateFeedbackStatus
 );
+
 
 router.delete(
     "/feedback/:id",
@@ -1177,11 +1837,16 @@ router.get(
                         createdAt: -1
                     });
 
+
             return res.render(
                 "admin/contacts",
                 {
+
                     title:
-                        "Contact & Inquiries",
+                        "Customer Inquiries",
+
+                    pageTitle:
+                        "Customer Inquiries",
 
                     pageCss:
                         "/css/admin/contacts.css",
@@ -1196,22 +1861,23 @@ router.get(
 
                     error:
                         req.query.error || ""
+
                 }
             );
 
         } catch (error) {
 
             console.error(
-                "Admin contacts fetch error:",
+                "Admin contacts error:",
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Server Error"
-                );
+            return res.status(500).send(
+                "Unable to load contacts."
+            );
+
         }
+
     }
 );
 
@@ -1223,47 +1889,55 @@ router.post(
 
         try {
 
-            const { id } =
-                req.params;
+            if (!validId(req.params.id)) {
 
-            const status =
-                String(
-                    req.body.status || ""
-                )
-                    .trim()
-                    .toLowerCase();
+                return res.redirect(
+                    "/admin/contacts?error=Invalid+contact+ID"
+                );
 
-            const allowed = [
+            }
+
+
+            const allowedStatuses = [
                 "unread",
                 "read",
                 "replied"
             ];
 
-            if (!validId(id)) {
 
-                return res.redirect(
-                    "/admin/contacts?error=Invalid+contact+ID"
-                );
-            }
+            const status =
+                String(
+                    req.body.status || ""
+                ).trim().toLowerCase();
+
 
             if (
-                !allowed.includes(status)
+                !allowedStatuses.includes(
+                    status
+                )
             ) {
 
                 return res.redirect(
-                    "/admin/contacts?error=Invalid+contact+status"
+                    "/admin/contacts?error=Invalid+status"
                 );
+
             }
 
+
             const contact =
-                await Contact.findById(id);
+                await Contact.findById(
+                    req.params.id
+                );
+
 
             if (!contact) {
 
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
+
             }
+
 
             contact.status =
                 status;
@@ -1274,23 +1948,27 @@ router.post(
             contact.isReplied =
                 status === "replied";
 
+
             await contact.save();
 
+
             return res.redirect(
-                "/admin/contacts?success=Contact+status+updated+successfully"
+                "/admin/contacts?success=Status+updated"
             );
 
         } catch (error) {
 
             console.error(
-                "Contact status update error:",
+                "Contact status error:",
                 error
             );
 
             return res.redirect(
-                "/admin/contacts?error=Unable+to+update+contact+status"
+                "/admin/contacts?error=Unable+to+update+status"
             );
+
         }
+
     }
 );
 
@@ -1302,35 +1980,45 @@ router.post(
 
         try {
 
+            if (!validId(req.params.id)) {
+
+                return res.redirect(
+                    "/admin/contacts?error=Invalid+contact+ID"
+                );
+
+            }
+
+
             const contact =
-                validId(
+                await Contact.findById(
                     req.params.id
-                )
-                    ? await Contact.findById(
-                        req.params.id
-                    )
-                    : null;
+                );
+
 
             if (!contact) {
 
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
+
             }
+
 
             contact.isRead = true;
 
             if (
                 !contact.status ||
-                contact.status ===
-                    "unread"
+                contact.status === "unread"
             ) {
 
                 contact.status =
                     "read";
+
             }
 
+
             await contact.save();
+
 
             return res.redirect(
                 "/admin/contacts?success=Contact+marked+as+read"
@@ -1339,14 +2027,16 @@ router.post(
         } catch (error) {
 
             console.error(
-                "Mark contact read error:",
+                "Contact read error:",
                 error
             );
 
             return res.redirect(
-                "/admin/contacts?error=Unable+to+mark+contact+as+read"
+                "/admin/contacts?error=Unable+to+update+contact"
             );
+
         }
+
     }
 );
 
@@ -1358,32 +2048,37 @@ router.post(
 
         try {
 
+            if (!validId(req.params.id)) {
+
+                return res.redirect(
+                    "/admin/contacts?error=Invalid+contact+ID"
+                );
+
+            }
+
+
             const contact =
-                validId(
+                await Contact.findById(
                     req.params.id
-                )
-                    ? await Contact.findById(
-                        req.params.id
-                    )
-                    : null;
+                );
+
 
             if (!contact) {
 
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
+
             }
 
-            contact.isRead =
-                false;
 
-            contact.isReplied =
-                false;
+            contact.isRead = false;
+            contact.isReplied = false;
+            contact.status = "unread";
 
-            contact.status =
-                "unread";
 
             await contact.save();
+
 
             return res.redirect(
                 "/admin/contacts?success=Contact+marked+as+unread"
@@ -1392,14 +2087,16 @@ router.post(
         } catch (error) {
 
             console.error(
-                "Mark contact unread error:",
+                "Contact unread error:",
                 error
             );
 
             return res.redirect(
-                "/admin/contacts?error=Unable+to+mark+contact+as+unread"
+                "/admin/contacts?error=Unable+to+update+contact"
             );
+
         }
+
     }
 );
 
@@ -1411,28 +2108,19 @@ router.post(
 
         try {
 
-            if (
-                !validId(
-                    req.params.id
-                )
-            ) {
+            if (!validId(req.params.id)) {
 
                 return res.redirect(
                     "/admin/contacts?error=Invalid+contact+ID"
                 );
+
             }
 
-            const deleted =
-                await Contact.findByIdAndDelete(
-                    req.params.id
-                );
 
-            if (!deleted) {
+            await Contact.findByIdAndDelete(
+                req.params.id
+            );
 
-                return res.redirect(
-                    "/admin/contacts?error=Contact+not+found"
-                );
-            }
 
             return res.redirect(
                 "/admin/contacts?success=Contact+deleted+successfully"
@@ -1448,7 +2136,9 @@ router.post(
             return res.redirect(
                 "/admin/contacts?error=Unable+to+delete+contact"
             );
+
         }
+
     }
 );
 
@@ -1467,15 +2157,21 @@ router.get(
             let settings =
                 await Settings.findOne();
 
+
             if (!settings) {
 
                 settings =
-                    await Settings.create({});
+                    new Settings({});
+
+                await settings.save();
+
             }
+
 
             return res.render(
                 "admin/settings",
                 {
+
                     title:
                         "Website Settings",
 
@@ -1496,6 +2192,7 @@ router.get(
 
                     error:
                         req.query.error || ""
+
                 }
             );
 
@@ -1506,83 +2203,68 @@ router.get(
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Unable to load admin settings."
-                );
+            return res.status(500).send(
+                "Unable to load website settings."
+            );
+
         }
+
     }
 );
 
-
-// =========================================================
-// SETTINGS IMAGE FIELDS
-// =========================================================
 
 const settingsFields = [
 
     {
         name:
             "heroImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "aboutImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "aboutStoryImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "aboutArtImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "faviconFile",
-
         maxCount: 1
     },
 
     {
         name:
             "heritageHandcraftedImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "heritageIntricateImageFile",
-
         maxCount: 1
     },
 
     {
         name:
             "heritageTimelessImageFile",
-
         maxCount: 1
     }
+
 ];
 
-
-// =========================================================
-// SAVE SETTINGS
-// =========================================================
 
 router.post(
     "/settings",
@@ -1594,194 +2276,168 @@ router.post(
 
         try {
 
-            const clean = value =>
-                String(
-                    value || ""
-                ).trim();
+            const clean =
+                value =>
+                    String(
+                        value || ""
+                    ).trim();
 
 
-            const {
-                siteName,
-                siteDescription,
-                siteEmail,
-                sitePhone,
+            const siteName =
+                clean(
+                    req.body.siteName
+                );
 
-                metaTitle,
-                metaDescription,
-                metaKeywords,
-                faviconUrl,
+            const siteDescription =
+                clean(
+                    req.body.siteDescription
+                );
 
-                heroHeading,
-                heroDescription,
-                heroImage,
+            const siteEmail =
+                clean(
+                    req.body.siteEmail
+                ).toLowerCase();
 
-                aboutHeading,
-                aboutDescription,
-                aboutImage,
-                aboutStoryImage,
-
-                aboutArtImage,
-
-                heritageHandcraftedImage,
-                heritageIntricateImage,
-                heritageTimelessImage,
-
-                address,
-                whatsapp,
-                instagram,
-                facebook,
-                youtube,
-
-                maintenanceMode,
-                showContact,
-                showFeedback,
-                showReviews
-            } = req.body;
+            const sitePhone =
+                clean(
+                    req.body.sitePhone
+                );
 
 
-            let settings =
-                await Settings.findOne();
+            const metaTitle =
+                clean(
+                    req.body.metaTitle
+                );
+
+            const metaDescription =
+                clean(
+                    req.body.metaDescription
+                );
+
+            const metaKeywords =
+                clean(
+                    req.body.metaKeywords
+                );
+
+            const faviconUrl =
+                clean(
+                    req.body.faviconUrl
+                );
 
 
-            if (!settings) {
+            const heroHeading =
+                clean(
+                    req.body.heroHeading
+                );
 
-                settings =
-                    new Settings();
-            }
+            const heroDescription =
+                clean(
+                    req.body.heroDescription
+                );
+
+            const heroImage =
+                clean(
+                    req.body.heroImage
+                );
+
+
+            const aboutHeading =
+                clean(
+                    req.body.aboutHeading
+                );
+
+            const aboutDescription =
+                clean(
+                    req.body.aboutDescription
+                );
+
+            const aboutImage =
+                clean(
+                    req.body.aboutImage
+                );
+
+            const aboutStoryImage =
+                clean(
+                    req.body.aboutStoryImage
+                );
+
+            const aboutArtImage =
+                clean(
+                    req.body.aboutArtImage
+                );
+
+
+            const heritageHandcraftedImage =
+                clean(
+                    req.body.heritageHandcraftedImage
+                );
+
+            const heritageIntricateImage =
+                clean(
+                    req.body.heritageIntricateImage
+                );
+
+            const heritageTimelessImage =
+                clean(
+                    req.body.heritageTimelessImage
+                );
+
+
+            const address =
+                clean(
+                    req.body.address
+                );
+
+            const whatsapp =
+                clean(
+                    req.body.whatsapp
+                );
+
+            const instagram =
+                clean(
+                    req.body.instagram
+                );
+
+            const facebook =
+                clean(
+                    req.body.facebook
+                );
+
+            const youtube =
+                clean(
+                    req.body.youtube
+                );
 
 
             const isChecked =
                 value =>
+                    value === true ||
                     value === "true" ||
-                    value === "on" ||
-                    value === true;
+                    value === "on";
 
 
-            const data = {
+            const maintenanceMode =
+                isChecked(
+                    req.body.maintenanceMode
+                );
 
-                siteName:
-                    clean(siteName),
+            const showContact =
+                isChecked(
+                    req.body.showContact
+                );
 
-                siteDescription:
-                    clean(
-                        siteDescription
-                    ),
+            const showFeedback =
+                isChecked(
+                    req.body.showFeedback
+                );
 
-                siteEmail:
-                    clean(
-                        siteEmail
-                    ).toLowerCase(),
-
-                sitePhone:
-                    clean(
-                        sitePhone
-                    ),
-
-                metaTitle:
-                    clean(metaTitle),
-
-                metaDescription:
-                    clean(
-                        metaDescription
-                    ),
-
-                metaKeywords:
-                    clean(metaKeywords),
-
-                faviconUrl:
-                    clean(faviconUrl),
-
-                heroHeading:
-                    clean(heroHeading),
-
-                heroDescription:
-                    clean(
-                        heroDescription
-                    ),
-
-                heroImage:
-                    clean(heroImage),
-
-                aboutHeading:
-                    clean(
-                        aboutHeading
-                    ),
-
-                aboutDescription:
-                    clean(
-                        aboutDescription
-                    ),
-
-                aboutImage:
-                    clean(aboutImage),
-
-                aboutStoryImage:
-                    clean(
-                        aboutStoryImage
-                    ),
-
-                aboutArtImage:
-                    clean(
-                        aboutArtImage
-                    ),
-
-                heritageHandcraftedImage:
-                    clean(
-                        heritageHandcraftedImage
-                    ),
-
-                heritageIntricateImage:
-                    clean(
-                        heritageIntricateImage
-                    ),
-
-                heritageTimelessImage:
-                    clean(
-                        heritageTimelessImage
-                    ),
-
-                address:
-                    clean(address),
-
-                whatsapp:
-                    clean(whatsapp),
-
-                instagram:
-                    clean(instagram),
-
-                facebook:
-                    clean(facebook),
-
-                youtube:
-                    clean(youtube),
-
-                maintenanceMode:
-                    isChecked(
-                        maintenanceMode
-                    ),
-
-                showContact:
-                    isChecked(
-                        showContact
-                    ),
-
-                showFeedback:
-                    isChecked(
-                        showFeedback
-                    ),
-
-                showReviews:
-                    isChecked(
-                        showReviews
-                    )
-            };
+            const showReviews =
+                isChecked(
+                    req.body.showReviews
+                );
 
 
-            // =================================================
-            // VALIDATION
-            // =================================================
-
-            if (!data.siteName) {
+            if (!siteName) {
 
                 deleteSettingsFiles(
                     req.files
@@ -1790,12 +2446,12 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+name+is+required"
                 );
+
             }
 
 
             if (
-                data.siteName.length >
-                150
+                siteName.length > 150
             ) {
 
                 deleteSettingsFiles(
@@ -1805,11 +2461,12 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+name+is+too+long"
                 );
+
             }
 
 
             if (
-                data.siteDescription.length >
+                siteDescription.length >
                 500
             ) {
 
@@ -1820,13 +2477,14 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+description+is+too+long"
                 );
+
             }
 
 
             if (
-                data.siteEmail &&
+                siteEmail &&
                 !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-                    data.siteEmail
+                    siteEmail
                 )
             ) {
 
@@ -1835,14 +2493,14 @@ router.post(
                 );
 
                 return res.redirect(
-                    "/admin/settings?error=Please+enter+a+valid+email"
+                    "/admin/settings?error=Invalid+email+address"
                 );
+
             }
 
 
             if (
-                data.sitePhone.length >
-                30
+                sitePhone.length > 30
             ) {
 
                 deleteSettingsFiles(
@@ -1852,12 +2510,12 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Phone+number+is+too+long"
                 );
+
             }
 
 
             if (
-                data.address.length >
-                500
+                address.length > 500
             ) {
 
                 deleteSettingsFiles(
@@ -1867,128 +2525,167 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Address+is+too+long"
                 );
+
             }
 
 
-            // =================================================
-            // IMAGE UPLOAD / REPLACEMENT
-            // =================================================
+            let settings =
+                await Settings.findOne();
 
-            const imageKeys = [
 
-                {
-                    field:
-                        "heroImageFile",
+            if (!settings) {
 
-                    prop:
-                        "heroImage"
-                },
+                settings =
+                    new Settings({});
 
-                {
-                    field:
-                        "aboutImageFile",
+            }
 
-                    prop:
-                        "aboutImage"
-                },
 
-                {
-                    field:
-                        "aboutStoryImageFile",
+            const data = {
 
-                    prop:
-                        "aboutStoryImage"
-                },
+                siteName,
 
-                {
-                    field:
-                        "aboutArtImageFile",
+                siteDescription,
 
-                    prop:
-                        "aboutArtImage"
-                },
+                siteEmail,
 
-                {
-                    field:
-                        "faviconFile",
+                sitePhone,
 
-                    prop:
-                        "faviconUrl"
-                },
+                metaTitle,
 
-                {
-                    field:
-                        "heritageHandcraftedImageFile",
+                metaDescription,
 
-                    prop:
-                        "heritageHandcraftedImage"
-                },
+                metaKeywords,
 
-                {
-                    field:
-                        "heritageIntricateImageFile",
+                faviconUrl,
 
-                    prop:
-                        "heritageIntricateImage"
-                },
+                heroHeading,
 
-                {
-                    field:
-                        "heritageTimelessImageFile",
+                heroDescription,
 
-                    prop:
-                        "heritageTimelessImage"
-                }
+                heroImage,
+
+                aboutHeading,
+
+                aboutDescription,
+
+                aboutImage,
+
+                aboutStoryImage,
+
+                aboutArtImage,
+
+                heritageHandcraftedImage,
+
+                heritageIntricateImage,
+
+                heritageTimelessImage,
+
+                address,
+
+                whatsapp,
+
+                instagram,
+
+                facebook,
+
+                youtube,
+
+                maintenanceMode,
+
+                showContact,
+
+                showFeedback,
+
+                showReviews
+
+            };
+
+
+            const imageMappings = [
+
+                [
+                    "heroImageFile",
+                    "heroImage"
+                ],
+
+                [
+                    "aboutImageFile",
+                    "aboutImage"
+                ],
+
+                [
+                    "aboutStoryImageFile",
+                    "aboutStoryImage"
+                ],
+
+                [
+                    "aboutArtImageFile",
+                    "aboutArtImage"
+                ],
+
+                [
+                    "faviconFile",
+                    "faviconUrl"
+                ],
+
+                [
+                    "heritageHandcraftedImageFile",
+                    "heritageHandcraftedImage"
+                ],
+
+                [
+                    "heritageIntricateImageFile",
+                    "heritageIntricateImage"
+                ],
+
+                [
+                    "heritageTimelessImageFile",
+                    "heritageTimelessImage"
+                ]
+
             ];
 
 
-            for (
-                const {
-                    field,
-                    prop
-                } of imageKeys
-            ) {
+            imageMappings.forEach(
+                ([fileField, property]) => {
 
-                const uploadedFile =
-                    req.files?.[field]?.[0];
+                    const uploaded =
+                        req.files?.[
+                            fileField
+                        ]?.[0];
 
 
-                if (uploadedFile) {
+                    if (!uploaded) {
 
-                    const oldImage =
-                        settings[prop];
+                        data[property] =
+                            req.body[property] ||
+                            settings[property] ||
+                            "";
 
+                        return;
 
-                    data[prop] =
-                        "/uploads/settings/" +
-                        uploadedFile.filename;
+                    }
 
 
                     if (
-                        oldImage &&
-                        oldImage !==
-                            data[prop]
+                        settings[property]
                     ) {
 
                         deleteImageFile(
-                            oldImage
+                            settings[property]
                         );
+
                     }
 
-                } else {
 
-                    data[prop] =
-                        clean(
-                            req.body[prop] ||
-                            settings[prop]
-                        );
+                    data[property] =
+                        "/uploads/settings/" +
+                        uploaded.filename;
+
                 }
-            }
+            );
 
-
-            // =================================================
-            // SAVE
-            // =================================================
 
             Object.assign(
                 settings,
@@ -2000,31 +2697,17 @@ router.post(
 
 
             console.log(
-                "Settings saved:",
-                settings._id
+                "Website settings updated."
             );
 
-
             console.log(
-                "Website Status:",
-                {
-                    maintenanceMode:
-                        settings.maintenanceMode,
-
-                    showContact:
-                        settings.showContact,
-
-                    showFeedback:
-                        settings.showFeedback,
-
-                    showReviews:
-                        settings.showReviews
-                }
+                "Maintenance mode:",
+                maintenanceMode
             );
 
 
             return res.redirect(
-                "/admin/settings?success=Settings+saved+successfully"
+                "/admin/settings?success=Website+settings+updated+successfully"
             );
 
         } catch (error) {
@@ -2039,9 +2722,11 @@ router.post(
             );
 
             return res.redirect(
-                "/admin/settings?error=Unable+to+save+settings"
+                "/admin/settings?error=Unable+to+save+website+settings"
             );
+
         }
+
     }
 );
 
@@ -2059,47 +2744,54 @@ router.get(
             const existingAdmin =
                 await Admin.findOne();
 
+
             if (existingAdmin) {
 
                 return res.send(
                     "Admin already exists."
                 );
+
             }
 
 
             const email =
-                process.env.ADMIN_EMAIL;
+                String(
+                    process.env.ADMIN_EMAIL || ""
+                )
+                    .trim()
+                    .toLowerCase();
 
             const password =
                 process.env.ADMIN_PASSWORD;
 
 
-            if (
-                !email ||
-                !password
-            ) {
+            if (!email || !password) {
 
-                return res
-                    .status(500)
-                    .send(
-                        "ADMIN_EMAIL or ADMIN_PASSWORD is missing in .env"
-                    );
+                return res.status(500).send(
+                    "ADMIN_EMAIL and ADMIN_PASSWORD are required."
+                );
+
             }
+
+
+            const hashedPassword =
+                await bcrypt.hash(
+                    password,
+                    10
+                );
 
 
             const admin =
                 new Admin({
 
-                    email:
-                        email
-                            .trim()
-                            .toLowerCase(),
+                    name:
+                        "Admin",
+
+                    email,
 
                     password:
-                        await bcrypt.hash(
-                            password,
-                            10
-                        )
+                        hashedPassword
+
                 });
 
 
@@ -2107,7 +2799,7 @@ router.get(
 
 
             return res.send(
-                "First admin created successfully. You can now login."
+                "First admin created successfully."
             );
 
         } catch (error) {
@@ -2117,14 +2809,15 @@ router.get(
                 error
             );
 
-            return res
-                .status(500)
-                .send(
-                    "Unable to create first admin."
-                );
+            return res.status(500).send(
+                "Unable to create first admin."
+            );
+
         }
+
     }
 );
 
 
 module.exports = router;
+

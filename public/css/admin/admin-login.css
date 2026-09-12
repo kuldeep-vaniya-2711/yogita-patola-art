@@ -1595,3 +1595,38 @@ body.admin-login-body {
 
 }
 
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+.admin-forgot-password {
+
+    text-align: right;
+
+    margin-top: -8px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.admin-forgot-password a {
+
+    color: #651f2a;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+
+}
+
+
+.admin-forgot-password a:hover {
+
+    color: #b08a4a;
+
+}

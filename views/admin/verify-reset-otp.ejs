@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Verify OTP | Yogita Patola Art</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f7f1e8;
+            color: #3b3030;
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .otp-card {
+            width: 100%;
+            max-width: 520px;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(60, 35, 25, 0.12);
+        }
+
+        .otp-header {
+            background: #641f2b;
+            padding: 34px 28px;
+            text-align: center;
+        }
+
+        .symbol {
+            color: #d8b56a;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .brand {
+            color: #d8b56a;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .header-text {
+            color: #ffffff;
+            margin: 7px 0 0;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .otp-body {
+            padding: 38px 32px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            color: #641f2b;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 34px;
+        }
+
+        .description {
+            color: #756761;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .email {
+            color: #641f2b;
+            font-size: 13px;
+            font-weight: 700;
+            word-break: break-all;
+            margin-bottom: 26px;
+        }
+
+        .alert {
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .alert-error {
+            background: #fff0ef;
+            border: 1px solid #edc6c2;
+            color: #8c2f28;
+        }
+
+        .alert-success {
+            background: #eff8f0;
+            border: 1px solid #c7dfc9;
+            color: #326b38;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4c3a34;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        .otp-input {
+            width: 100%;
+            height: 58px;
+            border: 1px solid #d9cec5;
+            border-radius: 9px;
+            padding: 0 15px;
+            text-align: center;
+            font-family: inherit;
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: 9px;
+            outline: none;
+        }
+
+        .otp-input:focus {
+            border-color: #8b5960;
+            box-shadow: 0 0 0 3px rgba(100, 31, 43, .08);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .verify-button,
+        .resend-button {
+            width: 100%;
+            height: 52px;
+            border-radius: 9px;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .verify-button {
+            border: 0;
+            background: #641f2b;
+            color: #ffffff;
+        }
+
+        .verify-button:hover {
+            background: #4d1720;
+        }
+
+        .resend-form {
+            margin-top: 12px;
+        }
+
+        .resend-button {
+            border: 1px solid #cdbcae;
+            background: #ffffff;
+            color: #641f2b;
+        }
+
+        .resend-button:hover {
+            background: #faf5ef;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #641f2b;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid #eee4d8;
+            text-align: center;
+            color: #8a7b73;
+            font-size: 11px;
+        }
+
+        @media (max-width: 520px) {
+
+            body {
+                padding: 14px;
+            }
+
+            .otp-body {
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .otp-input {
+                font-size: 22px;
+                letter-spacing: 7px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="otp-card">
+
+        <header class="otp-header">
+
+            <div class="symbol">✦</div>
+
+            <div class="brand">
+                Yogita Patola Art
+            </div>
+
+            <p class="header-text">
+                OTP VERIFICATION
+            </p>
+
+        </header>
+
+
+        <section class="otp-body">
+
+            <h1>
+                Verify Your OTP
+            </h1>
+
+            <p class="description">
+                A 6-digit password reset OTP has been
+                sent to:
+            </p>
+
+            <div class="email">
+                <%= email %>
+            </div>
+
+
+            <% if (typeof error !== "undefined" && error) { %>
+
+                <div class="alert alert-error">
+                    <%= error %>
+                </div>
+
+            <% } %>
+
+
+            <% if (typeof success !== "undefined" && success) { %>
+
+                <div class="alert alert-success">
+                    <%= success %>
+                </div>
+
+            <% } %>
+
+
+            <form
+                action="/admin/verify-reset-otp"
+                method="POST"
+                autocomplete="off"
+            >
+
+                <div class="field">
+
+                    <label for="otp">
+                        ENTER 6-DIGIT OTP
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otp"
+                        name="otp"
+                        class="otp-input"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        autocomplete="one-time-code"
+                        placeholder="••••••"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="verify-button"
+                >
+                    Verify OTP
+                </button>
+
+            </form>
+
+
+            <form
+                action="/admin/resend-reset-otp"
+                method="POST"
+                class="resend-form"
+            >
+
+                <button
+                    type="submit"
+                    class="resend-button"
+                >
+                    Resend OTP
+                </button>
+
+            </form>
+
+
+            <a
+                href="/admin/login"
+                class="back"
+            >
+                ← Back to Admin Login
+            </a>
+
+
+            <div class="note">
+                OTP expires automatically for security.
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const otpInput =
+            document.getElementById("otp");
+
+        if (otpInput) {
+
+            otpInput.addEventListener(
+                "input",
+                function () {
+
+                    this.value =
+                        this.value
+                            .replace(/\D/g, "")
+                            .slice(0, 6);
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

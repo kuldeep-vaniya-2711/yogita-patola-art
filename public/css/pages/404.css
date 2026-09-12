@@ -1,550 +1,62 @@
-/* =========================================================
-YOGITA PATOLA ART
-404 PAGE
-========================================================= */
 
 /* =========================================================
-MAIN PAGE
+   YOGITA PATOLA ART
+   404 PAGE
+   Premium Patola / Heritage Design
+========================================================= */
+
+
+/* =========================================================
+   ROOT
 ========================================================= */
 
 .error-page {
 
+    --error-ivory: #faf8f3;
+    --error-cream: #f3ede3;
+    --error-beige: #e7dbca;
 
-position: relative;
+    --error-maroon: #651f2a;
+    --error-maroon-dark: #4d1720;
+    --error-maroon-deep: #351118;
 
-min-height: calc(100vh - 150px);
+    --error-gold: #b08a4a;
+    --error-gold-light: #d2b77c;
+    --error-gold-soft: #e6d3a8;
 
-display: flex;
+    --error-brown: #403835;
+    --error-muted: #766d67;
+    --error-white: #ffffff;
 
-align-items: center;
+    position: relative;
 
-justify-content: center;
+    min-height: calc(100vh - 120px);
 
-overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-background: #f8f4ec;
+    overflow: hidden;
 
-color: #38231f;
+    padding: 80px 24px;
 
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(250, 248, 243, 0.96) 42%,
+            rgba(243, 237, 227, 0.98) 100%
+        );
 
+    color: var(--error-brown);
+
+    isolation: isolate;
 }
+
 
 /* =========================================================
-BACKGROUND PATTERN
+   TOP / BOTTOM DECORATIVE GLOW
 ========================================================= */
-
-.error-pattern {
-
-
-position: absolute;
-
-top: -100px;
-
-right: -100px;
-
-width: 650px;
-
-height: 650px;
-
-pointer-events: none;
-
-opacity: 0.08;
-
-color: #762438;
-
-transform: rotate(8deg);
-
-z-index: 0;
-
-
-}
-
-.patola-pattern-svg {
-
-
-display: block;
-
-width: 100%;
-
-height: 100%;
-
-
-}
-
-/* =========================================================
-BOTTOM DECORATION
-========================================================= */
-
-.error-page::after {
-
-
-content: "";
-
-position: absolute;
-
-left: -180px;
-
-bottom: -220px;
-
-width: 600px;
-
-height: 600px;
-
-border-radius: 50%;
-
-border: 1px solid rgba(176, 138, 69, 0.13);
-
-box-shadow:
-    0 0 0 35px rgba(176, 138, 69, 0.035),
-    0 0 0 70px rgba(176, 138, 69, 0.025);
-
-pointer-events: none;
-
-z-index: 0;
-
-
-}
-
-/* =========================================================
-CONTENT
-========================================================= */
-
-.error-page .container {
-
-
-position: relative;
-
-z-index: 5;
-
-width: 100%;
-
-
-}
-
-.error-content {
-
-
-width: 100%;
-
-max-width: 800px;
-
-margin: 0 auto;
-
-padding: 90px 20px;
-
-text-align: center;
-
-
-}
-
-/* =========================================================
-TOP ORNAMENT
-========================================================= */
-
-.error-ornament {
-
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-gap: 16px;
-
-margin-bottom: 25px;
-
-
-}
-
-.ornament-line {
-
-
-display: block;
-
-width: 75px;
-
-height: 1px;
-
-background: #b08a45;
-
-
-}
-
-.ornament-diamond {
-
-
-width: 34px;
-
-height: 34px;
-
-fill: none;
-
-stroke: #a77d38;
-
-stroke-width: 1;
-
-
-}
-
-/* =========================================================
-404 NUMBER
-========================================================= */
-
-.error-number {
-
-
-font-family:
-    "Cormorant Garamond",
-    Georgia,
-    "Times New Roman",
-    serif;
-
-font-size: clamp(120px, 18vw, 205px);
-
-font-weight: 700;
-
-line-height: 0.75;
-
-letter-spacing: -8px;
-
-color: #762438;
-
-margin-left: -8px;
-
-text-shadow:
-    3px 3px 0 rgba(176, 138, 69, 0.13);
-
--webkit-user-select: none;
-user-select: none;
-
-
-}
-
-/* =========================================================
-LABEL
-========================================================= */
-
-.error-label {
-
-
-display: inline-block;
-
-margin-top: 35px;
-
-margin-bottom: 15px;
-
-font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-font-size: 10px;
-
-font-weight: 600;
-
-letter-spacing: 3.5px;
-
-color: #a17a3d;
-
-
-}
-
-/* =========================================================
-TITLE
-========================================================= */
-
-.error-title {
-
-
-margin: 0;
-
-font-family:
-    "Cormorant Garamond",
-    Georgia,
-    "Times New Roman",
-    serif;
-
-font-size: clamp(42px, 5vw, 62px);
-
-font-weight: 600;
-
-line-height: 1;
-
-letter-spacing: -0.8px;
-
-color: #38231f;
-
-
-}
-
-.error-title span {
-
-
-display: block;
-
-color: #762438;
-
-
-}
-
-/* =========================================================
-DESCRIPTION
-========================================================= */
-
-.error-description {
-
-
-width: 100%;
-
-max-width: 530px;
-
-margin: 24px auto 0;
-
-font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-font-size: 13px;
-
-font-weight: 400;
-
-line-height: 1.9;
-
-color: #766a63;
-
-
-}
-
-/* =========================================================
-BUTTON AREA
-========================================================= */
-
-.error-actions {
-
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-flex-wrap: wrap;
-
-gap: 13px;
-
-margin-top: 34px;
-
-
-}
-
-/* =========================================================
-BUTTON BASE
-========================================================= */
-
-.error-btn {
-
-
-display: inline-flex;
-
-align-items: center;
-
-justify-content: center;
-
-gap: 10px;
-
-min-width: 185px;
-
-min-height: 50px;
-
-padding: 0 24px;
-
-border-radius: 2px;
-
-font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-font-size: 11px;
-
-font-weight: 600;
-
-letter-spacing: 0.4px;
-
-text-decoration: none;
-
-transition:
-    transform 0.25s ease,
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease,
-    box-shadow 0.25s ease;
-
-
-}
-
-/* =========================================================
-PRIMARY BUTTON
-========================================================= */
-
-.error-btn-primary {
-
-
-background: #762438;
-
-border: 1px solid #762438;
-
-color: #ffffff;
-
-
-}
-
-.error-btn-primary:hover {
-
-
-background: #5f1d2d;
-
-border-color: #5f1d2d;
-
-color: #ffffff;
-
-transform: translateY(-2px);
-
-box-shadow:
-    0 12px 28px rgba(118, 36, 56, 0.20);
-
-
-}
-
-.error-btn-primary i {
-
-
-font-size: 14px;
-
-
-}
-
-/* =========================================================
-SECONDARY BUTTON
-========================================================= */
-
-.error-btn-secondary {
-
-
-background: transparent;
-
-border: 1px solid #b08a45;
-
-color: #765b2c;
-
-
-}
-
-.error-btn-secondary:hover {
-
-
-background: #b08a45;
-
-border-color: #b08a45;
-
-color: #ffffff;
-
-transform: translateY(-2px);
-
-box-shadow:
-    0 12px 28px rgba(176, 138, 69, 0.17);
-
-
-}
-
-.error-btn-secondary i {
-
-
-font-size: 13px;
-
-transition:
-    transform 0.25s ease;
-
-
-}
-
-.error-btn-secondary:hover i {
-
-
-transform: translateX(4px);
-
-
-}
-
-/* =========================================================
-BRAND
-========================================================= */
-
-.error-brand {
-
-
-display: flex;
-
-align-items: center;
-
-justify-content: center;
-
-gap: 16px;
-
-margin-top: 58px;
-
-
-}
-
-.error-brand span {
-
-
-display: block;
-
-width: 60px;
-
-height: 1px;
-
-background: rgba(176, 138, 69, 0.50);
-
-
-}
-
-.error-brand-name {
-
-
-font-family:
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-font-size: 9px;
-
-font-weight: 600;
-
-letter-spacing: 3px;
-
-color: #9a826c;
-
-white-space: nowrap;
-
-
-}
-
-/* =========================================================
-DESKTOP BORDER
-========================================================= */
-
-@media (min-width: 992px) {
-
-
-.error-page {
-
-    padding: 20px;
-}
-
 
 .error-page::before {
 
@@ -552,69 +64,163 @@ DESKTOP BORDER
 
     position: absolute;
 
-    inset: 20px;
+    top: -220px;
+    left: 50%;
 
-    border: 1px solid rgba(176, 138, 69, 0.14);
+    width: 620px;
+    height: 620px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(176, 138, 74, 0.09) 0%,
+            rgba(176, 138, 74, 0.035) 40%,
+            transparent 72%
+        );
 
     pointer-events: none;
+
+    z-index: -2;
+}
+
+
+.error-page::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: -180px;
+    left: 50%;
+
+    width: 760px;
+    height: 360px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50% 50% 0 0;
+
+    border-top:
+        1px solid
+        rgba(176, 138, 74, 0.18);
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(176, 138, 74, 0.075),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+    z-index: -2;
+}
+
+
+/* =========================================================
+   PATOLA BACKGROUND PATTERN
+========================================================= */
+
+.error-pattern {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    opacity: 0.055;
+
+    overflow: hidden;
+}
+
+
+.patola-pattern-svg {
+
+    width: min(780px, 80vw);
+
+    height: min(780px, 80vw);
+
+    color: var(--error-maroon);
+
+    transform:
+        rotate(8deg)
+        scale(1.18);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.error-page > .container {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
 
     z-index: 2;
 }
 
 
-}
-
 /* =========================================================
-TABLET
+   CONTENT
 ========================================================= */
-
-@media (max-width: 991px) {
-
 
 .error-content {
 
-    padding: 80px 25px;
+    position: relative;
+
+    width: min(760px, 100%);
+
+    margin: 0 auto;
+
+    padding: 30px 30px 24px;
+
+    text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
 }
 
-
-.error-pattern {
-
-    width: 500px;
-
-    height: 500px;
-
-    right: -180px;
-
-    top: -80px;
-}
-
-
-}
 
 /* =========================================================
-MOBILE
+   TOP ORNAMENT
 ========================================================= */
-
-@media (max-width: 767px) {
-
-
-.error-page {
-
-    min-height: calc(100vh - 110px);
-
-    padding: 0;
-}
-
-
-.error-content {
-
-    padding: 70px 18px;
-}
-
 
 .error-ornament {
 
-    gap: 10px;
+    width: min(360px, 80%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
 
     margin-bottom: 20px;
 }
@@ -622,165 +228,842 @@ MOBILE
 
 .ornament-line {
 
-    width: 45px;
+    flex: 1;
+
+    height: 1px;
+
+    max-width: 125px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--error-gold),
+            transparent
+        );
+
+    opacity: 0.8;
 }
 
 
 .ornament-diamond {
 
-    width: 28px;
+    width: 34px;
+    height: 34px;
 
-    height: 28px;
+    flex-shrink: 0;
+
+    fill: none;
+
+    stroke:
+        var(--error-gold);
+
+    stroke-width: 1;
+
+    filter:
+        drop-shadow(
+            0 2px 4px
+            rgba(176, 138, 74, 0.15)
+        );
 }
 
+
+/* =========================================================
+   404 NUMBER
+========================================================= */
 
 .error-number {
 
-    font-size: 115px;
+    position: relative;
 
-    letter-spacing: -5px;
+    margin: 0;
 
-    margin-left: -5px;
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: clamp(
+        8rem,
+        19vw,
+        12.5rem
+    );
+
+    font-weight: 600;
+
+    line-height: 0.76;
+
+    letter-spacing: -0.045em;
+
+    color: var(--error-maroon);
+
+    text-shadow:
+        1px 1px 0
+        rgba(176, 138, 74, 0.25),
+
+        3px 4px 0
+        rgba(176, 138, 74, 0.055);
+
+    -webkit-user-select: none;
+    user-select: none;
 }
 
+
+/* =========================================================
+   GOLD LINE UNDER 404
+========================================================= */
+
+.error-number::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -19px;
+
+    width: 92px;
+    height: 2px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--error-gold),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
 
 .error-label {
 
-    margin-top: 29px;
+    margin-top: 42px;
 
-    font-size: 9px;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
 
-    letter-spacing: 2.7px;
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.32em;
+
+    text-transform: uppercase;
+
+    color: var(--error-gold);
+
+    line-height: 1.4;
 }
 
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .error-title {
 
-    font-size: 39px;
+    max-width: 700px;
 
-    line-height: 1.02;
+    margin: 15px auto 0;
 
-    letter-spacing: -0.4px;
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: clamp(
+        2.6rem,
+        5vw,
+        4.25rem
+    );
+
+    font-weight: 600;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.018em;
+
+    color: var(--error-maroon-deep);
 }
 
+
+.error-title span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--error-maroon);
+
+    font-style: italic;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
 
 .error-description {
 
-    max-width: 400px;
+    max-width: 570px;
 
-    margin-top: 19px;
+    margin: 20px auto 0;
 
-    font-size: 12px;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
 
-    line-height: 1.85;
+    font-size: 0.9rem;
+
+    font-weight: 400;
+
+    line-height: 1.9;
+
+    letter-spacing: 0.015em;
+
+    color: var(--error-muted);
 }
 
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
 
 .error-actions {
 
-    flex-direction: column;
+    display: flex;
 
-    width: 100%;
+    align-items: center;
 
-    margin-top: 28px;
+    justify-content: center;
 
-    gap: 10px;
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    margin-top: 34px;
 }
 
+
+/* =========================================================
+   COMMON BUTTON
+========================================================= */
 
 .error-btn {
 
-    width: 100%;
+    position: relative;
 
-    max-width: 290px;
+    min-height: 52px;
 
-    min-height: 49px;
+    padding: 0 25px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid transparent;
+
+    border-radius: 2px;
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.11em;
+
+    text-transform: uppercase;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.28s ease,
+        background-color 0.28s ease,
+        border-color 0.28s ease,
+        color 0.28s ease,
+        box-shadow 0.28s ease;
+
+    white-space: nowrap;
+
+    overflow: hidden;
 }
 
+
+.error-btn i {
+
+    font-size: 0.95rem;
+
+    line-height: 1;
+
+    transition:
+        transform 0.28s ease;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.error-btn-primary {
+
+    color: var(--error-white);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--error-maroon),
+            var(--error-maroon-dark)
+        );
+
+    border-color:
+        var(--error-maroon);
+
+    box-shadow:
+        0 8px 22px
+        rgba(101, 31, 42, 0.15);
+}
+
+
+.error-btn-primary::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 25%,
+            rgba(255, 255, 255, 0.13) 50%,
+            transparent 75%
+        );
+
+    transform:
+        translateX(-120%);
+
+    transition:
+        transform 0.55s ease;
+}
+
+
+.error-btn-primary:hover {
+
+    color: var(--error-white);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--error-maroon-dark),
+            var(--error-maroon-deep)
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(101, 31, 42, 0.22);
+}
+
+
+.error-btn-primary:hover::before {
+
+    transform:
+        translateX(120%);
+}
+
+
+.error-btn-primary:hover i {
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.error-btn-secondary {
+
+    color: var(--error-maroon);
+
+    background:
+        rgba(255, 255, 255, 0.72);
+
+    border-color:
+        rgba(176, 138, 74, 0.55);
+
+    box-shadow:
+        0 6px 18px
+        rgba(101, 31, 42, 0.045);
+}
+
+
+.error-btn-secondary:hover {
+
+    color: var(--error-maroon-dark);
+
+    background:
+        var(--error-cream);
+
+    border-color:
+        var(--error-gold);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(176, 138, 74, 0.12);
+}
+
+
+.error-btn-secondary:hover i {
+
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================================
+   BRAND FOOTER
+========================================================= */
 
 .error-brand {
 
-    margin-top: 42px;
+    width: min(390px, 80%);
 
-    gap: 11px;
+    margin-top: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
 }
 
 
-.error-brand span {
+.error-brand > span {
 
-    width: 35px;
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--error-beige)
+        );
+}
+
+
+.error-brand > span:last-child {
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--error-beige),
+            transparent
+        );
 }
 
 
 .error-brand-name {
 
-    font-size: 7.5px;
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
 
-    letter-spacing: 2.2px;
+    font-size: 0.62rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.25em;
+
+    color: var(--error-maroon);
+
+    white-space: nowrap;
 }
 
-
-.error-pattern {
-
-    width: 420px;
-
-    height: 420px;
-
-    right: -210px;
-
-    top: -80px;
-
-    opacity: 0.06;
-}
-
-
-}
 
 /* =========================================================
-SMALL MOBILE
+   TABLET
 ========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width: 991px) {
+
+    .error-page {
+
+        min-height: calc(100vh - 100px);
+
+        padding:
+            70px 22px;
+    }
 
 
-.error-content {
+    .error-content {
 
-    padding-left: 15px;
+        padding:
+            25px 20px 20px;
+    }
 
-    padding-right: 15px;
+
+    .patola-pattern-svg {
+
+        width: 700px;
+        height: 700px;
+
+        opacity: 0.8;
+    }
+
+
+    .error-title {
+
+        font-size:
+            clamp(
+                2.45rem,
+                6vw,
+                3.7rem
+            );
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .error-page {
+
+        min-height: calc(100vh - 85px);
+
+        padding:
+            55px 18px;
+    }
+
+
+    .error-content {
+
+        padding:
+            15px 5px;
+    }
+
+
+    .error-pattern {
+
+        opacity: 0.045;
+    }
+
+
+    .patola-pattern-svg {
+
+        width: 520px;
+        height: 520px;
+
+        transform:
+            rotate(8deg)
+            scale(1.25);
+    }
+
+
+    .error-ornament {
+
+        width: 82%;
+
+        gap: 12px;
+
+        margin-bottom: 16px;
+    }
+
+
+    .ornament-line {
+
+        max-width: 85px;
+    }
+
+
+    .ornament-diamond {
+
+        width: 28px;
+        height: 28px;
+    }
+
+
+    .error-number {
+
+        font-size:
+            clamp(
+                7rem,
+                28vw,
+                9rem
+            );
+
+        line-height: 0.8;
+    }
+
+
+    .error-number::after {
+
+        width: 70px;
+
+        bottom: -15px;
+    }
+
+
+    .error-label {
+
+        margin-top: 35px;
+
+        font-size: 0.63rem;
+
+        letter-spacing: 0.24em;
+    }
+
+
+    .error-title {
+
+        margin-top: 13px;
+
+        font-size:
+            clamp(
+                2.35rem,
+                10vw,
+                3.15rem
+            );
+
+        line-height: 1;
+    }
+
+
+    .error-title span {
+
+        margin-top: 5px;
+    }
+
+
+    .error-description {
+
+        max-width: 500px;
+
+        margin-top: 17px;
+
+        padding:
+            0 8px;
+
+        font-size: 0.78rem;
+
+        line-height: 1.8;
+    }
+
+
+    .error-actions {
+
+        width: 100%;
+
+        margin-top: 28px;
+
+        gap: 10px;
+    }
+
+
+    .error-btn {
+
+        width: 100%;
+
+        max-width: 290px;
+
+        min-height: 50px;
+
+        padding:
+            0 18px;
+
+        font-size: 0.66rem;
+
+        letter-spacing: 0.095em;
+    }
+
+
+    .error-brand {
+
+        width: 88%;
+
+        margin-top: 36px;
+
+        gap: 11px;
+    }
+
+
+    .error-brand-name {
+
+        font-size: 0.52rem;
+
+        letter-spacing: 0.18em;
+    }
+
 }
 
 
-.error-number {
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
-    font-size: 100px;
+@media (max-width: 420px) {
+
+    .error-page {
+
+        padding:
+            45px 14px;
+    }
+
+
+    .error-ornament {
+
+        width: 88%;
+
+        gap: 9px;
+    }
+
+
+    .ornament-line {
+
+        max-width: 65px;
+    }
+
+
+    .ornament-diamond {
+
+        width: 25px;
+        height: 25px;
+    }
+
+
+    .error-number {
+
+        font-size: 6.7rem;
+    }
+
+
+    .error-label {
+
+        margin-top: 32px;
+
+        font-size: 0.58rem;
+
+        letter-spacing: 0.19em;
+    }
+
+
+    .error-title {
+
+        font-size: 2.15rem;
+    }
+
+
+    .error-description {
+
+        font-size: 0.74rem;
+
+        line-height: 1.75;
+    }
+
+
+    .error-btn {
+
+        max-width: 275px;
+    }
+
+
+    .error-brand {
+
+        width: 94%;
+    }
+
+
+    .error-brand-name {
+
+        font-size: 0.47rem;
+
+        letter-spacing: 0.14em;
+    }
+
 }
 
 
-.error-title {
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
 
-    font-size: 34px;
+@media (max-width: 350px) {
+
+    .error-number {
+
+        font-size: 6rem;
+    }
+
+
+    .error-title {
+
+        font-size: 1.95rem;
+    }
+
+
+    .error-description {
+
+        font-size: 0.7rem;
+    }
+
+
+    .error-brand-name {
+
+        font-size: 0.42rem;
+    }
+
 }
 
 
-.error-description {
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
-    font-size: 11.5px;
-}
+@media (prefers-reduced-motion: reduce) {
 
+    .error-btn,
+    .error-btn i,
+    .error-btn-primary::before {
 
-.error-btn {
-
-    max-width: 270px;
-}
-
-
-.error-brand-name {
-
-    font-size: 7px;
-
-    letter-spacing: 1.8px;
-}
-
+        transition: none;
+    }
 
 }
+

@@ -1,12 +1,16 @@
 <aside class="admin-sidebar" id="adminSidebar">
 
+
     <!-- =====================================================
          SIDEBAR HEADER
     ====================================================== -->
 
     <div class="admin-sidebar-header">
 
-        <a href="/admin" class="admin-sidebar-brand">
+        <a
+            href="/admin"
+            class="admin-sidebar-brand"
+        >
 
             <span class="admin-sidebar-brand-main">
                 Yogita Patola Art
@@ -18,6 +22,7 @@
 
         </a>
 
+
         <button
             type="button"
             class="admin-sidebar-close"
@@ -25,10 +30,13 @@
             aria-controls="adminSidebar"
             aria-expanded="true"
         >
+
             <i class="bi bi-x-lg"></i>
+
         </button>
 
     </div>
+
 
 
     <!-- =====================================================
@@ -68,6 +76,7 @@
             </a>
 
         </div>
+
 
 
         <!-- =================================================
@@ -113,6 +122,7 @@
             </a>
 
         </div>
+
 
 
         <!-- =================================================
@@ -176,8 +186,9 @@
         </div>
 
 
+
         <!-- =================================================
-             WISHLISTS
+             CUSTOMER DATA
         ================================================== -->
 
         <div class="admin-sidebar-section">
@@ -203,6 +214,7 @@
             </a>
 
         </div>
+
 
 
         <!-- =================================================
@@ -234,6 +246,7 @@
         </div>
 
 
+
         <!-- =================================================
              WEBSITE MANAGEMENT
         ================================================== -->
@@ -263,7 +276,38 @@
         </div>
 
 
+
+        <!-- =================================================
+             ACCOUNT SECURITY
+        ================================================== -->
+
+        <div class="admin-sidebar-section">
+
+            <div class="admin-sidebar-section-title">
+                Account Security
+            </div>
+
+
+            <a
+                href="/admin/change-password"
+                class="admin-sidebar-link <%= currentPath === '/admin/change-password' ? 'active' : '' %>"
+            >
+
+                <span class="admin-sidebar-icon">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </span>
+
+                <span class="admin-sidebar-text">
+                    Change Password
+                </span>
+
+            </a>
+
+        </div>
+
+
     </nav>
+
 
 
     <!-- =====================================================
@@ -272,8 +316,6 @@
 
     <div class="admin-sidebar-footer">
 
-
-        <!-- VIEW WEBSITE -->
 
         <a
             href="/"
@@ -292,8 +334,6 @@
 
         </a>
 
-
-        <!-- LOGOUT -->
 
         <a
             href="/admin/logout"

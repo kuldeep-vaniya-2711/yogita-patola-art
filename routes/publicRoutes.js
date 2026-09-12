@@ -16,10 +16,14 @@ const Wishlist = require("../models/Wishlist");
 
 async function getSettings() {
     try {
-        let settings = await Settings.findOne();
+
+        let settings =
+            await Settings.findOne();
 
         if (!settings) {
-            settings = await Settings.create({});
+
+            settings =
+                await Settings.create({});
         }
 
         return settings;
@@ -720,12 +724,252 @@ router.get(
 
         try {
 
-            const products =
-                await Product.find({})
-                .sort({
-                    createdAt: -1
-                });
+            // ==================================================
+            // PAGINATION
+            // ==================================================
 
+            const PRODUCTS_PER_PAGE = 12;
+
+
+            let currentPage =
+                parseInt(
+                    req.query.page,
+                    10
+                );
+
+
+            if (
+                !Number.isInteger(
+                    currentPage
+                ) ||
+                currentPage < 1
+            ) {
+
+                currentPage = 1;
+            }
+
+
+            // ==================================================
+            // QUERY VALUES
+            // ==================================================
+
+            const search =
+                String(
+                    req.query.search || ""
+                ).trim();
+
+
+            const category =
+                String(
+                    req.query.category || ""
+                ).trim();
+
+
+            const availability =
+                String(
+                    req.query.availability || ""
+                ).trim();
+
+
+            // ==================================================
+            // MONGODB FILTER
+            // ==================================================
+
+            const filter = {};
+
+
+            // ==================================================
+            // SEARCH FILTER
+            // ==================================================
+
+            if (search) {
+
+                const searchRegex = {
+
+                    $regex: search,
+
+                    $options: "i"
+
+                };
+
+
+                filter.$or = [
+
+                    {
+                        name: searchRegex
+                    },
+
+                    {
+                        category: searchRegex
+                    },
+
+                    {
+                        description: searchRegex
+                    },
+
+                    {
+                        fabric: searchRegex
+                    },
+
+                    {
+                        technique: searchRegex
+                    },
+
+                    {
+                        color: searchRegex
+                    }
+
+                ];
+            }
+
+
+            // ==================================================
+            // CATEGORY FILTER
+            // ==================================================
+
+            const categoryFilters = {
+
+                "Patola Sarees":
+                    /^Patola Sarees$/i,
+
+                "Double Ikat Sarees":
+                    /^Double Ikat Sarees$/i,
+
+                "Single Ikat Sarees":
+                    /^Single Ikat Sarees$/i,
+
+                "Dupattas":
+                    /^Dupattas$/i,
+
+                "Accessories":
+                    /^Accessories$/i
+
+            };
+
+
+            if (
+                category &&
+                categoryFilters[category]
+            ) {
+
+                filter.category =
+                    categoryFilters[category];
+            }
+
+
+            // ==================================================
+            // AVAILABILITY FILTER
+            // ==================================================
+
+            const allowedAvailability = [
+
+                "In Stock",
+
+                "Limited",
+
+                "Out of Stock"
+
+            ];
+
+
+            if (
+                allowedAvailability.includes(
+                    availability
+                )
+            ) {
+
+                filter.availability =
+                    availability;
+            }
+
+
+            // ==================================================
+            // TOTAL PRODUCTS
+            // ==================================================
+
+            const totalProducts =
+                await Product.countDocuments(
+                    filter
+                );
+
+
+            // ==================================================
+            // TOTAL PAGES
+            // ==================================================
+
+            const totalPages =
+                Math.max(
+                    1,
+                    Math.ceil(
+                        totalProducts /
+                        PRODUCTS_PER_PAGE
+                    )
+                );
+
+
+            // ==================================================
+            // KEEP PAGE VALID
+            // ==================================================
+
+            if (
+                currentPage >
+                totalPages
+            ) {
+
+                currentPage =
+                    totalPages;
+            }
+
+
+            // ==================================================
+            // SKIP
+            // ==================================================
+
+            const skip =
+                (
+                    currentPage - 1
+                ) *
+                PRODUCTS_PER_PAGE;
+
+
+            // ==================================================
+            // GET PRODUCTS
+            // ==================================================
+
+            const products =
+                await Product.find(
+                    filter
+                )
+                .sort({
+                    featured: -1,
+                    createdAt: -1
+                })
+                .skip(skip)
+                .limit(PRODUCTS_PER_PAGE)
+                .lean();
+
+
+            // ==================================================
+            // SHOWING RANGE
+            // ==================================================
+
+            const showingFrom =
+                totalProducts === 0
+                    ? 0
+                    : skip + 1;
+
+
+            const showingTo =
+                Math.min(
+                    skip +
+                    products.length,
+                    totalProducts
+                );
+
+
+            // ==================================================
+            // RENDER PRODUCTS PAGE
+            // ==================================================
 
             return res.render(
                 "public/products",
@@ -734,10 +978,31 @@ router.get(
                     title:
                         `Products | ${res.locals.siteName}`,
 
+                    description:
+                        "Explore handcrafted Patola sarees and traditional Indian textiles.",
+
                     pageCss:
                         "/css/pages/products.css",
 
-                    products
+                    products,
+
+                    search,
+
+                    category,
+
+                    availability,
+
+                    page:
+                        currentPage,
+
+                    pages:
+                        totalPages,
+
+                    totalProducts,
+
+                    showingFrom,
+
+                    showingTo
 
                 }
             );
@@ -817,7 +1082,11 @@ router.get(
                 });
 
 
-            const relatedProducts =
+            // ==================================================
+            // RELATED PRODUCTS
+            // ==================================================
+
+            let relatedProducts =
                 await Product.find({
 
                     category:
@@ -829,8 +1098,70 @@ router.get(
                     }
 
                 })
-                .limit(4);
+                .sort({
+                    createdAt: -1
+                })
+                .limit(4)
+                .lean();
 
+
+            // ==================================================
+            // FILL REMAINING RELATED PRODUCTS
+            // ==================================================
+
+            if (
+                relatedProducts.length < 4
+            ) {
+
+                const existingRelatedIds =
+                    relatedProducts.map(
+                        relatedProduct =>
+                            relatedProduct._id
+                    );
+
+
+                const excludedIds = [
+
+                    product._id,
+
+                    ...existingRelatedIds
+
+                ];
+
+
+                const remainingProducts =
+                    await Product.find({
+
+                        _id: {
+                            $nin:
+                                excludedIds
+                        }
+
+                    })
+                    .sort({
+                        featured: -1,
+                        createdAt: -1
+                    })
+                    .limit(
+                        4 -
+                        relatedProducts.length
+                    )
+                    .lean();
+
+
+                relatedProducts = [
+
+                    ...relatedProducts,
+
+                    ...remainingProducts
+
+                ];
+            }
+
+
+            // ==================================================
+            // AVERAGE RATING
+            // ==================================================
 
             const averageRating =
                 reviews.length
@@ -850,6 +1181,10 @@ router.get(
                     ).toFixed(1)
                     : 0;
 
+
+            // ==================================================
+            // WISHLIST
+            // ==================================================
 
             let isInWishlist =
                 false;
@@ -881,6 +1216,10 @@ router.get(
                     );
             }
 
+
+            // ==================================================
+            // RENDER PRODUCT DETAIL
+            // ==================================================
 
             return res.render(
                 "public/product-detail",
@@ -1396,64 +1735,15 @@ router.use(
 
         return res
             .status(404)
-            .send(`
+            .render(
+                "public/404",
+                {
 
-                <!DOCTYPE html>
+                    title:
+                        `Page Not Found | ${res.locals.siteName}`
 
-                <html lang="en">
-
-                <head>
-
-                    <meta charset="UTF-8">
-
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1.0"
-                    >
-
-                    <title>
-                        Page Not Found
-                    </title>
-
-                </head>
-
-
-                <body
-                    style="
-                        min-height:100vh;
-                        display:flex;
-                        flex-direction:column;
-                        align-items:center;
-                        justify-content:center;
-                        text-align:center;
-                        font-family:Arial,sans-serif;
-                    "
-                >
-
-                    <h1>
-                        404
-                    </h1>
-
-
-                    <h2>
-                        Page Not Found
-                    </h2>
-
-
-                    <p>
-                        The requested page could not be found.
-                    </p>
-
-
-                    <a href="/">
-                        Go Home
-                    </a>
-
-                </body>
-
-                </html>
-
-            `);
+                }
+            );
     }
 );
 

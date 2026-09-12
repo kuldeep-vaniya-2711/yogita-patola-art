@@ -1,18 +1,24 @@
-<%
-    layout("admin/layout", {
-        title: "Edit Product | Admin",
-        pageCss: "/css/admin/edit-product.css",
-        pageJs: "/js/admin/edit-product.js"
-    });
-%>
+<% layout("admin/layout", {
+    title: "Edit Product | Admin",
+    pageCss: "/css/admin/edit-product.css",
+    pageJs: "/js/admin/edit-product.js"
+}) -%>
 
-<div class="admin-edit-product-page">
 
-    <!-- HEADER -->
+<div class="admin-page edit-product-page">
+
+
+    <!-- ====================================================
+         PAGE HEADER
+    ====================================================== -->
+
     <div class="admin-page-header">
 
         <div>
-            <span class="admin-page-eyebrow">PRODUCT MANAGEMENT</span>
+
+            <span class="admin-page-eyebrow">
+                PRODUCT MANAGEMENT
+            </span>
 
             <h1 class="admin-page-title">
                 Edit Product
@@ -21,19 +27,36 @@
             <p class="admin-page-description">
                 Update product information, pricing, availability and images.
             </p>
+
         </div>
 
-        <a href="/admin/products" class="btn btn-outline-dark">
-            ← Back to Products
-        </a>
+
+        <div class="admin-page-header-actions">
+
+            <a
+                href="/admin/products"
+                class="admin-btn admin-btn-outline"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Products
+            </a>
+
+        </div>
 
     </div>
 
 
+    <!-- ====================================================
+         ALERTS
+    ====================================================== -->
+
     <%- include("../partials/alerts") %>
 
 
-    <!-- FORM -->
+    <!-- ====================================================
+         FORM
+    ====================================================== -->
+
     <form
         id="editProductForm"
         action="/admin/products/edit/<%= product._id %>"
@@ -42,27 +65,53 @@
         novalidate
     >
 
+
         <div class="row g-4">
 
-            <!-- LEFT -->
+
+            <!-- =================================================
+                 LEFT COLUMN
+            ================================================== -->
+
             <div class="col-xl-8">
 
-                <!-- BASIC INFORMATION -->
+
+                <!-- =================================================
+                     BASIC INFORMATION
+                ================================================== -->
+
                 <div class="admin-edit-card">
 
                     <div class="admin-edit-card-header">
+
                         <div>
-                            <span class="card-eyebrow">BASIC INFORMATION</span>
-                            <h2>Product Details</h2>
+
+                            <span class="card-eyebrow">
+                                BASIC INFORMATION
+                            </span>
+
+                            <h2>
+                                Product Details
+                            </h2>
+
                         </div>
+
                     </div>
+
 
                     <div class="admin-edit-card-body">
 
+
+                        <!-- PRODUCT NAME -->
+
                         <div class="mb-4">
 
-                            <label for="productName" class="form-label">
-                                Product Name <span class="text-danger">*</span>
+                            <label
+                                for="productName"
+                                class="form-label"
+                            >
+                                Product Name
+                                <span class="text-danger">*</span>
                             </label>
 
                             <input
@@ -85,12 +134,19 @@
                         </div>
 
 
+                        <!-- CATEGORY + TECHNIQUE -->
+
                         <div class="row g-3">
+
 
                             <div class="col-md-6">
 
-                                <label for="productCategory" class="form-label">
-                                    Category <span class="text-danger">*</span>
+                                <label
+                                    for="productCategory"
+                                    class="form-label"
+                                >
+                                    Category
+                                    <span class="text-danger">*</span>
                                 </label>
 
                                 <select
@@ -100,7 +156,10 @@
                                     required
                                 >
 
-                                    <option value="">Select Category</option>
+                                    <option value="">
+                                        Select Category
+                                    </option>
+
 
                                     <% [
                                         "Patola Sarees",
@@ -130,7 +189,10 @@
 
                             <div class="col-md-6">
 
-                                <label for="productTechnique" class="form-label">
+                                <label
+                                    for="productTechnique"
+                                    class="form-label"
+                                >
                                     Technique
                                 </label>
 
@@ -149,10 +211,16 @@
                         </div>
 
 
+                        <!-- DESCRIPTION -->
+
                         <div class="mt-4">
 
-                            <label for="productDescription" class="form-label">
-                                Description <span class="text-danger">*</span>
+                            <label
+                                for="productDescription"
+                                class="form-label"
+                            >
+                                Description
+                                <span class="text-danger">*</span>
                             </label>
 
                             <textarea
@@ -166,12 +234,17 @@
                                 required
                             ><%= product.description || '' %></textarea>
 
+
                             <div class="description-counter">
+
                                 <span id="descriptionCount">
                                     <%= (product.description || "").length %>
                                 </span>
+
                                 / 3000
+
                             </div>
+
 
                             <div class="invalid-feedback">
                                 Please enter a valid product description.
@@ -184,31 +257,53 @@
                 </div>
 
 
-                <!-- SPECIFICATIONS -->
+                <!-- =================================================
+                     SPECIFICATIONS
+                ================================================== -->
+
                 <div class="admin-edit-card mt-4">
 
                     <div class="admin-edit-card-header">
+
                         <div>
+
                             <span class="card-eyebrow">
                                 PRODUCT SPECIFICATIONS
                             </span>
-                            <h2>Details & Specifications</h2>
+
+                            <h2>
+                                Details & Specifications
+                            </h2>
+
                         </div>
+
                     </div>
+
 
                     <div class="admin-edit-card-body">
 
                         <div class="row g-4">
 
+
+                            <!-- PRICE -->
+
                             <div class="col-md-6">
 
-                                <label for="productPrice" class="form-label">
-                                    Price <span class="text-danger">*</span>
+                                <label
+                                    for="productPrice"
+                                    class="form-label"
+                                >
+                                    Price
+                                    <span class="text-danger">*</span>
                                 </label>
+
 
                                 <div class="input-group">
 
-                                    <span class="input-group-text">₹</span>
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span>
+
 
                                     <input
                                         id="productPrice"
@@ -224,6 +319,7 @@
 
                                 </div>
 
+
                                 <div class="invalid-feedback">
                                     Please enter a valid price.
                                 </div>
@@ -231,9 +327,14 @@
                             </div>
 
 
+                            <!-- FABRIC -->
+
                             <div class="col-md-6">
 
-                                <label for="productFabric" class="form-label">
+                                <label
+                                    for="productFabric"
+                                    class="form-label"
+                                >
                                     Fabric
                                 </label>
 
@@ -250,9 +351,14 @@
                             </div>
 
 
+                            <!-- COLOR -->
+
                             <div class="col-md-6">
 
-                                <label for="productColor" class="form-label">
+                                <label
+                                    for="productColor"
+                                    class="form-label"
+                                >
                                     Color
                                 </label>
 
@@ -269,9 +375,14 @@
                             </div>
 
 
+                            <!-- DIMENSIONS -->
+
                             <div class="col-md-6">
 
-                                <label for="productDimensions" class="form-label">
+                                <label
+                                    for="productDimensions"
+                                    class="form-label"
+                                >
                                     Dimensions
                                 </label>
 
@@ -288,11 +399,18 @@
                             </div>
 
 
+                            <!-- AVAILABILITY -->
+
                             <div class="col-md-6">
 
-                                <label for="productAvailability" class="form-label">
-                                    Availability <span class="text-danger">*</span>
+                                <label
+                                    for="productAvailability"
+                                    class="form-label"
+                                >
+                                    Availability
+                                    <span class="text-danger">*</span>
                                 </label>
+
 
                                 <select
                                     id="productAvailability"
@@ -321,34 +439,47 @@
                             </div>
 
 
+                            <!-- FEATURED -->
+
                             <div class="col-md-6">
 
                                 <label class="form-label d-block">
                                     Homepage Visibility
                                 </label>
 
-                                <div class="form-check form-switch featured-switch">
+
+                                <label
+                                    class="settings-switch"
+                                    for="featuredProduct"
+                                >
 
                                     <input
                                         id="featuredProduct"
                                         name="featured"
                                         type="checkbox"
-                                        class="form-check-input"
-                                        role="switch"
                                         value="true"
                                         <%= product.featured ? "checked" : "" %>
                                     >
 
-                                    <label
-                                        for="featuredProduct"
-                                        class="form-check-label"
-                                    >
-                                        Show as Featured Product
-                                    </label>
+                                    <span class="switch-slider"></span>
 
-                                </div>
+
+                                    <span class="switch-content">
+
+                                        <strong>
+                                            Show as Featured Product
+                                        </strong>
+
+                                        <small>
+                                            Display this product in featured collections.
+                                        </small>
+
+                                    </span>
+
+                                </label>
 
                             </div>
+
 
                         </div>
 
@@ -357,20 +488,29 @@
                 </div>
 
 
-                <!-- IMAGES -->
+                <!-- =================================================
+                     PRODUCT IMAGES
+                ================================================== -->
+
                 <div class="admin-edit-card mt-4">
 
                     <div class="admin-edit-card-header">
 
                         <div>
-                            <span class="card-eyebrow">PRODUCT IMAGES</span>
 
-                            <h2>Update Product Photos</h2>
+                            <span class="card-eyebrow">
+                                PRODUCT IMAGES
+                            </span>
+
+                            <h2>
+                                Update Product Photos
+                            </h2>
 
                             <p>
-                                Uploading new images will replace all existing
-                                product images.
+                                Uploading new images will replace all
+                                existing product images.
                             </p>
+
                         </div>
 
                     </div>
@@ -378,13 +518,17 @@
 
                     <div class="admin-edit-card-body">
 
-                        <% if (product.images?.length) { %>
+
+                        <!-- CURRENT IMAGES -->
+
+                        <% if (product.images && product.images.length) { %>
 
                             <div class="current-images-section">
 
                                 <h3 class="image-section-title">
                                     Current Images
                                 </h3>
+
 
                                 <div class="current-images-grid">
 
@@ -397,6 +541,7 @@
                                                 alt="<%= product.name || 'Product Image' %>"
                                             >
 
+
                                             <% if (index === 0) { %>
 
                                                 <span class="main-image-badge">
@@ -404,6 +549,7 @@
                                                 </span>
 
                                             <% } %>
+
 
                                             <span class="current-image-number">
                                                 <%= index + 1 %>
@@ -415,31 +561,47 @@
 
                                 </div>
 
+
                                 <p class="image-help-text">
+
                                     Current images remain unchanged if you
                                     do not upload new images.
+
                                 </p>
 
                             </div>
 
+
                         <% } else { %>
+
 
                             <div class="no-current-images">
 
-                                <span>✦</span>
+                                <span>
+                                    ✦
+                                </span>
 
-                                <p>No product images available.</p>
+                                <p>
+                                    No product images available.
+                                </p>
 
                             </div>
+
 
                         <% } %>
 
 
+                        <!-- NEW IMAGES -->
+
                         <div class="new-images-section mt-4">
 
-                            <label for="productImages" class="form-label">
+                            <label
+                                for="productImages"
+                                class="form-label"
+                            >
                                 Upload New Images
                             </label>
+
 
                             <input
                                 id="productImages"
@@ -450,15 +612,19 @@
                                 multiple
                             >
 
+
                             <div class="form-text">
+
                                 JPG, JPEG, PNG or WEBP.
                                 Maximum 5MB per image.
                                 Maximum 5 images.
+
                             </div>
+
 
                             <div
                                 id="imagePreview"
-                                class="image-preview-grid mt-4"
+                                class="edit-product-image-preview"
                             ></div>
 
                         </div>
@@ -468,25 +634,31 @@
                 </div>
 
 
-                <!-- ACTIONS -->
+                <!-- =================================================
+                     ACTIONS
+                ================================================== -->
+
                 <div class="edit-form-actions mt-4">
+
 
                     <a
                         href="/admin/products"
-                        class="btn btn-outline-dark"
+                        class="admin-btn admin-btn-outline"
                     >
                         Cancel
                     </a>
 
+
                     <button
                         type="submit"
                         id="saveProductButton"
-                        class="btn btn-dark"
+                        class="admin-btn admin-btn-primary"
                     >
 
                         <span class="button-text">
                             Save Changes
                         </span>
+
 
                         <span class="button-loading d-none">
                             Saving...
@@ -499,29 +671,43 @@
             </div>
 
 
-            <!-- RIGHT -->
+            <!-- =================================================
+                 RIGHT COLUMN
+            ================================================== -->
+
             <div class="col-xl-4">
 
-                <!-- PREVIEW -->
+
+                <!-- =================================================
+                     PRODUCT PREVIEW
+                ================================================== -->
+
                 <div class="admin-edit-card sticky-edit-card">
 
                     <div class="admin-edit-card-header">
 
                         <div>
+
                             <span class="card-eyebrow">
                                 CURRENT PRODUCT
                             </span>
 
-                            <h2>Preview</h2>
+                            <h2>
+                                Preview
+                            </h2>
+
                         </div>
 
                     </div>
 
+
                     <div class="admin-edit-card-body">
+
 
                         <div class="product-summary-image">
 
-                            <% if (product.images?.length) { %>
+
+                            <% if (product.images && product.images.length) { %>
 
                                 <img
                                     id="productMainPreview"
@@ -529,7 +715,9 @@
                                     alt="<%= product.name || 'Product' %>"
                                 >
 
+
                             <% } else { %>
+
 
                                 <div
                                     id="productMainPreview"
@@ -538,12 +726,15 @@
                                     Yogita Patola Art
                                 </div>
 
+
                             <% } %>
+
 
                         </div>
 
 
                         <div class="product-summary-details">
+
 
                             <span
                                 id="summaryCategory"
@@ -552,23 +743,35 @@
                                 <%= product.category || "Patola" %>
                             </span>
 
+
                             <h3 id="summaryName">
+
                                 <%= product.name || "Product Name" %>
+
                             </h3>
+
 
                             <div
                                 id="summaryPrice"
                                 class="product-summary-price"
                             >
-                                ₹<%= Number(product.price || 0).toLocaleString("en-IN") %>
+
+                                ₹<%= Number(
+                                    product.price || 0
+                                ).toLocaleString("en-IN") %>
+
                             </div>
+
 
                             <span
                                 id="summaryAvailability"
                                 class="product-summary-availability"
                             >
+
                                 <%= product.availability || "In Stock" %>
+
                             </span>
+
 
                         </div>
 
@@ -577,14 +780,20 @@
                 </div>
 
 
-                <!-- PRODUCT ID -->
+                <!-- =================================================
+                     PRODUCT ID
+                ================================================== -->
+
                 <div class="admin-edit-card mt-4">
 
                     <div class="admin-edit-card-body">
 
                         <div class="product-id-box">
 
-                            <span>Product ID</span>
+                            <span>
+                                Product ID
+                            </span>
+
 
                             <code>
                                 <%= product._id %>
@@ -597,19 +806,30 @@
                 </div>
 
 
-                <!-- INFO -->
+                <!-- =================================================
+                     INFO
+                ================================================== -->
+
                 <div class="admin-info-box mt-4">
 
-                    <div class="admin-info-icon">✦</div>
+                    <div class="admin-info-icon">
+                        ✦
+                    </div>
+
 
                     <div>
 
-                        <h3>Editing Product</h3>
+                        <h3>
+                            Editing Product
+                        </h3>
+
 
                         <p>
+
                             Review all changes carefully before saving.
                             Product information will be updated in the
                             database immediately.
+
                         </p>
 
                     </div>

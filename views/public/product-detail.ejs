@@ -1,12 +1,10 @@
 <%
 /*
- * =========================================================
- * PRODUCT DETAIL PAGE
- * =========================================================
- *
- * EJS-MATE LAYOUT
- * =========================================================
- */
+=========================================================
+YOGITA PATOLA ART
+PRODUCT DETAIL PAGE
+=========================================================
+*/
 
 layout("layout");
 
@@ -19,117 +17,238 @@ block("scripts").append(
 );
 
 
-/*
- * =========================================================
- * SAFE PRODUCT DATA
- * =========================================================
- */
+// =========================================================
+// SAFE PRODUCT DATA
+// =========================================================
 
-var currentProduct =
+const currentProduct =
     typeof product !== "undefined" && product
         ? product
         : null;
 
-var ratingValue = 0;
-
-if (
-    typeof averageRating !== "undefined" &&
-    averageRating !== null &&
-    averageRating !== ""
-) {
-    ratingValue = Number(averageRating);
-
-    if (isNaN(ratingValue)) {
-        ratingValue = 0;
-    }
-}
-
-var reviewList =
-    typeof reviews !== "undefined" &&
+const reviewList =
     Array.isArray(reviews)
         ? reviews
         : [];
 
-var relatedProductList =
-    typeof relatedProducts !== "undefined" &&
+const relatedProductList =
     Array.isArray(relatedProducts)
         ? relatedProducts
         : [];
 
-var wishlistStatus =
+const wishlistStatus =
     typeof isInWishlist !== "undefined"
         ? Boolean(isInWishlist)
         : false;
 
-var fullStars = Math.floor(ratingValue);
 
-var hasHalfStar =
-    ratingValue % 1 >= 0.5;
+// =========================================================
+// SAFE PRODUCT VALUES
+// =========================================================
 
+const productName =
+    currentProduct?.name ||
+    "Patola Product";
 
-/*
- * =========================================================
- * SAFE PRODUCT INFORMATION
- * =========================================================
- */
-
-var productDescription =
-    currentProduct &&
-    currentProduct.description
-        ? currentProduct.description
-        : "A beautifully handcrafted textile created with traditional Indian artistry and timeless craftsmanship.";
-
-var productFabric =
-    currentProduct &&
-    currentProduct.fabric
-        ? currentProduct.fabric
-        : "Traditional textile craftsmanship";
-
-var productTechnique =
-    currentProduct &&
-    currentProduct.technique
-        ? currentProduct.technique
-        : "Traditional handwoven technique";
-
-var productColor =
-    currentProduct &&
-    currentProduct.color
-        ? currentProduct.color
-        : "Traditional Indian colour palette";
-
-var productDimensions =
-    currentProduct &&
-    currentProduct.dimensions
-        ? currentProduct.dimensions
+const productId =
+    currentProduct?._id
+        ? String(currentProduct._id)
         : "";
 
-var productCategory =
-    currentProduct &&
-    currentProduct.category
-        ? currentProduct.category
-        : "Patola";
+const productPrice =
+    currentProduct?.price !== undefined &&
+    currentProduct?.price !== null
+        ? Number(currentProduct.price)
+        : 0;
 
-var productAvailability =
-    currentProduct &&
-    currentProduct.availability
-        ? currentProduct.availability
-        : "In Stock";
+const formattedPrice =
+    productPrice.toLocaleString("en-IN");
+
+const productDescription =
+    currentProduct?.description ||
+    "Handcrafted with traditional Patola weaving techniques.";
+
+const productFabric =
+    currentProduct?.fabric ||
+    "Traditional Patola textile";
+
+const productTechnique =
+    currentProduct?.technique ||
+    "Traditional Patola weaving";
+
+const productColor =
+    currentProduct?.color ||
+    "Traditional Patola colours";
+
+const productDimensions =
+    currentProduct?.dimensions ||
+    "As mentioned for the product";
+
+const productCategory =
+    currentProduct?.category ||
+    "Patola";
+
+const productAvailability =
+    currentProduct?.availability ||
+    "Available";
+
+
+// =========================================================
+// PRODUCT IMAGES
+// =========================================================
+
+let productImages = [];
+
+if (
+    Array.isArray(currentProduct?.images) &&
+    currentProduct.images.length
+) {
+    productImages = currentProduct.images.filter(
+        image =>
+            image &&
+            String(image).trim()
+    );
+}
+
+if (
+    !productImages.length &&
+    currentProduct?.image
+) {
+    productImages = [
+        currentProduct.image
+    ];
+}
+
+if (!productImages.length) {
+    productImages = [
+        "/images/placeholder-product.jpg"
+    ];
+}
+
+const mainProductImage =
+    productImages[0];
+
+
+// =========================================================
+// RATING
+// =========================================================
+
+const ratingValue =
+    typeof averageRating !== "undefined"
+        ? Number(averageRating || 0)
+        : 0;
+
+const fullStars =
+    Math.floor(ratingValue);
+
+const hasHalfStar =
+    ratingValue - fullStars >= 0.5;
+
+
+// =========================================================
+// WHATSAPP ORDER MESSAGE
+// =========================================================
+
+const whatsappPhone =
+    typeof whatsappUrl !== "undefined" &&
+    whatsappUrl
+        ? String(whatsappUrl)
+        : "";
+
+const availabilityText =
+    String(productAvailability);
+
+const isOutOfStock =
+    availabilityText
+        .toLowerCase()
+        .replace(/[_-]/g, " ")
+        .trim() === "out of stock";
+
+let whatsappMessage;
+
+if (isOutOfStock) {
+
+    whatsappMessage =
+        "Hello, I am interested in this product.\n\n" +
+        "Product: " +
+        productName +
+        "\n" +
+        "Product ID: " +
+        productId +
+        "\n" +
+        "Price: ₹" +
+        formattedPrice +
+        "\n" +
+        "Category: " +
+        productCategory +
+        "\n" +
+        "Availability: " +
+        availabilityText +
+        "\n\n" +
+        "Please let me know if this product is available or if a similar piece is available.";
+
+} else {
+
+    whatsappMessage =
+        "Hello, I would like to order this product.\n\n" +
+        "Product: " +
+        productName +
+        "\n" +
+        "Product ID: " +
+        productId +
+        "\n" +
+        "Price: ₹" +
+        formattedPrice +
+        "\n" +
+        "Category: " +
+        productCategory +
+        "\n" +
+        "Availability: " +
+        availabilityText +
+        "\n\n" +
+        "Please share the order details and next steps.";
+}
+
+
+let whatsappOrderUrl;
+
+if (whatsappPhone) {
+
+    whatsappOrderUrl =
+        whatsappPhone +
+        (
+            whatsappPhone.includes("?")
+                ? "&"
+                : "?"
+        ) +
+        "text=" +
+        encodeURIComponent(
+            whatsappMessage
+        );
+
+} else {
+
+    whatsappOrderUrl =
+        "https://wa.me/?text=" +
+        encodeURIComponent(
+            whatsappMessage
+        );
+}
 
 %>
 
 
 <% if (currentProduct) { %>
 
+
 <section class="product-detail-page">
 
-
-<!-- =========================================================
-     BREADCRUMB
-     ========================================================= -->
-
-<section class="product-breadcrumb-section">
-
     <div class="container">
+
+
+        <!-- =================================================
+             BREADCRUMB
+        ================================================== -->
 
         <nav
             class="product-breadcrumb"
@@ -140,94 +259,116 @@ var productAvailability =
                 Home
             </a>
 
-            <span>/</span>
+            <span>
+                /
+            </span>
 
-            <a href="/products">
-                Products
+            <a href="/collections">
+                Collections
             </a>
 
-            <span>/</span>
+            <span>
+                /
+            </span>
 
-            <span class="current">
-                <%= currentProduct.name %>
+            <span>
+                <%= productName %>
             </span>
 
         </nav>
 
-    </div>
 
-</section>
+        <!-- =================================================
+             PRODUCT MAIN AREA
+        ================================================== -->
 
-
-<!-- =========================================================
-     PRODUCT MAIN
-     ========================================================= -->
-
-<section class="product-main-section py-5">
-
-    <div class="container">
-
-        <div class="row g-5">
+        <div class="row g-4 g-lg-5">
 
 
             <!-- =================================================
                  PRODUCT GALLERY
-                 ================================================= -->
+            ================================================== -->
 
             <div class="col-lg-6">
 
                 <div class="product-gallery">
 
-                    <!-- MAIN IMAGE -->
 
-                    <div
-                        class="product-main-image"
-                        id="productMainImageWrapper"
-                    >
+                    <!-- =================================================
+                         MAIN IMAGE
+                    ================================================== -->
 
-                        <% if (
-                            currentProduct.images &&
-                            Array.isArray(currentProduct.images) &&
-                            currentProduct.images.length > 0
-                        ) { %>
+                    <div class="product-main-image">
 
-                            <img
-                                src="<%= currentProduct.images[0] %>"
-                                alt="<%= currentProduct.name %>"
-                                id="mainProductImage"
-                                class="img-fluid"
-                                data-index="0"
+                        <% if (productImages.length > 1) { %>
+
+                            <!-- PREVIOUS -->
+
+                            <button
+                                type="button"
+                                class="product-gallery-arrow product-gallery-prev"
+                                id="productGalleryPrev"
+                                aria-label="Previous product image"
                             >
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
 
-                        <% } else { %>
+                        <% } %>
 
-                            <div class="product-image-placeholder">
 
-                                <span>
-                                    Yogita Patola Art
-                                </span>
+                        <!-- MAIN PRODUCT IMAGE -->
 
-                            </div>
+                        <img
+                            id="mainProductImage"
+                            src="<%= mainProductImage %>"
+                            alt="<%= productName %>"
+                            loading="eager"
+                        >
+
+
+                        <!-- FULL IMAGE BUTTON -->
+
+                        <button
+                            type="button"
+                            class="product-image-zoom"
+                            id="openProductLightbox"
+                            aria-label="Open product image in full view"
+                        >
+                            <i class="bi bi-arrows-fullscreen"></i>
+                        </button>
+
+
+                        <% if (productImages.length > 1) { %>
+
+                            <!-- NEXT -->
+
+                            <button
+                                type="button"
+                                class="product-gallery-arrow product-gallery-next"
+                                id="productGalleryNext"
+                                aria-label="Next product image"
+                            >
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
 
                         <% } %>
 
                     </div>
 
 
-                    <!-- THUMBNAILS -->
+                    <!-- =================================================
+                         PRODUCT THUMBNAILS
+                    ================================================== -->
 
-                    <% if (
-                        currentProduct.images &&
-                        Array.isArray(currentProduct.images) &&
-                        currentProduct.images.length > 1
-                    ) { %>
+                    <% if (productImages.length > 1) { %>
 
                         <div
                             class="product-thumbnails"
                             id="productThumbnails"
+                            aria-label="Product images"
                         >
 
-                            <% currentProduct.images.forEach(function(image, index) { %>
+                            <% productImages.forEach((image, index) => { %>
 
                                 <button
                                     type="button"
@@ -235,11 +376,12 @@ var productAvailability =
                                     data-image="<%= image %>"
                                     data-index="<%= index %>"
                                     aria-label="View product image <%= index + 1 %>"
+                                    aria-current="<%= index === 0 ? 'true' : 'false' %>"
                                 >
 
                                     <img
                                         src="<%= image %>"
-                                        alt="<%= currentProduct.name %> image <%= index + 1 %>"
+                                        alt="<%= productName %> image <%= index + 1 %>"
                                         loading="lazy"
                                     >
 
@@ -251,6 +393,7 @@ var productAvailability =
 
                     <% } %>
 
+
                 </div>
 
             </div>
@@ -258,91 +401,79 @@ var productAvailability =
 
             <!-- =================================================
                  PRODUCT INFORMATION
-                 ================================================= -->
+            ================================================== -->
 
             <div class="col-lg-6">
 
-                <div class="product-detail-info">
+                <div class="product-info">
+
 
                     <!-- CATEGORY -->
 
-                    <span class="product-detail-category">
+                    <div class="product-category">
                         <%= productCategory %>
-                    </span>
+                    </div>
 
 
-                    <!-- NAME -->
+                    <!-- TITLE -->
 
-                    <h1 class="product-detail-title">
-                        <%= currentProduct.name %>
+                    <h1 class="product-title">
+                        <%= productName %>
                     </h1>
 
 
                     <!-- RATING -->
 
-                    <div class="product-rating-summary">
+                    <% if (ratingValue > 0) { %>
 
-                        <div class="product-stars">
+                        <div class="product-rating">
 
-                            <% for (
-                                var star = 1;
-                                star <= 5;
-                                star++
-                            ) { %>
+                            <div class="rating-stars">
 
-                                <% if (star <= fullStars) { %>
+                                <% for (let i = 1; i <= 5; i++) { %>
 
-                                    <span class="star filled">
-                                        ★
-                                    </span>
+                                    <% if (i <= fullStars) { %>
 
-                                <% } else if (
-                                    star === fullStars + 1 &&
-                                    hasHalfStar
-                                ) { %>
+                                        <i class="bi bi-star-fill"></i>
 
-                                    <span class="star half">
-                                        ★
-                                    </span>
+                                    <% } else if (
+                                        i === fullStars + 1 &&
+                                        hasHalfStar
+                                    ) { %>
 
-                                <% } else { %>
+                                        <i class="bi bi-star-half"></i>
 
-                                    <span class="star">
-                                        ☆
-                                    </span>
+                                    <% } else { %>
+
+                                        <i class="bi bi-star"></i>
+
+                                    <% } %>
 
                                 <% } %>
 
-                            <% } %>
+                            </div>
+
+                            <span class="rating-value">
+                                <%= ratingValue.toFixed(1) %>
+                            </span>
+
+                            <span class="rating-count">
+                                (<%= reviewList.length %>
+                                <%= reviewList.length === 1
+                                    ? "Review"
+                                    : "Reviews"
+                                %>)
+                            </span>
 
                         </div>
 
-                        <span class="rating-number">
-                            <%= ratingValue.toFixed(1) %>
-                        </span>
-
-                        <a
-                            href="#reviews"
-                            class="review-count"
-                        >
-                            (<%= reviewList.length %>
-                            <%= reviewList.length === 1
-                                ? "Review"
-                                : "Reviews"
-                            %>)
-                        </a>
-
-                    </div>
+                    <% } %>
 
 
                     <!-- PRICE -->
 
-                    <div class="product-detail-price">
-
-                        ₹<%= Number(
-                            currentProduct.price || 0
-                        ).toLocaleString("en-IN") %>
-
+                    <div class="product-price">
+                        ₹<%= formattedPrice %>
                     </div>
 
 
@@ -350,27 +481,25 @@ var productAvailability =
 
                     <div class="product-availability">
 
-                        <span class="availability-label">
+                        <span>
                             Availability:
                         </span>
 
-                        <span
-                            class="availability-badge <%= productAvailability === 'In Stock'
-                                ? 'in-stock'
-                                : productAvailability === 'Limited'
-                                    ? 'limited'
-                                    : 'out-of-stock'
+                        <strong
+                            class="<%= isOutOfStock
+                                ? 'text-danger'
+                                : 'text-success'
                             %>"
                         >
                             <%= productAvailability %>
-                        </span>
+                        </strong>
 
                     </div>
 
 
                     <!-- DESCRIPTION -->
 
-                    <div class="product-detail-description">
+                    <div class="product-description">
 
                         <p>
                             <%= productDescription %>
@@ -379,185 +508,149 @@ var productAvailability =
                     </div>
 
 
-                    <!-- SPECIFICATIONS -->
+                    <!-- =================================================
+                         ACTION BUTTONS
+                    ================================================== -->
 
-                    <div class="product-specifications">
-
-                        <% if (currentProduct.fabric) { %>
-
-                            <div class="product-spec-row">
-
-                                <span class="spec-label">
-                                    Fabric
-                                </span>
-
-                                <span class="spec-value">
-                                    <%= currentProduct.fabric %>
-                                </span>
-
-                            </div>
-
-                        <% } %>
+                    <div class="product-actions">
 
 
-                        <% if (currentProduct.technique) { %>
+                        <!-- WISHLIST -->
 
-                            <div class="product-spec-row">
+                        <form
+                            method="POST"
+                            action="<%= wishlistStatus
+                                ? '/wishlist/remove/' + productId
+                                : '/wishlist/add/' + productId
+                            %>"
+                        >
 
-                                <span class="spec-label">
-                                    Technique
-                                </span>
-
-                                <span class="spec-value">
-                                    <%= currentProduct.technique %>
-                                </span>
-
-                            </div>
-
-                        <% } %>
-
-
-                        <% if (currentProduct.color) { %>
-
-                            <div class="product-spec-row">
-
-                                <span class="spec-label">
-                                    Color
-                                </span>
-
-                                <span class="spec-value">
-                                    <%= currentProduct.color %>
-                                </span>
-
-                            </div>
-
-                        <% } %>
-
-
-                        <% if (currentProduct.dimensions) { %>
-
-                            <div class="product-spec-row">
-
-                                <span class="spec-label">
-                                    Dimensions
-                                </span>
-
-                                <span class="spec-value">
-                                    <%= currentProduct.dimensions %>
-                                </span>
-
-                            </div>
-
-                        <% } %>
-
-                    </div>
-
-
-                    <!-- ACTION BUTTONS -->
-
-                    <div class="product-detail-actions">
-
-                        <%
-                            var wishlistProductId =
-                                currentProduct._id;
-                        %>
-
-                        <% if (wishlistStatus) { %>
-
-                            <form
-                                action="/wishlist/remove/<%= wishlistProductId %>"
-                                method="POST"
-                                class="wishlist-action-form"
+                            <button
+                                type="submit"
+                                class="btn btn-outline-dark wishlist-btn"
+                                aria-label="<%= wishlistStatus
+                                    ? 'Remove from wishlist'
+                                    : 'Add to wishlist'
+                                %>"
                             >
 
-                                <button
-                                    type="submit"
-                                    class="btn btn-dark wishlist-btn wishlist-added"
-                                    aria-label="Remove <%= currentProduct.name %> from wishlist"
-                                >
+                                <i
+                                    class="bi <%= wishlistStatus
+                                        ? 'bi-heart-fill'
+                                        : 'bi-heart'
+                                    %>"
+                                ></i>
 
-                                    <span class="wishlist-icon">
-                                        ♥
-                                    </span>
+                                <span>
+                                    <%= wishlistStatus
+                                        ? "Remove from Wishlist"
+                                        : "Add to Wishlist"
+                                    %>
+                                </span>
 
-                                    <span>
-                                        Added to Wishlist
-                                    </span>
+                            </button>
 
-                                </button>
-
-                            </form>
-
-                        <% } else { %>
-
-                            <form
-                                action="/wishlist/add/<%= wishlistProductId %>"
-                                method="POST"
-                                class="wishlist-action-form"
-                            >
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-outline-dark wishlist-btn"
-                                    aria-label="Add <%= currentProduct.name %> to wishlist"
-                                >
-
-                                    <span class="wishlist-icon">
-                                        ♡
-                                    </span>
-
-                                    <span>
-                                        Add to Wishlist
-                                    </span>
-
-                                </button>
-
-                            </form>
-
-                        <% } %>
+                        </form>
 
 
-                        <!-- WHATSAPP -->
-
-                        <%
-                            var whatsappMessage =
-                                encodeURIComponent(
-                                    "Hello, I am interested in " +
-                                    currentProduct.name +
-                                    "."
-                                );
-                        %>
+                        <!-- WHATSAPP ORDER -->
 
                         <a
-                            href="https://wa.me/?text=<%= whatsappMessage %>"
+                            href="<%= whatsappOrderUrl %>"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="btn btn-dark inquiry-btn"
+                            aria-label="<%= isOutOfStock
+                                ? 'Ask about ' + productName + ' on WhatsApp'
+                                : 'Order ' + productName + ' on WhatsApp'
+                            %>"
                         >
-                            Enquire About This Product
+
+                            <i class="bi bi-whatsapp"></i>
+
+                            <span>
+                                <%= isOutOfStock
+                                    ? "Ask on WhatsApp"
+                                    : "Order on WhatsApp"
+                                %>
+                            </span>
+
                         </a>
 
                     </div>
 
 
-                    <!-- WISHLIST STATUS -->
+                    <!-- WHATSAPP NOTE -->
 
-                    <% if (wishlistStatus) { %>
+                    <div class="product-whatsapp-note">
 
-                        <div class="wishlist-status-message">
-                            ♥ This product is saved in your wishlist.
+                        <i class="bi bi-whatsapp"></i>
+
+                        <span>
+                            Orders are confirmed personally through WhatsApp.
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SPECIFICATIONS
+                    ================================================== -->
+
+                    <div class="product-specifications">
+
+
+                        <div class="specification-row">
+
+                            <span>
+                                Fabric
+                            </span>
+
+                            <strong>
+                                <%= productFabric %>
+                            </strong>
+
                         </div>
 
-                    <% } %>
+
+                        <div class="specification-row">
+
+                            <span>
+                                Technique
+                            </span>
+
+                            <strong>
+                                <%= productTechnique %>
+                            </strong>
+
+                        </div>
 
 
-                    <!-- BACK -->
+                        <div class="specification-row">
 
-                    <div class="back-to-products">
+                            <span>
+                                Colour
+                            </span>
 
-                        <a href="/products">
-                            ← Back to Collection
-                        </a>
+                            <strong>
+                                <%= productColor %>
+                            </strong>
+
+                        </div>
+
+
+                        <div class="specification-row">
+
+                            <span>
+                                Dimensions
+                            </span>
+
+                            <strong>
+                                <%= productDimensions %>
+                            </strong>
+
+                        </div>
+
 
                     </div>
 
@@ -567,217 +660,131 @@ var productAvailability =
 
         </div>
 
-    </div>
 
-</section>
+        <!-- =================================================
+             PRODUCT INFORMATION TABS
+        ================================================== -->
 
+        <div class="product-information-section">
 
-<!-- =========================================================
-     PRODUCT INFORMATION
-     ========================================================= -->
-
-<section class="product-information-section">
-
-    <div class="container">
-
-
-        <!-- =====================================================
-             TRUST FEATURES
-             ===================================================== -->
-
-        <div class="product-trust-grid">
-
-
-            <div class="product-trust-item">
-
-                <div class="product-trust-icon">
-                    <i class="bi bi-patch-check"></i>
-                </div>
-
-                <div class="product-trust-content">
-
-                    <strong>
-                        Certified handloom
-                    </strong>
-
-                    <span>
-                        Authentic traditional craftsmanship
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="product-trust-item">
-
-                <div class="product-trust-icon">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-
-                <div class="product-trust-content">
-
-                    <strong>
-                        Insured shipping
-                    </strong>
-
-                    <span>
-                        Carefully packed for safe delivery
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="product-trust-item">
-
-                <div class="product-trust-icon">
-                    <i class="bi bi-arrow-repeat"></i>
-                </div>
-
-                <div class="product-trust-content">
-
-                    <strong>
-                        7-day exchange
-                    </strong>
-
-                    <span>
-                        Easy exchange support within 7 days
-                    </span>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- =====================================================
-             INFORMATION PANEL
-             ===================================================== -->
-
-        <div class="product-information-panel">
-
-
-            <!-- TABS -->
-
-            <div
-                class="product-info-tabs"
+            <ul
+                class="nav nav-tabs product-tabs"
+                id="productInfoTabs"
                 role="tablist"
-                aria-label="Product information"
             >
 
-                <button
-                    type="button"
-                    class="product-info-tab active"
-                    id="productTabDescription"
-                    data-tab="description"
-                    role="tab"
-                    aria-selected="true"
-                    aria-controls="productPanelDescription"
+
+                <li
+                    class="nav-item"
+                    role="presentation"
                 >
-                    Description
-                </button>
+
+                    <button
+                        class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#descriptionTab"
+                        type="button"
+                        role="tab"
+                    >
+                        Description
+                    </button>
+
+                </li>
 
 
-                <button
-                    type="button"
-                    class="product-info-tab"
-                    id="productTabCraftsmanship"
-                    data-tab="craftsmanship"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="productPanelCraftsmanship"
+                <li
+                    class="nav-item"
+                    role="presentation"
                 >
-                    Craftsmanship
-                </button>
+
+                    <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#craftsmanshipTab"
+                        type="button"
+                        role="tab"
+                    >
+                        Craftsmanship
+                    </button>
+
+                </li>
 
 
-                <button
-                    type="button"
-                    class="product-info-tab"
-                    id="productTabFabric"
-                    data-tab="fabric"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="productPanelFabric"
+                <li
+                    class="nav-item"
+                    role="presentation"
                 >
-                    Fabric &amp; Care
-                </button>
+
+                    <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#fabricTab"
+                        type="button"
+                        role="tab"
+                    >
+                        Fabric & Care
+                    </button>
+
+                </li>
 
 
-                <button
-                    type="button"
-                    class="product-info-tab"
-                    id="productTabShipping"
-                    data-tab="shipping"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="productPanelShipping"
+                <li
+                    class="nav-item"
+                    role="presentation"
                 >
-                    Shipping
-                </button>
+
+                    <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#shippingTab"
+                        type="button"
+                        role="tab"
+                    >
+                        Shipping
+                    </button>
+
+                </li>
 
 
-                <button
-                    type="button"
-                    class="product-info-tab"
-                    id="productTabReturns"
-                    data-tab="returns"
-                    role="tab"
-                    aria-selected="false"
-                    aria-controls="productPanelReturns"
+                <li
+                    class="nav-item"
+                    role="presentation"
                 >
-                    Returns &amp; Exchange
-                </button>
 
-            </div>
+                    <button
+                        class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#returnsTab"
+                        type="button"
+                        role="tab"
+                    >
+                        Returns & Exchange
+                    </button>
+
+                </li>
 
 
-            <!-- =================================================
-                 TAB PANELS
-                 ================================================= -->
+            </ul>
 
-            <div class="product-info-panels">
+
+            <div class="tab-content product-tab-content">
 
 
                 <!-- DESCRIPTION -->
 
                 <div
-                    class="product-info-panel active"
-                    id="productPanelDescription"
-                    data-panel="description"
+                    class="tab-pane fade show active"
+                    id="descriptionTab"
                     role="tabpanel"
-                    aria-labelledby="productTabDescription"
                 >
 
-                    <div class="product-info-content">
+                    <h3>
+                        Product Description
+                    </h3>
 
-                        <span class="product-info-eyebrow">
-                            ABOUT THIS PIECE
-                        </span>
-
-                        <h2>
-                            About this piece
-                        </h2>
-
-                        <p>
-                            <%= productDescription %>
-                        </p>
-
-                        <p>
-                            This piece reflects the character of
-                            <%= productCategory %> weaving through
-                            its considered colour, traditional
-                            technique and carefully finished details.
-                            Each textile carries subtle variations
-                            that are part of the beauty of
-                            handcrafted work.
-                        </p>
-
-                    </div>
+                    <p>
+                        <%= productDescription %>
+                    </p>
 
                 </div>
 
@@ -785,132 +792,65 @@ var productAvailability =
                 <!-- CRAFTSMANSHIP -->
 
                 <div
-                    class="product-info-panel"
-                    id="productPanelCraftsmanship"
-                    data-panel="craftsmanship"
+                    class="tab-pane fade"
+                    id="craftsmanshipTab"
                     role="tabpanel"
-                    aria-labelledby="productTabCraftsmanship"
-                    hidden
                 >
 
-                    <div class="product-info-content">
+                    <h3>
+                        The Art of Patola
+                    </h3>
 
-                        <span class="product-info-eyebrow">
-                            THE ART BEHIND THE WEAVE
-                        </span>
+                    <p>
+                        Each Patola creation represents generations
+                        of textile craftsmanship, patience and
+                        artistic precision.
+                    </p>
 
-                        <h2>
-                            Crafted With Patience &amp; Tradition
-                        </h2>
+                    <p>
+                        The traditional weaving process creates
+                        intricate patterns and vibrant colours that
+                        make every piece distinctive.
+                    </p>
 
-                        <p>
-                            The defining character of this piece comes
-                            from its
-                            <strong><%= productTechnique %></strong>.
-                            Traditional textile making requires
-                            precision, patience and consistency at
-                            every stage of the process.
-                        </p>
+                    <p>
+                        Technique:
 
-                        <p>
-                            Small variations in weave, colour and
-                            surface are natural characteristics of
-                            handcrafted textiles and make every piece
-                            distinct.
-                        </p>
+                        <strong>
+                            <%= productTechnique %>
+                        </strong>
 
-                    </div>
+                    </p>
 
                 </div>
 
 
-                <!-- FABRIC & CARE -->
+                <!-- FABRIC -->
 
                 <div
-                    class="product-info-panel"
-                    id="productPanelFabric"
-                    data-panel="fabric"
+                    class="tab-pane fade"
+                    id="fabricTab"
                     role="tabpanel"
-                    aria-labelledby="productTabFabric"
-                    hidden
                 >
 
-                    <div class="product-info-content">
+                    <h3>
+                        Fabric & Care
+                    </h3>
 
-                        <span class="product-info-eyebrow">
-                            FABRIC &amp; CARE
-                        </span>
+                    <p>
+                        Fabric:
 
-                        <h2>
-                            Fabric &amp; Care
-                        </h2>
+                        <strong>
+                            <%= productFabric %>
+                        </strong>
+                    </p>
 
-                        <div class="product-info-detail-grid">
-
-
-                            <div class="product-info-detail">
-
-                                <span>
-                                    Fabric
-                                </span>
-
-                                <strong>
-                                    <%= productFabric %>
-                                </strong>
-
-                            </div>
-
-
-                            <div class="product-info-detail">
-
-                                <span>
-                                    Colour
-                                </span>
-
-                                <strong>
-                                    <%= productColor %>
-                                </strong>
-
-                            </div>
-
-
-                            <% if (productDimensions) { %>
-
-                                <div class="product-info-detail">
-
-                                    <span>
-                                        Dimensions
-                                    </span>
-
-                                    <strong>
-                                        <%= productDimensions %>
-                                    </strong>
-
-                                </div>
-
-                            <% } %>
-
-
-                        </div>
-
-
-                        <div class="product-care-note">
-
-                            <i class="bi bi-heart"></i>
-
-                            <p>
-                                Store the textile in a clean, dry
-                                environment away from direct sunlight.
-                                Fold gently and use a breathable
-                                muslin or cotton covering for long-term
-                                storage. Follow fabric-specific
-                                professional cleaning guidance where
-                                required.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        For long-lasting beauty, store the textile
+                        away from direct sunlight and moisture.
+                        Follow professional textile cleaning
+                        recommendations where appropriate.
+                    </p>
 
                 </div>
 
@@ -918,76 +858,20 @@ var productAvailability =
                 <!-- SHIPPING -->
 
                 <div
-                    class="product-info-panel"
-                    id="productPanelShipping"
-                    data-panel="shipping"
+                    class="tab-pane fade"
+                    id="shippingTab"
                     role="tabpanel"
-                    aria-labelledby="productTabShipping"
-                    hidden
                 >
 
-                    <div class="product-info-content">
+                    <h3>
+                        Shipping
+                    </h3>
 
-                        <span class="product-info-eyebrow">
-                            DELIVERY
-                        </span>
-
-                        <h2>
-                            Insured Shipping
-                        </h2>
-
-                        <p>
-                            Your piece is carefully prepared and
-                            securely packed before dispatch to help
-                            protect the textile during transit.
-                        </p>
-
-
-                        <div class="product-info-detail-grid">
-
-
-                            <div class="product-info-detail">
-
-                                <span>
-                                    Packaging
-                                </span>
-
-                                <strong>
-                                    Protective textile packaging
-                                </strong>
-
-                            </div>
-
-
-                            <div class="product-info-detail">
-
-                                <span>
-                                    Shipping
-                                </span>
-
-                                <strong>
-                                    Insured delivery
-                                </strong>
-
-                            </div>
-
-
-                            <div class="product-info-detail">
-
-                                <span>
-                                    Dispatch
-                                </span>
-
-                                <strong>
-                                    Carefully prepared before shipping
-                                </strong>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Shipping and delivery details are confirmed
+                        personally through WhatsApp before the order
+                        is finalized.
+                    </p>
 
                 </div>
 
@@ -995,49 +879,19 @@ var productAvailability =
                 <!-- RETURNS -->
 
                 <div
-                    class="product-info-panel"
-                    id="productPanelReturns"
-                    data-panel="returns"
+                    class="tab-pane fade"
+                    id="returnsTab"
                     role="tabpanel"
-                    aria-labelledby="productTabReturns"
-                    hidden
                 >
 
-                    <div class="product-info-content">
+                    <h3>
+                        Returns & Exchange
+                    </h3>
 
-                        <span class="product-info-eyebrow">
-                            PURCHASE SUPPORT
-                        </span>
-
-                        <h2>
-                            Returns &amp; Exchange
-                        </h2>
-
-                        <p>
-                            We want you to feel confident about your
-                            purchase. Eligible products can be
-                            exchanged within 7 days of delivery,
-                            subject to the applicable product and
-                            condition requirements.
-                        </p>
-
-
-                        <div class="product-policy-note">
-
-                            <i class="bi bi-info-circle"></i>
-
-                            <p>
-                                Please contact Yogita Patola Art as
-                                soon as possible if you receive a
-                                damaged, incorrect or unsuitable
-                                eligible product. Keep the original
-                                packaging until the exchange process
-                                is completed.
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Return and exchange eligibility is discussed
+                        and confirmed before the order is finalized.
+                    </p>
 
                 </div>
 
@@ -1047,543 +901,475 @@ var productAvailability =
         </div>
 
 
-        <!-- =====================================================
+        <!-- =================================================
              WHAT'S INCLUDED
-             ===================================================== -->
+        ================================================== -->
 
-        <div class="product-included-section">
+        <section class="product-included-section">
 
-            <div class="product-included-content">
+            <div class="section-heading">
 
-                <span class="product-info-eyebrow">
-                    YOUR PIECE
+                <span class="section-eyebrow">
+                    Your Purchase
                 </span>
 
                 <h2>
-                    What's included
+                    What's Included
                 </h2>
 
+            </div>
 
-                <div class="product-included-list">
+
+            <div class="row g-4">
 
 
-                    <div class="product-included-item">
+                <div class="col-md-4">
 
-                        <span class="included-number">
-                            01
-                        </span>
+                    <div class="included-card">
 
-                        <div>
+                        <i class="bi bi-award"></i>
 
-                            <strong>
-                                <%= currentProduct.name %>
-                            </strong>
+                        <h3>
+                            Authentic Craftsmanship
+                        </h3>
 
-                            <p>
-                                The handcrafted
-                                <%= productCategory %>
-                                piece shown on this page.
-                            </p>
-
-                        </div>
+                        <p>
+                            A traditionally crafted Patola textile
+                            made with attention to detail.
+                        </p>
 
                     </div>
-
-
-                    <div class="product-included-item">
-
-                        <span class="included-number">
-                            02
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Craft details
-                            </strong>
-
-                            <p>
-                                <%= productTechnique %>
-                                craftsmanship and product
-                                specifications as listed above.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="product-included-item">
-
-                        <span class="included-number">
-                            03
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Secure packaging
-                            </strong>
-
-                            <p>
-                                Carefully prepared packaging for
-                                safe handling during delivery.
-                            </p>
-
-                        </div>
-
-                    </div>
-
 
                 </div>
 
-            </div>
 
-        </div>
+                <div class="col-md-4">
 
+                    <div class="included-card">
 
-    </div>
+                        <i class="bi bi-box-seam"></i>
 
-</section>
+                        <h3>
+                            Carefully Prepared
+                        </h3>
 
-
-<!-- =========================================================
-     YOU MAY ALSO LIKE
-     ========================================================= -->
-
-<section class="product-related-section">
-
-    <div class="container">
-
-
-        <div class="product-related-header text-center">
-
-            <span class="section-subtitle">
-                YOU MAY ALSO LIKE
-            </span>
-
-            <h2 class="section-title">
-                Related Pieces
-            </h2>
-
-            <p class="section-description mx-auto">
-                Explore more handcrafted pieces from the collection.
-            </p>
-
-        </div>
-
-
-        <% if (relatedProductList.length > 0) { %>
-
-            <div class="row g-4 collections-product-grid">
-
-                <% relatedProductList.forEach(function(relatedProduct) { %>
-
-                    <div class="col-6 col-lg-3">
-
-                        <%- include("../partials/product-card", {
-                            product: relatedProduct
-                        }) %>
+                        <p>
+                            Your selected piece is prepared carefully
+                            before dispatch.
+                        </p>
 
                     </div>
 
-                <% }); %>
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="included-card">
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        <h3>
+                            Personal Assistance
+                        </h3>
+
+                        <p>
+                            Order confirmation and assistance are
+                            handled personally through WhatsApp.
+                        </p>
+
+                    </div>
+
+                </div>
+
 
             </div>
 
-        <% } else { %>
+        </section>
 
-            <div class="product-related-empty text-center">
 
-                <p>
-                    More handcrafted pieces will be available soon.
-                </p>
+        <!-- =================================================
+             RELATED PRODUCTS
+        ================================================== -->
 
-                <a
-                    href="/products"
-                    class="btn btn-outline-dark"
-                >
-                    Explore Collection
-                </a>
+        <% if (relatedProductList.length) { %>
 
-            </div>
+            <section class="related-products-section">
+
+                <div class="section-heading">
+
+                    <span class="section-eyebrow">
+                        You May Also Like
+                    </span>
+
+                    <h2>
+                        Related Products
+                    </h2>
+
+                </div>
+
+
+                <!--
+                    Same product grid structure as Collections page.
+                    Shared product-card partial remains unchanged.
+                -->
+
+                <div class="row collections-product-grid">
+
+                    <% relatedProductList.forEach(relatedProduct => { %>
+
+                        <div class="col-6 col-md-4 col-lg-3 collection-product-item">
+
+                            <%- include(
+                                "../partials/product-card",
+                                {
+                                    product: relatedProduct
+                                }
+                            ) %>
+
+                        </div>
+
+                    <% }); %>
+
+                </div>
+
+            </section>
 
         <% } %>
 
 
-    </div>
+        <!-- =================================================
+             PRODUCT STORY
+        ================================================== -->
 
-</section>
+        <section class="product-story-section">
 
+            <div class="product-story-content">
 
-<!-- =========================================================
-     EXISTING PRODUCT STORY
-     ========================================================= -->
-
-<section class="product-story-section py-5">
-
-    <div class="container">
-
-        <div class="row justify-content-center">
-
-            <div class="col-lg-9 text-center">
-
-                <span class="section-subtitle">
-                    THE ART BEHIND THE WEAVE
+                <span class="section-eyebrow">
+                    Yogita Patola Art
                 </span>
 
-                <h2 class="section-title">
-                    Crafted With Patience &amp; Tradition
+                <h2>
+                    Woven With Tradition.
+                    Created With Passion.
                 </h2>
 
-                <p class="section-description mx-auto">
-                    Every Patola reflects the patience,
-                    precision and artistry of traditional
-                    Indian weaving. Each motif and colour
-                    comes together through careful
-                    craftsmanship, creating a textile meant
-                    to be cherished for generations.
+                <p>
+                    Every Patola textile carries the story of
+                    traditional Indian craftsmanship. From carefully
+                    planned motifs to intricate weaving, each piece
+                    reflects patience, skill and heritage.
+                </p>
+
+                <p>
+                    We believe that authentic textile art should not
+                    only be worn, but preserved and celebrated for
+                    generations.
                 </p>
 
             </div>
 
-        </div>
-
-    </div>
-
-</section>
+        </section>
 
 
-<!-- =========================================================
-     REVIEWS
-     ========================================================= -->
+        <!-- =================================================
+             REVIEWS
+        ================================================== -->
 
-<section
-    class="product-reviews-section py-5"
-    id="reviews"
->
+        <% if (
+            typeof showReviews === "undefined" ||
+            showReviews !== false
+        ) { %>
 
-    <div class="container">
+            <section class="product-reviews-section">
 
+                <div class="section-heading">
 
-        <!-- REVIEW HEADER -->
-
-        <div class="reviews-header text-center">
-
-            <span class="section-subtitle">
-                CUSTOMER REVIEWS
-            </span>
-
-            <h2 class="section-title">
-                What People Say
-            </h2>
-
-
-            <% if (reviewList.length > 0) { %>
-
-                <div class="reviews-overall-rating">
-
-                    <span class="overall-rating-number">
-                        <%= ratingValue.toFixed(1) %>
+                    <span class="section-eyebrow">
+                        Customer Experience
                     </span>
 
-
-                    <div class="overall-stars">
-
-                        <% for (
-                            var overallStar = 1;
-                            overallStar <= 5;
-                            overallStar++
-                        ) { %>
-
-                            <span
-                                class="<%= overallStar <= Math.round(ratingValue)
-                                    ? 'filled'
-                                    : ''
-                                %>"
-                            >
-                                ★
-                            </span>
-
-                        <% } %>
-
-                    </div>
-
-
-                    <span class="overall-review-count">
-
-                        Based on
-                        <%= reviewList.length %>
-                        <%= reviewList.length === 1
-                            ? "review"
-                            : "reviews"
-                        %>
-
-                    </span>
+                    <h2>
+                        Reviews
+                    </h2>
 
                 </div>
 
-            <% } %>
 
-        </div>
+                <% if (reviewList.length) { %>
+
+                    <div class="reviews-list">
+
+                        <% reviewList.forEach(review => { %>
+
+                            <article class="review-card">
+
+                                <div class="review-card-header">
+
+                                    <div>
+
+                                        <strong>
+                                            <%= review.name || "Customer" %>
+                                        </strong>
+
+                                        <div class="review-stars">
+
+                                            <% for (
+                                                let i = 1;
+                                                i <= 5;
+                                                i++
+                                            ) { %>
+
+                                                <i
+                                                    class="bi <%= i <= Number(review.rating || 0)
+                                                        ? 'bi-star-fill'
+                                                        : 'bi-star'
+                                                    %>"
+                                                ></i>
+
+                                            <% } %>
+
+                                        </div>
+
+                                    </div>
 
 
-        <!-- REVIEW LIST -->
+                                    <% if (review.createdAt) { %>
 
-        <% if (reviewList.length > 0) { %>
+                                        <time>
 
-            <div class="reviews-list mt-5">
+                                            <%= new Date(
+                                                review.createdAt
+                                            ).toLocaleDateString(
+                                                "en-IN"
+                                            ) %>
 
-                <% reviewList.forEach(function(review) { %>
-
-                    <article class="review-card">
-
-                        <div class="review-card-header">
-
-                            <div>
-
-                                <h3 class="reviewer-name">
-                                    <%= review.name || "Customer" %>
-                                </h3>
-
-
-                                <div class="review-stars">
-
-                                    <% for (
-                                        var reviewStar = 1;
-                                        reviewStar <= 5;
-                                        reviewStar++
-                                    ) { %>
-
-                                        <span
-                                            class="<%= reviewStar <= Number(review.rating || 0)
-                                                ? 'filled'
-                                                : ''
-                                            %>"
-                                        >
-                                            ★
-                                        </span>
+                                        </time>
 
                                     <% } %>
 
                                 </div>
 
+
+                                <p>
+                                    <%= review.comment ||
+                                        review.message ||
+                                        ""
+                                    %>
+                                </p>
+
+                            </article>
+
+                        <% }); %>
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="no-reviews">
+
+                        <i class="bi bi-chat-quote"></i>
+
+                        <p>
+                            Be the first to share your experience
+                            with this product.
+                        </p>
+
+                    </div>
+
+                <% } %>
+
+
+                <!-- REVIEW FORM -->
+
+                <div class="review-form-wrapper">
+
+                    <h3>
+                        Write a Review
+                    </h3>
+
+
+                    <form
+                        method="POST"
+                        action="/products/<%= productId %>/review"
+                        class="product-review-form"
+                    >
+
+                        <div class="row g-3">
+
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="reviewName"
+                                    class="form-label"
+                                >
+                                    Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="reviewName"
+                                    name="name"
+                                    required
+                                >
+
                             </div>
 
 
-                            <% if (review.createdAt) { %>
+                            <div class="col-md-6">
 
-                                <%
-                                    var reviewDate =
-                                        new Date(review.createdAt);
+                                <label
+                                    for="reviewEmail"
+                                    class="form-label"
+                                >
+                                    Email
+                                </label>
 
-                                    var reviewDateValid =
-                                        !isNaN(
-                                            reviewDate.getTime()
-                                        );
-                                %>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="reviewEmail"
+                                    name="email"
+                                >
 
-                                <% if (reviewDateValid) { %>
+                            </div>
 
-                                    <time
-                                        class="review-date"
-                                        datetime="<%= reviewDate.toISOString() %>"
-                                    >
-                                        <%= reviewDate.toLocaleDateString(
-                                            "en-IN",
-                                            {
-                                                day: "numeric",
-                                                month: "short",
-                                                year: "numeric"
-                                            }
-                                        ) %>
-                                    </time>
 
-                                <% } %>
+                            <div class="col-md-6">
 
-                            <% } %>
+                                <label
+                                    for="reviewRating"
+                                    class="form-label"
+                                >
+                                    Rating
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="reviewRating"
+                                    name="rating"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select rating
+                                    </option>
+
+                                    <option value="5">
+                                        5 - Excellent
+                                    </option>
+
+                                    <option value="4">
+                                        4 - Very Good
+                                    </option>
+
+                                    <option value="3">
+                                        3 - Good
+                                    </option>
+
+                                    <option value="2">
+                                        2 - Fair
+                                    </option>
+
+                                    <option value="1">
+                                        1 - Poor
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-12">
+
+                                <label
+                                    for="reviewMessage"
+                                    class="form-label"
+                                >
+                                    Review
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="reviewMessage"
+                                    name="comment"
+                                    rows="5"
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <div class="col-12">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-dark"
+                                >
+                                    Submit Review
+                                </button>
+
+                            </div>
+
 
                         </div>
 
+                    </form>
 
-                        <p class="review-message">
-
-                            <%= review.comment ||
-                                review.message ||
-                                ""
-                            %>
-
-                        </p>
-
-                    </article>
-
-                <% }); %>
-
-            </div>
-
-        <% } else { %>
-
-            <div class="reviews-empty text-center">
-
-                <div class="reviews-empty-icon">
-                    ☆
                 </div>
 
-                <h3>
-                    Be The First To Review
-                </h3>
-
-                <p>
-                    Share your experience with this
-                    beautiful Patola.
-                </p>
-
-            </div>
+            </section>
 
         <% } %>
 
 
-        <!-- REVIEW FORM -->
+        <!-- =================================================
+             CONTACT CTA
+        ================================================== -->
 
-        <div class="review-form-wrapper mt-5">
+        <section class="product-contact-cta">
 
-            <div class="review-form-header text-center">
+            <div class="product-contact-cta-content">
 
-                <span class="section-subtitle">
-                    SHARE YOUR EXPERIENCE
+                <span class="section-eyebrow">
+                    Need Assistance?
                 </span>
 
-                <h2 class="section-title">
-                    Write A Review
+                <h2>
+                    Interested in This Piece?
                 </h2>
+
+                <p>
+                    Contact us directly for product details,
+                    availability, shipping information and
+                    personalized assistance.
+                </p>
+
+
+                <a
+                    href="<%= whatsappOrderUrl %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-dark"
+                >
+
+                    <i class="bi bi-whatsapp"></i>
+
+                    <span>
+                        <%= isOutOfStock
+                            ? "Ask on WhatsApp"
+                            : "Order on WhatsApp"
+                        %>
+                    </span>
+
+                </a>
 
             </div>
 
-
-            <form
-                action="/products/<%= currentProduct._id %>/review"
-                method="POST"
-                class="review-form"
-            >
-
-
-                <!-- NAME -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="reviewName"
-                        class="form-label"
-                    >
-                        Your Name
-                        <span class="text-danger">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="reviewName"
-                        name="name"
-                        class="form-control"
-                        placeholder="Enter your name"
-                        minlength="2"
-                        maxlength="50"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- RATING -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="reviewRating"
-                        class="form-label"
-                    >
-                        Your Rating
-                        <span class="text-danger">*</span>
-                    </label>
-
-                    <select
-                        id="reviewRating"
-                        name="rating"
-                        class="form-select"
-                        required
-                    >
-
-                        <option value="">
-                            Select Rating
-                        </option>
-
-                        <option value="5">
-                            ★★★★★ — Excellent
-                        </option>
-
-                        <option value="4">
-                            ★★★★☆ — Very Good
-                        </option>
-
-                        <option value="3">
-                            ★★★☆☆ — Good
-                        </option>
-
-                        <option value="2">
-                            ★★☆☆☆ — Fair
-                        </option>
-
-                        <option value="1">
-                            ★☆☆☆☆ — Poor
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- MESSAGE -->
-
-                <div class="mb-4">
-
-                    <label
-                        for="reviewMessage"
-                        class="form-label"
-                    >
-                        Your Review
-                        <span class="text-danger">*</span>
-                    </label>
-
-                    <textarea
-                        id="reviewMessage"
-                        name="message"
-                        class="form-control"
-                        rows="5"
-                        placeholder="Tell us about your experience..."
-                        minlength="3"
-                        maxlength="500"
-                        required
-                    ></textarea>
-
-                </div>
-
-
-                <!-- SUBMIT -->
-
-                <div class="text-center">
-
-                    <button
-                        type="submit"
-                        class="btn btn-dark btn-lg px-5"
-                    >
-                        Submit Review
-                    </button>
-
-                </div>
-
-
-            </form>
-
-        </div>
+        </section>
 
 
     </div>
@@ -1592,76 +1378,91 @@ var productAvailability =
 
 
 <!-- =========================================================
-     PRODUCT CTA
-     ========================================================= -->
-
-<section class="product-detail-cta py-5">
-
-    <div class="container">
-
-        <div class="text-center">
-
-            <span class="products-eyebrow">
-                YOGITA PATOLA ART
-            </span>
-
-            <h2 class="section-title">
-                Looking For Something Special?
-            </h2>
-
-            <p class="section-description mx-auto">
-                Contact us to learn more about this
-                handcrafted piece and its availability.
-            </p>
-
-            <a
-                href="/contact"
-                class="btn btn-dark btn-lg"
-            >
-                Contact Us
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     LIGHTBOX
-     ========================================================= -->
+     PRODUCT IMAGE LIGHTBOX / FULL IMAGE VIEW
+========================================================= -->
 
 <div
-    id="productLightbox"
     class="product-lightbox"
+    id="productLightbox"
     aria-hidden="true"
-    role="dialog"
-    aria-label="Image Preview"
 >
 
-    <button
-        type="button"
-        class="lightbox-close"
-        aria-label="Close image preview"
+    <div
+        class="lightbox-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Product image full view"
     >
-        &times;
-    </button>
 
-    <div class="lightbox-dialog">
+
+        <!-- CLOSE -->
+
+        <button
+            type="button"
+            class="lightbox-close"
+            id="lightboxClose"
+            aria-label="Close full image view"
+        >
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+
+        <% if (productImages.length > 1) { %>
+
+            <!-- PREVIOUS -->
+
+            <button
+                type="button"
+                class="lightbox-nav lightbox-prev"
+                id="lightboxPrev"
+                aria-label="Previous product image"
+            >
+                <i class="bi bi-chevron-left"></i>
+            </button>
+
+        <% } %>
+
+
+        <!-- FULL IMAGE -->
 
         <img
             id="lightboxImage"
-            src=""
-            alt="<%= currentProduct.name %> - full preview"
+            src="<%= mainProductImage %>"
+            alt="<%= productName %>"
         >
+
+
+        <% if (productImages.length > 1) { %>
+
+            <!-- NEXT -->
+
+            <button
+                type="button"
+                class="lightbox-nav lightbox-next"
+                id="lightboxNext"
+                aria-label="Next product image"
+            >
+                <i class="bi bi-chevron-right"></i>
+            </button>
+
+        <% } %>
+
+
+        <!-- FULLSCREEN -->
+
+        <button
+            type="button"
+            class="lightbox-fullscreen"
+            id="lightboxFullscreen"
+            aria-label="View image fullscreen"
+        >
+            <i class="bi bi-fullscreen"></i>
+        </button>
+
 
     </div>
 
 </div>
-
-
-</section>
 
 
 <% } else { %>
@@ -1669,38 +1470,33 @@ var productAvailability =
 
 <!-- =========================================================
      PRODUCT NOT FOUND
-     ========================================================= -->
+========================================================= -->
 
-<section class="product-not-found py-5">
+<section class="product-not-found">
 
-    <div class="container">
+    <div class="container text-center">
 
-        <div class="text-center py-5">
+        <i class="bi bi-box-seam"></i>
 
-            <div class="product-not-found-icon">
-                ✦
-            </div>
+        <h1>
+            Product Not Found
+        </h1>
 
-            <h1 class="section-title">
-                Product Not Found
-            </h1>
+        <p>
+            The product you are looking for is no longer
+            available or the link is incorrect.
+        </p>
 
-            <p class="section-description mx-auto">
-                Sorry, the product you are looking for
-                could not be found.
-            </p>
-
-            <a
-                href="/products"
-                class="btn btn-dark"
-            >
-                View All Products
-            </a>
-
-        </div>
+        <a
+            href="/collections"
+            class="btn btn-dark"
+        >
+            Browse Collections
+        </a>
 
     </div>
 
 </section>
+
 
 <% } %>

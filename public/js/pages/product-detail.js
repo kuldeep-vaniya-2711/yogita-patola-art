@@ -1,21 +1,31 @@
 /* =========================================================
-   YOGITA PATOLA ART - PRODUCT DETAIL PAGE JAVASCRIPT
-   ========================================================= */
+   YOGITA PATOLA ART
+   PRODUCT DETAIL PAGE JAVASCRIPT
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       PRODUCT IMAGE GALLERY
+       ELEMENTS
     ===================================================== */
 
-    const mainProductImage =
+    const mainImage =
         document.getElementById("mainProductImage");
 
-    const productThumbnails = Array.from(
-        document.querySelectorAll(".product-thumbnail")
-    );
+    const thumbnails =
+        Array.from(
+            document.querySelectorAll(".product-thumbnail")
+        );
 
+    const galleryPrev =
+        document.getElementById("productGalleryPrev");
+
+    const galleryNext =
+        document.getElementById("productGalleryNext");
+
+    const openLightboxButton =
+        document.getElementById("openProductLightbox");
 
     const lightbox =
         document.getElementById("productLightbox");
@@ -23,172 +33,164 @@ document.addEventListener("DOMContentLoaded", function () {
     const lightboxImage =
         document.getElementById("lightboxImage");
 
+    const lightboxClose =
+        document.getElementById("lightboxClose");
 
-    const galleryImages =
-        productThumbnails
-            .map(thumbnail => ({
-                src: thumbnail.getAttribute("data-image"),
-                alt:
-                    thumbnail
-                        .querySelector("img")
-                        ?.getAttribute("alt") || ""
-            }))
-            .filter(image => image.src);
+    const lightboxPrev =
+        document.getElementById("lightboxPrev");
 
+    const lightboxNext =
+        document.getElementById("lightboxNext");
 
-    if (
-        mainProductImage &&
-        galleryImages.length === 0 &&
-        mainProductImage.getAttribute("src")
-    ) {
-
-        galleryImages.push({
-            src: mainProductImage.getAttribute("src"),
-            alt:
-                mainProductImage.getAttribute("alt") || ""
-        });
-
-    }
-
-
-    let currentImageIndex = 0;
-
+    const lightboxFullscreen =
+        document.getElementById("lightboxFullscreen");
 
 
     /* =====================================================
-       CREATE GALLERY NAVIGATION
+       BASIC VALIDATION
     ===================================================== */
 
-    const productMainImageWrapper =
-        document.getElementById(
-            "productMainImageWrapper"
-        );
-
-
-    let previousButton = null;
-    let nextButton = null;
-
-
-    if (
-        productMainImageWrapper &&
-        mainProductImage &&
-        galleryImages.length > 1
-    ) {
-
-        previousButton =
-            document.createElement("button");
-
-        previousButton.type = "button";
-
-        previousButton.className =
-            "product-gallery-arrow product-gallery-prev";
-
-        previousButton.setAttribute(
-            "aria-label",
-            "Previous product image"
-        );
-
-        previousButton.innerHTML =
-            "&#10094;";
-
-
-        nextButton =
-            document.createElement("button");
-
-        nextButton.type = "button";
-
-        nextButton.className =
-            "product-gallery-arrow product-gallery-next";
-
-        nextButton.setAttribute(
-            "aria-label",
-            "Next product image"
-        );
-
-        nextButton.innerHTML =
-            "&#10095;";
-
-
-        productMainImageWrapper.appendChild(
-            previousButton
-        );
-
-        productMainImageWrapper.appendChild(
-            nextButton
-        );
-
+    if (!mainImage) {
+        return;
     }
 
 
-
     /* =====================================================
-       SHOW PRODUCT IMAGE
+       IMAGE LIST
     ===================================================== */
 
-    function showProductImage(index) {
+    const images = thumbnails.length
+        ? thumbnails.map(function (thumbnail) {
 
-        if (
-            !mainProductImage ||
-            galleryImages.length === 0
-        ) {
-            return;
-        }
+            const image =
+                thumbnail.getAttribute("data-image");
 
+            return image || "";
 
-        currentImageIndex =
-            (
-                index +
-                galleryImages.length
-            ) %
-            galleryImages.length;
+        }).filter(Boolean)
+
+        : [
+            mainImage.getAttribute("src") || ""
+        ].filter(Boolean);
 
 
-        const image =
-            galleryImages[currentImageIndex];
+    if (!images.length) {
+        return;
+    }
 
 
-        if (!image?.src) {
-            return;
-        }
+    /* =====================================================
+       CURRENT IMAGE INDEX
+    ===================================================== */
+
+    let currentIndex = 0;
 
 
-        mainProductImage.src =
-            image.src;
+    /* =====================================================
+       FIND INITIAL ACTIVE IMAGE
+    ===================================================== */
 
-        mainProductImage.dataset.index =
-            currentImageIndex;
-
-
-        if (image.alt) {
-
-            mainProductImage.alt =
-                image.alt;
-
-        }
-
-
-        productThumbnails.forEach(
-            (thumbnail, thumbnailIndex) => {
-
-                thumbnail.classList.toggle(
-                    "active",
-                    thumbnailIndex ===
-                        currentImageIndex
-                );
-
-            }
-        );
-
+    if (thumbnails.length) {
 
         const activeThumbnail =
-            productThumbnails[
-                currentImageIndex
-            ];
+            thumbnails.findIndex(function (thumbnail) {
+
+                return thumbnail.classList.contains("active");
+
+            });
+
+        if (activeThumbnail >= 0) {
+            currentIndex = activeThumbnail;
+        }
+    }
 
 
-        if (activeThumbnail) {
+    /* =====================================================
+       UPDATE MAIN IMAGE
+    ===================================================== */
 
-            activeThumbnail.scrollIntoView({
+    function updateMainImage(index) {
+
+        if (!images.length) {
+            return;
+        }
+
+
+        /* ---------------------------------------------
+           LOOP INDEX
+        --------------------------------------------- */
+
+        if (index < 0) {
+
+            index =
+                images.length - 1;
+
+        }
+
+        if (index >= images.length) {
+
+            index = 0;
+
+        }
+
+
+        currentIndex = index;
+
+
+        /* ---------------------------------------------
+           IMAGE
+        --------------------------------------------- */
+
+        const newImage =
+            images[currentIndex];
+
+        mainImage.src =
+            newImage;
+
+
+        /* ---------------------------------------------
+           ACTIVE THUMBNAIL
+        --------------------------------------------- */
+
+        thumbnails.forEach(function (thumbnail, thumbnailIndex) {
+
+            const isActive =
+                thumbnailIndex === currentIndex;
+
+            thumbnail.classList.toggle(
+                "active",
+                isActive
+            );
+
+            thumbnail.setAttribute(
+                "aria-current",
+                isActive
+                    ? "true"
+                    : "false"
+            );
+
+        });
+
+
+        /* ---------------------------------------------
+           LIGHTBOX IMAGE
+        --------------------------------------------- */
+
+        if (lightboxImage) {
+
+            lightboxImage.src =
+                newImage;
+
+        }
+
+
+        /* ---------------------------------------------
+           SCROLL ACTIVE THUMBNAIL INTO VIEW
+        --------------------------------------------- */
+
+        if (thumbnails[currentIndex]) {
+
+            thumbnails[currentIndex].scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
                 inline: "center"
@@ -199,490 +201,63 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    /* =====================================================
+       PREVIOUS IMAGE
+    ===================================================== */
+
+    function showPreviousImage() {
+
+        updateMainImage(
+            currentIndex - 1
+        );
+
+    }
+
+
+    /* =====================================================
+       NEXT IMAGE
+    ===================================================== */
+
+    function showNextImage() {
+
+        updateMainImage(
+            currentIndex + 1
+        );
+
+    }
+
 
     /* =====================================================
        THUMBNAIL CLICK
     ===================================================== */
 
-    productThumbnails.forEach(
-        (thumbnail, index) => {
+    thumbnails.forEach(function (thumbnail, index) {
 
-            thumbnail.addEventListener(
-                "click",
-                function () {
-
-                    showProductImage(index);
-
-                }
-            );
-
-        }
-    );
-
-
-
-    /* =====================================================
-       PREVIOUS / NEXT BUTTONS
-    ===================================================== */
-
-    if (previousButton) {
-
-        previousButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.stopPropagation();
-
-                showProductImage(
-                    currentImageIndex - 1
-                );
-
-            }
-        );
-
-    }
-
-
-    if (nextButton) {
-
-        nextButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.stopPropagation();
-
-                showProductImage(
-                    currentImageIndex + 1
-                );
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================================
-       PRODUCT IMAGE ERROR HANDLING
-    ===================================================== */
-
-    document
-        .querySelectorAll(
-            ".product-detail-page img"
-        )
-        .forEach(image => {
-
-            image.addEventListener(
-                "error",
-                function () {
-
-                    this.classList.add(
-                        "image-load-error"
-                    );
-
-                }
-            );
-
-        });
-
-
-
-    /* =====================================================
-       QUANTITY CONTROL
-    ===================================================== */
-
-    const quantityInput =
-        document.getElementById(
-            "quantity"
-        );
-
-    const quantityMinus =
-        document.getElementById(
-            "quantityMinus"
-        );
-
-    const quantityPlus =
-        document.getElementById(
-            "quantityPlus"
-        );
-
-
-    if (
-        quantityInput &&
-        quantityMinus &&
-        quantityPlus
-    ) {
-
-
-        quantityMinus.addEventListener(
-            "click",
-            () => {
-
-                const value =
-                    parseInt(
-                        quantityInput.value,
-                        10
-                    ) || 1;
-
-
-                if (value > 1) {
-
-                    quantityInput.value =
-                        value - 1;
-
-                }
-
-            }
-        );
-
-
-        quantityPlus.addEventListener(
-            "click",
-            () => {
-
-                const value =
-                    parseInt(
-                        quantityInput.value,
-                        10
-                    ) || 1;
-
-
-                const max =
-                    parseInt(
-                        quantityInput.getAttribute(
-                            "max"
-                        ),
-                        10
-                    );
-
-
-                if (
-                    !isNaN(max) &&
-                    value >= max
-                ) {
-                    return;
-                }
-
-
-                quantityInput.value =
-                    value + 1;
-
-            }
-        );
-
-
-        quantityInput.addEventListener(
-            "input",
-            function () {
-
-                let value =
-                    parseInt(
-                        this.value,
-                        10
-                    );
-
-
-                if (
-                    isNaN(value) ||
-                    value < 1
-                ) {
-
-                    value = 1;
-
-                }
-
-
-                const max =
-                    parseInt(
-                        this.getAttribute(
-                            "max"
-                        ),
-                        10
-                    );
-
-
-                if (
-                    !isNaN(max) &&
-                    value > max
-                ) {
-
-                    value = max;
-
-                }
-
-
-                this.value = value;
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================================
-       REVIEW STARS
-    ===================================================== */
-
-    const reviewRatingInputs =
-        document.querySelectorAll(
-            'input[name="rating"]'
-        );
-
-
-    const reviewStars =
-        document.querySelectorAll(
-            ".review-star"
-        );
-
-
-    if (reviewRatingInputs.length > 0) {
-
-        reviewRatingInputs.forEach(
-            input => {
-
-                input.addEventListener(
-                    "change",
-                    function () {
-
-                        const selected =
-                            parseInt(
-                                this.value,
-                                10
-                            );
-
-
-                        reviewStars.forEach(
-                            star => {
-
-                                const starRating =
-                                    parseInt(
-                                        star.getAttribute(
-                                            "data-rating"
-                                        ),
-                                        10
-                                    );
-
-
-                                star.classList.toggle(
-                                    "active",
-                                    starRating <=
-                                        selected
-                                );
-
-                            }
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    reviewStars.forEach(
-        star => {
-
-            star.addEventListener(
-                "click",
-                function () {
-
-                    const rating =
-                        this.getAttribute(
-                            "data-rating"
-                        );
-
-
-                    const match =
-                        document.querySelector(
-                            `input[name="rating"][value="${rating}"]`
-                        );
-
-
-                    if (match) {
-
-                        match.checked = true;
-
-                        match.dispatchEvent(
-                            new Event("change")
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-
-    /* =====================================================
-       WISHLIST BUTTON UI STATE
-    ===================================================== */
-
-    const wishlistButton =
-        document.getElementById(
-            "wishlistButton"
-        );
-
-
-    if (wishlistButton) {
-
-        wishlistButton.addEventListener(
+        thumbnail.addEventListener(
             "click",
             function () {
 
-                if (
-                    this.dataset.loading ===
-                    "true"
-                ) {
-                    return;
-                }
-
-
-                this.dataset.loading =
-                    "true";
-
-
-                setTimeout(() => {
-
-                    this.dataset.loading =
-                        "false";
-
-                }, 500);
+                updateMainImage(index);
 
             }
         );
 
-    }
-
+    });
 
 
     /* =====================================================
-       REVIEW FORM VALIDATION
+       GALLERY PREVIOUS
     ===================================================== */
 
-    const reviewForm =
-        document.getElementById(
-            "reviewForm"
-        );
+    if (galleryPrev) {
 
-
-    function showProductDetailMessage(
-        message,
-        type = "info"
-    ) {
-
-        const existing =
-            document.querySelector(
-                ".product-detail-js-alert"
-            );
-
-
-        if (existing) {
-            existing.remove();
-        }
-
-
-        const alert =
-            document.createElement(
-                "div"
-            );
-
-
-        alert.className =
-            `alert alert-${type} product-detail-js-alert mt-3`;
-
-
-        alert.setAttribute(
-            "role",
-            "alert"
-        );
-
-
-        alert.textContent =
-            message;
-
-
-        const container =
-            document.getElementById(
-                "reviewForm"
-            ) ||
-            document.querySelector(
-                ".product-detail-page"
-            );
-
-
-        if (container) {
-
-            container.prepend(
-                alert
-            );
-
-        }
-
-
-        setTimeout(() => {
-
-            alert?.remove();
-
-        }, 4000);
-
-    }
-
-
-    if (reviewForm) {
-
-        reviewForm.addEventListener(
-            "submit",
+        galleryPrev.addEventListener(
+            "click",
             function (event) {
 
-                const rating =
-                    reviewForm.querySelector(
-                        'input[name="rating"]:checked'
-                    );
+                event.preventDefault();
 
-
-                const message =
-                    reviewForm.querySelector(
-                        'textarea[name="message"]'
-                    );
-
-
-                if (!rating) {
-
-                    event.preventDefault();
-
-
-                    showProductDetailMessage(
-                        "Please select a rating.",
-                        "warning"
-                    );
-
-
-                    return;
-
-                }
-
-
-                if (
-                    message &&
-                    message.value.trim()
-                        .length < 3
-                ) {
-
-                    event.preventDefault();
-
-
-                    showProductDetailMessage(
-                        "Please write a little more about your experience.",
-                        "warning"
-                    );
-
-                }
+                showPreviousImage();
 
             }
         );
@@ -690,81 +265,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
     /* =====================================================
-       SMOOTH SCROLL FOR REVIEW LINK
+       GALLERY NEXT
     ===================================================== */
 
-    document
-        .querySelectorAll(
-            'a[href="#reviews"], a[href="#reviewSection"]'
-        )
-        .forEach(link => {
+    if (galleryNext) {
 
-            link.addEventListener(
-                "click",
-                function (event) {
-
-                    const target =
-                        document.querySelector(
-                            this.getAttribute(
-                                "href"
-                            )
-                        );
-
-
-                    if (target) {
-
-                        event.preventDefault();
-
-
-                        target.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start"
-                        });
-
-                    }
-
-                }
-            );
-
-        });
-
-
-
-    /* =====================================================
-       BACK TO TOP
-    ===================================================== */
-
-    const backToTopButton =
-        document.getElementById(
-            "backToTop"
-        );
-
-
-    if (backToTopButton) {
-
-        window.addEventListener(
-            "scroll",
-            () => {
-
-                backToTopButton.classList.toggle(
-                    "show",
-                    window.scrollY > 500
-                );
-
-            }
-        );
-
-
-        backToTopButton.addEventListener(
+        galleryNext.addEventListener(
             "click",
-            () => {
+            function (event) {
 
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
+                event.preventDefault();
+
+                showNextImage();
 
             }
         );
@@ -772,83 +285,149 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
     /* =====================================================
-       PRODUCT INFORMATION TABS
+       LIGHTBOX OPEN
     ===================================================== */
 
-    const productInfoTabs =
-        Array.from(
-            document.querySelectorAll(
-                ".product-info-tab"
-            )
-        );
+    function openLightbox() {
 
-
-    const productInfoPanels =
-        Array.from(
-            document.querySelectorAll(
-                ".product-info-panel"
-            )
-        );
-
-
-    function activateProductInfoTab(
-        tab
-    ) {
-
-        if (!tab) {
+        if (!lightbox) {
             return;
         }
 
 
-        const selectedTab =
-            tab.getAttribute(
-                "data-tab"
-            );
+        /* ---------------------------------------------
+           UPDATE IMAGE
+        --------------------------------------------- */
+
+        if (lightboxImage) {
+
+            lightboxImage.src =
+                images[currentIndex];
+
+        }
 
 
-        productInfoTabs.forEach(
-            currentTab => {
+        /* ---------------------------------------------
+           SHOW LIGHTBOX
+        --------------------------------------------- */
 
-                const isActive =
-                    currentTab === tab;
-
-
-                currentTab.classList.toggle(
-                    "active",
-                    isActive
-                );
-
-
-                currentTab.setAttribute(
-                    "aria-selected",
-                    isActive
-                        ? "true"
-                        : "false"
-                );
-
-            }
+        lightbox.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
 
-        productInfoPanels.forEach(
-            panel => {
-
-                const isActive =
-                    panel.getAttribute(
-                        "data-panel"
-                    ) === selectedTab;
+        lightbox.classList.add(
+            "is-open"
+        );
 
 
-                panel.classList.toggle(
-                    "active",
-                    isActive
-                );
+        /* ---------------------------------------------
+           LOCK PAGE SCROLL
+        --------------------------------------------- */
+
+        document.body.classList.add(
+            "lightbox-open"
+        );
 
 
-                panel.hidden =
-                    !isActive;
+        document.body.style.overflow =
+            "hidden";
+
+
+        /* ---------------------------------------------
+           FOCUS CLOSE BUTTON
+        --------------------------------------------- */
+
+        if (lightboxClose) {
+
+            setTimeout(function () {
+
+                lightboxClose.focus();
+
+            }, 50);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       LIGHTBOX CLOSE
+    ===================================================== */
+
+    function closeLightbox() {
+
+        if (!lightbox) {
+            return;
+        }
+
+
+        /* ---------------------------------------------
+           EXIT FULLSCREEN IF ACTIVE
+        --------------------------------------------- */
+
+        if (
+            document.fullscreenElement
+        ) {
+
+            if (
+                document.exitFullscreen
+            ) {
+
+                document
+                    .exitFullscreen()
+                    .catch(function () {});
+
+            }
+
+        }
+
+
+        /* ---------------------------------------------
+           HIDE LIGHTBOX
+        --------------------------------------------- */
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        lightbox.classList.remove(
+            "is-open"
+        );
+
+
+        /* ---------------------------------------------
+           RESTORE PAGE SCROLL
+        --------------------------------------------- */
+
+        document.body.classList.remove(
+            "lightbox-open"
+        );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* =====================================================
+       OPEN BUTTON
+    ===================================================== */
+
+    if (openLightboxButton) {
+
+        openLightboxButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                openLightbox();
 
             }
         );
@@ -856,457 +435,53 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    productInfoTabs.forEach(
-        (tab, index) => {
+    /* =====================================================
+       MAIN IMAGE CLICK
+       ALSO OPENS LIGHTBOX
+    ===================================================== */
 
-            tab.addEventListener(
-                "click",
-                function () {
+    mainImage.addEventListener(
+        "click",
+        function () {
 
-                    activateProductInfoTab(
-                        this
-                    );
-
-                }
-            );
-
-
-            tab.addEventListener(
-                "keydown",
-                function (event) {
-
-                    let nextIndex =
-                        null;
-
-
-                    if (
-                        event.key ===
-                        "ArrowRight"
-                    ) {
-
-                        nextIndex =
-                            index + 1;
-
-                    }
-
-
-                    if (
-                        event.key ===
-                        "ArrowLeft"
-                    ) {
-
-                        nextIndex =
-                            index - 1;
-
-                    }
-
-
-                    if (
-                        event.key ===
-                        "Home"
-                    ) {
-
-                        nextIndex = 0;
-
-                    }
-
-
-                    if (
-                        event.key ===
-                        "End"
-                    ) {
-
-                        nextIndex =
-                            productInfoTabs.length - 1;
-
-                    }
-
-
-                    if (
-                        nextIndex === null ||
-                        productInfoTabs.length === 0
-                    ) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    if (
-                        nextIndex < 0
-                    ) {
-
-                        nextIndex =
-                            productInfoTabs.length - 1;
-
-                    }
-
-
-                    if (
-                        nextIndex >=
-                        productInfoTabs.length
-                    ) {
-
-                        nextIndex = 0;
-
-                    }
-
-
-                    const nextTab =
-                        productInfoTabs[
-                            nextIndex
-                        ];
-
-
-                    nextTab.focus();
-
-                    activateProductInfoTab(
-                        nextTab
-                    );
-
-                }
-            );
+            openLightbox();
 
         }
     );
 
 
-
     /* =====================================================
-       LIGHTBOX
+       LIGHTBOX CLOSE BUTTON
     ===================================================== */
 
-    if (
-        lightbox &&
-        lightboxImage &&
-        galleryImages.length > 0
-    ) {
+    if (lightboxClose) {
 
-        let lightboxPreviousButton =
-            null;
+        lightboxClose.addEventListener(
+            "click",
+            function (event) {
 
-        let lightboxNextButton =
-            null;
+                event.preventDefault();
 
-        let fullscreenButton =
-            null;
-
-
-        const lightboxDialog =
-            lightbox.querySelector(
-                ".lightbox-dialog"
-            );
-
-
-        /* -------------------------------------------------
-           LIGHTBOX CONTROLS
-        ------------------------------------------------- */
-
-        if (
-            galleryImages.length > 1 &&
-            lightboxDialog
-        ) {
-
-            lightboxPreviousButton =
-                document.createElement(
-                    "button"
-                );
-
-
-            lightboxPreviousButton.type =
-                "button";
-
-
-            lightboxPreviousButton.className =
-                "lightbox-nav lightbox-prev";
-
-
-            lightboxPreviousButton.setAttribute(
-                "aria-label",
-                "Previous product image"
-            );
-
-
-            lightboxPreviousButton.innerHTML =
-                "&#10094;";
-
-
-            lightboxNextButton =
-                document.createElement(
-                    "button"
-                );
-
-
-            lightboxNextButton.type =
-                "button";
-
-
-            lightboxNextButton.className =
-                "lightbox-nav lightbox-next";
-
-
-            lightboxNextButton.setAttribute(
-                "aria-label",
-                "Next product image"
-            );
-
-
-            lightboxNextButton.innerHTML =
-                "&#10095;";
-
-
-            lightbox.appendChild(
-                lightboxPreviousButton
-            );
-
-
-            lightbox.appendChild(
-                lightboxNextButton
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           FULLSCREEN BUTTON
-        ------------------------------------------------- */
-
-        if (lightboxDialog) {
-
-            fullscreenButton =
-                document.createElement(
-                    "button"
-                );
-
-
-            fullscreenButton.type =
-                "button";
-
-
-            fullscreenButton.className =
-                "lightbox-fullscreen";
-
-
-            fullscreenButton.setAttribute(
-                "aria-label",
-                "View image in fullscreen"
-            );
-
-
-            fullscreenButton.innerHTML =
-                "&#x26F6;";
-
-
-            lightbox.appendChild(
-                fullscreenButton
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           UPDATE LIGHTBOX IMAGE
-        ------------------------------------------------- */
-
-        function showLightboxImage(
-            index
-        ) {
-
-            currentImageIndex =
-                (
-                    index +
-                    galleryImages.length
-                ) %
-                galleryImages.length;
-
-
-            const image =
-                galleryImages[
-                    currentImageIndex
-                ];
-
-
-            if (!image?.src) {
-                return;
-            }
-
-
-            lightboxImage.src =
-                image.src;
-
-
-            if (image.alt) {
-
-                lightboxImage.alt =
-                    image.alt;
+                closeLightbox();
 
             }
+        );
+
+    }
 
 
-            productThumbnails.forEach(
-                (
-                    thumbnail,
-                    thumbnailIndex
-                ) => {
+    /* =====================================================
+       CLICK BACKDROP TO CLOSE
+    ===================================================== */
 
-                    thumbnail.classList.toggle(
-                        "active",
-                        thumbnailIndex ===
-                            currentImageIndex
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           OPEN LIGHTBOX
-        ------------------------------------------------- */
-
-        function openLightbox(
-            index = currentImageIndex
-        ) {
-
-            showLightboxImage(index);
-
-
-            lightbox.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-
-            lightbox.classList.add(
-                "show"
-            );
-
-
-            document.body.classList.add(
-                "lightbox-open"
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           CLOSE LIGHTBOX
-        ------------------------------------------------- */
-
-        function closeLightbox() {
-
-            lightbox.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-
-            lightbox.classList.remove(
-                "show"
-            );
-
-
-            document.body.classList.remove(
-                "lightbox-open"
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           MAIN IMAGE CLICK
-        ------------------------------------------------- */
-
-        if (mainProductImage) {
-
-            mainProductImage.addEventListener(
-                "click",
-                function () {
-
-                    const index =
-                        parseInt(
-                            this.dataset.index,
-                            10
-                        ) || 0;
-
-
-                    openLightbox(index);
-
-                }
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           LIGHTBOX PREVIOUS
-        ------------------------------------------------- */
-
-        if (lightboxPreviousButton) {
-
-            lightboxPreviousButton.addEventListener(
-                "click",
-                function (event) {
-
-                    event.stopPropagation();
-
-
-                    showLightboxImage(
-                        currentImageIndex - 1
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           LIGHTBOX NEXT
-        ------------------------------------------------- */
-
-        if (lightboxNextButton) {
-
-            lightboxNextButton.addEventListener(
-                "click",
-                function (event) {
-
-                    event.stopPropagation();
-
-
-                    showLightboxImage(
-                        currentImageIndex + 1
-                    );
-
-                }
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           CLOSE LIGHTBOX
-        ------------------------------------------------- */
+    if (lightbox) {
 
         lightbox.addEventListener(
             "click",
             function (event) {
 
                 if (
-                    event.target === lightbox ||
-                    event.target.classList.contains(
-                        "lightbox-close"
-                    )
+                    event.target === lightbox
                 ) {
 
                     closeLightbox();
@@ -1316,229 +491,258 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
 
+    }
 
 
-        /* -------------------------------------------------
-           NATIVE FULLSCREEN
-        ------------------------------------------------- */
+    /* =====================================================
+       LIGHTBOX PREVIOUS
+    ===================================================== */
 
-        if (fullscreenButton) {
+    if (lightboxPrev) {
 
-            fullscreenButton.addEventListener(
-                "click",
-                async function (event) {
-
-                    event.stopPropagation();
-
-
-                    try {
-
-                        if (
-                            !document.fullscreenElement
-                        ) {
-
-                            if (
-                                lightboxDialog.requestFullscreen
-                            ) {
-
-                                await lightboxDialog.requestFullscreen();
-
-                            }
-
-                        } else if (
-                            document.exitFullscreen
-                        ) {
-
-                            await document.exitFullscreen();
-
-                        }
-
-                    } catch (error) {
-
-                        /* Fullscreen unavailable */
-
-                    }
-
-                }
-            );
-
-        }
-
-
-
-        /* -------------------------------------------------
-           KEYBOARD CONTROLS
-        ------------------------------------------------- */
-
-        document.addEventListener(
-            "keydown",
+        lightboxPrev.addEventListener(
+            "click",
             function (event) {
 
+                event.preventDefault();
+
+                showPreviousImage();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LIGHTBOX NEXT
+    ===================================================== */
+
+    if (lightboxNext) {
+
+        lightboxNext.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                showNextImage();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       KEYBOARD CONTROLS
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+
+            /* -----------------------------------------
+               ESC
+            ----------------------------------------- */
+
+            if (
+                event.key === "Escape" &&
+                lightbox &&
+                lightbox.getAttribute("aria-hidden") === "false"
+            ) {
+
+                event.preventDefault();
+
+                closeLightbox();
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               LIGHTBOX CONTROLS
+            ----------------------------------------- */
+
+            if (
+                !lightbox ||
+                lightbox.getAttribute("aria-hidden") !== "false"
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
+                showPreviousImage();
+
+            }
+
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                showNextImage();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       FULLSCREEN
+    ===================================================== */
+
+    if (lightboxFullscreen) {
+
+        lightboxFullscreen.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const dialog =
+                    lightbox
+                        ? lightbox.querySelector(
+                            ".lightbox-dialog"
+                        )
+                        : null;
+
+
+                if (!dialog) {
+                    return;
+                }
+
+
+                /* -----------------------------------------
+                   EXIT FULLSCREEN
+                ----------------------------------------- */
+
                 if (
-                    lightbox.getAttribute(
-                        "aria-hidden"
-                    ) === "true"
+                    document.fullscreenElement
                 ) {
+
+                    if (
+                        document.exitFullscreen
+                    ) {
+
+                        document
+                            .exitFullscreen()
+                            .catch(function () {});
+
+                    }
 
                     return;
 
                 }
 
 
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    closeLightbox();
-
-                    return;
-
-                }
-
+                /* -----------------------------------------
+                   ENTER FULLSCREEN
+                ----------------------------------------- */
 
                 if (
-                    event.key === "ArrowLeft"
+                    dialog.requestFullscreen
                 ) {
 
-                    showLightboxImage(
-                        currentImageIndex - 1
-                    );
-
-                    return;
-
-                }
-
-
-                if (
-                    event.key === "ArrowRight"
-                ) {
-
-                    showLightboxImage(
-                        currentImageIndex + 1
-                    );
+                    dialog
+                        .requestFullscreen()
+                        .catch(function () {});
 
                 }
 
             }
         );
 
+    }
 
 
-        /* -------------------------------------------------
-           MAIN IMAGE SWIPE
-        ------------------------------------------------- */
+    /* =====================================================
+       UPDATE FULLSCREEN ICON
+    ===================================================== */
 
-        let touchStartX = 0;
-        let touchStartY = 0;
+    document.addEventListener(
+        "fullscreenchange",
+        function () {
 
-
-        if (mainProductImage) {
-
-            mainProductImage.addEventListener(
-                "touchstart",
-                function (event) {
-
-                    const touch =
-                        event.changedTouches[0];
+            if (!lightboxFullscreen) {
+                return;
+            }
 
 
-                    touchStartX =
-                        touch.clientX;
+            const icon =
+                lightboxFullscreen.querySelector("i");
 
 
-                    touchStartY =
-                        touch.clientY;
-
-                },
-                {
-                    passive: true
-                }
-            );
+            if (!icon) {
+                return;
+            }
 
 
-            mainProductImage.addEventListener(
-                "touchend",
-                function (event) {
+            if (
+                document.fullscreenElement
+            ) {
 
-                    const touch =
-                        event.changedTouches[0];
+                icon.className =
+                    "bi bi-fullscreen-exit";
 
+                lightboxFullscreen.setAttribute(
+                    "aria-label",
+                    "Exit fullscreen"
+                );
 
-                    const differenceX =
-                        touch.clientX -
-                        touchStartX;
+            } else {
 
+                icon.className =
+                    "bi bi-fullscreen";
 
-                    const differenceY =
-                        touch.clientY -
-                        touchStartY;
+                lightboxFullscreen.setAttribute(
+                    "aria-label",
+                    "Enter fullscreen"
+                );
 
-
-                    if (
-                        Math.abs(
-                            differenceX
-                        ) < 50 ||
-                        Math.abs(
-                            differenceX
-                        ) <
-                        Math.abs(
-                            differenceY
-                        )
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    if (
-                        differenceX < 0
-                    ) {
-
-                        showProductImage(
-                            currentImageIndex + 1
-                        );
-
-                    } else {
-
-                        showProductImage(
-                            currentImageIndex - 1
-                        );
-
-                    }
-
-                },
-                {
-                    passive: true
-                }
-            );
+            }
 
         }
+    );
 
 
+    /* =====================================================
+       TOUCH SWIPE SUPPORT
+    ===================================================== */
 
-        /* -------------------------------------------------
-           LIGHTBOX SWIPE
-        ------------------------------------------------- */
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-        let lightboxTouchStartX = 0;
-        let lightboxTouchStartY = 0;
 
+    if (lightboxImage) {
 
         lightboxImage.addEventListener(
             "touchstart",
             function (event) {
 
-                const touch =
-                    event.changedTouches[0];
+                if (
+                    !event.touches ||
+                    !event.touches.length
+                ) {
+                    return;
+                }
 
-
-                lightboxTouchStartX =
-                    touch.clientX;
-
-
-                lightboxTouchStartY =
-                    touch.clientY;
+                touchStartX =
+                    event.touches[0].clientX;
 
             },
             {
@@ -1551,30 +755,29 @@ document.addEventListener("DOMContentLoaded", function () {
             "touchend",
             function (event) {
 
-                const touch =
-                    event.changedTouches[0];
+                if (
+                    !event.changedTouches ||
+                    !event.changedTouches.length
+                ) {
+                    return;
+                }
 
 
-                const differenceX =
-                    touch.clientX -
-                    lightboxTouchStartX;
+                touchEndX =
+                    event.changedTouches[0].clientX;
 
 
-                const differenceY =
-                    touch.clientY -
-                    lightboxTouchStartY;
+                const swipeDistance =
+                    touchEndX - touchStartX;
+
+
+                const minimumSwipe =
+                    50;
 
 
                 if (
-                    Math.abs(
-                        differenceX
-                    ) < 50 ||
-                    Math.abs(
-                        differenceX
-                    ) <
-                    Math.abs(
-                        differenceY
-                    )
+                    Math.abs(swipeDistance) <
+                    minimumSwipe
                 ) {
 
                     return;
@@ -1583,18 +786,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 if (
-                    differenceX < 0
+                    swipeDistance > 0
                 ) {
 
-                    showLightboxImage(
-                        currentImageIndex + 1
-                    );
+                    showPreviousImage();
 
                 } else {
 
-                    showLightboxImage(
-                        currentImageIndex - 1
-                    );
+                    showNextImage();
 
                 }
 
@@ -1605,5 +804,43 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
     }
+
+
+    /* =====================================================
+       INITIAL IMAGE
+    ===================================================== */
+
+    updateMainImage(
+        currentIndex
+    );
+
+
+    /* =====================================================
+       INITIAL LIGHTBOX STATE
+    ===================================================== */
+
+    if (lightbox) {
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        lightbox.classList.remove(
+            "is-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       LOG
+    ===================================================== */
+
+    console.log(
+        "Product gallery initialized:",
+        images.length,
+        "image(s)"
+    );
 
 });
