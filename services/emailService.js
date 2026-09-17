@@ -81,9 +81,7 @@ function sendBrevoEmail({
 
                                 parsedResponse =
                                     responseData
-                                        ? JSON.parse(
-                                            responseData
-                                        )
+                                        ? JSON.parse(responseData)
                                         : null;
 
                             } catch (_) {
@@ -154,7 +152,6 @@ function sendBrevoEmail({
 }
 
 
-
 // =========================================================
 // USER EMAIL VERIFICATION OTP
 // =========================================================
@@ -211,33 +208,55 @@ async function sendOTPEmail(
         "Your Yogita Patola Art Verification OTP";
 
 
+    // =====================================================
+    // PLAIN TEXT EMAIL
+    // =====================================================
+
     const textContent = `
 Hello ${recipientName || "User"},
 
-Your Yogita Patola Art email verification OTP is:
+Thank you for registering with Yogita Patola Art.
+
+Please use the OTP below to verify your email address.
+
+Your verification OTP is:
 
 ${otp}
 
 This OTP is valid for 10 minutes.
 
-If you did not request this OTP, please ignore this email.
+If you did not request this verification code, you can safely ignore this email.
 
 Regards,
 Yogita Patola Art
 `;
 
 
+    // =====================================================
+    // HTML EMAIL
+    // IMPORTANT:
+    // This is a JavaScript template literal.
+    // Use ${...}, NOT EJS <%= ... %>.
+    // =====================================================
+
     const htmlContent = `
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
+
     <title>Email Verification</title>
+
 </head>
+
 
 <body
     style="
@@ -252,7 +271,9 @@ Yogita Patola Art
     width="100%"
     cellpadding="0"
     cellspacing="0"
+    border="0"
     style="
+        width:100%;
         background:#f7f1e8;
         padding:40px 15px;
     "
@@ -262,18 +283,25 @@ Yogita Patola Art
 
 <td align="center">
 
+
 <table
     width="100%"
     cellpadding="0"
     cellspacing="0"
+    border="0"
     style="
+        width:100%;
         max-width:520px;
         background:#ffffff;
         border-radius:14px;
         overflow:hidden;
-        box-shadow:0 8px 30px rgba(0,0,0,0.08);
     "
 >
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
 <tr>
 
@@ -289,18 +317,22 @@ Yogita Patola Art
     style="
         margin:0;
         color:#d8b56a;
-        font-family:Georgia,serif;
+        font-family:Georgia,'Times New Roman',serif;
         font-size:26px;
+        line-height:1.3;
+        font-weight:bold;
     "
 >
     Yogita Patola Art
 </h1>
+
 
 <p
     style="
         margin:8px 0 0;
         color:#ffffff;
         font-size:13px;
+        line-height:1.5;
     "
 >
     Email Verification
@@ -310,6 +342,10 @@ Yogita Patola Art
 
 </tr>
 
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
 
 <tr>
 
@@ -323,17 +359,23 @@ Yogita Patola Art
 <h2
     style="
         margin:0 0 15px;
-        font-family:Georgia,serif;
+        font-family:Georgia,'Times New Roman',serif;
         color:#641f2b;
+        font-size:23px;
+        line-height:1.4;
+        font-weight:bold;
     "
 >
-    Hello <%= recipientName || "User" %>,
+    Hello ${recipientName || "User"},
 </h2>
+
 
 <p
     style="
+        margin:0 0 20px;
         font-size:15px;
         line-height:1.7;
+        color:#3b3030;
     "
 >
     Thank you for registering with
@@ -341,14 +383,31 @@ Yogita Patola Art
     Please use the OTP below to verify your email address.
 </p>
 
-<div
+
+<!-- =====================================================
+     OTP BOX
+====================================================== -->
+
+<table
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
     style="
+        width:100%;
         margin:30px 0;
-        padding:20px;
         background:#f8f1e5;
         border:1px solid #dfc58d;
         border-radius:10px;
-        text-align:center;
+    "
+>
+
+<tr>
+
+<td
+    align="center"
+    style="
+        padding:20px;
     "
 >
 
@@ -357,14 +416,18 @@ Yogita Patola Art
         font-size:12px;
         color:#76645a;
         margin-bottom:8px;
+        letter-spacing:1px;
+        font-weight:bold;
     "
 >
     YOUR VERIFICATION CODE
 </div>
 
+
 <div
     style="
         font-size:36px;
+        line-height:1.3;
         font-weight:bold;
         letter-spacing:8px;
         color:#641f2b;
@@ -373,10 +436,16 @@ Yogita Patola Art
     ${otp}
 </div>
 
-</div>
+</td>
+
+</tr>
+
+</table>
+
 
 <p
     style="
+        margin:0 0 15px;
         font-size:14px;
         line-height:1.7;
         color:#665858;
@@ -386,8 +455,10 @@ Yogita Patola Art
     <strong>10 minutes</strong>.
 </p>
 
+
 <p
     style="
+        margin:0;
         font-size:13px;
         line-height:1.6;
         color:#8a7b73;
@@ -401,6 +472,10 @@ Yogita Patola Art
 
 </tr>
 
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
 
 <tr>
 
@@ -418,15 +493,17 @@ Yogita Patola Art
         margin:0;
         color:#8a7b73;
         font-size:12px;
+        line-height:1.5;
     "
 >
-    © ${new Date().getFullYear()} Yogita Patola Art
+    &copy; ${new Date().getFullYear()} Yogita Patola Art
 </p>
 
 </td>
 
 </tr>
 
+
 </table>
 
 </td>
@@ -435,7 +512,9 @@ Yogita Patola Art
 
 </table>
 
+
 </body>
+
 </html>
 `;
 
@@ -513,7 +592,6 @@ Yogita Patola Art
 }
 
 
-
 // =========================================================
 // ADMIN PASSWORD RESET OTP
 // =========================================================
@@ -562,6 +640,10 @@ async function sendAdminPasswordResetOTP(
         "Yogita Patola Art Admin Password Reset OTP";
 
 
+    // =====================================================
+    // PLAIN TEXT EMAIL
+    // =====================================================
+
     const textContent = `
 Hello ${recipientName || "Admin"},
 
@@ -580,9 +662,14 @@ Yogita Patola Art
 `;
 
 
+    // =====================================================
+    // HTML EMAIL
+    // =====================================================
+
     const htmlContent = `
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 
 <head>
 
@@ -611,7 +698,9 @@ Yogita Patola Art
     width="100%"
     cellpadding="0"
     cellspacing="0"
+    border="0"
     style="
+        width:100%;
         background:#f7f1e8;
         padding:40px 15px;
     "
@@ -621,18 +710,25 @@ Yogita Patola Art
 
 <td align="center">
 
+
 <table
     width="100%"
     cellpadding="0"
     cellspacing="0"
+    border="0"
     style="
+        width:100%;
         max-width:520px;
         background:#ffffff;
         border-radius:14px;
         overflow:hidden;
-        box-shadow:0 8px 30px rgba(0,0,0,0.08);
     "
 >
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
 <tr>
 
@@ -648,18 +744,22 @@ Yogita Patola Art
     style="
         margin:0;
         color:#d8b56a;
-        font-family:Georgia,serif;
+        font-family:Georgia,'Times New Roman',serif;
         font-size:26px;
+        line-height:1.3;
+        font-weight:bold;
     "
 >
     Yogita Patola Art
 </h1>
+
 
 <p
     style="
         margin:8px 0 0;
         color:#ffffff;
         font-size:13px;
+        line-height:1.5;
     "
 >
     Administrator Password Reset
@@ -669,6 +769,10 @@ Yogita Patola Art
 
 </tr>
 
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
 
 <tr>
 
@@ -682,8 +786,11 @@ Yogita Patola Art
 <h2
     style="
         margin:0 0 15px;
-        font-family:Georgia,serif;
+        font-family:Georgia,'Times New Roman',serif;
         color:#641f2b;
+        font-size:23px;
+        line-height:1.4;
+        font-weight:bold;
     "
 >
     Hello ${recipientName || "Admin"},
@@ -692,8 +799,10 @@ Yogita Patola Art
 
 <p
     style="
+        margin:0 0 20px;
         font-size:15px;
         line-height:1.7;
+        color:#3b3030;
     "
 >
     A password reset request was made for your
@@ -701,14 +810,30 @@ Yogita Patola Art
 </p>
 
 
-<div
+<!-- =====================================================
+     OTP BOX
+====================================================== -->
+
+<table
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
     style="
+        width:100%;
         margin:30px 0;
-        padding:20px;
         background:#f8f1e5;
         border:1px solid #dfc58d;
         border-radius:10px;
-        text-align:center;
+    "
+>
+
+<tr>
+
+<td
+    align="center"
+    style="
+        padding:20px;
     "
 >
 
@@ -717,6 +842,8 @@ Yogita Patola Art
         font-size:12px;
         color:#76645a;
         margin-bottom:8px;
+        letter-spacing:1px;
+        font-weight:bold;
     "
 >
     PASSWORD RESET OTP
@@ -726,6 +853,7 @@ Yogita Patola Art
 <div
     style="
         font-size:36px;
+        line-height:1.3;
         font-weight:bold;
         letter-spacing:8px;
         color:#641f2b;
@@ -734,11 +862,16 @@ Yogita Patola Art
     ${otp}
 </div>
 
-</div>
+</td>
+
+</tr>
+
+</table>
 
 
 <p
     style="
+        margin:0 0 15px;
         font-size:14px;
         line-height:1.7;
         color:#665858;
@@ -751,6 +884,7 @@ Yogita Patola Art
 
 <p
     style="
+        margin:0;
         font-size:13px;
         line-height:1.6;
         color:#8a7b73;
@@ -764,6 +898,10 @@ Yogita Patola Art
 
 </tr>
 
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
 
 <tr>
 
@@ -781,15 +919,17 @@ Yogita Patola Art
         margin:0;
         color:#8a7b73;
         font-size:12px;
+        line-height:1.5;
     "
 >
-    © ${new Date().getFullYear()} Yogita Patola Art
+    &copy; ${new Date().getFullYear()} Yogita Patola Art
 </p>
 
 </td>
 
 </tr>
 
+
 </table>
 
 </td>
@@ -797,6 +937,7 @@ Yogita Patola Art
 </tr>
 
 </table>
+
 
 </body>
 
@@ -831,6 +972,7 @@ Yogita Patola Art
             error.message
         );
 
+
         return {
             success: false,
             error
@@ -841,6 +983,9 @@ Yogita Patola Art
 }
 
 
+// =========================================================
+// EXPORTS
+// =========================================================
 
 module.exports = {
 

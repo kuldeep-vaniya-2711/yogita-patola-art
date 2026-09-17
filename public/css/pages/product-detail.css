@@ -484,7 +484,7 @@
    PRICE
    MAIN PRODUCT ONLY
    IMPORTANT:
-   Prevents this 34px price from affecting
+   Prevents this price styling from affecting
    Related Products shared product cards.
    ========================================================= */
 
@@ -504,6 +504,100 @@
     line-height: 1;
 
     font-weight: 600;
+}
+
+
+/* =========================================================
+   DISCOUNT ORIGINAL PRICE
+   MAIN PRODUCT ONLY
+   ========================================================= */
+
+.product-detail-page
+> .container
+> .row
+> .col-lg-6
+> .product-info
+.product-price-original {
+    display: inline-block;
+
+    margin: 0 10px 0 0;
+
+    color: #8a7669;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 21px;
+    line-height: 1;
+
+    font-weight: 500;
+
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+}
+
+
+/* =========================================================
+   DISCOUNTED / FINAL PRICE
+   MAIN PRODUCT ONLY
+   ========================================================= */
+
+.product-detail-page
+> .container
+> .row
+> .col-lg-6
+> .product-info
+.product-price-discounted {
+    display: inline-block;
+
+    margin: 0 0 22px;
+
+    color: #702c35;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 34px;
+    line-height: 1;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DISCOUNT BADGE
+   MAIN PRODUCT ONLY
+   ========================================================= */
+
+.product-detail-page
+> .container
+> .row
+> .col-lg-6
+> .product-info
+.product-discount-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 27px;
+
+    margin: 0 0 22px;
+    padding: 5px 9px;
+
+    border-radius: 2px;
+
+    background: #a67c38;
+
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    vertical-align: middle;
 }
 
 
@@ -2340,8 +2434,38 @@ body.lightbox-open {
     > .row
     > .col-lg-6
     > .product-info
-    .product-price {
+    .product-price,
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-price-discounted {
         font-size: 29px;
+    }
+
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-price-original {
+        font-size: 19px;
+    }
+
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-discount-badge {
+        min-height: 25px;
+
+        padding: 5px 8px;
+
+        margin-bottom: 20px;
+
+        font-size: 9px;
     }
 
 
@@ -2602,8 +2726,40 @@ body.lightbox-open {
     > .row
     > .col-lg-6
     > .product-info
-    .product-price {
+    .product-price,
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-price-discounted {
         font-size: 27px;
+    }
+
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-price-original {
+        font-size: 18px;
+
+        margin-right: 8px;
+    }
+
+    .product-detail-page
+    > .container
+    > .row
+    > .col-lg-6
+    > .product-info
+    .product-discount-badge {
+        min-height: 24px;
+
+        padding: 4px 7px;
+
+        margin-bottom: 19px;
+
+        font-size: 8px;
     }
 
 

@@ -1,5 +1,6 @@
 <%
 /*
+
 * =====================================================
 * PREMIUM PRODUCT CARD
 * Yogita Patola Art
@@ -11,134 +12,181 @@
 * products.ejs
 * search.ejs
 *
+
 */
 %>
 
 <article class="product-card h-100">
 
-
 <!-- ================================================= -->
+
 <!-- PRODUCT IMAGE -->
+
 <!-- ================================================= -->
 
 <div class="product-image">
 
-    <a
-        href="/products/<%= product._id %>"
-        class="product-image-link"
-        aria-label="View <%= product.name || 'Patola Product' %>"
-    >
 
-        <% if (
-            product &&
-            Array.isArray(product.images) &&
-            product.images.length > 0
-        ) { %>
+<a
+    href="/products/<%= product._id %>"
+    class="product-image-link"
+    aria-label="View <%= product.name || 'Patola Product' %>"
+>
 
-            <img
-                src="<%= product.images[0] %>"
-                alt="<%= product.name || 'Patola Product' %>"
-                class="product-image-main"
-                loading="lazy"
-            >
+    <% if (
+        product &&
+        Array.isArray(product.images) &&
+        product.images.length > 0
+    ) { %>
 
-        <% } else { %>
+        <img
+            src="<%= product.images[0] %>"
+            alt="<%= product.name || 'Patola Product' %>"
+            class="product-image-main"
+            loading="lazy"
+        >
 
-            <div class="no-product-image">
-                <span>Yogita Patola Art</span>
-            </div>
+    <% } else { %>
 
-        <% } %>
-
-        <!-- IMAGE OVERLAY -->
-
-        <div class="product-image-overlay">
-            <span class="product-view-link">
-                View Piece
-                <span class="product-view-arrow">→</span>
-            </span>
+        <div class="no-product-image">
+            <span>Yogita Patola Art</span>
         </div>
 
-    </a>
+    <% } %>
 
+    <!-- IMAGE OVERLAY -->
 
-    <!-- ================================================= -->
-    <!-- PRODUCT BADGE -->
-    <!-- ================================================= -->
+    <div class="product-image-overlay">
+        <span class="product-view-link">
+            View Piece
+            <span class="product-view-arrow">→</span>
+        </span>
+    </div>
 
-    <span class="product-badge">
-        Handcrafted
-    </span>
-
-
-    <!-- ================================================= -->
-    <!-- NUMBER -->
-    <!-- ================================================= -->
-
-    <span class="product-image-mark">
-        ✦
-    </span>
-
-</div>
+</a>
 
 
 <!-- ================================================= -->
+<!-- PRODUCT BADGE -->
+<!-- ================================================= -->
+
+<span class="product-badge">
+    Handcrafted
+</span>
+
+
+<!-- DISCOUNT BADGE -->
+
+<% if (
+    product.discountEnabled &&
+    Number(product.discountPercentage || 0) > 0
+) { %>
+
+    <span class="product-discount-badge">
+        <%= Number(product.discountPercentage) %>% OFF
+    </span>
+
+<% } %>
+
+
+<!-- ================================================= -->
+<!-- NUMBER -->
+<!-- ================================================= -->
+
+<span class="product-image-mark">
+    ✦
+</span>
+
+
+</div>
+
+<!-- ================================================= -->
+
 <!-- PRODUCT INFORMATION -->
+
 <!-- ================================================= -->
 
 <div class="product-info">
 
 
-    <!-- CATEGORY -->
+<!-- CATEGORY -->
 
-    <span class="product-category">
-        <%= product.category || "Patola Collection" %>
-    </span>
-
-
-    <!-- NAME -->
-
-    <h3 class="product-name">
-
-        <a href="/products/<%= product._id %>">
-
-            <%= product.name || "Handcrafted Patola" %>
-
-        </a>
-
-    </h3>
+<span class="product-category">
+    <%= product.category || "Patola Collection" %>
+</span>
 
 
-    <!-- DESCRIPTION -->
+<!-- NAME -->
 
-    <p class="product-description">
+<h3 class="product-name">
 
-        <%= product.description
-            ? (
-                product.description.length > 100
-                    ? product.description.substring(0, 100) + "..."
-                    : product.description
-            )
-            : "A beautifully handcrafted Patola created with traditional artistry."
-        %>
+    <a href="/products/<%= product._id %>">
 
-    </p>
+        <%= product.name || "Handcrafted Patola" %>
+
+    </a>
+
+</h3>
 
 
-    <!-- ================================================= -->
-    <!-- BOTTOM META -->
-    <!-- ================================================= -->
+<!-- DESCRIPTION -->
 
-    <div class="product-bottom">
+<p class="product-description">
+
+    <%= product.description
+        ? (
+            product.description.length > 100
+                ? product.description.substring(0, 100) + "..."
+                : product.description
+        )
+        : "A beautifully handcrafted Patola created with traditional artistry."
+    %>
+
+</p>
 
 
-        <!-- PRICE -->
+<!-- ================================================= -->
+<!-- BOTTOM META -->
+<!-- ================================================= -->
 
-        <div class="product-price-wrap">
+<div class="product-bottom">
 
-            <span class="product-price-label">
-                Price
+
+    <!-- PRICE -->
+
+    <div class="product-price-wrap">
+
+        <span class="product-price-label">
+            Price
+        </span>
+
+
+        <% if (
+            product.discountEnabled &&
+            Number(product.discountPercentage || 0) > 0
+        ) { %>
+
+            <span class="product-price-original">
+                ₹<%= Number(
+                    product.price || 0
+                ).toLocaleString("en-IN") %>
             </span>
+
+
+            <span class="product-price product-price-discounted">
+                ₹<%= Number(
+                    Number(product.price || 0) *
+                    (
+                        1 -
+                        Number(product.discountPercentage || 0) / 100
+                    )
+                ).toLocaleString("en-IN", {
+                    maximumFractionDigits: 0
+                }) %>
+            </span>
+
+
+        <% } else { %>
 
             <span class="product-price">
                 ₹<%= Number(
@@ -146,50 +194,52 @@
                 ).toLocaleString("en-IN") %>
             </span>
 
-        </div>
-
-
-        <!-- AVAILABILITY -->
-
-        <span
-            class="product-availability
-            <%= product.availability === 'In Stock'
-                ? 'is-stock'
-                : product.availability === 'Limited'
-                    ? 'is-limited'
-                    : 'is-unavailable'
-            %>"
-        >
-
-            <span class="availability-dot"></span>
-
-            <%= product.availability || "In Stock" %>
-
-        </span>
+        <% } %>
 
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- VIEW DETAILS -->
-    <!-- ================================================= -->
+    <!-- AVAILABILITY -->
 
-    <a
-        href="/products/<%= product._id %>"
-        class="product-details-btn"
+    <span
+        class="product-availability
+        <%= product.availability === 'In Stock'
+            ? 'is-stock'
+            : product.availability === 'Limited'
+                ? 'is-limited'
+                : 'is-unavailable'
+        %>"
     >
 
-        <span>
-            View Details
-        </span>
+        <span class="availability-dot"></span>
 
-        <span class="product-details-arrow">
-            →
-        </span>
+        <%= product.availability || "In Stock" %>
 
-    </a>
+    </span>
 
 </div>
 
+
+<!-- ================================================= -->
+<!-- VIEW DETAILS -->
+<!-- ================================================= -->
+
+<a
+    href="/products/<%= product._id %>"
+    class="product-details-btn"
+>
+
+    <span>
+        View Details
+    </span>
+
+    <span class="product-details-arrow">
+        →
+    </span>
+
+</a>
+
+
+</div>
 
 </article>

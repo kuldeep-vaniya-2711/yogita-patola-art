@@ -61,8 +61,41 @@ const productPrice =
         ? Number(currentProduct.price)
         : 0;
 
+
+// =========================================================
+// DISCOUNT
+// =========================================================
+
+const discountEnabled =
+    Boolean(currentProduct?.discountEnabled) &&
+    Number(currentProduct?.discountPercentage || 0) > 0;
+
+const discountPercentage =
+    discountEnabled
+        ? Number(currentProduct.discountPercentage)
+        : 0;
+
+const discountedProductPrice =
+    discountEnabled
+        ? productPrice * (1 - discountPercentage / 100)
+        : productPrice;
+
 const formattedPrice =
     productPrice.toLocaleString("en-IN");
+
+const formattedDiscountedPrice =
+    discountedProductPrice.toLocaleString(
+        "en-IN",
+        {
+            maximumFractionDigits: 0
+        }
+    );
+
+const finalProductPrice =
+    discountEnabled
+        ? formattedDiscountedPrice
+        : formattedPrice;
+
 
 const productDescription =
     currentProduct?.description ||
@@ -177,7 +210,7 @@ if (isOutOfStock) {
         productId +
         "\n" +
         "Price: ₹" +
-        formattedPrice +
+        finalProductPrice +
         "\n" +
         "Category: " +
         productCategory +
@@ -198,7 +231,7 @@ if (isOutOfStock) {
         productId +
         "\n" +
         "Price: ₹" +
-        formattedPrice +
+        finalProductPrice +
         "\n" +
         "Category: " +
         productCategory +
@@ -470,10 +503,34 @@ if (whatsappPhone) {
                     <% } %>
 
 
-                    <!-- PRICE -->
+                    <!-- =================================================
+                         PRICE
+                    ================================================== -->
 
-                    <div class="product-price">
-                        ₹<%= formattedPrice %>
+                    <div class="product-price-wrapper">
+
+                        <% if (discountEnabled) { %>
+
+                            <span class="product-discount-badge">
+                                <%= discountPercentage %>% OFF
+                            </span>
+
+                            <div class="product-price-original">
+                                ₹<%= formattedPrice %>
+                            </div>
+
+                            <div class="product-price product-price-discounted">
+                                ₹<%= formattedDiscountedPrice %>
+                            </div>
+
+                        <% } else { %>
+
+                            <div class="product-price">
+                                ₹<%= formattedPrice %>
+                            </div>
+
+                        <% } %>
+
                     </div>
 
 
@@ -512,10 +569,22 @@ if (whatsappPhone) {
                          ACTION BUTTONS
                     ================================================== -->
 
-                    <div class="product-actions">
+                    <div
+                        class="product-actions"
+                        id="productActions"
+
+                        data-product-name="<%= productName %>"
+                        data-product-id="<%= productId %>"
+                        data-product-price="₹<%= finalProductPrice %>"
+                        data-product-category="<%= productCategory %>"
+                        data-product-availability="<%= productAvailability %>"
+                        data-product-image="<%= mainProductImage %>"
+                    >
 
 
-                        <!-- WISHLIST -->
+                        <!-- =================================================
+                             WISHLIST
+                        ================================================== -->
 
                         <form
                             method="POST"
@@ -553,7 +622,10 @@ if (whatsappPhone) {
                         </form>
 
 
-                        <!-- WHATSAPP ORDER -->
+                        <!-- =================================================
+                             WHATSAPP ORDER
+                             EXISTING FUNCTIONALITY UNCHANGED
+                        ================================================== -->
 
                         <a
                             href="<%= whatsappOrderUrl %>"
@@ -576,6 +648,27 @@ if (whatsappPhone) {
                             </span>
 
                         </a>
+
+
+                        <!-- =================================================
+                             SHARE PRODUCT
+                        ================================================== -->
+
+                        <button
+                            type="button"
+                            class="btn btn-outline-dark product-share-btn"
+                            id="shareProductButton"
+                            aria-label="Share <%= productName %>"
+                        >
+
+                            <i class="bi bi-share"></i>
+
+                            <span>
+                                Share Product
+                            </span>
+
+                        </button>
+
 
                     </div>
 

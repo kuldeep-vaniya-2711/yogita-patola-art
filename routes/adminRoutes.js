@@ -34,7 +34,6 @@ const {
     isOTPExpired
 } = require("../services/otpService");
 
-
 // =========================================================
 // HELPERS
 // =========================================================
@@ -42,9 +41,7 @@ const {
 const validId = id =>
     mongoose.Types.ObjectId.isValid(id);
 
-
 function adminAuth(req, res, next) {
-
     if (req.session?.adminId) {
         return next();
     }
@@ -52,11 +49,8 @@ function adminAuth(req, res, next) {
     return res.redirect("/admin/login");
 }
 
-
 function deleteImageFile(imagePath) {
-
     try {
-
         if (!imagePath) {
             return;
         }
@@ -74,17 +68,13 @@ function deleteImageFile(imagePath) {
         if (fs.existsSync(fullPath)) {
             fs.unlinkSync(fullPath);
         }
-
     } catch (error) {
-
         console.error(
             "Image delete error:",
             error
         );
-
     }
 }
-
 
 const imagePaths = files =>
     (files || []).map(
@@ -93,23 +83,16 @@ const imagePaths = files =>
             file.filename
     );
 
-
 const deleteUploadedFiles = files => {
-
     (files || []).forEach(file => {
-
         deleteImageFile(
             "/uploads/products/" +
             file.filename
         );
-
     });
-
 };
 
-
 const deleteSettingsFiles = files => {
-
     if (!files) {
         return;
     }
@@ -117,27 +100,20 @@ const deleteSettingsFiles = files => {
     Object.values(files)
         .flat()
         .forEach(file => {
-
             deleteImageFile(
                 "/uploads/settings/" +
                 file.filename
             );
-
         });
-
 };
-
 
 // =========================================================
 // MULTER
 // =========================================================
 
 function createStorage(subfolder) {
-
     return multer.diskStorage({
-
         destination: (req, file, cb) => {
-
             const dir =
                 path.join(
                     __dirname,
@@ -146,20 +122,16 @@ function createStorage(subfolder) {
                 );
 
             if (!fs.existsSync(dir)) {
-
                 fs.mkdirSync(
                     dir,
                     { recursive: true }
                 );
-
             }
 
             cb(null, dir);
-
         },
 
         filename: (req, file, cb) => {
-
             const ext =
                 path.extname(
                     file.originalname
@@ -169,16 +141,11 @@ function createStorage(subfolder) {
                 null,
                 `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
             );
-
         }
-
     });
-
 }
 
-
 const fileFilter = (req, file, cb) => {
-
     const allowed = [
         "image/jpeg",
         "image/jpg",
@@ -187,9 +154,7 @@ const fileFilter = (req, file, cb) => {
     ];
 
     if (allowed.includes(file.mimetype)) {
-
         return cb(null, true);
-
     }
 
     cb(
@@ -197,12 +162,9 @@ const fileFilter = (req, file, cb) => {
             "Only JPG, JPEG, PNG and WEBP images are allowed."
         )
     );
-
 };
 
-
 const productUpload = multer({
-
     storage: createStorage("products"),
 
     limits: {
@@ -211,12 +173,9 @@ const productUpload = multer({
     },
 
     fileFilter
-
 });
 
-
 const settingsUpload = multer({
-
     storage: createStorage("settings"),
 
     limits: {
@@ -225,9 +184,7 @@ const settingsUpload = multer({
     },
 
     fileFilter
-
 });
-
 
 // =========================================================
 // ADMIN ROOT / AUTH
@@ -237,14 +194,11 @@ router.get(
     "/",
     adminAuth,
     (req, res) => {
-
         return res.redirect(
             "/admin/dashboard"
         );
-
     }
 );
-
 
 // =========================================================
 // ADMIN LOGIN
@@ -253,13 +207,10 @@ router.get(
 router.get(
     "/login",
     (req, res) => {
-
         if (req.session?.adminId) {
-
             return res.redirect(
                 "/admin/dashboard"
             );
-
         }
 
         return res.render(
@@ -270,17 +221,13 @@ router.get(
                 success: req.query.success || ""
             }
         );
-
     }
 );
-
 
 router.post(
     "/login",
     async (req, res) => {
-
         try {
-
             const email =
                 String(
                     req.body.email || ""
@@ -291,21 +238,16 @@ router.post(
             const password =
                 req.body.password;
 
-
             if (!email || !password) {
-
                 return res.redirect(
                     "/admin/login?error=Please+enter+email+and+password"
                 );
-
             }
-
 
             const admin =
                 await Admin.findOne({
                     email
                 });
-
 
             if (
                 !admin ||
@@ -314,13 +256,10 @@ router.post(
                     admin.password
                 ))
             ) {
-
                 return res.redirect(
                     "/admin/login?error=Invalid+email+or+password"
                 );
-
             }
-
 
             req.session.adminId =
                 admin._id;
@@ -328,13 +267,10 @@ router.post(
             req.session.adminEmail =
                 admin.email;
 
-
             return res.redirect(
                 "/admin/dashboard"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin login error:",
                 error
@@ -343,12 +279,9 @@ router.post(
             return res.redirect(
                 "/admin/login?error=Server+error"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // ADMIN FORGOT PASSWORD
@@ -357,13 +290,10 @@ router.post(
 router.get(
     "/forgot-password",
     (req, res) => {
-
         if (req.session?.adminId) {
-
             return res.redirect(
                 "/admin/dashboard"
             );
-
         }
 
         return res.render(
@@ -374,17 +304,13 @@ router.get(
                 success: req.query.success || ""
             }
         );
-
     }
 );
-
 
 router.post(
     "/forgot-password",
     async (req, res) => {
-
         try {
-
             const email =
                 String(
                     req.body.email || ""
@@ -392,21 +318,16 @@ router.post(
                     .trim()
                     .toLowerCase();
 
-
             if (!email) {
-
                 return res.redirect(
                     "/admin/forgot-password?error=Please+enter+your+admin+email"
                 );
-
             }
-
 
             const admin =
                 await Admin.findOne({
                     email
                 });
-
 
             /*
              * Do not reveal whether an admin
@@ -414,20 +335,16 @@ router.post(
              */
 
             if (!admin) {
-
                 return res.redirect(
                     "/admin/forgot-password?success=If+this+email+belongs+to+an+admin+account%2C+an+OTP+has+been+sent"
                 );
-
             }
-
 
             const otp =
                 generateOTP();
 
             const otpExpiry =
                 getOTPExpiry();
-
 
             admin.resetOtp =
                 otp;
@@ -437,7 +354,6 @@ router.post(
 
             await admin.save();
 
-
             const emailResult =
                 await sendAdminPasswordResetOTP(
                     admin.email,
@@ -445,51 +361,47 @@ router.post(
                     otp
                 );
 
-
             if (
                 !emailResult ||
                 !emailResult.success
             ) {
-
                 admin.resetOtp = null;
                 admin.resetOtpExpires = null;
 
                 await admin.save();
-
 
                 console.error(
                     "Admin reset OTP email failed:",
                     emailResult?.error
                 );
 
-
                 return res.redirect(
                     "/admin/forgot-password?error=Unable+to+send+OTP.+Please+try+again"
                 );
-
             }
 
-console.log(
-    "\n================================="
-);
-console.log(
-    "ADMIN PASSWORD RESET OTP"
-);
-console.log(
-    "Email:",
-    admin.email
-);
-console.log(
-    "OTP:",
-    otp
-);
-console.log(
-    "Expires:",
-    otpExpiry
-);
-console.log(
-    "=================================\n"
-);
+            console.log(
+                "\n================================="
+            );
+            console.log(
+                "ADMIN PASSWORD RESET OTP"
+            );
+            console.log(
+                "Email:",
+                admin.email
+            );
+            console.log(
+                "OTP:",
+                otp
+            );
+            console.log(
+                "Expires:",
+                otpExpiry
+            );
+            console.log(
+                "=================================\n"
+            );
+
             /*
              * Store only the email in session.
              * The password cannot be reset until
@@ -502,13 +414,10 @@ console.log(
             req.session.adminResetVerified =
                 false;
 
-
             return res.redirect(
                 "/admin/verify-reset-otp"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin forgot password error:",
                 error
@@ -517,12 +426,9 @@ console.log(
             return res.redirect(
                 "/admin/forgot-password?error=Something+went+wrong.+Please+try+again"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // VERIFY RESET OTP
@@ -531,19 +437,14 @@ console.log(
 router.get(
     "/verify-reset-otp",
     (req, res) => {
-
         const email =
             req.session?.adminResetEmail;
 
-
         if (!email) {
-
             return res.redirect(
                 "/admin/forgot-password?error=Please+request+a+new+OTP"
             );
-
         }
-
 
         return res.render(
             "admin/verify-reset-otp",
@@ -554,81 +455,61 @@ router.get(
                 success: req.query.success || ""
             }
         );
-
     }
 );
-
 
 router.post(
     "/verify-reset-otp",
     async (req, res) => {
-
         try {
-
             const email =
                 req.session?.adminResetEmail;
 
-
             if (!email) {
-
                 return res.redirect(
                     "/admin/forgot-password?error=Please+request+a+new+OTP"
                 );
-
             }
-
 
             const otp =
                 String(
                     req.body.otp || ""
                 ).trim();
 
-
             if (!/^\d{6}$/.test(otp)) {
-
                 return res.redirect(
                     "/admin/verify-reset-otp?error=Please+enter+a+valid+6+digit+OTP"
                 );
-
             }
-
 
             const admin =
                 await Admin.findOne({
                     email
                 });
 
-
             if (!admin) {
-
                 req.session.adminResetEmail = null;
                 req.session.adminResetVerified = false;
 
                 return res.redirect(
                     "/admin/forgot-password?error=Invalid+reset+request"
                 );
-
             }
-
 
             if (
                 !admin.resetOtp ||
                 !admin.resetOtpExpires
             ) {
-
                 return res.redirect(
                     "/admin/verify-reset-otp?error=OTP+is+invalid.+Please+request+a+new+OTP"
                 );
-
             }
-
 
             if (
                 isOTPExpired(
                     admin.resetOtpExpires
                 )
             ) {
-
                 admin.resetOtp = null;
                 admin.resetOtpExpires = null;
 
@@ -637,20 +518,15 @@ router.post(
                 return res.redirect(
                     "/admin/verify-reset-otp?error=OTP+has+expired.+Please+request+a+new+OTP"
                 );
-
             }
-
 
             if (
                 admin.resetOtp !== otp
             ) {
-
                 return res.redirect(
                     "/admin/verify-reset-otp?error=Invalid+OTP.+Please+try+again"
                 );
-
             }
-
 
             /*
              * OTP is valid.
@@ -664,17 +540,13 @@ router.post(
 
             await admin.save();
 
-
             req.session.adminResetVerified =
                 true;
-
 
             return res.redirect(
                 "/admin/reset-password"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin OTP verification error:",
                 error
@@ -683,12 +555,9 @@ router.post(
             return res.redirect(
                 "/admin/verify-reset-otp?error=Something+went+wrong.+Please+try+again"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // RESEND RESET OTP
@@ -697,43 +566,32 @@ router.post(
 router.post(
     "/resend-reset-otp",
     async (req, res) => {
-
         try {
-
             const email =
                 req.session?.adminResetEmail;
 
-
             if (!email) {
-
                 return res.redirect(
                     "/admin/forgot-password?error=Please+request+a+new+OTP"
                 );
-
             }
-
 
             const admin =
                 await Admin.findOne({
                     email
                 });
 
-
             if (!admin) {
-
                 return res.redirect(
                     "/admin/forgot-password?error=Invalid+reset+request"
                 );
-
             }
-
 
             const otp =
                 generateOTP();
 
             const otpExpiry =
                 getOTPExpiry();
-
 
             admin.resetOtp =
                 otp;
@@ -743,7 +601,6 @@ router.post(
 
             await admin.save();
 
-
             const emailResult =
                 await sendAdminPasswordResetOTP(
                     admin.email,
@@ -751,31 +608,24 @@ router.post(
                     otp
                 );
 
-
             if (
                 !emailResult ||
                 !emailResult.success
             ) {
-
                 admin.resetOtp = null;
                 admin.resetOtpExpires = null;
 
                 await admin.save();
 
-
                 return res.redirect(
                     "/admin/verify-reset-otp?error=Unable+to+send+OTP.+Please+try+again"
                 );
-
             }
-
 
             return res.redirect(
                 "/admin/verify-reset-otp?success=A+new+OTP+has+been+sent+to+your+email"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin resend OTP error:",
                 error
@@ -784,12 +634,9 @@ router.post(
             return res.redirect(
                 "/admin/verify-reset-otp?error=Unable+to+send+OTP"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // RESET PASSWORD
@@ -798,18 +645,14 @@ router.post(
 router.get(
     "/reset-password",
     (req, res) => {
-
         if (
             !req.session?.adminResetEmail ||
             !req.session?.adminResetVerified
         ) {
-
             return res.redirect(
                 "/admin/forgot-password?error=Please+verify+your+OTP+first"
             );
-
         }
-
 
         return res.render(
             "admin/reset-password",
@@ -819,33 +662,24 @@ router.get(
                 success: req.query.success || ""
             }
         );
-
     }
 );
-
 
 router.post(
     "/reset-password",
     async (req, res) => {
-
         try {
-
             const email =
                 req.session?.adminResetEmail;
-
 
             const verified =
                 req.session?.adminResetVerified;
 
-
             if (!email || !verified) {
-
                 return res.redirect(
                     "/admin/forgot-password?error=Please+verify+your+OTP+first"
                 );
-
             }
-
 
             const password =
                 String(
@@ -857,58 +691,43 @@ router.post(
                     req.body.confirmPassword || ""
                 );
 
-
             if (!password || !confirmPassword) {
-
                 return res.redirect(
                     "/admin/reset-password?error=Please+enter+both+password+fields"
                 );
-
             }
 
-
             if (password.length < 8) {
-
                 return res.redirect(
                     "/admin/reset-password?error=Password+must+be+at+least+8+characters"
                 );
-
             }
 
-
             if (password !== confirmPassword) {
-
                 return res.redirect(
                     "/admin/reset-password?error=Passwords+do+not+match"
                 );
-
             }
-
 
             const admin =
                 await Admin.findOne({
                     email
                 });
 
-
             if (!admin) {
-
                 req.session.adminResetEmail = null;
                 req.session.adminResetVerified = false;
 
                 return res.redirect(
                     "/admin/forgot-password?error=Admin+account+not+found"
                 );
-
             }
-
 
             const hashedPassword =
                 await bcrypt.hash(
                     password,
                     10
                 );
-
 
             admin.password =
                 hashedPassword;
@@ -918,7 +737,6 @@ router.post(
 
             await admin.save();
 
-
             /*
              * Destroy reset session data.
              * User must log in with the new password.
@@ -927,13 +745,10 @@ router.post(
             req.session.adminResetEmail = null;
             req.session.adminResetVerified = false;
 
-
             return res.redirect(
                 "/admin/login?success=Password+reset+successfully.+Please+login+with+your+new+password"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin password reset error:",
                 error
@@ -942,12 +757,9 @@ router.post(
             return res.redirect(
                 "/admin/reset-password?error=Unable+to+reset+password.+Please+try+again"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // ADMIN LOGOUT
@@ -956,38 +768,28 @@ router.post(
 router.get(
     "/logout",
     (req, res) => {
-
         if (!req.session) {
-
             return res.redirect(
                 "/admin/login"
             );
-
         }
-
 
         req.session.destroy(
             error => {
-
                 if (error) {
-
                     console.error(
                         "Admin logout error:",
                         error
                     );
-
                 }
 
                 return res.redirect(
                     "/admin/login"
                 );
-
             }
         );
-
     }
 );
-
 
 // =========================================================
 // DASHBOARD
@@ -997,9 +799,7 @@ router.get(
     "/dashboard",
     adminAuth,
     async (req, res) => {
-
         try {
-
             const [
                 productCount,
                 reviewCount,
@@ -1012,7 +812,6 @@ router.get(
                 recentFeedback,
                 recentContacts
             ] = await Promise.all([
-
                 Product.countDocuments(),
 
                 Review.countDocuments(),
@@ -1040,14 +839,11 @@ router.get(
                 Contact.find({})
                     .sort({ createdAt: -1 })
                     .limit(5)
-
             ]);
-
 
             return res.render(
                 "admin/dashboard",
                 {
-
                     title: "Admin Dashboard",
 
                     pageTitle:
@@ -1070,12 +866,9 @@ router.get(
                     recentReviews,
                     recentFeedback,
                     recentContacts
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin dashboard error:",
                 error
@@ -1084,12 +877,9 @@ router.get(
             return res.status(500).send(
                 "Unable to load admin dashboard."
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // VISITORS
@@ -1099,20 +889,16 @@ router.get(
     "/visitors",
     adminAuth,
     async (req, res) => {
-
         try {
-
             const visitors =
                 await Visitor.find({})
                     .sort({
                         visitedAt: -1
                     });
 
-
             return res.render(
                 "admin/visitors",
                 {
-
                     title:
                         "Visitors",
 
@@ -1126,12 +912,9 @@ router.get(
                         "/js/admin/visitors.js",
 
                     visitors
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin visitors error:",
                 error
@@ -1140,40 +923,29 @@ router.get(
             return res.status(500).send(
                 "Unable to load visitors."
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/visitors/delete/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/visitors?error=Invalid+visitor+ID"
                 );
-
             }
-
 
             await Visitor.findByIdAndDelete(
                 req.params.id
             );
 
-
             return res.redirect(
                 "/admin/visitors?success=Visitor+deleted"
             );
-
         } catch (error) {
-
             console.error(
                 "Visitor delete error:",
                 error
@@ -1182,12 +954,9 @@ router.post(
             return res.redirect(
                 "/admin/visitors?error=Unable+to+delete+visitor"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // PRODUCTS
@@ -1197,20 +966,16 @@ router.get(
     "/products",
     adminAuth,
     async (req, res) => {
-
         try {
-
             const products =
                 await Product.find({})
                     .sort({
                         createdAt: -1
                     });
 
-
             return res.render(
                 "admin/products",
                 {
-
                     title:
                         "Products",
 
@@ -1230,12 +995,9 @@ router.get(
 
                     error:
                         req.query.error || ""
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin products error:",
                 error
@@ -1244,22 +1006,17 @@ router.get(
             return res.status(500).send(
                 "Unable to load products."
             );
-
         }
-
     }
 );
-
 
 router.get(
     "/products/add",
     adminAuth,
     (req, res) => {
-
         return res.render(
             "admin/add-product",
             {
-
                 title:
                     "Add Product",
 
@@ -1274,13 +1031,10 @@ router.get(
 
                 error:
                     req.query.error || ""
-
             }
         );
-
     }
 );
-
 
 router.post(
     "/products/add",
@@ -1290,14 +1044,14 @@ router.post(
         5
     ),
     async (req, res) => {
-
         try {
-
             const {
                 name,
                 category,
                 description,
                 price,
+                discountEnabled,
+                discountPercentage,
                 fabric,
                 technique,
                 color,
@@ -1305,9 +1059,7 @@ router.post(
                 availability
             } = req.body;
 
-
             if (!name || !category) {
-
                 deleteUploadedFiles(
                     req.files
                 );
@@ -1315,19 +1067,44 @@ router.post(
                 return res.redirect(
                     "/admin/products/add?error=Product+name+and+category+are+required"
                 );
-
             }
 
+            const isDiscountEnabled =
+                discountEnabled === true ||
+                discountEnabled === "true";
+
+            let percentage = 0;
+
+            if (isDiscountEnabled) {
+                percentage =
+                    Number(
+                        discountPercentage
+                    );
+
+                if (
+                    !Number.isFinite(
+                        percentage
+                    ) ||
+                    percentage < 1 ||
+                    percentage > 100
+                ) {
+                    deleteUploadedFiles(
+                        req.files
+                    );
+
+                    return res.redirect(
+                        "/admin/products/add?error=Discount+percentage+must+be+between+1+and+100"
+                    );
+                }
+            }
 
             const featured =
                 req.body.featured === true ||
                 req.body.featured === "true" ||
                 req.body.featured === "on";
 
-
             const product =
                 new Product({
-
                     name:
                         String(name).trim(),
 
@@ -1339,6 +1116,14 @@ router.post(
 
                     price:
                         price || 0,
+
+                    discountEnabled:
+                        isDiscountEnabled,
+
+                    discountPercentage:
+                        isDiscountEnabled
+                            ? percentage
+                            : 0,
 
                     fabric:
                         fabric || "",
@@ -1359,19 +1144,14 @@ router.post(
 
                     images:
                         imagePaths(req.files)
-
                 });
 
-
             await product.save();
-
 
             return res.redirect(
                 "/admin/products?success=Product+added+successfully"
             );
-
         } catch (error) {
-
             console.error(
                 "Product add error:",
                 error
@@ -1384,48 +1164,35 @@ router.post(
             return res.redirect(
                 "/admin/products/add?error=Unable+to+add+product"
             );
-
         }
-
     }
 );
-
 
 router.get(
     "/products/edit/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
-
             }
-
 
             const product =
                 await Product.findById(
                     req.params.id
                 );
 
-
             if (!product) {
-
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
-
             }
-
 
             return res.render(
                 "admin/edit-product",
                 {
-
                     title:
                         "Edit Product",
 
@@ -1445,12 +1212,9 @@ router.get(
 
                     success:
                         req.query.success || ""
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Product edit page error:",
                 error
@@ -1459,12 +1223,9 @@ router.get(
             return res.redirect(
                 "/admin/products?error=Unable+to+load+product"
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/products/edit/:id",
@@ -1474,11 +1235,8 @@ router.post(
         5
     ),
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 deleteUploadedFiles(
                     req.files
                 );
@@ -1486,18 +1244,14 @@ router.post(
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
-
             }
-
 
             const product =
                 await Product.findById(
                     req.params.id
                 );
 
-
             if (!product) {
-
                 deleteUploadedFiles(
                     req.files
                 );
@@ -1505,17 +1259,13 @@ router.post(
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
-
             }
-
 
             const category =
                 req.body.category ||
                 product.category;
 
-
             if (!category) {
-
                 deleteUploadedFiles(
                     req.files
                 );
@@ -1523,9 +1273,36 @@ router.post(
                 return res.redirect(
                     `/admin/products/edit/${product._id}?error=Product+category+is+required`
                 );
-
             }
 
+            const isDiscountEnabled =
+                req.body.discountEnabled === true ||
+                req.body.discountEnabled === "true";
+
+            let percentage = 0;
+
+            if (isDiscountEnabled) {
+                percentage =
+                    Number(
+                        req.body.discountPercentage
+                    );
+
+                if (
+                    !Number.isFinite(
+                        percentage
+                    ) ||
+                    percentage < 1 ||
+                    percentage > 100
+                ) {
+                    deleteUploadedFiles(
+                        req.files
+                    );
+
+                    return res.redirect(
+                        `/admin/products/edit/${product._id}?error=Discount+percentage+must+be+between+1+and+100`
+                    );
+                }
+            }
 
             product.name =
                 String(
@@ -1541,6 +1318,14 @@ router.post(
 
             product.price =
                 req.body.price || 0;
+
+            product.discountEnabled =
+                isDiscountEnabled;
+
+            product.discountPercentage =
+                isDiscountEnabled
+                    ? percentage
+                    : 0;
 
             product.fabric =
                 req.body.fabric || "";
@@ -1562,42 +1347,32 @@ router.post(
                 req.body.featured === "true" ||
                 req.body.featured === "on";
 
-
             if (
                 req.files &&
                 req.files.length > 0
             ) {
-
                 if (
                     Array.isArray(
                         product.images
                     )
                 ) {
-
                     product.images.forEach(
                         deleteImageFile
                     );
-
                 }
-
 
                 product.images =
                     imagePaths(
                         req.files
                     );
-
             }
 
-
             await product.save();
-
 
             return res.redirect(
                 "/admin/products?success=Product+updated+successfully"
             );
-
         } catch (error) {
-
             console.error(
                 "Product edit error:",
                 error
@@ -1610,78 +1385,58 @@ router.post(
             return res.redirect(
                 `/admin/products/edit/${req.params.id}?error=Unable+to+update+product`
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/products/delete/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/products?error=Invalid+product+ID"
                 );
-
             }
-
 
             const product =
                 await Product.findById(
                     req.params.id
                 );
 
-
             if (!product) {
-
                 return res.redirect(
                     "/admin/products?error=Product+not+found"
                 );
-
             }
-
 
             if (
                 Array.isArray(
                     product.images
                 )
             ) {
-
                 product.images.forEach(
                     deleteImageFile
                 );
-
             }
-
 
             await Product.findByIdAndDelete(
                 req.params.id
             );
 
-
             await Review.deleteMany({
                 product: req.params.id
             });
-
 
             await Wishlist.deleteMany({
                 product: req.params.id
             });
 
-
             return res.redirect(
                 "/admin/products?success=Product+deleted+successfully"
             );
-
         } catch (error) {
-
             console.error(
                 "Product delete error:",
                 error
@@ -1690,12 +1445,9 @@ router.post(
             return res.redirect(
                 "/admin/products?error=Unable+to+delete+product"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // REVIEWS
@@ -1707,13 +1459,11 @@ router.get(
     reviewController.getAdminReviews
 );
 
-
 router.post(
     "/reviews/:id/approve",
     adminAuth,
     reviewController.approveReview
 );
-
 
 router.post(
     "/reviews/:id/reject",
@@ -1721,13 +1471,11 @@ router.post(
     reviewController.rejectReview
 );
 
-
 router.post(
     "/reviews/:id/delete",
     adminAuth,
     reviewController.deleteReview
 );
-
 
 // =========================================================
 // WISHLISTS
@@ -1737,9 +1485,7 @@ router.get(
     "/wishlists",
     adminAuth,
     async (req, res) => {
-
         try {
-
             const wishlists =
                 await Wishlist.find({})
                     .populate("user")
@@ -1748,11 +1494,9 @@ router.get(
                         createdAt: -1
                     });
 
-
             return res.render(
                 "admin/wishlists",
                 {
-
                     title:
                         "Wishlist Management",
 
@@ -1760,12 +1504,9 @@ router.get(
                         "Wishlist Management",
 
                     wishlists
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin wishlists error:",
                 error
@@ -1774,12 +1515,9 @@ router.get(
             return res.status(500).send(
                 "Unable to load wishlists."
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // FEEDBACK
@@ -1791,13 +1529,11 @@ router.get(
     feedbackController.getAdminFeedback
 );
 
-
 router.post(
     "/feedback/status/:id",
     adminAuth,
     feedbackController.updateFeedbackStatus
 );
-
 
 router.post(
     "/feedback/delete/:id",
@@ -1805,20 +1541,17 @@ router.post(
     feedbackController.deleteFeedback
 );
 
-
 router.patch(
     "/feedback/:id/status",
     adminAuth,
     feedbackController.updateFeedbackStatus
 );
 
-
 router.delete(
     "/feedback/:id",
     adminAuth,
     feedbackController.deleteFeedback
 );
-
 
 // =========================================================
 // CONTACTS
@@ -1828,20 +1561,16 @@ router.get(
     "/contacts",
     adminAuth,
     async (req, res) => {
-
         try {
-
             const contacts =
                 await Contact.find({})
                     .sort({
                         createdAt: -1
                     });
 
-
             return res.render(
                 "admin/contacts",
                 {
-
                     title:
                         "Customer Inquiries",
 
@@ -1861,12 +1590,9 @@ router.get(
 
                     error:
                         req.query.error || ""
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin contacts error:",
                 error
@@ -1875,28 +1601,20 @@ router.get(
             return res.status(500).send(
                 "Unable to load contacts."
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/contacts/status/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/contacts?error=Invalid+contact+ID"
                 );
-
             }
-
 
             const allowedStatuses = [
                 "unread",
@@ -1904,40 +1622,31 @@ router.post(
                 "replied"
             ];
 
-
             const status =
                 String(
                     req.body.status || ""
                 ).trim().toLowerCase();
-
 
             if (
                 !allowedStatuses.includes(
                     status
                 )
             ) {
-
                 return res.redirect(
                     "/admin/contacts?error=Invalid+status"
                 );
-
             }
-
 
             const contact =
                 await Contact.findById(
                     req.params.id
                 );
 
-
             if (!contact) {
-
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
-
             }
-
 
             contact.status =
                 status;
@@ -1948,16 +1657,12 @@ router.post(
             contact.isReplied =
                 status === "replied";
 
-
             await contact.save();
-
 
             return res.redirect(
                 "/admin/contacts?success=Status+updated"
             );
-
         } catch (error) {
-
             console.error(
                 "Contact status error:",
                 error
@@ -1966,43 +1671,31 @@ router.post(
             return res.redirect(
                 "/admin/contacts?error=Unable+to+update+status"
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/contacts/read/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/contacts?error=Invalid+contact+ID"
                 );
-
             }
-
 
             const contact =
                 await Contact.findById(
                     req.params.id
                 );
 
-
             if (!contact) {
-
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
-
             }
-
 
             contact.isRead = true;
 
@@ -2010,22 +1703,16 @@ router.post(
                 !contact.status ||
                 contact.status === "unread"
             ) {
-
                 contact.status =
                     "read";
-
             }
 
-
             await contact.save();
-
 
             return res.redirect(
                 "/admin/contacts?success=Contact+marked+as+read"
             );
-
         } catch (error) {
-
             console.error(
                 "Contact read error:",
                 error
@@ -2034,58 +1721,42 @@ router.post(
             return res.redirect(
                 "/admin/contacts?error=Unable+to+update+contact"
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/contacts/unread/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/contacts?error=Invalid+contact+ID"
                 );
-
             }
-
 
             const contact =
                 await Contact.findById(
                     req.params.id
                 );
 
-
             if (!contact) {
-
                 return res.redirect(
                     "/admin/contacts?error=Contact+not+found"
                 );
-
             }
-
 
             contact.isRead = false;
             contact.isReplied = false;
             contact.status = "unread";
 
-
             await contact.save();
-
 
             return res.redirect(
                 "/admin/contacts?success=Contact+marked+as+unread"
             );
-
         } catch (error) {
-
             console.error(
                 "Contact unread error:",
                 error
@@ -2094,40 +1765,29 @@ router.post(
             return res.redirect(
                 "/admin/contacts?error=Unable+to+update+contact"
             );
-
         }
-
     }
 );
-
 
 router.post(
     "/contacts/delete/:id",
     adminAuth,
     async (req, res) => {
-
         try {
-
             if (!validId(req.params.id)) {
-
                 return res.redirect(
                     "/admin/contacts?error=Invalid+contact+ID"
                 );
-
             }
-
 
             await Contact.findByIdAndDelete(
                 req.params.id
             );
 
-
             return res.redirect(
                 "/admin/contacts?success=Contact+deleted+successfully"
             );
-
         } catch (error) {
-
             console.error(
                 "Contact delete error:",
                 error
@@ -2136,12 +1796,9 @@ router.post(
             return res.redirect(
                 "/admin/contacts?error=Unable+to+delete+contact"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // SETTINGS
@@ -2151,27 +1808,20 @@ router.get(
     "/settings",
     adminAuth,
     async (req, res) => {
-
         try {
-
             let settings =
                 await Settings.findOne();
 
-
             if (!settings) {
-
                 settings =
                     new Settings({});
 
                 await settings.save();
-
             }
-
 
             return res.render(
                 "admin/settings",
                 {
-
                     title:
                         "Website Settings",
 
@@ -2192,12 +1842,9 @@ router.get(
 
                     error:
                         req.query.error || ""
-
                 }
             );
-
         } catch (error) {
-
             console.error(
                 "Admin settings page error:",
                 error
@@ -2206,15 +1853,11 @@ router.get(
             return res.status(500).send(
                 "Unable to load website settings."
             );
-
         }
-
     }
 );
 
-
 const settingsFields = [
-
     {
         name:
             "heroImageFile",
@@ -2262,9 +1905,7 @@ const settingsFields = [
             "heritageTimelessImageFile",
         maxCount: 1
     }
-
 ];
-
 
 router.post(
     "/settings",
@@ -2273,15 +1914,12 @@ router.post(
         settingsFields
     ),
     async (req, res) => {
-
         try {
-
             const clean =
                 value =>
                     String(
                         value || ""
                     ).trim();
-
 
             const siteName =
                 clean(
@@ -2303,7 +1941,6 @@ router.post(
                     req.body.sitePhone
                 );
 
-
             const metaTitle =
                 clean(
                     req.body.metaTitle
@@ -2324,7 +1961,6 @@ router.post(
                     req.body.faviconUrl
                 );
 
-
             const heroHeading =
                 clean(
                     req.body.heroHeading
@@ -2339,7 +1975,6 @@ router.post(
                 clean(
                     req.body.heroImage
                 );
-
 
             const aboutHeading =
                 clean(
@@ -2366,7 +2001,6 @@ router.post(
                     req.body.aboutArtImage
                 );
 
-
             const heritageHandcraftedImage =
                 clean(
                     req.body.heritageHandcraftedImage
@@ -2381,7 +2015,6 @@ router.post(
                 clean(
                     req.body.heritageTimelessImage
                 );
-
 
             const address =
                 clean(
@@ -2408,13 +2041,11 @@ router.post(
                     req.body.youtube
                 );
 
-
             const isChecked =
                 value =>
                     value === true ||
                     value === "true" ||
                     value === "on";
-
 
             const maintenanceMode =
                 isChecked(
@@ -2436,9 +2067,7 @@ router.post(
                     req.body.showReviews
                 );
 
-
             if (!siteName) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2446,14 +2075,12 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+name+is+required"
                 );
-
             }
 
-
             if (
-                siteName.length > 150
+                siteName.length >
+                150
             ) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2461,15 +2088,12 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+name+is+too+long"
                 );
-
             }
-
 
             if (
                 siteDescription.length >
                 500
             ) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2477,9 +2101,7 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Website+description+is+too+long"
                 );
-
             }
-
 
             if (
                 siteEmail &&
@@ -2487,7 +2109,6 @@ router.post(
                     siteEmail
                 )
             ) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2495,14 +2116,11 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Invalid+email+address"
                 );
-
             }
-
 
             if (
                 sitePhone.length > 30
             ) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2510,14 +2128,11 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Phone+number+is+too+long"
                 );
-
             }
-
 
             if (
                 address.length > 500
             ) {
-
                 deleteSettingsFiles(
                     req.files
                 );
@@ -2525,24 +2140,17 @@ router.post(
                 return res.redirect(
                     "/admin/settings?error=Address+is+too+long"
                 );
-
             }
-
 
             let settings =
                 await Settings.findOne();
 
-
             if (!settings) {
-
                 settings =
                     new Settings({});
-
             }
 
-
             const data = {
-
                 siteName,
 
                 siteDescription,
@@ -2598,12 +2206,9 @@ router.post(
                 showFeedback,
 
                 showReviews
-
             };
 
-
             const imageMappings = [
-
                 [
                     "heroImageFile",
                     "heroImage"
@@ -2643,58 +2248,44 @@ router.post(
                     "heritageTimelessImageFile",
                     "heritageTimelessImage"
                 ]
-
             ];
-
 
             imageMappings.forEach(
                 ([fileField, property]) => {
-
                     const uploaded =
                         req.files?.[
                             fileField
                         ]?.[0];
 
-
                     if (!uploaded) {
-
                         data[property] =
                             req.body[property] ||
                             settings[property] ||
                             "";
 
                         return;
-
                     }
-
 
                     if (
                         settings[property]
                     ) {
-
                         deleteImageFile(
                             settings[property]
                         );
-
                     }
-
 
                     data[property] =
                         "/uploads/settings/" +
                         uploaded.filename;
-
                 }
             );
-
 
             Object.assign(
                 settings,
                 data
             );
 
-
             await settings.save();
-
 
             console.log(
                 "Website settings updated."
@@ -2705,13 +2296,10 @@ router.post(
                 maintenanceMode
             );
 
-
             return res.redirect(
                 "/admin/settings?success=Website+settings+updated+successfully"
             );
-
         } catch (error) {
-
             console.error(
                 "Admin settings update error:",
                 error
@@ -2724,12 +2312,9 @@ router.post(
             return res.redirect(
                 "/admin/settings?error=Unable+to+save+website+settings"
             );
-
         }
-
     }
 );
-
 
 // =========================================================
 // CREATE FIRST ADMIN
@@ -2738,21 +2323,15 @@ router.post(
 router.get(
     "/create-first-admin",
     async (req, res) => {
-
         try {
-
             const existingAdmin =
                 await Admin.findOne();
 
-
             if (existingAdmin) {
-
                 return res.send(
                     "Admin already exists."
                 );
-
             }
-
 
             const email =
                 String(
@@ -2764,15 +2343,11 @@ router.get(
             const password =
                 process.env.ADMIN_PASSWORD;
 
-
             if (!email || !password) {
-
                 return res.status(500).send(
                     "ADMIN_EMAIL and ADMIN_PASSWORD are required."
                 );
-
             }
-
 
             const hashedPassword =
                 await bcrypt.hash(
@@ -2780,10 +2355,8 @@ router.get(
                     10
                 );
 
-
             const admin =
                 new Admin({
-
                     name:
                         "Admin",
 
@@ -2791,19 +2364,14 @@ router.get(
 
                     password:
                         hashedPassword
-
                 });
 
-
             await admin.save();
-
 
             return res.send(
                 "First admin created successfully."
             );
-
         } catch (error) {
-
             console.error(
                 "Create first admin error:",
                 error
@@ -2812,12 +2380,8 @@ router.get(
             return res.status(500).send(
                 "Unable to create first admin."
             );
-
         }
-
     }
 );
 
-
 module.exports = router;
-

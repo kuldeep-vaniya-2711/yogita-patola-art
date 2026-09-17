@@ -6,6 +6,19 @@ const productSchema = new mongoose.Schema(
         category: { type: String, required: [true, "Product category is required"], trim: true },
         description: { type: String, trim: true, default: "" },
         price: { type: Number, default: 0, min: 0 },
+
+        discountEnabled: {
+    type: Boolean,
+    default: false
+},
+
+discountPercentage: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
+},
+
         fabric: { type: String, trim: true, default: "" },
         technique: { type: String, trim: true, default: "" },
         color: { type: String, trim: true, default: "" },

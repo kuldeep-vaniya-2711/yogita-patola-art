@@ -47,6 +47,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
+       SHARE ELEMENT
+    ===================================================== */
+
+    const shareProductButton =
+        document.getElementById("shareProductButton");
+
+    const productActions =
+        document.getElementById("productActions");
+
+
+    /* =====================================================
        BASIC VALIDATION
     ===================================================== */
 
@@ -60,14 +71,18 @@ document.addEventListener("DOMContentLoaded", function () {
     ===================================================== */
 
     const images = thumbnails.length
-        ? thumbnails.map(function (thumbnail) {
+        ? thumbnails
+            .map(function (thumbnail) {
 
-            const image =
-                thumbnail.getAttribute("data-image");
+                const image =
+                    thumbnail.getAttribute(
+                        "data-image"
+                    );
 
-            return image || "";
+                return image || "";
 
-        }).filter(Boolean)
+            })
+            .filter(Boolean)
 
         : [
             mainImage.getAttribute("src") || ""
@@ -93,15 +108,23 @@ document.addEventListener("DOMContentLoaded", function () {
     if (thumbnails.length) {
 
         const activeThumbnail =
-            thumbnails.findIndex(function (thumbnail) {
+            thumbnails.findIndex(
+                function (thumbnail) {
 
-                return thumbnail.classList.contains("active");
+                    return thumbnail.classList.contains(
+                        "active"
+                    );
 
-            });
+                }
+            );
 
         if (activeThumbnail >= 0) {
-            currentIndex = activeThumbnail;
+
+            currentIndex =
+                activeThumbnail;
+
         }
+
     }
 
 
@@ -134,7 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        currentIndex = index;
+        currentIndex =
+            index;
 
 
         /* ---------------------------------------------
@@ -152,24 +176,30 @@ document.addEventListener("DOMContentLoaded", function () {
            ACTIVE THUMBNAIL
         --------------------------------------------- */
 
-        thumbnails.forEach(function (thumbnail, thumbnailIndex) {
+        thumbnails.forEach(
+            function (
+                thumbnail,
+                thumbnailIndex
+            ) {
 
-            const isActive =
-                thumbnailIndex === currentIndex;
+                const isActive =
+                    thumbnailIndex ===
+                    currentIndex;
 
-            thumbnail.classList.toggle(
-                "active",
-                isActive
-            );
+                thumbnail.classList.toggle(
+                    "active",
+                    isActive
+                );
 
-            thumbnail.setAttribute(
-                "aria-current",
-                isActive
-                    ? "true"
-                    : "false"
-            );
+                thumbnail.setAttribute(
+                    "aria-current",
+                    isActive
+                        ? "true"
+                        : "false"
+                );
 
-        });
+            }
+        );
 
 
         /* ---------------------------------------------
@@ -190,11 +220,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (thumbnails[currentIndex]) {
 
-            thumbnails[currentIndex].scrollIntoView({
-                behavior: "smooth",
-                block: "nearest",
-                inline: "center"
-            });
+            thumbnails[currentIndex]
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center"
+                });
 
         }
 
@@ -231,18 +262,23 @@ document.addEventListener("DOMContentLoaded", function () {
        THUMBNAIL CLICK
     ===================================================== */
 
-    thumbnails.forEach(function (thumbnail, index) {
+    thumbnails.forEach(
+        function (
+            thumbnail,
+            index
+        ) {
 
-        thumbnail.addEventListener(
-            "click",
-            function () {
+            thumbnail.addEventListener(
+                "click",
+                function () {
 
-                updateMainImage(index);
+                    updateMainImage(index);
 
-            }
-        );
+                }
+            );
 
-    });
+        }
+    );
 
 
     /* =====================================================
@@ -317,7 +353,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "false"
         );
 
-
         lightbox.classList.add(
             "is-open"
         );
@@ -331,7 +366,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "lightbox-open"
         );
 
-
         document.body.style.overflow =
             "hidden";
 
@@ -342,11 +376,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (lightboxClose) {
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                lightboxClose.focus();
+                    lightboxClose.focus();
 
-            }, 50);
+                },
+                50
+            );
 
         }
 
@@ -378,7 +415,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document
                     .exitFullscreen()
-                    .catch(function () {});
+                    .catch(
+                        function () {}
+                    );
 
             }
 
@@ -394,7 +433,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "true"
         );
 
-
         lightbox.classList.remove(
             "is-open"
         );
@@ -407,7 +445,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.remove(
             "lightbox-open"
         );
-
 
         document.body.style.overflow =
             "";
@@ -481,7 +518,8 @@ document.addEventListener("DOMContentLoaded", function () {
             function (event) {
 
                 if (
-                    event.target === lightbox
+                    event.target ===
+                    lightbox
                 ) {
 
                     closeLightbox();
@@ -550,7 +588,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (
                 event.key === "Escape" &&
                 lightbox &&
-                lightbox.getAttribute("aria-hidden") === "false"
+                lightbox.getAttribute(
+                    "aria-hidden"
+                ) === "false"
             ) {
 
                 event.preventDefault();
@@ -568,7 +608,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (
                 !lightbox ||
-                lightbox.getAttribute("aria-hidden") !== "false"
+                lightbox.getAttribute(
+                    "aria-hidden"
+                ) !== "false"
             ) {
 
                 return;
@@ -577,7 +619,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (
-                event.key === "ArrowLeft"
+                event.key ===
+                "ArrowLeft"
             ) {
 
                 event.preventDefault();
@@ -588,7 +631,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             if (
-                event.key === "ArrowRight"
+                event.key ===
+                "ArrowRight"
             ) {
 
                 event.preventDefault();
@@ -641,7 +685,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         document
                             .exitFullscreen()
-                            .catch(function () {});
+                            .catch(
+                                function () {}
+                            );
 
                     }
 
@@ -660,7 +706,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     dialog
                         .requestFullscreen()
-                        .catch(function () {});
+                        .catch(
+                            function () {}
+                        );
 
                 }
 
@@ -684,7 +732,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             const icon =
-                lightboxFullscreen.querySelector("i");
+                lightboxFullscreen
+                    .querySelector("i");
 
 
             if (!icon) {
@@ -738,7 +787,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     !event.touches ||
                     !event.touches.length
                 ) {
+
                     return;
+
                 }
 
                 touchStartX =
@@ -759,7 +810,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     !event.changedTouches ||
                     !event.changedTouches.length
                 ) {
+
                     return;
+
                 }
 
 
@@ -768,7 +821,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 const swipeDistance =
-                    touchEndX - touchStartX;
+                    touchEndX -
+                    touchStartX;
 
 
                 const minimumSwipe =
@@ -776,8 +830,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 if (
-                    Math.abs(swipeDistance) <
-                    minimumSwipe
+                    Math.abs(
+                        swipeDistance
+                    ) < minimumSwipe
                 ) {
 
                     return;
@@ -800,6 +855,436 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             {
                 passive: true
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SHARE PRODUCT
+    ===================================================== */
+
+    async function shareProduct() {
+
+        if (!shareProductButton) {
+            return;
+        }
+
+
+        /* ---------------------------------------------
+           PRODUCT DATA
+        --------------------------------------------- */
+
+        const productName =
+            productActions
+                ?.getAttribute(
+                    "data-product-name"
+                ) ||
+            "Patola Product";
+
+
+        const productId =
+            productActions
+                ?.getAttribute(
+                    "data-product-id"
+                ) ||
+            "";
+
+
+        const productPrice =
+            productActions
+                ?.getAttribute(
+                    "data-product-price"
+                ) ||
+            "";
+
+
+        const productCategory =
+            productActions
+                ?.getAttribute(
+                    "data-product-category"
+                ) ||
+            "";
+
+
+        const productAvailability =
+            productActions
+                ?.getAttribute(
+                    "data-product-availability"
+                ) ||
+            "";
+
+
+        const productImage =
+            productActions
+                ?.getAttribute(
+                    "data-product-image"
+                ) ||
+            mainImage.getAttribute(
+                "src"
+            ) ||
+            "";
+
+
+        /* ---------------------------------------------
+           PRODUCT URL
+        --------------------------------------------- */
+
+        const productUrl =
+            window.location.href;
+
+
+        /* ---------------------------------------------
+           SHARE TEXT
+        --------------------------------------------- */
+
+        const shareText =
+            "Yogita Patola Art\n\n" +
+            "Product: " +
+            productName +
+            "\n" +
+            "Product ID: " +
+            productId +
+            "\n" +
+            "Price: " +
+            productPrice +
+            "\n" +
+            "Category: " +
+            productCategory +
+            "\n" +
+            "Availability: " +
+            productAvailability +
+            "\n\n" +
+            "View Product:\n" +
+            productUrl;
+
+
+        /* ---------------------------------------------
+           BASIC SHARE SUPPORT
+        --------------------------------------------- */
+
+        if (
+            !navigator.share
+        ) {
+
+            window.prompt(
+                "Copy this product link:",
+                productUrl
+            );
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           BUTTON STATE
+        --------------------------------------------- */
+
+        const originalButtonHTML =
+            shareProductButton.innerHTML;
+
+
+        shareProductButton.disabled =
+            true;
+
+
+        shareProductButton.innerHTML =
+            '<i class="bi bi-hourglass-split"></i>' +
+            '<span>Preparing...</span>';
+
+
+        try {
+
+
+            /* =========================================
+               IMAGE URL
+            ========================================= */
+
+            const imageUrl =
+                new URL(
+                    productImage,
+                    window.location.origin
+                ).href;
+
+
+            /* =========================================
+               FETCH IMAGE
+            ========================================= */
+
+            const imageResponse =
+                await fetch(
+                    imageUrl,
+                    {
+                        credentials: "same-origin"
+                    }
+                );
+
+
+            if (
+                !imageResponse.ok
+            ) {
+
+                throw new Error(
+                    "Unable to load product image."
+                );
+
+            }
+
+
+            const imageBlob =
+                await imageResponse.blob();
+
+
+            /* =========================================
+               DETERMINE MIME TYPE
+            ========================================= */
+
+            let mimeType =
+                imageBlob.type ||
+                "image/jpeg";
+
+
+            if (
+                mimeType ===
+                "image/jpg"
+            ) {
+
+                mimeType =
+                    "image/jpeg";
+
+            }
+
+
+            /* =========================================
+               FILE EXTENSION
+            ========================================= */
+
+            let extension =
+                "jpg";
+
+
+            if (
+                mimeType.includes(
+                    "png"
+                )
+            ) {
+
+                extension =
+                    "png";
+
+            } else if (
+                mimeType.includes(
+                    "webp"
+                )
+            ) {
+
+                extension =
+                    "webp";
+
+            } else if (
+                mimeType.includes(
+                    "gif"
+                )
+            ) {
+
+                extension =
+                    "gif";
+
+            }
+
+
+            /* =========================================
+               CREATE IMAGE FILE
+            ========================================= */
+
+            const imageFile =
+                new File(
+                    [
+                        imageBlob
+                    ],
+                    "yogita-patola-" +
+                    (
+                        productId ||
+                        "product"
+                    ) +
+                    "." +
+                    extension,
+                    {
+                        type:
+                            mimeType
+                    }
+                );
+
+
+            /* =========================================
+               CHECK FILE SHARE SUPPORT
+            ========================================= */
+
+            const canShareImage =
+                navigator.canShare &&
+                navigator.canShare({
+                    files: [
+                        imageFile
+                    ]
+                });
+
+
+            /* =========================================
+               ACTUAL IMAGE SHARE
+            ========================================= */
+
+            if (
+                canShareImage
+            ) {
+
+                await navigator.share({
+
+                    files: [
+                        imageFile
+                    ],
+
+                    title:
+                        productName,
+
+                    text:
+                        shareText
+
+                });
+
+
+                console.log(
+                    "Product image shared successfully."
+                );
+
+            } else {
+
+
+                /* =====================================
+                   TEXT + URL FALLBACK
+                ===================================== */
+
+                await navigator.share({
+
+                    title:
+                        productName,
+
+                    text:
+                        shareText,
+
+                    url:
+                        productUrl
+
+                });
+
+
+                console.log(
+                    "Product shared without image file support."
+                );
+
+            }
+
+        } catch (error) {
+
+
+            /* -----------------------------------------
+               USER CANCELLED SHARE
+            ----------------------------------------- */
+
+            if (
+                error &&
+                error.name ===
+                "AbortError"
+            ) {
+
+                console.log(
+                    "Product share cancelled by user."
+                );
+
+            } else {
+
+                console.error(
+                    "Product sharing error:",
+                    error
+                );
+
+
+                /* -------------------------------------
+                   FALLBACK
+                ------------------------------------- */
+
+                try {
+
+                    await navigator.share({
+
+                        title:
+                            productName,
+
+                        text:
+                            shareText,
+
+                        url:
+                            productUrl
+
+                    });
+
+                } catch (
+                    fallbackError
+                ) {
+
+                    if (
+                        fallbackError &&
+                        fallbackError.name ===
+                        "AbortError"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    window.prompt(
+                        "Copy this product link:",
+                        productUrl
+                    );
+
+                }
+
+            }
+
+        } finally {
+
+
+            /* -----------------------------------------
+               RESTORE BUTTON
+            ----------------------------------------- */
+
+            shareProductButton.disabled =
+                false;
+
+            shareProductButton.innerHTML =
+                originalButtonHTML;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SHARE BUTTON CLICK
+    ===================================================== */
+
+    if (shareProductButton) {
+
+        shareProductButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                shareProduct();
+
             }
         );
 
