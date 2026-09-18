@@ -1,356 +1,327 @@
+<%
+const sidebarCurrentPath =
+typeof req !== "undefined" && req.path
+? req.path
+: "";
+%>
+
 <aside class="admin-sidebar" id="adminSidebar">
 
+<!-- =====================================================
+     SIDEBAR HEADER
+====================================================== -->
 
-    <!-- =====================================================
-         SIDEBAR HEADER
-    ====================================================== -->
-
-    <div class="admin-sidebar-header">
-
-        <a
-            href="/admin"
-            class="admin-sidebar-brand"
-        >
-
-            <span class="admin-sidebar-brand-main">
-                Yogita Patola Art
-            </span>
-
-            <span class="admin-sidebar-brand-subtitle">
-                ADMIN PANEL
-            </span>
-
-        </a>
+<div class="admin-sidebar-header">
 
 
-        <button
-            type="button"
-            class="admin-sidebar-close"
-            aria-label="Close admin navigation"
-            aria-controls="adminSidebar"
-            aria-expanded="true"
-        >
+<a
+    href="/admin"
+    class="admin-sidebar-brand"
+>
+    <span class="admin-sidebar-brand-main">
+        Yogita Patola Art
+    </span>
 
-            <i class="bi bi-x-lg"></i>
+    <span class="admin-sidebar-brand-sub">
+        ADMIN PANEL
+    </span>
+</a>
 
-        </button>
 
+</div>
+
+<!-- =====================================================
+     SIDEBAR NAVIGATION
+====================================================== -->
+
+<nav class="admin-sidebar-nav">
+
+
+<!-- =================================================
+     MAIN
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Main
     </div>
 
-
-
-    <!-- =====================================================
-         SIDEBAR NAVIGATION
-    ====================================================== -->
-
-    <nav
-        class="admin-sidebar-nav"
-        aria-label="Admin navigation"
+    <a
+        href="/admin"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin' || sidebarCurrentPath === '/admin/dashboard' ? 'active' : '' %>"
     >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-speedometer2"></i>
+        </span>
 
+        <span class="admin-sidebar-text">
+            Dashboard
+        </span>
+    </a>
 
-        <!-- =================================================
-             MAIN
-        ================================================== -->
+</div>
 
-        <div class="admin-sidebar-section">
 
-            <div class="admin-sidebar-section-title">
-                Main
-            </div>
+<!-- =================================================
+     CATALOG
+================================================== -->
 
+<div class="admin-sidebar-section">
 
-            <a
-                href="/admin"
-                class="admin-sidebar-link <%= currentPath === '/admin' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-grid-1x2-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Dashboard
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             CATALOG
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Catalog
-            </div>
-
-
-            <a
-                href="/admin/products"
-                class="admin-sidebar-link <%= currentPath === '/admin/products' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-bag-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    All Products
-                </span>
-
-            </a>
-
-
-            <a
-                href="/admin/products/add"
-                class="admin-sidebar-link <%= currentPath === '/admin/products/add' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-plus-square-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Add Product
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             CUSTOMER ACTIVITY
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Customer Activity
-            </div>
-
-
-            <a
-                href="/admin/reviews"
-                class="admin-sidebar-link <%= currentPath === '/admin/reviews' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-star-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Reviews
-                </span>
-
-            </a>
-
-
-            <a
-                href="/admin/feedback"
-                class="admin-sidebar-link <%= currentPath === '/admin/feedback' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-chat-square-text-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Feedback
-                </span>
-
-            </a>
-
-
-            <a
-                href="/admin/contacts"
-                class="admin-sidebar-link <%= currentPath === '/admin/contacts' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-envelope-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Contact Messages
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             CUSTOMER DATA
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Customer Data
-            </div>
-
-
-            <a
-                href="/admin/wishlists"
-                class="admin-sidebar-link <%= currentPath === '/admin/wishlists' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-heart-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Wishlists
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             ANALYTICS
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Analytics
-            </div>
-
-
-            <a
-                href="/admin/visitors"
-                class="admin-sidebar-link <%= currentPath === '/admin/visitors' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-bar-chart-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Visitors &amp; Analytics
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             WEBSITE MANAGEMENT
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Website Management
-            </div>
-
-
-            <a
-                href="/admin/settings"
-                class="admin-sidebar-link admin-settings-link <%= currentPath === '/admin/settings' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-sliders2"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Website Settings
-                </span>
-
-            </a>
-
-        </div>
-
-
-
-        <!-- =================================================
-             ACCOUNT SECURITY
-        ================================================== -->
-
-        <div class="admin-sidebar-section">
-
-            <div class="admin-sidebar-section-title">
-                Account Security
-            </div>
-
-
-            <a
-                href="/admin/change-password"
-                class="admin-sidebar-link <%= currentPath === '/admin/change-password' ? 'active' : '' %>"
-            >
-
-                <span class="admin-sidebar-icon">
-                    <i class="bi bi-shield-lock-fill"></i>
-                </span>
-
-                <span class="admin-sidebar-text">
-                    Change Password
-                </span>
-
-            </a>
-
-        </div>
-
-
-    </nav>
-
-
-
-    <!-- =====================================================
-         SIDEBAR FOOTER
-    ====================================================== -->
-
-    <div class="admin-sidebar-footer">
-
-
-        <a
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="admin-sidebar-link admin-view-site"
-        >
-
-            <span class="admin-sidebar-icon">
-                <i class="bi bi-box-arrow-up-right"></i>
-            </span>
-
-            <span class="admin-sidebar-text">
-                View Website
-            </span>
-
-        </a>
-
-
-        <a
-            href="/admin/logout"
-            class="admin-sidebar-link admin-logout"
-        >
-
-            <span class="admin-sidebar-icon">
-                <i class="bi bi-box-arrow-right"></i>
-            </span>
-
-            <span class="admin-sidebar-text">
-                Logout
-            </span>
-
-        </a>
-
-
+    <div class="admin-sidebar-section-title">
+        Catalog
     </div>
+
+    <a
+        href="/admin/products"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/products' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-box-seam-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            All Products
+        </span>
+    </a>
+
+    <a
+        href="/admin/products/add"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/products/add' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-plus-square-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Add Product
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     CUSTOMER ACTIVITY
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Customer Activity
+    </div>
+
+    <a
+        href="/admin/reviews"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/reviews' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-star-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Reviews
+        </span>
+    </a>
+
+    <a
+        href="/admin/feedback"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/feedback' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-chat-square-text-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Feedback
+        </span>
+    </a>
+
+    <a
+        href="/admin/contacts"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/contacts' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-envelope-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Contact Messages
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     CUSTOMER DATA
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Customer Data
+    </div>
+
+    <a
+        href="/admin/wishlists"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/wishlists' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-heart-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Wishlists
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     ANALYTICS
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Analytics
+    </div>
+
+    <a
+        href="/admin/visitors"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/visitors' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-bar-chart-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Visitors & Analytics
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     WEBSITE MANAGEMENT
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Website Management
+    </div>
+
+    <a
+        href="/admin/settings"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/settings' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-gear-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Website Settings
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     ADMIN MANAGEMENT
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Admin Management
+    </div>
+
+    <a
+        href="/admin/admins"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/admins' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-people-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Admins
+        </span>
+    </a>
+
+</div>
+
+
+<!-- =================================================
+     ACCOUNT SECURITY
+================================================== -->
+
+<div class="admin-sidebar-section">
+
+    <div class="admin-sidebar-section-title">
+        Account Security
+    </div>
+
+    <a
+        href="/admin/change-password"
+        class="admin-sidebar-link <%= sidebarCurrentPath === '/admin/change-password' ? 'active' : '' %>"
+    >
+        <span class="admin-sidebar-icon">
+            <i class="bi bi-shield-lock-fill"></i>
+        </span>
+
+        <span class="admin-sidebar-text">
+            Change Password
+        </span>
+    </a>
+
+</div>
+
+
+</nav>
+
+<!-- =====================================================
+     SIDEBAR FOOTER
+====================================================== -->
+
+<div class="admin-sidebar-footer">
+
+
+<a
+    href="/"
+    class="admin-sidebar-link"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    <span class="admin-sidebar-icon">
+        <i class="bi bi-globe2"></i>
+    </span>
+
+    <span class="admin-sidebar-text">
+        View Website
+    </span>
+</a>
+
+<a
+    href="/admin/logout"
+    class="admin-sidebar-link admin-sidebar-logout"
+>
+    <span class="admin-sidebar-icon">
+        <i class="bi bi-box-arrow-right"></i>
+    </span>
+
+    <span class="admin-sidebar-text">
+        Logout
+    </span>
+</a>
+
+
+</div>
 
 </aside>

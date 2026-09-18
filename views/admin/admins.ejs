@@ -1,0 +1,433 @@
+<%
+layout("admin/layout", {
+title: "Admin Management",
+pageTitle: "Admin Management",
+pageCss: "/css/admin/admins.css"
+});
+%>
+
+<section class="admin-page">
+
+
+<!-- =====================================================
+     ALERTS
+====================================================== -->
+
+<% if (success) { %>
+
+    <div
+        class="alert alert-success border-0 shadow-sm mb-4"
+        role="alert"
+    >
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <%= success %>
+    </div>
+
+<% } %>
+
+
+<% if (error) { %>
+
+    <div
+        class="alert alert-danger border-0 shadow-sm mb-4"
+        role="alert"
+    >
+        <i class="bi bi-exclamation-circle-fill me-2"></i>
+        <%= error %>
+    </div>
+
+<% } %>
+
+
+<!-- =====================================================
+     ADMIN MANAGEMENT CONTENT
+====================================================== -->
+
+<div class="row g-4">
+
+
+    <!-- =================================================
+         EXISTING ADMINS
+    ================================================== -->
+
+    <div class="col-lg-7">
+
+        <section class="card admin-admins-card h-100">
+
+            <div class="card-body p-4 p-xl-5">
+
+                <div class="admin-section-header">
+
+                    <div>
+
+                        <span class="admin-section-label">
+                            Administration
+                        </span>
+
+                        <h2 class="admin-section-title">
+                            Existing Admins
+                        </h2>
+
+                        <p class="admin-section-description">
+                            Admin accounts currently available for the panel.
+                        </p>
+
+                    </div>
+
+
+                    <span class="admin-count-badge">
+                        <%= Array.isArray(admins) ? admins.length : 0 %>
+                    </span>
+
+                </div>
+
+
+                <% if (Array.isArray(admins) && admins.length) { %>
+
+                    <div class="table-responsive admin-table-wrapper">
+
+                        <table class="table align-middle mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    <th>
+                                        Email
+                                    </th>
+
+                                    <th>
+                                        Created
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <% admins.forEach(admin => { %>
+
+                                    <tr>
+
+                                        <td>
+
+                                            <div class="admin-user-info">
+
+                                                <span class="admin-user-avatar">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </span>
+
+
+                                                <div>
+
+                                                    <strong class="admin-user-name">
+                                                        <%= admin.name || "Admin" %>
+                                                    </strong>
+
+                                                    <small class="admin-user-role">
+                                                        Administrator
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <span class="admin-user-email">
+                                                <%= admin.email %>
+                                            </span>
+
+                                        </td>
+
+
+                                        <td class="admin-created-date">
+
+                                            <%= admin.createdAt
+                                                ? new Date(admin.createdAt).toLocaleDateString("en-IN")
+                                                : "—" %>
+
+                                        </td>
+
+
+                                        <!-- =================================================
+                                             DELETE ADMIN
+                                        ================================================== -->
+
+                                        <td>
+
+                                            <% if (
+                                                typeof admin._id !== "undefined" &&
+                                                typeof adminName !== "undefined"
+                                            ) { %>
+
+                                                <% if (
+                                                    String(admin._id) !==
+                                                    String(typeof currentAdminId !== "undefined"
+                                                        ? currentAdminId
+                                                        : "")
+                                                ) { %>
+
+                                                    <form
+                                                        action="/admin/admins/delete/<%= admin._id %>"
+                                                        method="POST"
+                                                        class="d-inline"
+                                                        onsubmit="return confirm('Are you sure you want to delete this admin?');"
+                                                    >
+
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-sm btn-danger"
+                                                            title="Delete Admin"
+                                                            aria-label="Delete <%= admin.name || 'Admin' %>"
+                                                        >
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+
+                                                    </form>
+
+                                                <% } else { %>
+
+                                                    <span
+                                                        class="text-muted"
+                                                        title="You cannot delete your own account"
+                                                    >
+                                                        <i class="bi bi-shield-check"></i>
+                                                    </span>
+
+                                                <% } %>
+
+                                            <% } %>
+
+                                        </td>
+
+                                    </tr>
+
+                                <% }) %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="admin-empty-state">
+
+                        <i class="bi bi-people"></i>
+
+                        <span>
+                            No admin accounts found.
+                        </span>
+
+                    </div>
+
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =================================================
+         ADD NEW ADMIN
+    ================================================== -->
+
+    <div class="col-lg-5">
+
+        <section class="card admin-admins-card">
+
+            <div class="card-body p-4 p-xl-5">
+
+
+                <div class="admin-section-header add-admin-header">
+
+                    <div>
+
+                        <span class="admin-section-label">
+                            Admin Management
+                        </span>
+
+                        <h2 class="admin-section-title">
+                            Add New Admin
+                        </h2>
+
+                        <p class="admin-section-description">
+                            Create another administrator who can log in to the existing admin panel.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ADD ADMIN FORM
+                ================================================== -->
+
+                <form
+                    action="/admin/admins/add"
+                    method="POST"
+                    class="admin-create-form"
+                >
+
+
+                    <!-- NAME -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="adminName"
+                            class="form-label"
+                        >
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="adminName"
+                            name="name"
+                            class="form-control"
+                            placeholder="Enter admin name"
+                            autocomplete="name"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="adminEmail"
+                            class="form-label"
+                        >
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            name="email"
+                            class="form-control"
+                            placeholder="admin@example.com"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="adminPassword"
+                            class="form-label"
+                        >
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            name="password"
+                            class="form-control"
+                            placeholder="Minimum 8 characters"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="adminConfirmPassword"
+                            class="form-label"
+                        >
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="adminConfirmPassword"
+                            name="confirmPassword"
+                            class="form-control"
+                            placeholder="Re-enter password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CREATE BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="btn admin-create-button w-100"
+                    >
+
+                        <i class="bi bi-person-plus-fill"></i>
+
+                        <span>
+                            Create Admin
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- =================================================
+                     SECURITY NOTE
+                ================================================== -->
+
+                <div class="admin-security-note">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    <small>
+                        Passwords are securely stored using bcrypt hashing.
+                        New admins use the existing admin login and access system.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+
+</section>

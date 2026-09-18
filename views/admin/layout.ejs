@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -107,6 +108,27 @@
     <% } %>
 
 
+    <!-- =====================================================
+         ADMIN MANAGEMENT CSS
+         
+         Direct link kept intentionally so Admin Management
+         styling does not depend on pageCss resolution.
+    ====================================================== -->
+
+    <% if (
+        typeof title !== "undefined" &&
+        title &&
+        title.includes("Admin Management")
+    ) { %>
+
+        <link
+            rel="stylesheet"
+            href="/css/admin/admins.css"
+        >
+
+    <% } %>
+
+
 </head>
 
 
@@ -138,8 +160,11 @@
                  TOPBAR
             ============================================== -->
 
-            <%- include("../partials/topbar") %>
-
+            <%- include("../partials/topbar", {
+    adminName: typeof adminName !== "undefined"
+        ? adminName
+        : "Administrator"
+}) %>
 
             <!-- =============================================
                  ALERTS
@@ -209,3 +234,24 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        document
+            .querySelectorAll(".alert")
+            .forEach(alert => {
+
+                setTimeout(() => {
+
+                    const bsAlert =
+                        bootstrap.Alert.getOrCreateInstance(alert);
+
+                    bsAlert.close();
+
+                }, 1000);
+
+            });
+
+    });
+</script>

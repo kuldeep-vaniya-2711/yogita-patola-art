@@ -1,4 +1,3 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -7,6 +6,13 @@ const fs = require("fs");
 const path = require("path");
 
 const router = express.Router();
+
+router.use((req, res, next) => {
+    res.locals.adminName =
+        req.session?.adminName || "Admin";
+
+    next();
+});
 
 const Product = require("../models/Product");
 const Admin = require("../models/Admin");
@@ -266,6 +272,10 @@ router.post(
 
             req.session.adminEmail =
                 admin.email;
+
+
+            req.session.adminName =
+                admin.name || "Admin";
 
             return res.redirect(
                 "/admin/dashboard"
@@ -756,6 +766,279 @@ router.post(
 
             return res.redirect(
                 "/admin/reset-password?error=Unable+to+reset+password.+Please+try+again"
+            );
+        }
+    }
+);
+
+// =========================================================
+// CHANGE PASSWORD
+// =========================================================
+
+router.get(
+    "/change-password",
+    adminAuth,
+    (req, res) => {
+        return res.render(
+            "admin/change-password",
+            {
+                title: "Change Password",
+                pageTitle: "Change Password",
+                error: req.query.error || "",
+                success: req.query.success || ""
+            }
+        );
+    }
+);
+
+router.post(
+    "/change-password",
+    adminAuth,
+    async (req, res) => {
+        try {
+            const currentPassword =
+                String(req.body.currentPassword || "");
+
+            const newPassword =
+                String(req.body.newPassword || "");
+
+            const confirmPassword =
+                String(req.body.confirmPassword || "");
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                return res.redirect(
+                    "/admin/change-password?error=Please+fill+all+password+fields"
+                );
+            }
+
+            if (newPassword.length < 8) {
+                return res.redirect(
+                    "/admin/change-password?error=New+password+must+be+at+least+8+characters"
+                );
+            }
+
+            if (newPassword !== confirmPassword) {
+                return res.redirect(
+                    "/admin/change-password?error=New+passwords+do+not+match"
+                );
+            }
+
+            const admin =
+                await Admin.findById(req.session.adminId);
+
+            if (!admin) {
+                req.session.destroy(() => {});
+
+                return res.redirect(
+                    "/admin/login?error=Admin+account+not+found"
+                );
+            }
+
+            const passwordValid =
+                await bcrypt.compare(
+                    currentPassword,
+                    admin.password
+                );
+
+            if (!passwordValid) {
+                return res.redirect(
+                    "/admin/change-password?error=Current+password+is+incorrect"
+                );
+            }
+
+            admin.password =
+                await bcrypt.hash(newPassword, 10);
+
+            await admin.save();
+
+            return res.redirect(
+                "/admin/change-password?success=Password+changed+successfully"
+            );
+        } catch (error) {
+            console.error(
+                "Admin change password error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/change-password?error=Unable+to+change+password.+Please+try+again"
+            );
+        }
+    }
+);
+
+// =========================================================
+// ADMIN MANAGEMENT
+// =========================================================
+
+router.get(
+    "/admins",
+    adminAuth,
+    async (req, res) => {
+        try {
+            const admins =
+                await Admin.find({})
+                    .sort({ createdAt: -1 });
+
+            return res.render(
+                "admin/admins",
+                {
+                    title: "Admin Management",
+                    pageTitle: "Admin Management",
+                    admins,
+                    error: req.query.error || "",
+                    success: req.query.success || ""
+                }
+            );
+        } catch (error) {
+            console.error(
+                "Admin management error:",
+                error
+            );
+
+            return res.status(500).send(
+                "Unable to load admin management."
+            );
+        }
+    }
+);
+
+router.post(
+    "/admins/add",
+    adminAuth,
+    async (req, res) => {
+        try {
+            const name =
+                String(req.body.name || "").trim();
+
+            const email =
+                String(req.body.email || "")
+                    .trim()
+                    .toLowerCase();
+
+            const password =
+                String(req.body.password || "");
+
+            const confirmPassword =
+                String(req.body.confirmPassword || "");
+
+            if (!name || !email || !password || !confirmPassword) {
+                return res.redirect(
+                    "/admin/admins?error=Please+fill+all+admin+fields"
+                );
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                return res.redirect(
+                    "/admin/admins?error=Please+enter+a+valid+email+address"
+                );
+            }
+
+            if (password.length < 8) {
+                return res.redirect(
+                    "/admin/admins?error=Password+must+be+at+least+8+characters"
+                );
+            }
+
+            if (password !== confirmPassword) {
+                return res.redirect(
+                    "/admin/admins?error=Passwords+do+not+match"
+                );
+            }
+
+            const existingAdmin =
+                await Admin.findOne({ email });
+
+            if (existingAdmin) {
+                return res.redirect(
+                    "/admin/admins?error=An+admin+with+this+email+already+exists"
+                );
+            }
+
+            const hashedPassword =
+                await bcrypt.hash(password, 10);
+
+            const admin =
+                new Admin({
+                    name,
+                    email,
+                    password: hashedPassword
+                });
+
+            await admin.save();
+
+            return res.redirect(
+                "/admin/admins?success=New+admin+created+successfully"
+            );
+        } catch (error) {
+            console.error(
+                "Create admin error:",
+                error
+            );
+
+            if (error?.code === 11000) {
+                return res.redirect(
+                    "/admin/admins?error=An+admin+with+this+email+already+exists"
+                );
+            }
+
+            return res.redirect(
+                "/admin/admins?error=Unable+to+create+admin.+Please+try+again"
+            );
+        }
+    }
+);
+
+// =========================================================
+// DELETE ADMIN
+// =========================================================
+
+router.post(
+    "/admins/delete/:id",
+    adminAuth,
+    async (req, res) => {
+        try {
+            if (!validId(req.params.id)) {
+                return res.redirect(
+                    "/admin/admins?error=Invalid+admin+ID"
+                );
+            }
+
+            if (
+                String(req.params.id) ===
+                String(req.session.adminId)
+            ) {
+                return res.redirect(
+                    "/admin/admins?error=You+cannot+delete+your+own+admin+account"
+                );
+            }
+
+            const admin =
+                await Admin.findById(
+                    req.params.id
+                );
+
+            if (!admin) {
+                return res.redirect(
+                    "/admin/admins?error=Admin+not+found"
+                );
+            }
+
+            await Admin.findByIdAndDelete(
+                req.params.id
+            );
+
+            return res.redirect(
+                "/admin/admins?success=Admin+deleted+successfully"
+            );
+        } catch (error) {
+            console.error(
+                "Delete admin error:",
+                error
+            );
+
+            return res.redirect(
+                "/admin/admins?error=Unable+to+delete+admin"
             );
         }
     }
